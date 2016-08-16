@@ -116,23 +116,13 @@ float TileMap::GetTileSize() const {
 
 }
 
-int TileMap::GetTileX(const float& xPosition) {
+int TileMap::GetTile(const float& position) {
 
-	if (xPosition >= -tileSize * 0.5f) {
-		return static_cast<int>(xPosition / tileSize + 0.5f);
+	if (position >= -tileSize * 0.5f) {
+		return static_cast<int>(position / tileSize + 0.5f);
 	}
 
-	return static_cast<int>(xPosition / tileSize - 0.5f);
-
-}
-
-int TileMap::GetTileY(const float& yPosition) {
-
-	if (yPosition >= -tileSize * 0.5f) {
-		return static_cast<int>(yPosition / tileSize + 0.5f);
-	}
-
-	return static_cast<int>(yPosition / tileSize - 0.5f);
+	return static_cast<int>(position / tileSize - 0.5f);
 
 }
 

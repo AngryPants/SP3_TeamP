@@ -58,6 +58,10 @@ void InputManager::Update() {
 		inputInfo.keyDown[INPUT_MOVE_UP] = 1;
 		inputInfo.keyValue[INPUT_MOVE_UP] = 1.0f;
 	}
+	if (keyboard.IsKeyPressed(0x46)) {
+		inputInfo.keyDown[INPUT_SHOOT] = 1;
+		inputInfo.keyValue[INPUT_SHOOT] = 1.0f;
+	}
 
 	/********************************************************************************************************************/
 	//Do not touch anything below unless you know what you're doing.

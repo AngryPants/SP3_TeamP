@@ -66,11 +66,31 @@
     <ClCompile Include="Source\Bullet.cpp">
       <Filter>Source Files\Gameplay</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="Source\EntityManager.cpp">
       <Filter>Source Files\Entity</Filter>
     </ClCompile>
     <ClCompile Include="Source\Camera2D.cpp">
       <Filter>Source Files\Camera</Filter>
+=======
+    <ClCompile Include="Source\Character.cpp">
+      <Filter>Source Files\Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Hero.cpp">
+      <Filter>Source Files\Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Enemy.cpp">
+      <Filter>Source Files\Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Seetwo.cpp">
+      <Filter>Source Files\Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Daniu.cpp">
+      <Filter>Source Files\Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Kifella.cpp">
+      <Filter>Source Files\Gameplay</Filter>
+>>>>>>> origin/master
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -161,11 +181,31 @@
     <ClInclude Include="Source\EntityBase.h">
       <Filter>Header Files\Entity</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="Source\EntityManager.h">
       <Filter>Header Files\Entity</Filter>
     </ClInclude>
     <ClInclude Include="Source\Camera2D.h">
       <Filter>Header Files\Camera</Filter>
+=======
+    <ClInclude Include="Source\Character.h">
+      <Filter>Header Files\Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Hero.h">
+      <Filter>Header Files\Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy.h">
+      <Filter>Header Files\Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Kifella.h">
+      <Filter>Header Files\Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Seetwo.h">
+      <Filter>Header Files\Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Daniu.h">
+      <Filter>Header Files\Gameplay</Filter>
+>>>>>>> origin/master
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
