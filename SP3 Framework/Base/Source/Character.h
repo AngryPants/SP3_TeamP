@@ -6,6 +6,7 @@
 #include "MeshBuilder.h"
 #include "TextureManager.h"
 #include "Vector2.h"
+#include "TileMap.h"
 
 class Character : public EntityBase
 {
@@ -16,6 +17,10 @@ protected:
 	float speed;
 	int damage;
 	float fireRate;
+	float detectionWidth;
+	float detectionHeight;
+	float offsetX;
+	float offsetY;
 public:
 	Character();
 	Character(bool bIsAlive, Vector2 position, int health, float speed, int damage, float fireRate);
@@ -25,6 +30,9 @@ public:
 	virtual void Update(const double& deltaTime) {}
 	virtual void Render() {}
 	virtual void RenderUI() {}
+
+	int GetTileInfo(Vector2);
+	TileMap *tileMap;
 };
 
 #endif
