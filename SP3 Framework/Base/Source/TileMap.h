@@ -32,8 +32,7 @@ public:
 	int GetNumColumns() const;
 	void SetTileSize(const float& tileSize);
 	float GetTileSize() const;
-	int GetTileX(const float& xPosition);
-	int GetTileY(const float& yPosition);
+	int GetTile(const float& xPosition);
 
 	float GetLeftBorder() const;
 	float GetRightBorder() const;
