@@ -3,6 +3,8 @@
 #define HERO_H
 
 #include "Character.h"
+#include "Bullet.h"
+#include "InputManager.h"
 
 class Hero : public Character
 {
@@ -12,9 +14,11 @@ public:
 	Hero();
 	~Hero();
 
-	void Update(const double &deltaTime);
-	void Render();
-	void RenderUI();
+	virtual void Update(const double &deltaTime);
+	virtual void Render();
+	virtual void RenderUI();
+
+	Bullet *bullet;
 };
 
 #endif

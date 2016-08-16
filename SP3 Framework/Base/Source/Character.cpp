@@ -20,10 +20,7 @@ Character::~Character()
 
 void Character::Update(const double &deltaTime)
 {
-	if (!bIsAlive)
-	{
-		return;
-	}
+
 }
 
 void Character::Render()

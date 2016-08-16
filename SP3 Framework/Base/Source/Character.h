@@ -9,7 +9,7 @@
 
 class Character : public EntityBase
 {
-private:
+protected:
 	bool bIsAlive;
 	Vector2 position;
 	int health;
