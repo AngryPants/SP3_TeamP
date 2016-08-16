@@ -42,7 +42,7 @@ public:
 
 class Camera : public EntityBase {
 
-private:
+protected:
 	//Perspective
 	float FOV;
 	float nearClippingPlane;
@@ -79,7 +79,7 @@ public:
 	void SetFarClippingPlane(const float& nearClippingPlane);
 	float GetNearClippingPlane() const;
 	float GetFarClippingPlane() const;
-
+	
 	const Vector3 GetPosition() const {
 		return this->position;
 	}
