@@ -10,7 +10,7 @@ private:
 
 public:
 	Seetwo();
-	~Seetwo();
+	virtual ~Seetwo();
 
 	void Update(const double &deltaTime);
 	void Render();
