@@ -83,7 +83,6 @@ void Kifellah::Render() {
 
 }
 
-void Kifellah::RenderUI()
-{
+void Kifellah::RenderUI() {
 
 }

@@ -35,6 +35,7 @@ void SceneBase::InitShader() {
 	GraphicsManager::GetInstance().GetActiveShader()->UpdateBool("lightEnabled", false);
 	GraphicsManager::GetInstance().GetActiveShader()->UpdateInt("numLights", 0);
 	GraphicsManager::GetInstance().GetActiveShader()->UpdateBool("fogParam.enabled", false);
+	GraphicsManager::GetInstance().GetActiveShader()->UpdateFloat("alphaDiscardValue", 0.1f);
 
 }
 

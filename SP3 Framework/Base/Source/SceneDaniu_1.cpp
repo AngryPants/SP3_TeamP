@@ -18,7 +18,7 @@ void SceneDaniu_1::Init() {
 	EntityManager::GetInstance().AddEntity(name, *hero);
 
 	camera.SetFollowTarget(*hero);
-	//EntityManager::GetInstance().AddEntity(name, camera);
+	EntityManager::GetInstance().AddEntity(name, camera);
 
 }
 
@@ -26,6 +26,7 @@ void SceneDaniu_1::Update(const double& deltaTime) {
 
 	double frameTime = deltaTime;
 	if (frameTime > 1.0 / minFPS) {
+		cout << "Lag Spike Detected." << endl;
 		frameTime = 1.0 / minFPS;
 	}
 
@@ -43,4 +44,7 @@ void SceneDaniu_1::Render() {
 }
 
 void SceneDaniu_1::Exit() {
+
+	EntityManager::GetInstance().ClearScene(name);
+
 }

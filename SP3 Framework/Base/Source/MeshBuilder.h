@@ -35,7 +35,7 @@ public:
 	SpriteAnimation* GetSpriteAnimation(const string& spriteName);
 
 	Mesh* GenerateAxes(const std::string &meshName);
-	Mesh* GenerateQuad(const std::string &meshName, Color color, float length = 1.0f);
+	Mesh* GenerateQuad(const std::string &meshName, Color color = Color(1, 1, 1), float length = 1.0f);
 	Mesh* GenerateCube(const std::string &meshName, Color color, float length = 1.0f);
 	Mesh* GenerateRing(const std::string &meshName, Color color, unsigned numSlice, float outerR = 1.0f, float innerR = 0.0f);
 	Mesh* GenerateSphere(const std::string &meshName, Color color, unsigned numStack, unsigned numSlice, float radius = 1.0f);

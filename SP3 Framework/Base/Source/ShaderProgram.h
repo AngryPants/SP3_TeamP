@@ -2,6 +2,7 @@
 #define SHADER_PROGRAM_H
 
 #include <string>
+#include <unordered_map>
 #include <map>
 
 using std::string;

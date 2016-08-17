@@ -33,6 +33,7 @@
     <ClCompile Include="Source\Mesh.cpp" />
     <ClCompile Include="Source\MeshBuilder.cpp" />
     <ClCompile Include="Source\RenderHelper.cpp" />
+    <ClCompile Include="Source\Sawblade.cpp" />
     <ClCompile Include="Source\SceneBase.cpp" />
     <ClCompile Include="Source\SceneDaniu_1.cpp" />
     <ClCompile Include="Source\SceneManager.cpp" />
@@ -41,7 +42,7 @@
     <ClCompile Include="Source\ShaderProgram.cpp" />
     <ClCompile Include="Source\SpriteAnimation.cpp" />
     <ClCompile Include="Source\TextureManager.cpp" />
-    <ClCompile Include="Source\TileMap.cpp" />
+    <ClCompile Include="Source\TileSystem.cpp" />
     <ClCompile Include="Source\Utility.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -81,7 +82,9 @@
     <ClInclude Include="Source\SpriteAnimation.h" />
     <ClInclude Include="Source\Texture.h" />
     <ClInclude Include="Source\TextureManager.h" />
-    <ClInclude Include="Source\TileMap.h" />
+    <ClInclude Include="Source\Tile.h" />
+    <ClInclude Include="Source\TileIndex.h" />
+    <ClInclude Include="Source\TileSystem.h" />
     <ClInclude Include="Source\Utility.h" />
     <ClInclude Include="Source\Vertex.h" />
   </ItemGroup>

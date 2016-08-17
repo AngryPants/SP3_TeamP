@@ -29,7 +29,7 @@ namespace Math
 	const float TWO_PI     = PI * 2.0f;
 	const float HALF_PI    = PI / 2.0f;
 	const float QUARTER_PI = PI / 4.0f;
-
+	
 	inline float FAbs(const float& value)
 	{
 		return (value < 0.0f) ? -value : value;

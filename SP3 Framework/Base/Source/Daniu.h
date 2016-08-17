@@ -10,7 +10,7 @@ private:
 
 public:
 	Daniu();
-	~Daniu();
+	virtual ~Daniu();
 
 	void Update(const double &deltaTime);
 	void Render();
