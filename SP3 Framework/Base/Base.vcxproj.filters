@@ -57,40 +57,41 @@
     <ClCompile Include="Source\shader.cpp">
       <Filter>Source Files\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="Source\TileMap.cpp">
-      <Filter>Source Files\Gameplay</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Utility.cpp">
       <Filter>Source Files\Others</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Bullet.cpp">
-      <Filter>Source Files\Gameplay</Filter>
+    <ClCompile Include="Source\Camera2D.cpp">
+      <Filter>Source Files\Camera</Filter>
     </ClCompile>
-<<<<<<< HEAD
+    <ClCompile Include="Source\Character.cpp">
+      <Filter>Source Files\Gameplay\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Hero.cpp">
+      <Filter>Source Files\Gameplay\Characters\Heroes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Enemy.cpp">
+      <Filter>Source Files\Gameplay\Characters\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Daniu.cpp">
+      <Filter>Source Files\Gameplay\Characters\Heroes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Seetwo.cpp">
+      <Filter>Source Files\Gameplay\Characters\Heroes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Bullet.cpp">
+      <Filter>Source Files\Gameplay\Bullet</Filter>
+    </ClCompile>
     <ClCompile Include="Source\EntityManager.cpp">
       <Filter>Source Files\Entity</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Camera2D.cpp">
-      <Filter>Source Files\Camera</Filter>
-=======
-    <ClCompile Include="Source\Character.cpp">
-      <Filter>Source Files\Gameplay</Filter>
+    <ClCompile Include="Source\Kifellah.cpp">
+      <Filter>Source Files\Gameplay\Characters\Heroes</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Hero.cpp">
-      <Filter>Source Files\Gameplay</Filter>
+    <ClCompile Include="Source\TileMap.cpp">
+      <Filter>Source Files\Gameplay\TileMap</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Enemy.cpp">
-      <Filter>Source Files\Gameplay</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Seetwo.cpp">
-      <Filter>Source Files\Gameplay</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Daniu.cpp">
-      <Filter>Source Files\Gameplay</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Kifella.cpp">
-      <Filter>Source Files\Gameplay</Filter>
->>>>>>> origin/master
+    <ClCompile Include="Source\SceneDaniu_1.cpp">
+      <Filter>Source Files\Scene\DaniuLevels</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -111,9 +112,6 @@
     </ClInclude>
     <ClInclude Include="Source\InputManager.h">
       <Filter>Header Files\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ShaderProgram.h">
-      <Filter>Header Files\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="Source\LoadOBJ.h">
       <Filter>Header Files\Graphics</Filter>
@@ -169,43 +167,50 @@
     <ClInclude Include="Source\Light.h">
       <Filter>Header Files\Others</Filter>
     </ClInclude>
-    <ClInclude Include="Source\TileMap.h">
-      <Filter>Header Files\Gameplay</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Utility.h">
       <Filter>Header Files\Others</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Bullet.h">
-      <Filter>Header Files\Gameplay</Filter>
     </ClInclude>
     <ClInclude Include="Source\EntityBase.h">
       <Filter>Header Files\Entity</Filter>
     </ClInclude>
-<<<<<<< HEAD
+    <ClInclude Include="Source\Camera2D.h">
+      <Filter>Header Files\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Character.h">
+      <Filter>Header Files\Gameplay\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Hero.h">
+      <Filter>Header Files\Gameplay\Characters\Heroes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Daniu.h">
+      <Filter>Header Files\Gameplay\Characters\Heroes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Seetwo.h">
+      <Filter>Header Files\Gameplay\Characters\Heroes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy.h">
+      <Filter>Header Files\Gameplay\Characters\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Bullet.h">
+      <Filter>Header Files\Gameplay\Characters\Bullets</Filter>
+    </ClInclude>
     <ClInclude Include="Source\EntityManager.h">
       <Filter>Header Files\Entity</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Camera2D.h">
-      <Filter>Header Files\Camera</Filter>
-=======
-    <ClInclude Include="Source\Character.h">
+    <ClInclude Include="Source\ShaderProgram.h">
+      <Filter>Header Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Sawblade.h">
       <Filter>Header Files\Gameplay</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Hero.h">
-      <Filter>Header Files\Gameplay</Filter>
+    <ClInclude Include="Source\Kifellah.h">
+      <Filter>Header Files\Gameplay\Characters\Heroes</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Enemy.h">
-      <Filter>Header Files\Gameplay</Filter>
+    <ClInclude Include="Source\TileMap.h">
+      <Filter>Header Files\Gameplay\TileMap</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Kifella.h">
-      <Filter>Header Files\Gameplay</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Seetwo.h">
-      <Filter>Header Files\Gameplay</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Daniu.h">
-      <Filter>Header Files\Gameplay</Filter>
->>>>>>> origin/master
+    <ClInclude Include="Source\SceneDaniu_1.h">
+      <Filter>Header Files\Scene\DaniuLevels</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -278,8 +283,44 @@
     <Filter Include="Header Files\Entity">
       <UniqueIdentifier>{0fb46dd4-e31e-4239-acd1-f85e3010a866}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Gameplay\Characters">
+      <UniqueIdentifier>{18ee08f9-f088-4a6e-bf10-1df968c11488}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Gameplay\Characters\Heroes">
+      <UniqueIdentifier>{959cbc48-ca56-4030-9407-5c568f1f0b57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Gameplay\Characters\Enemies">
+      <UniqueIdentifier>{92b370f2-bd20-4636-8e88-1086f204f1d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Gameplay\Characters">
+      <UniqueIdentifier>{96f1f0f1-fc92-4404-b807-360aa5d65a14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Gameplay\Characters\Heroes">
+      <UniqueIdentifier>{41b9da91-f3b2-490b-9618-154222e19285}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Gameplay\Characters\Enemies">
+      <UniqueIdentifier>{ae4fb2b9-f780-4d91-887f-afb52d42c7f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Gameplay\Characters\Bullets">
+      <UniqueIdentifier>{6d918a1e-5e81-46c5-835d-7db59aac2cec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Gameplay\Bullet">
+      <UniqueIdentifier>{88f9ef95-7832-4baf-bf86-742e2bb5168b}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Source Files\Entity">
-      <UniqueIdentifier>{5e907990-0216-488a-9b80-53f9399b049a}</UniqueIdentifier>
+      <UniqueIdentifier>{f2c21d18-4475-4dd7-8753-d528f2d07f3d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Gameplay\TileMap">
+      <UniqueIdentifier>{8b398f2d-c5dd-4258-8ddb-c75ab5a04390}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Gameplay\TileMap">
+      <UniqueIdentifier>{892e0d2b-9f58-4c82-8405-928b736f00b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Scene\DaniuLevels">
+      <UniqueIdentifier>{856064fe-8ae6-4e30-806a-570e64025e84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scene\DaniuLevels">
+      <UniqueIdentifier>{b9701e39-4536-4f87-b496-0935ebeb9b2d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

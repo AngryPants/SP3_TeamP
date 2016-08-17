@@ -13,16 +13,15 @@ SpriteAnimation::SpriteAnimation(const string& meshName, unsigned int row, unsig
 }
 
 SpriteAnimation::~SpriteAnimation() {
-
-	if (animation != nullptr) {
-		delete animation;
-	}
-
 }
 
 void SpriteAnimation::Update(double deltaTime) {
 
-	if (animation->animActive == false || animation->animTime < Math::EPSILON || row == 0 || column == 0) {
+	if (animation == nullptr) {
+		std::cout << name << " has no animation attached." << std::endl;
+	}
+
+	if (!animation->animActive || animation->animTime < Math::EPSILON || row == 0 || column == 0) {
 		return;
 	}
 	
@@ -47,7 +46,7 @@ void SpriteAnimation::Update(double deltaTime) {
 			animation->animActive = false;
 		}
 		currentTime = 0.0;
-		currentFrame = animation->startFrame;
+		//currentFrame = animation->startFrame;
 	}
 
 }

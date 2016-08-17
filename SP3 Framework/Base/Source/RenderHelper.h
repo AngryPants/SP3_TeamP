@@ -7,13 +7,18 @@
 #include "Texture.h"
 #include "Vertex.h"
 
-class RenderHelper : Singleton<RenderHelper> {
+class RenderHelper : public Singleton<RenderHelper> {
 
 	friend class Singleton<RenderHelper>;
 
 private:
 	//Variable(s)
 	bool refreshUniforms;
+	
+	//Uniform Enums
+	//enum UNIFORM_TYPE {
+	//	
+	//};
 
 	//Constructor(s) & Destructor
 	RenderHelper();

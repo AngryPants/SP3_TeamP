@@ -6,13 +6,14 @@
 using std::string;
 
 class EntityBase {
-
+	
 public:
 	//Variables
 	string name;
-	
+	bool isActive;
+
 	//Constructor(s) & Destructor
-	EntityBase(const string& name = "EntityBase") : name(name) {}
+	EntityBase(const string& name = "EntityBase") : name(name), isActive(true) {}
 	virtual ~EntityBase() {}
 
 	//Virtual Function(s)

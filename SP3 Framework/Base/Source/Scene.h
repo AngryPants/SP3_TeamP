@@ -19,7 +19,7 @@ public:
 	virtual ~Scene() {}
 
 	//Virtual Function(s)
-	virtual void Initialise() = 0;
+	virtual void Init() = 0;
 	virtual void Update(const double& deltaTime) = 0;
 	virtual void Render() = 0;
 	virtual void Exit() = 0;

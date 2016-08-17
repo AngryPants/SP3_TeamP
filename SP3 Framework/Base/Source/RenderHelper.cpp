@@ -21,38 +21,17 @@ void RenderHelper::Update() {
 
 void RenderHelper::RenderMesh(Mesh& mesh, Texture& texture, const bool& enableLight) {
 
-	static enum UNIFORM_TYPE {
-		U_MVP,
-		U_MV,
-		U_MV_INVERSE_TRANSPOSE,
-		
-		U_LIGHTENABLED,
-
-		U_MATERIAL_AMBIENT,
-		U_MATERIAL_DIFFUSE,
-		U_MATERIAL_SPECULAR,
-		U_MATERIAL_SHININESS,
-
-		NUM_UNIFORM,
-	};
-	static UniformID uniforms[NUM_UNIFORM];
-
-	static enum TEXTURE_UNIFORM_TYPE {
-		COLOR_TEXTURE,
-		COLOR_TEXTURE_ENABLED,
-
-		NUM_TEXTURE_UNIFORM,
-	};
-	static UniformID textureUniforms[NUM_TEXTURE_UNIFORM];
-	
-	Mtx44 MVP, modelView, modelView_inverse_transpose;
-	MVP = GraphicsManager::GetInstance().projectionStack.Top() * GraphicsManager::GetInstance().viewStack.Top() * GraphicsManager::GetInstance().modelStack.Top();
 	ShaderProgram* shaderProgram = GraphicsManager::GetInstance().GetActiveShader();
 	if (shaderProgram == nullptr) {
 		cout << "Unable to render as no active shader has been set." << endl;
 		return;
 	}
 
+
+
+	Mtx44 MVP, modelView, modelView_inverse_transpose;
+	MVP = GraphicsManager::GetInstance().projectionStack.Top() * GraphicsManager::GetInstance().viewStack.Top() * GraphicsManager::GetInstance().modelStack.Top();
+	
 	shaderProgram->UpdateFloatMatrix4x4("MVP", false, &MVP.a[0]);
 	modelView = GraphicsManager::GetInstance().viewStack.Top() * GraphicsManager::GetInstance().modelStack.Top();
 	shaderProgram->UpdateFloatMatrix4x4("MV", false, &modelView.a[0]);

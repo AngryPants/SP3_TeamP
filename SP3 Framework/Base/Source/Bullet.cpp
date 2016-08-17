@@ -1,12 +1,13 @@
 #include "Bullet.h"
 
-Bullet::Bullet() : bIsActive(false), position(0, 0), rotation(0), speed(0), lifetime(0), damage(0)
+Bullet::Bullet() : position(0, 0), rotation(0), speed(0), lifetime(0), damage(0)
 {
+	isActive = false;
 }
 
 Bullet::Bullet(bool bIsActive, Vector2 position, float rotation, float speed, float lifetime, int damage)
 {
-	this->bIsActive = bIsActive;
+	this->isActive = bIsActive;
 	this->position = position;
 	this->rotation = rotation;
 	this->speed = speed;
@@ -20,7 +21,7 @@ Bullet::~Bullet()
 
 void Bullet::Update(const double& deltaTime)
 {
-	if (!bIsActive)
+	if (!isActive)
 	{
 		return;
 	}
@@ -32,7 +33,13 @@ void Bullet::Update(const double& deltaTime)
 	lifetime -= deltaTime;
 	if (lifetime < 0)
 	{
-		bIsActive = false;
+		isActive = false;
 	}
 
+}
+
+void Bullet::Render() {
+}
+
+void Bullet::RenderUI() {
 }

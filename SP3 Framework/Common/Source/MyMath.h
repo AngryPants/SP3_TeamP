@@ -45,28 +45,31 @@ namespace Math
 		return (value < 0.0) ? -value : value;
 	}
 
-	int HCF(int a, int b)
+	inline int HCF(int a, int b)
 	{
 		a = IAbs(a);
 		b = IAbs(b);
 		
-		if (b == 0) {
+		if (b == 0)
+		{
 			return a;
 		}
 
-		return HCF(b, a % b);
+		return Math::HCF(b, a % b);
 	}
 
-	int LCM(int a, int b)
+	inline int LCM(int a, int b)
 	{
-		if (a < 0) {
+		if (a < 0)
+		{
 			a = -a;
 		}
-		if (b < 0) {
+		if (b < 0)
+		{
 			b = -b;
 		}
 
-		return (a * (b / HCF(a, b)));
+		return (a * (b / Math::HCF(a, b)));
 	}
 
 /******************************************************************************/

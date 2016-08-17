@@ -80,15 +80,15 @@ public:
 	float GetNearClippingPlane() const;
 	float GetFarClippingPlane() const;
 	
-	const Vector3 GetPosition() const {
+	const Vector3& GetPosition() const {
 		return this->position;
 	}
 
-	const Vector3 GetTarget() const {
+	const Vector3& GetTarget() const {
 		return this->target;
 	}
 
-	const Vector3 GetUp() const {
+	const Vector3& GetUp() const {
 		return this->up;
 	}
 

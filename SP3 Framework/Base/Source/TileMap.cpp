@@ -116,7 +116,7 @@ float TileMap::GetTileSize() const {
 
 }
 
-int TileMap::GetTile(const float& position) {
+int TileMap::GetTile(const float& position) const {
 
 	if (position >= -tileSize * 0.5f) {
 		return static_cast<int>(position / tileSize + 0.5f);
@@ -156,5 +156,21 @@ float TileMap::GetTopBorder() const {
 float TileMap::GetBottomBorder() const {
 
 	return this->bottomBorder;
+
+}
+
+int TileMap::GetTileValue(const float& x, const float& y) {
+
+	int tileX = GetTile(x);
+	int tileY = GetTile(y);
+
+	if (tileX >= GetNumColumns() || tileX < 0) {
+		return 0;
+	}
+	if (tileY >= GetNumRows() || tileY < 0) {
+		return 0;
+	}
+
+	return map[tileX][tileY];
 
 }

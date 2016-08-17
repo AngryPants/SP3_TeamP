@@ -20,8 +20,9 @@ struct Color
 struct TexCoord
 {
 	float u, v;
-	TexCoord(float u = 0, float v = 0) {Set(u, v);}
-	void Set(float u, float v) {this->u = u; this->v = v;}
+	TexCoord(const float& u = 0, const float& v = 0) {Set(u, v);}
+	TexCoord(const TexCoord& rhs) {Set(rhs.u, rhs.v);}
+	void Set(const float& u, const float& v) {this->u = u; this->v = v;}
 };
 
 struct Vertex 

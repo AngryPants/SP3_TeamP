@@ -101,8 +101,14 @@ Mesh* MeshBuilder::GenerateQuad(const std::string &meshName, Color color, float 
 	glBindBuffer(GL_ARRAY_BUFFER, 0); //Unbind the VBO
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0); //Unbind the EBO
 
+	mesh->vertexSize = vertex_buffer_data.size();
 	mesh->indexSize = index_buffer_data.size();
 	mesh->mode = Mesh::DRAW_TRIANGLE_STRIP;
+
+	//TexCoords
+	for (size_t i = 0; i < vertex_buffer_data.size(); ++i) {
+		mesh->texCoords.push_back(vertex_buffer_data[i].texCoord);
+	}
 
 	meshMap.insert(pair<string, Mesh*>(meshName, mesh));
 
@@ -222,8 +228,14 @@ Mesh* MeshBuilder::GenerateCube(const std::string &meshName, Color color, float 
 	glBindBuffer(GL_ARRAY_BUFFER, 0); //Unbind the VBO
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0); //Unbind the EBO
 
-	mesh->indexSize = 36;
+	mesh->vertexSize = vertex_buffer_data.size();
+	mesh->indexSize = index_buffer_data.size();
 	mesh->mode = Mesh::DRAW_TRIANGLES;
+
+	//TexCoords
+	for (size_t i = 0; i < vertex_buffer_data.size(); ++i) {
+		mesh->texCoords.push_back(vertex_buffer_data[i].texCoord);
+	}
 
 	meshMap.insert(pair<string, Mesh*>(meshName, mesh));
 
@@ -270,8 +282,12 @@ Mesh* MeshBuilder::GenerateRing(const std::string &meshName, Color color, unsign
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0); //Unbind the EBO
 
 	mesh->mode = Mesh::DRAW_TRIANGLE_STRIP;
-
+	mesh->vertexSize = vertex_buffer_data.size();
 	mesh->indexSize = index_buffer_data.size();
+	//TexCoords
+	for (size_t i = 0; i < vertex_buffer_data.size(); ++i) {
+		mesh->texCoords.push_back(vertex_buffer_data[i].texCoord);
+	}
 
 	meshMap.insert(pair<string, Mesh*>(meshName, mesh));
 
@@ -339,7 +355,12 @@ Mesh* MeshBuilder::GenerateSphere(const std::string &meshName, Color color, unsi
 	glBindBuffer(GL_ARRAY_BUFFER, 0); //Unbind the VBO
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0); //Unbind the EBO
 
+	mesh->vertexSize = vertex_buffer_data.size();
 	mesh->indexSize = index_buffer_data.size();
+	//TexCoords
+	for (size_t i = 0; i < vertex_buffer_data.size(); ++i) {
+		mesh->texCoords.push_back(vertex_buffer_data[i].texCoord);
+	}
 
 	meshMap.insert(pair<string, Mesh*>(meshName, mesh));
 
@@ -419,8 +440,13 @@ Mesh* MeshBuilder::GenerateSkyPlane(const std::string &meshName, Color color, un
 	glBindBuffer(GL_ARRAY_BUFFER, 0); //Unbind the VBO
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0); //Unbind the EBO
 
+	mesh->vertexSize = vertex_buffer_data.size();
 	mesh->indexSize = index_buffer_data.size();
 	mesh->mode = Mesh::DRAW_TRIANGLES;
+	//TexCoords
+	for (size_t i = 0; i < vertex_buffer_data.size(); ++i) {
+		mesh->texCoords.push_back(vertex_buffer_data[i].texCoord);
+	}
 
 	meshMap.insert(pair<string, Mesh*>(meshName, mesh));
 
@@ -460,7 +486,12 @@ Mesh* MeshBuilder::GenerateOBJ(const std::string &meshName, const std::string& f
 	glBindBuffer(GL_ARRAY_BUFFER, 0); //Unbind the VBO
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0); //Unbind the EBO
 
+	mesh->vertexSize = vertex_buffer_data.size();
 	mesh->indexSize = index_buffer_data.size();
+	//TexCoords
+	for (size_t i = 0; i < vertex_buffer_data.size(); ++i) {
+		mesh->texCoords.push_back(vertex_buffer_data[i].texCoord);
+	}
 
 	meshMap.insert(pair<string, Mesh*>(meshName, mesh));
 
@@ -524,8 +555,13 @@ Mesh* MeshBuilder::GenerateText(const std::string &meshName, unsigned numRow, un
 	glBindBuffer(GL_ARRAY_BUFFER, 0); //Unbind the VBO
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0); //Unbind the EBO
 
+	mesh->vertexSize = vertex_buffer_data.size();
 	mesh->indexSize = index_buffer_data.size();
 	mesh->mode = Mesh::DRAW_TRIANGLES;
+	//TexCoords
+	for (size_t i = 0; i < vertex_buffer_data.size(); ++i) {
+		mesh->texCoords.push_back(vertex_buffer_data[i].texCoord);
+	}
 
 	meshMap.insert(pair<string, Mesh*>(meshName, mesh));
 
@@ -619,8 +655,13 @@ Mesh* MeshBuilder::GenerateTerrain(const std::string &meshName, const std::strin
 	glBindBuffer(GL_ARRAY_BUFFER, 0); //Unbind the VBO
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0); //Unbind the EBO
 
+	mesh->vertexSize = vertex_buffer_data.size();
 	mesh->indexSize = index_buffer_data.size();
 	mesh->mode = Mesh::DRAW_TRIANGLES;
+	//TexCoords
+	for (size_t i = 0; i < vertex_buffer_data.size(); ++i) {
+		mesh->texCoords.push_back(vertex_buffer_data[i].texCoord);
+	}
 
 	meshMap.insert(pair<string, Mesh*>(meshName, mesh));
 
@@ -691,8 +732,13 @@ SpriteAnimation* MeshBuilder::GenerateSpriteAnimation(const string& meshName, un
 	glBindBuffer(GL_ARRAY_BUFFER, 0); //Unbind the VBO
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0); //Unbind the EBO
 
+	mesh->vertexSize = vertex_buffer_data.size();
 	mesh->indexSize = index_buffer_data.size();
 	mesh->mode = Mesh::DRAW_TRIANGLES;
+	//TexCoords
+	for (size_t i = 0; i < vertex_buffer_data.size(); ++i) {
+		mesh->texCoords.push_back(vertex_buffer_data[i].texCoord);
+	}
 
 	spriteMap.insert(pair<string, SpriteAnimation*>(meshName, mesh));
 

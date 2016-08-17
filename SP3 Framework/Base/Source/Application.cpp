@@ -15,10 +15,11 @@
 #include "SceneManager.h"
 
 //Include Scenes
+#include "SceneDaniu_1.h"
 
 GLFWwindow* m_window;
-const unsigned char FPS = 60; //FPS of this game
-const unsigned int frameTime = 1000 / FPS; //time for each frame
+const unsigned char maxFPS = 60; //Maximum FPS of this game.
+const unsigned int frameTime = 1000 / maxFPS; //Minimum time for each frame.
 
 //Define an error callback
 static void error_callback(int error, const char* description) {
@@ -132,11 +133,14 @@ void Application::Init() {
 void Application::Run() {
 
 	//Main Loop
-	
+	Scene* scene = new SceneDaniu_1();
+	SceneManager::GetInstance().SetActiveScene("Daniu Level 1");
+
 	m_timer.startTimer(); //Start timer to calculate how long it takes to render this frame
 	while (glfwWindowShouldClose(m_window) == false && quit == false) {
 
 		elapsedTime = m_timer.getElapsedTime();
+		
 		SceneManager::GetInstance().Update(elapsedTime);
 
 		//Threads
@@ -161,6 +165,8 @@ void Application::Run() {
 
 	} //Check if the ESC key had been pressed or if the window had been closed
 	
+	SceneManager::GetInstance().Exit();
+
 }
 
 void Application::Exit() {

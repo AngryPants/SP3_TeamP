@@ -46,7 +46,7 @@ public:
 	bool CheckSceneExist(const string& sceneName) const;
 	bool AddScene(const string& sceneName, Scene& scene);
 	bool RemoveScene(const string& sceneName);
-	bool SetActiveScene(const string& sceneName, bool exitCurrent);
+	bool SetActiveScene(const string& sceneName);
 
 };
 

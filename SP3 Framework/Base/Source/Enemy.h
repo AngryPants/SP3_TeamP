@@ -10,7 +10,7 @@ private:
 
 public:
 	Enemy();
-	~Enemy();
+	virtual ~Enemy();
 
 	void Update(const double &deltaTime);
 	void Render();

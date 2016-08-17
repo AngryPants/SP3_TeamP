@@ -1,37 +1,91 @@
 #include "Character.h"
 
-Character::Character() : bIsAlive(false), position(0, 0), health(0), speed(0), damage(0), fireRate(0), detectionWidth(0.495), detectionHeight(0.495), offsetX(0.495), offsetY(0.495)
-{
+Character::Character() : isAlive(true), position(0, 0),
+health(1), speed(1), damage(0), fireRate(1),
+tileMap(nullptr), mesh(nullptr) {
 }
 
-Character::Character(bool bIsAlive, Vector2 position, int health, float speed, int damage, float fireRate)
-{
-	this->bIsAlive = bIsAlive;
+Character::Character(bool bIsAlive, Vector2 position, int health, float speed, int damage, float fireRate) {
+	
+	this->isAlive = bIsAlive;
 	this->position = position;
 	this->health = health;
 	this->speed = speed;
 	this->damage = damage;
 	this->fireRate = fireRate;
-}
-
-Character::~Character()
-{
-}
-
-void Character::Update(const double &deltaTime)
-{
 
 }
 
-void Character::Render()
-{
+Character::~Character() {
+}
+
+void Character::Update(const double &deltaTime) {
+}
+
+void Character::Render() {
+}
+
+void Character::RenderUI() {
+}
+
+//Stats
+int Character::GetHealth() const {
+
+	return this->health;
 
 }
 
-int Character::GetTileInfo(Vector2 position)
-{
-	int tileX = tileMap->GetTile(position.x);
-	int tileY = tileMap->GetTile(position.y);
+float Character::GetSpeed() const {
 
-	return tileMap->map[tileY][tileX];
+	return this->speed;
+
+}
+
+int Character::GetDamage() const {
+
+	return this->damage;
+
+}
+
+float Character::GetFireRate() const {
+
+	return this->fireRate;
+
+}
+
+void Character::SetHealth(const int& health) {
+
+	this->health = health;
+
+}
+
+void Character::SetSpeed(const float& speed) {
+
+	this->speed = speed;
+
+}
+
+void Character::SetDamage(const float& damage) {
+
+	this->damage = damage;
+
+}
+
+void Character::SetFireRate(const float& fireRate) {
+
+	this->fireRate = fireRate;
+
+}
+
+//TileMap
+void Character::SetTileMap(TileMap& tileMap) {
+
+	this->tileMap = &tileMap;
+
+}
+
+void Character::RemoveTileMap() {
+
+	this->tileMap = nullptr;
+
 }

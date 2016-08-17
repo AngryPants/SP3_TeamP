@@ -6,19 +6,39 @@
 #include "Bullet.h"
 #include "InputManager.h"
 
-class Hero : public Character
-{
-private:
+class Hero : public Character {
+
+protected:
+	//Enum(s)
+	enum ANIMATION_TYPE {
+		IDLE,
+		RUN,
+		JUMP,
+		SHOOT,
+		RUN_SHOOT,
+		DEAD,
+
+		NUM_ANIMATION,
+	};
+
+	Animation animations[NUM_ANIMATION];
+	SpriteAnimation* mesh;
+	Texture texture;
+
 	int lives;
+	Vector2 velocity;
+
 public:
 	Hero();
-	~Hero();
+	virtual ~Hero();
 
 	virtual void Update(const double &deltaTime);
 	virtual void Render();
 	virtual void RenderUI();
 
-	Bullet *bullet;
+	int GetLives() const;
+	void SetLives(const int& lives);
+
 };
 
 #endif

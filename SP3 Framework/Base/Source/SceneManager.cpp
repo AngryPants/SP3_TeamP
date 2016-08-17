@@ -36,7 +36,7 @@ void SceneManager::Update(const double& deltaTime) {
 			activeScene->Exit(); //Do we have an active scene we need to exit?
 		}
 		activeScene = nextScene;
-		activeScene->Initialise();
+		activeScene->Init();
 		nextScene = nullptr;		
 	}
 
@@ -103,23 +103,6 @@ bool SceneManager::AddScene(const string& sceneName, Scene& scene) {
 
 bool SceneManager::RemoveScene(const string& sceneName) {
 
-	Scene* scenePtr = GetScene(sceneName);
-
-	if (scenePtr == nullptr) {
-		cout << "Unable to remove scene: " << sceneName << " as it doesn't exist in the SceneManager." << endl;
-		return false;
-	}
-
-	scenePtr->Exit();
-	delete scenePtr;
-	sceneMap.erase(sceneMap.find(sceneName));
-
-	return true;
-
-}
-
-bool SceneManager::RemoveScene(const string& sceneName) {
-
 	if (CheckSceneExist(sceneName)) {
 		cout << "Unable to remove scene: " << sceneName << " as it doesn't exist in the SceneManager." << endl;
 		return false;
@@ -131,7 +114,7 @@ bool SceneManager::RemoveScene(const string& sceneName) {
 
 }
 
-bool SceneManager::SetActiveScene(const string& sceneName, bool exitCurrent) {
+bool SceneManager::SetActiveScene(const string& sceneName) {
 
 	Scene* scenePtr = GetScene(sceneName);
 

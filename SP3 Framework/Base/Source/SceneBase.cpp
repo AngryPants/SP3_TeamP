@@ -1,9 +1,40 @@
 #include "SceneBase.h"
 #include "GraphicsManager.h"
 
-void SceneBase::Initialise() {
+SceneBase::SceneBase(const string& name) : Scene(name) {
+	
+	hero = nullptr;
 
-	GraphicsManager::GetInstance().AddShader("Shadow", "Shadow.vertexshader", "Shadow.fragmentshader");
+}
+
+SceneBase::~SceneBase() {
+}
+
+void SceneBase::Init() {
+
+	minFPS = 30.0;
+	hero = nullptr;
+
+	GraphicsManager::GetInstance().Enable<GraphicsManager::MODE::BLENDING>();
+	GraphicsManager::GetInstance().Enable<GraphicsManager::MODE::CULLING>();
+	GraphicsManager::GetInstance().Enable<GraphicsManager::MODE::DEPTH_TEST>();
+
+	InitShader();
+
+}
+
+void SceneBase::InitShader() {
+
+	//Initialise the shader.
+	if (!GraphicsManager::GetInstance().HasShader("Shadow")) {
+		GraphicsManager::GetInstance().AddShader("Shadow", "Shader//Shadow.vertexshader", "Shader//Shadow.fragmentshader");
+	}
+	GraphicsManager::GetInstance().SetActiveShader("Shadow");
+
+	//Update Shader Uniforms
+	GraphicsManager::GetInstance().GetActiveShader()->UpdateBool("lightEnabled", false);
+	GraphicsManager::GetInstance().GetActiveShader()->UpdateInt("numLights", 0);
+	GraphicsManager::GetInstance().GetActiveShader()->UpdateBool("fogParam.enabled", false);
 
 }
 

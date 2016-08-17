@@ -1,12 +1,9 @@
 #include "Hero.h"
 
-Hero::Hero() : lives(3)
-{
-	bIsAlive = true;
-	health = 100;
-	speed = 10;
-	damage = 10;
-	fireRate = 5;
+Hero::Hero() {
+
+	mesh = nullptr;
+
 }
 
 Hero::~Hero()
@@ -31,10 +28,18 @@ void Hero::Update(const double &deltaTime)
 
 void Hero::Render()
 {
-
 }
 
 void Hero::RenderUI()
 {
+}
 
+int Hero::GetLives() const
+{
+	return this->lives;
+}
+
+void Hero::SetLives(const int& lives)
+{
+	this->lives = lives;
 }

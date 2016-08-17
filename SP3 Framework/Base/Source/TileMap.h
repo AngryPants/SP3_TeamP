@@ -25,14 +25,15 @@ public:
 
 	//Constructor(s) & Destructor
 	TileMap(void);
-	~TileMap(void);
+	virtual ~TileMap(void);
 
 	bool LoadFile(const string& mapName);
 	int GetNumRows() const;
 	int GetNumColumns() const;
 	void SetTileSize(const float& tileSize);
 	float GetTileSize() const;
-	int GetTile(const float& xPosition);
+	int GetTile(const float& position) const;
+	int GetTileValue(const float& x, const float& y);
 
 	float GetLeftBorder() const;
 	float GetRightBorder() const;

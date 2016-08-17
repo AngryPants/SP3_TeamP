@@ -12,8 +12,6 @@ private:
 	Mesh* mesh;
 	Texture texture;
 
-	//Indicate the IsActive of this bullet
-	bool bIsActive;
 	//The position of the bullet
 	Vector2 position;
 	//The rotation of the bullet
@@ -27,15 +25,14 @@ private:
 
 public:
 	Bullet();
-		/*mesh = MeshBuiklder::GenerateQuad("Bullet", 1.0f);
-		texture - Textadasd a:AdddTExture(aslkdjakls, "");*/
 	Bullet(bool bIsActive, Vector2 position, float rotation, float speed, float lifetime, int damage);
-	~Bullet();
+	virtual ~Bullet();
 
 	//Virtual Function(s)
 	void Update(const double& deltaTime);
 	void Render();
-	void RenderUI() {}
+	void RenderUI();
+
 };
 
 #endif

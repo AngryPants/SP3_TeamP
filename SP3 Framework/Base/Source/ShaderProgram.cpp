@@ -37,12 +37,6 @@ string ShaderProgram::GetFragmentShaderFile() const {
 
 }
 
-ProgramID ShaderProgram::GetProgramID() {
-
-	return this->programID;
-
-}
-
 UniformID ShaderProgram::GetUniformLocation(const string& uniformName) {
 
 	//Check if we already have the uniform.
@@ -103,11 +97,15 @@ bool ShaderProgram::BindTexture(TextureID textureID) {
 
 	glBindTexture(GL_TEXTURE_2D, textureID);
 
+	return true;
+
 }
 
 bool ShaderProgram::UnbindTexture() {
 
 	glBindTexture(GL_TEXTURE_2D, 0);
+
+	return true;
 
 }
 
@@ -215,9 +213,9 @@ void ShaderProgram::UpdateIntVector1(const UniformID& uniformID, int* value) {
 
 }
 
-void ShaderProgram::UpdateIntVector2(const string& uniformName, int* value) {
+void ShaderProgram::UpdateIntVector2(const UniformID& uniformID, int* value) {
 
-	glUniform2iv(GetUniformLocation(uniformName), 1, value);
+	glUniform2iv(uniformID, 1, value);
 
 }
 

@@ -22,6 +22,8 @@ bool TextureManager::Clear() {
 	while (textureMap.size() > 0) {
 		textureMap.erase(textureMap.begin());
 	}
+
+	return true;
 	
 }
 

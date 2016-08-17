@@ -104,6 +104,7 @@ uniform bool textEnabled;
 uniform vec3 textColor;
 uniform FogParam fogParam;
 uniform sampler2D shadowMap;
+uniform float alphaDiscardValue;
 
 float getShadowEffect()
 {
@@ -129,7 +130,7 @@ void main(){
 	
 	if (numEnabledTextures > 0) {
 		alphaValue /= numEnabledTextures;
-		if (alphaValue < 0.1f) {
+		if (alphaValue < alphaDiscardValue) {
 			discard;
 		}
 	}
@@ -150,12 +151,11 @@ void main(){
 
 			}		
 		}
-		if (texCount > 0)
-		{
+		if (texCount > 0) {
 			materialColor = materialColor/texCount;
-		}
-		else
+		} else {
 			materialColor = vec4( fragmentColor, 1 );
+		}
 	
 		// Vectors
 		vec3 eyeDirection_cameraspace = - vertexPosition_cameraspace;
@@ -196,7 +196,7 @@ void main(){
 			
 				color +=
 					// Diffuse : "color" of the object
-					visibility * materialColor * vec4(material.kDiffuse, 1) * vec4(lights[i].color, 1) * lights[i].power * cosTheta * attenuationFactor * spotlightEffect +
+					materialColor * visibility * vec4(material.kDiffuse, 1) * vec4(lights[i].color, 1) * lights[i].power * cosTheta * attenuationFactor * spotlightEffect +
 					
 					// Specular : reflective highlight, like a mirror
 					visibility * vec4(material.kSpecular, 1) * vec4(lights[i].color, 1) * lights[i].power * pow(cosAlpha, material.kShininess) * attenuationFactor * spotlightEffect;
