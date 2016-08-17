@@ -4,6 +4,7 @@
 #include "EntityBase.h"
 #include "Tile.h"
 #include "SpriteAnimation.h"
+#include "Mesh.h"
 #include "Texture.h"
 
 typedef vector<vector<Tile>> TileMap;
@@ -29,7 +30,7 @@ private:
 	Mesh* mesh;
 	Texture meshTextures[NUM_TEXTURE];
 
-	/*enum ANIMATION_TYPE {
+	enum ANIMATION_TYPE {
 		//Items
 		ANIM_COIN,
 		ANIM_DOOR,
@@ -39,17 +40,22 @@ private:
 	};
 	SpriteAnimation* sprite[NUM_ANIMATION];
 	Animation animation[NUM_ANIMATION];
-	Texture spriteTextures[NUM_ANIMATION];*/
+	Texture spriteTextures[NUM_ANIMATION];
 
 	int numRows, numColumns; //Number of tiles in the map.
 	
-	float tileSize;
+	float tileSize; //Tile Size
+
 	float leftBorder; //Left Most Of Our Map
 	float rightBorder; //Right Most Of Our Map
 	float topBorder; //Top Most Of Our Map
 	float bottomBorder; //Bottom Most Of Our Map
-
 	void UpdateBorders();
+
+	int renderStartTileRow;
+	int renderEndTileRow;
+	int renderStartTileColumn;
+	int renderEndTileColumn;
 
 public:
 	//Variable(s)
@@ -79,6 +85,10 @@ public:
 
 	//Tile Position
 	int GetTile(const float& position) const;
+
+	//Tile Rendering
+	void SetRenderTilesRow(const int& start, const int& end);
+	void SetRenderTilesColumn(const int& start, const int& end);
 
 };
 

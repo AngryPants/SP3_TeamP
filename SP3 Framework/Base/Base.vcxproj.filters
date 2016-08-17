@@ -91,7 +91,7 @@
       <Filter>Source Files\Scene\DaniuLevels</Filter>
     </ClCompile>
     <ClCompile Include="Source\TileSystem.cpp">
-      <Filter>Source Files\Gameplay\TileMap</Filter>
+      <Filter>Source Files\Gameplay\Tiles</Filter>
     </ClCompile>
     <ClCompile Include="Source\Sawblade.cpp">
       <Filter>Source Files\Gameplay</Filter>
@@ -210,16 +210,16 @@
       <Filter>Header Files\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="Source\TileSystem.h">
-      <Filter>Header Files\Gameplay\TileMap</Filter>
+      <Filter>Header Files\Gameplay\Tiles</Filter>
     </ClInclude>
     <ClInclude Include="Source\TileIndex.h">
-      <Filter>Header Files\Gameplay\TileMap</Filter>
+      <Filter>Header Files\Gameplay\Tiles</Filter>
     </ClInclude>
     <ClInclude Include="Source\Sawblade.h">
       <Filter>Header Files\Gameplay</Filter>
     </ClInclude>
     <ClInclude Include="Source\Tile.h">
-      <Filter>Header Files\Gameplay\TileMap</Filter>
+      <Filter>Header Files\Gameplay\Tiles</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -319,16 +319,16 @@
     <Filter Include="Source Files\Entity">
       <UniqueIdentifier>{f2c21d18-4475-4dd7-8753-d528f2d07f3d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Gameplay\TileMap">
-      <UniqueIdentifier>{892e0d2b-9f58-4c82-8405-928b736f00b3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Scene\DaniuLevels">
       <UniqueIdentifier>{856064fe-8ae6-4e30-806a-570e64025e84}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Scene\DaniuLevels">
       <UniqueIdentifier>{b9701e39-4536-4f87-b496-0935ebeb9b2d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Gameplay\TileMap">
+    <Filter Include="Source Files\Gameplay\Tiles">
+      <UniqueIdentifier>{892e0d2b-9f58-4c82-8405-928b736f00b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Gameplay\Tiles">
       <UniqueIdentifier>{8b398f2d-c5dd-4258-8ddb-c75ab5a04390}</UniqueIdentifier>
     </Filter>
   </ItemGroup>

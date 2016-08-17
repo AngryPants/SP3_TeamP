@@ -19,6 +19,8 @@ protected:
 	//Mesh
 	SpriteAnimation* mesh;
 
+	Vector2 hotspots[4];
+
 public:
 	bool isAlive;
 	Vector2 position;
@@ -38,10 +40,6 @@ public:
 	void SetSpeed(const float& speed);
 	void SetDamage(const float& damage);
 	void SetFireRate(const float& fireRate);
-
-	//TileMap
-	void SetTileMap(TileMap& tilemap);
-	void RemoveTileMap();
 
 	//Virtual Function(s)
 	virtual void Update(const double& deltaTime);

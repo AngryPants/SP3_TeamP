@@ -1,7 +1,6 @@
 #ifndef TILE_H
 #define TILE_H
 
-#include "TileMap.h"
 #include "TileIndex.h"
 #include <exception>
 
@@ -22,13 +21,13 @@ public:
 	//Enum(s)
 	enum class TILE_TYPE
 	{
-		TILE_TERRAIN,
-		TILE_ITEMS,
-		TILE_HERO_SPAWN,
-		TILE_ENEMY_SPAWN,
-		TILE_NUM_ENEMIES,
-		TILE_SAWBLADE_INDEX,
-		TILE_SAWBLADE_NODE,
+		TERRAIN,
+		ITEM,
+		HERO_SPAWN,
+		ENEMY_SPAWN,
+		NUM_ENEMIES,
+		SAWBLADE_INDEX,
+		SAWBLADE_NODE,
 	};
 
 	//Function(s)

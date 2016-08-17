@@ -2,15 +2,15 @@
 #define CAMERA_2D_H
 
 #include "Camera.h"
+#include "TileSystem.h"
 
 class Character;
-class TileMap;
 
 class Camera2D : public Camera {
 
 private:
 	Character* followTarget;
-	TileMap* tileMap;
+	TileSystem* tileSystem;
 
 	float deadZoneX, deadZoneY;
 
@@ -22,8 +22,8 @@ public:
 	//Function(s)
 	void SetFollowTarget(Character& target); //The target for the camera to follow.
 	void RemoveTarget();
-	void SetTileMap(TileMap& tileMap);
-	void RemoveTileMap();
+	void SetTileSystem(TileSystem& tileMap);
+	void RemoveTileSystem();
 
 	//Virtual Function(s)
 	virtual void Update(const double& deltaTime);

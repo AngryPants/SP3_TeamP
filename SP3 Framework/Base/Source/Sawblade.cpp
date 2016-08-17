@@ -68,11 +68,7 @@ void Sawblade::Render()
 {
 	MS& modelStack = GraphicsManager::GetInstance().modelStack;
 	modelStack.PushMatrix();
-	modelStack.Translate(position.x, position.y, 0);
-	RenderHelper::GetInstance().RenderMesh(*mesh, texture, false);
-}
-
-void Sawblade::RenderUI()
-{
-
+		modelStack.Translate(position.x, position.y, 0);
+		RenderHelper::GetInstance().RenderMesh(*mesh, texture, false);
+	modelStack.PopMatrix();
 }

@@ -2,6 +2,8 @@
 #include "MeshBuilder.h"
 #include "TextureManager.h"
 #include "TileIndex.h"
+#include "GraphicsManager.h"
+#include "RenderHelper.h"
 #include <fstream>
 #include <string>
 #include <sstream>
@@ -12,6 +14,11 @@ using namespace std;
 TileSystem::TileSystem() {
 
 	tileSize = 1;
+
+	renderStartTileRow = 0;
+	renderEndTileRow = 0;
+	renderStartTileColumn = 0;
+	renderEndTileColumn = 0;
 
 	//Mesh
 	mesh = MeshBuilder::GetInstance().GenerateQuad("Tile");
@@ -24,10 +31,11 @@ TileSystem::TileSystem() {
 	meshTextures[TEX_SPIKE].textureArray[0] = TextureManager::GetInstance().AddTexture("Spike", "Image//Tiles//Spike.tga");
 
 	//Sprite
-	/*animation[ANIM_COIN].Set(0, 3, true, 1.0, true);
+	animation[ANIM_COIN].Set(0, 3, true, 1.0, true);
 	sprite[ANIM_COIN] = MeshBuilder::GetInstance().GenerateSpriteAnimation("Coin", 1, 4);
 	sprite[ANIM_COIN]->animation = &animation[ANIM_COIN];
 
+	
 	animation[ANIM_DOOR].Set(0, 3, false, 1.0, false);
 	sprite[ANIM_DOOR] = MeshBuilder::GetInstance().GenerateSpriteAnimation("Door", 1, 4);
 	sprite[ANIM_DOOR]->animation = &animation[ANIM_DOOR];
@@ -39,7 +47,7 @@ TileSystem::TileSystem() {
 	//Sprite Textures
 	spriteTextures[ANIM_COIN].textureArray[0] = TextureManager::GetInstance().AddTexture("Coin", "Image//Tiles//Coin.tga");
 	spriteTextures[ANIM_DOOR].textureArray[0] = TextureManager::GetInstance().AddTexture("Door", "Image//Tiles//Door.tga");
-	spriteTextures[ANIM_TRAMPOLINE].textureArray[0] = TextureManager::GetInstance().AddTexture("Trampoline", "Image//Tiles//Trampoline.tga");*/
+	spriteTextures[ANIM_TRAMPOLINE].textureArray[0] = TextureManager::GetInstance().AddTexture("Trampoline", "Image//Tiles//Trampoline.tga");
 
 }
 
@@ -52,7 +60,62 @@ void TileSystem::Update(const double& deltaTime) {
 
 void TileSystem::Render() {
 
-	
+	unsigned int terrain = 0;
+	unsigned int item = 0;
+
+	MS& modelStack = GraphicsManager::GetInstance().modelStack;
+	for (int row = Math::Max(0, renderStartTileRow); row < Math::Min(numRows, renderEndTileRow); ++row)
+	{
+		for (int column = Math::Max(0, renderStartTileColumn); column < Math::Min(numColumns, renderEndTileColumn); ++column)
+		{
+			terrain = tiles[row][column].GetTileValue<Tile::TILE_TYPE::TERRAIN>();
+			item = tiles[row][column].GetTileValue<Tile::TILE_TYPE::ITEM>();
+			modelStack.PushMatrix();
+				modelStack.Translate(column * tileSize, row * tileSize, 0);
+				switch (terrain) {
+					case 0:
+						break;
+					case TILE_WALL_1:
+						RenderHelper::GetInstance().RenderMesh(*mesh, meshTextures[TEX_WALL_1], false);				
+						break;
+					case TILE_WALL_2:
+						RenderHelper::GetInstance().RenderMesh(*mesh, meshTextures[TEX_WALL_2], false);	
+						break;
+					case TILE_WALL_3:
+						RenderHelper::GetInstance().RenderMesh(*mesh, meshTextures[TEX_WALL_3], false);	
+						break;
+					case TILE_WALL_4: 
+						RenderHelper::GetInstance().RenderMesh(*mesh, meshTextures[TEX_WALL_4], false);	
+						break;
+				}
+
+				switch (item) {				
+					case 0:
+						break;
+					case TILE_COIN:
+						RenderHelper::GetInstance().RenderMesh(*sprite[ANIM_COIN], spriteTextures[ANIM_COIN], false);
+						break;
+					case TILE_ACID:
+						RenderHelper::GetInstance().RenderMesh(*mesh, meshTextures[TEX_ACID], false);	
+						break;
+					case TILE_SPIKE:
+						RenderHelper::GetInstance().RenderMesh(*mesh, meshTextures[TILE_SPIKE], false);
+						break;
+					case TILE_DOOR_OPEN:
+						RenderHelper::GetInstance().RenderMesh(*sprite[ANIM_DOOR], spriteTextures[ANIM_DOOR], false);
+						break;
+					case TILE_DOOR_CLOSE:
+						RenderHelper::GetInstance().RenderMesh(*sprite[ANIM_DOOR], spriteTextures[ANIM_DOOR], false);
+						break;
+					case TILE_TRAMPOLINE:
+						RenderHelper::GetInstance().RenderMesh(*sprite[ANIM_DOOR], spriteTextures[ANIM_DOOR], false);
+						break;
+				}
+
+			modelStack.PopMatrix();
+
+		}
+	}
 
 }
 
@@ -172,5 +235,45 @@ int TileSystem::GetTile(const float& position) const {
 	}
 
 	return static_cast<int>(position / tileSize - 0.5f);
+
+}
+
+void TileSystem::SetRenderTilesRow(const int& start, const int& end) {
+
+	if (start > 0) {
+		this->renderStartTileRow = start;
+	} else {
+		this->renderStartTileRow = 0;
+	}
+
+	if (end > 0) {
+		this->renderEndTileRow = end;
+	} else {
+		this->renderEndTileRow = 0;
+	}
+
+	if (this->renderEndTileRow < this->renderStartTileRow) {
+		this->renderEndTileRow = this->renderStartTileRow;
+	}
+
+}
+
+void TileSystem::SetRenderTilesColumn(const int& start, const int& end) {
+
+	if (start > 0) {
+		this->renderStartTileColumn = start;
+	} else {
+		this->renderStartTileColumn = 0;
+	}
+
+	if (end > 0) {
+		this->renderEndTileColumn = end;
+	} else {
+		this->renderEndTileColumn = 0;
+	}
+
+	if (this->renderEndTileColumn < this->renderStartTileColumn) {
+		this->renderEndTileColumn = this->renderStartTileColumn;
+	}
 
 }

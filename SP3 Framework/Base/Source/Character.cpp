@@ -75,16 +75,3 @@ void Character::SetFireRate(const float& fireRate) {
 	this->fireRate = fireRate;
 
 }
-
-//TileMap
-void Character::SetTileMap(TileMap& tileMap) {
-
-	this->tileMap = &tileMap;
-
-}
-
-void Character::RemoveTileMap() {
-
-	this->tileMap = nullptr;
-
-}
