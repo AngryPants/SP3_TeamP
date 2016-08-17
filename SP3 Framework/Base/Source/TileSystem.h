@@ -13,34 +13,48 @@ class TileSystem : public EntityBase {
 
 private:
 	//Enum(s)
-	enum TEXTURE_TYPE {
+	enum MESH_TYPE {
 		//Terrain
-		TEX_WALL_1,
-		TEX_WALL_2,
-		TEX_WALL_3,
-		TEX_WALL_4,
-
+		MESH_WALL_1,
+		MESH_WALL_2,
+		MESH_WALL_3,
+		
 		//Items
-		TEX_ACID,
-		TEX_SPIKE,
+		MESH_ACID,
+		MESH_SPIKE,
+		MESH_WRENCH,
+		MESH_HERO_SPAWN,
+		MESH_CHECKPOINT_UNSET,
+		MESH_CHECKPOINT_SET,
+		
+		//SIGNS
+		MESH_ARROW_LEFT,
+		MESH_ARROW_RIGHT,
+		MESH_ARROW_UP,
+		MESH_ARROW_DOWN,
+		MESH_WARNING,
+		MESH_WARNING_SAWBLADE,
+		MESH_WARNING_SPIKE,		
+		MESH_ALERT_TRAMPOLINE,		
+		MESH_ALERT_EXIT,
 
-		NUM_TEXTURE,
+		NUM_MESH,
 	};
 
 	Mesh* mesh;
-	Texture meshTextures[NUM_TEXTURE];
+	Texture meshTextures[NUM_MESH];
 
-	enum ANIMATION_TYPE {
+	enum SPRITE_TYPE {
 		//Items
-		ANIM_COIN,
-		ANIM_DOOR,
-		ANIM_TRAMPOLINE,
+		SPRITE_COIN,
+		SPRITE_DOOR,
+		SPRITE_TRAMPOLINE,
 
-		NUM_ANIMATION,
+		NUM_SPRITE,
 	};
-	SpriteAnimation* sprite[NUM_ANIMATION];
-	Animation animation[NUM_ANIMATION];
-	Texture spriteTextures[NUM_ANIMATION];
+	SpriteAnimation* sprite[NUM_SPRITE];
+	Animation animation[NUM_SPRITE];
+	Texture spriteTextures[NUM_SPRITE];
 
 	int numRows, numColumns; //Number of tiles in the map.
 	

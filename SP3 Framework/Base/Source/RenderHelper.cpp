@@ -26,9 +26,7 @@ void RenderHelper::RenderMesh(Mesh& mesh, Texture& texture, const bool& enableLi
 		cout << "Unable to render as no active shader has been set." << endl;
 		return;
 	}
-
-
-
+	
 	Mtx44 MVP, modelView, modelView_inverse_transpose;
 	MVP = GraphicsManager::GetInstance().projectionStack.Top() * GraphicsManager::GetInstance().viewStack.Top() * GraphicsManager::GetInstance().modelStack.Top();
 	

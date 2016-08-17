@@ -9,7 +9,7 @@ Camera2D::Camera2D() {
 	position.SetZero();
 	up.Set(0, 1, 0);
 	SetOrtho();
-	SetOrthoSize(2.5);
+	SetOrthoSize(8);
 	SetFarClippingPlane(100);
 	SetNearClippingPlane(-100);
 	aspectRatio.Set(1024, 800);
@@ -95,5 +95,15 @@ void Camera2D::Update(const double& deltaTime) {
 	if (bottomBorder < tileSystem->GetBottomBorder()) {
 		position.y = tileSystem->GetBottomBorder() + orthoSize;
 	}
+
+	target.Set(position.x, position.y, position.z - 1);
+
+	rightBorder = position.x + GetOrthoWidth();
+	leftBorder = position.x - GetOrthoWidth();
+	topBorder = position.y + orthoSize;
+	bottomBorder = position.y - orthoSize;
+
+	tileSystem->SetRenderTilesColumn(tileSystem->GetTile(leftBorder), tileSystem->GetTile(rightBorder) + 1);
+	tileSystem->SetRenderTilesRow(tileSystem->GetTile(bottomBorder), tileSystem->GetTile(topBorder) + 1);
 
 }

@@ -18,11 +18,17 @@ void SceneDaniu_1::Init() {
 	EntityManager::GetInstance().AddEntity(name, *hero);
 
 	camera.SetFollowTarget(*hero);
+	camera.SetTileSystem(tileSystem);
 	EntityManager::GetInstance().AddEntity(name, camera);
+
+	tileSystem.LoadFile("Levels//Daniu//Daniu_Level_1.csv");
+	EntityManager::GetInstance().AddEntity(name, tileSystem);
 
 }
 
 void SceneDaniu_1::Update(const double& deltaTime) {
+
+	cout << "FPS: " << std::to_string(1.0 / deltaTime) << endl;
 
 	double frameTime = deltaTime;
 	if (frameTime > 1.0 / minFPS) {
@@ -46,5 +52,7 @@ void SceneDaniu_1::Render() {
 void SceneDaniu_1::Exit() {
 
 	EntityManager::GetInstance().ClearScene(name);
+	delete hero;
+	hero = nullptr;
 
 }
