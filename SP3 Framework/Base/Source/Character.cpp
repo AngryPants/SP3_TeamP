@@ -1,8 +1,7 @@
 #include "Character.h"
 
 Character::Character() : isAlive(true), position(0, 0),
-health(1), speed(1), damage(0), fireRate(1),
-tileMap(nullptr), mesh(nullptr) {
+health(1), speed(1), damage(0), fireRate(1), mesh(nullptr) {
 }
 
 Character::Character(bool bIsAlive, Vector2 position, int health, float speed, int damage, float fireRate) {

@@ -87,11 +87,14 @@
     <ClCompile Include="Source\Kifellah.cpp">
       <Filter>Source Files\Gameplay\Characters\Heroes</Filter>
     </ClCompile>
-    <ClCompile Include="Source\TileMap.cpp">
-      <Filter>Source Files\Gameplay\TileMap</Filter>
-    </ClCompile>
     <ClCompile Include="Source\SceneDaniu_1.cpp">
       <Filter>Source Files\Scene\DaniuLevels</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TileSystem.cpp">
+      <Filter>Source Files\Gameplay\TileMap</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Sawblade.cpp">
+      <Filter>Source Files\Gameplay</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -197,20 +200,26 @@
     <ClInclude Include="Source\EntityManager.h">
       <Filter>Header Files\Entity</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Kifellah.h">
+      <Filter>Header Files\Gameplay\Characters\Heroes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneDaniu_1.h">
+      <Filter>Header Files\Scene\DaniuLevels</Filter>
+    </ClInclude>
     <ClInclude Include="Source\ShaderProgram.h">
-      <Filter>Header Files\Input</Filter>
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TileSystem.h">
+      <Filter>Header Files\Gameplay\TileMap</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TileIndex.h">
+      <Filter>Header Files\Gameplay\TileMap</Filter>
     </ClInclude>
     <ClInclude Include="Source\Sawblade.h">
       <Filter>Header Files\Gameplay</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Kifellah.h">
-      <Filter>Header Files\Gameplay\Characters\Heroes</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\TileMap.h">
+    <ClInclude Include="Source\Tile.h">
       <Filter>Header Files\Gameplay\TileMap</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\SceneDaniu_1.h">
-      <Filter>Header Files\Scene\DaniuLevels</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -310,9 +319,6 @@
     <Filter Include="Source Files\Entity">
       <UniqueIdentifier>{f2c21d18-4475-4dd7-8753-d528f2d07f3d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Gameplay\TileMap">
-      <UniqueIdentifier>{8b398f2d-c5dd-4258-8ddb-c75ab5a04390}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Gameplay\TileMap">
       <UniqueIdentifier>{892e0d2b-9f58-4c82-8405-928b736f00b3}</UniqueIdentifier>
     </Filter>
@@ -321,6 +327,9 @@
     </Filter>
     <Filter Include="Source Files\Scene\DaniuLevels">
       <UniqueIdentifier>{b9701e39-4536-4f87-b496-0935ebeb9b2d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Gameplay\TileMap">
+      <UniqueIdentifier>{8b398f2d-c5dd-4258-8ddb-c75ab5a04390}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

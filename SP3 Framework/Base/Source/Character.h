@@ -6,7 +6,6 @@
 #include "MeshBuilder.h"
 #include "TextureManager.h"
 #include "Vector2.h"
-#include "TileMap.h"
 
 class Character : public EntityBase {
 
@@ -16,9 +15,6 @@ protected:
 	float speed;
 	int damage;	
 	double fireRate;
-	
-	//TileMap
-	TileMap* tileMap;
 
 	//Mesh
 	SpriteAnimation* mesh;

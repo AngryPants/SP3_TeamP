@@ -7,6 +7,7 @@ enum TILE_INDEX {
 	TILE_WALL_1 = 1, // 1
 	TILE_WALL_2 = 2, // 2
 	TILE_WALL_3 = 3, // 3
+	TILE_WALL_4 = 4, //4
 
 	//Items
 	TILE_COIN = 0x10, // 16
@@ -24,10 +25,10 @@ enum TILE_INDEX {
 	TILE_BRAWLER = 0x3000, // 12288
 
 	// Number of Enemies
-	TILE_ONE_ENEMY = 0x10000, //65536
+	TILE_NUM_ENEMY = 0x10000, //65536
 
-	// Sawblade Spawn
-	TILE_HAS_SAWBLADE = 0x100000, // 1048576
+	// Sawblade Index
+	TILE_SAWBLADE_INDEX = 0x100000, // 1048576
 
 	// Sawblade Node
 	TILE_SAWBLADE_NODE = 0x1000000, // 16777216

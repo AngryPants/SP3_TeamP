@@ -116,7 +116,6 @@ void Kifellah::Render()
 	modelStack.PopMatrix();
 }
 
-void Kifellah::RenderUI()
-{
+void Kifellah::RenderUI() {
 
 }
