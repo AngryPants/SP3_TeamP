@@ -1,9 +1,7 @@
 #include "Hero.h"
 
-Hero::Hero() {
-
-	mesh = nullptr;
-
+Hero::Hero() : lives(3), score(0)
+{
 }
 
 Hero::~Hero()
@@ -23,23 +21,45 @@ void Hero::Update(const double &deltaTime)
 		int tileX = tileSystem->GetTile(hotspotPosition.x);
 		int tileY = tileSystem->GetTile(hotspotPosition.y);
 
+		Tile* tile = &tileSystem->tiles[tileY][tileX];
 		//CHeck if within boundaries
+		Vector2 sizeDiff;
+		sizeDiff.x = tileSystem->GetTileSize() - scale.x;
+		sizeDiff.y = tileSystem->GetTileSize() - scale.y;
 
-		switch (tileSystem->tiles[tileY][tileX].GetTileValue(Tile::TILE_TYPE::TERRAIN)) 
+		switch (tile->GetTileValue(Tile::TILE_TYPE::TERRAIN)) 
 		{
-
+		case TILE_WALL_1:
+		{
+			position += speed - sizeDiff.x;
+			break;
+		}
+		case TILE_WALL_2:
+		{
+			position += speed - sizeDiff.x;
+			break;
+		}
+		case TILE_WALL_3:
+		{
+			position += speed - sizeDiff.x;
+			break;
+		}
 		}
 
-		Tile* tile = &tileSystem->tiles[tileY][tileX];
 		switch (tile->GetTileValue(Tile::TILE_TYPE::ITEM)) 
 		{
+		case TILE_COIN:
+		{
+			tile->ClearTileValue(Tile::TILE_TYPE::ITEM);
+			score++;
+			break;
+		}
 		case TILE_CHECKPOINT_UNSET:
 		{
 			tile->ClearTileValue(Tile::TILE_TYPE::ITEM);
 			tile->tileValue |= TILE_CHECKPOINT_SET;
 			break;
 		}
-
 		}
 
 

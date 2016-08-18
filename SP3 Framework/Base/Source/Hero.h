@@ -28,6 +28,7 @@ protected:
 	TileCollider tCollision;
 
 	int lives;
+	int score;
 	Vector2 velocity;
 
 public:

@@ -28,6 +28,7 @@ protected:
 public:
 	bool isAlive;
 	Vector2 position;
+	Vector2 Scale;
 
 	//Constructor(s) & Destructor
 	Character();
