@@ -101,6 +101,7 @@
     </ClCompile>
     <ClCompile Include="Source\TileCollider.cpp">
       <Filter>Source Files\Gameplay\Tiles</Filter>
+    </ClCompile>
     <ClCompile Include="Source\GameInformation.cpp">
       <Filter>Source Files\Others</Filter>
     </ClCompile>

@@ -1,6 +1,6 @@
 #include "Character.h"
 
-Character::Character() : isAlive(true), health(1), speed(1), damage(0), fireRate(1), mesh(nullptr), tileSystem(nullptr) 
+Character::Character() : isAlive(true), health(1), speed(1), damage(0), fireRate(1), mesh(nullptr), tileSystem(nullptr), scale(2,2)
 {
 }
 
