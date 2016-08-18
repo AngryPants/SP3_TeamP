@@ -1,18 +1,17 @@
 #include "Character.h"
 
-Character::Character() : isAlive(true), position(0, 0),
-health(1), speed(1), damage(0), fireRate(1), mesh(nullptr), tileSystem(nullptr) {
+Character::Character() : isAlive(true), health(1), speed(1), damage(0), fireRate(1), mesh(nullptr), tileSystem(nullptr), scale(2,2)
+{
 }
 
-Character::Character(bool bIsAlive, Vector2 position, int health, float speed, int damage, float fireRate) {
-	
+Character::Character(bool bIsAlive, Vector2 position, int health, float speed, int damage, float fireRate) 
+{	
 	this->isAlive = bIsAlive;
 	this->position = position;
 	this->health = health;
 	this->speed = speed;
 	this->damage = damage;
 	this->fireRate = fireRate;
-
 }
 
 Character::~Character() {

@@ -16,8 +16,7 @@ private:
 	virtual ~CollisionSystem();
 public:
 	static float CircleCircle(Vector2 circlePos1, Vector2 circlePos2, float circleScale1, float circleScale2, float circleVel1, float circleVel2);
-	static float LineCircle();
-	static float CircleSquare();
+	static float LineCircle(Vector2 circlePos1, Vector2 circlePos2, float circleScale2, float circleVel1, float circleVel2);
 };
 
 #endif

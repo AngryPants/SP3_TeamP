@@ -17,6 +17,7 @@
     <ClCompile Include="Source\Camera.cpp" />
     <ClCompile Include="Source\Camera2D.cpp" />
     <ClCompile Include="Source\Character.cpp" />
+    <ClCompile Include="Source\CollisionSystem.cpp" />
     <ClCompile Include="Source\Controller_Keyboard.cpp" />
     <ClCompile Include="Source\Controller_Mouse.cpp" />
     <ClCompile Include="Source\Daniu.cpp" />
@@ -43,7 +44,9 @@
     <ClCompile Include="Source\ShaderProgram.cpp" />
     <ClCompile Include="Source\SpriteAnimation.cpp" />
     <ClCompile Include="Source\TextureManager.cpp" />
+    <ClCompile Include="Source\TileCollider.cpp" />
     <ClCompile Include="Source\TileSystem.cpp" />
+    <ClCompile Include="Source\GameInformation.cpp" />
     <ClCompile Include="Source\Utility.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -54,6 +57,7 @@
     <ClInclude Include="Source\Camera.h" />
     <ClInclude Include="Source\Camera2D.h" />
     <ClInclude Include="Source\Character.h" />
+    <ClInclude Include="Source\CollisionSystem.h" />
     <ClInclude Include="Source\Controller_Keyboard.h" />
     <ClInclude Include="Source\Controller_Mouse.h" />
     <ClInclude Include="Source\Daniu.h" />
@@ -75,6 +79,7 @@
     <ClInclude Include="Source\MeshBuilder.h" />
     <ClInclude Include="Source\ME_State_Terrain.h" />
     <ClInclude Include="Source\RenderHelper.h" />
+    <ClInclude Include="Source\GameInformation.h" />
     <ClInclude Include="Source\Sawblade.h" />
     <ClInclude Include="Source\Scene.h" />
     <ClInclude Include="Source\SceneBase.h" />
@@ -87,6 +92,7 @@
     <ClInclude Include="Source\Texture.h" />
     <ClInclude Include="Source\TextureManager.h" />
     <ClInclude Include="Source\Tile.h" />
+    <ClInclude Include="Source\TileCollider.h" />
     <ClInclude Include="Source\TileIndex.h" />
     <ClInclude Include="Source\TileSystem.h" />
     <ClInclude Include="Source\Utility.h" />

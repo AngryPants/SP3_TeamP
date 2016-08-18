@@ -2,8 +2,8 @@
 #define TILE_INDEX_H
 
 enum TILE_INDEX {
-	//Terrain
 	TILE_NOTHING = 0, // 0
+	//Terrain
 	TILE_WALL_1 = 1, // 1
 	TILE_WALL_2 = 2, // 2
 	TILE_WALL_3 = 3, // 3
@@ -44,6 +44,12 @@ enum TILE_INDEX {
 
 	// Sawblade Node
 	TILE_SAWBLADE_NODE = 0x1000000, // 16777216
+
+	// Body Parts
+	TILE_HEAD = 0x10000000, // 268435456
+	TILE_BODY = 0x20000000, // 536870912
+	TILE_HAND = 0x30000000, // 805306368
+	TILE_LEG = 0x40000000, //1073741824
 };
 
 #endif

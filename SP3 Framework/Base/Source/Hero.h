@@ -5,6 +5,7 @@
 #include "Character.h"
 #include "Bullet.h"
 #include "InputManager.h"
+#include "TileCollider.h"
 
 class Hero : public Character {
 
@@ -24,8 +25,10 @@ protected:
 	Animation animations[NUM_ANIMATION];
 	SpriteAnimation* mesh;
 	Texture texture;
+	TileCollider tCollision;
 
 	int lives;
+	int score;
 	Vector2 velocity;
 
 public:

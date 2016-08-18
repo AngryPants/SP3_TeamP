@@ -88,6 +88,7 @@ void TileSystem::Render()
 	unsigned int terrain = 0;
 	unsigned int item = 0;
 	unsigned int sign = 0;
+
 	MS& modelStack = GraphicsManager::GetInstance().modelStack;
 	
 	for (int row = Math::Max(0, renderStartTileRow); row < Math::Min(numRows, renderEndTileRow); ++row)
@@ -178,6 +179,7 @@ void TileSystem::Render()
 						RenderHelper::GetInstance().RenderMesh(*mesh, meshTextures[MESH_ALERT_EXIT], false);
 						break;
 				}
+
 			modelStack.PopMatrix();
 		}
 	}

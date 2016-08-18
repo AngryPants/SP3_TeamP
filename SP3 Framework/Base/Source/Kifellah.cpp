@@ -22,23 +22,10 @@ Kifellah::Kifellah() {
 	mesh = MeshBuilder::GetInstance().GenerateSpriteAnimation("Kifellah", 6, 10);
 	mesh->animation = &animations[IDLE];
 	texture.textureArray[0] = TextureManager::GetInstance().AddTexture("Kifellah", "Image//Cyborg_Shooter//Characters//Heroes//Hero_Kifellah.tga");
-
-	//Left	
-	hotspots[0].Set(-0.25f, 0.25f);
-	hotspots[1].Set(-0.25f, -0.25f);
-	//Right
-	hotspots[2].Set(0.25f, 0.25f);
-	hotspots[3].Set(0.25f, -0.25f);
-	//Up
-	hotspots[4].Set(-0.25f, 0.25f);
-	hotspots[5].Set(0.25f, 0.25f);
-	//Down
-	hotspots[6].Set(-0.25f, -0.25f);
-	hotspots[7].Set(0.25f, -0.25f);
-
 }
 
-Kifellah::~Kifellah() {
+Kifellah::~Kifellah() 
+{
 }
 
 void Kifellah::Update(const double& deltaTime) 
@@ -105,7 +92,7 @@ void Kifellah::Update(const double& deltaTime)
 	}
 
 	position += acceleration * deltaTime * 20.0f;
-
+	Hero::Update(deltaTime);
 	mesh->Update(deltaTime);
 }
 

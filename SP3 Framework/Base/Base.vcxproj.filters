@@ -224,14 +224,14 @@
     <ClInclude Include="Source\Tile.h">
       <Filter>Header Files\Gameplay\Tiles</Filter>
     </ClInclude>
-    <ClInclude Include="Source\MapEditor.h">
-      <Filter>Header Files\Gameplay\MapEditor</Filter>
+    <ClInclude Include="Source\CollisionSystem.h">
+      <Filter>Header Files\Others</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ME_State.h">
-      <Filter>Header Files\Gameplay\MapEditor\States</Filter>
+    <ClInclude Include="Source\TileCollider.h">
+      <Filter>Header Files\Gameplay\Tiles</Filter>
     </ClInclude>
-    <ClInclude Include="Source\ME_State_Terrain.h">
-      <Filter>Header Files\Gameplay\MapEditor\States</Filter>
+    <ClInclude Include="Source\GameInformation.h">
+      <Filter>Header Files\Others</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
