@@ -1,6 +1,6 @@
 #include "TileCollider.h"
 
-TileCollider::TileCollider() : detectionWidth(0), detectionHeight(0), numHotspots(2), hotspotOffsetWidth(0), hotspotOffsetHeight(0)
+TileCollider::TileCollider() : detectionWidth(0), detectionHeight(0), numHotspotsWidth(0), numHotspotsHeight(0)
 {
 }
 
