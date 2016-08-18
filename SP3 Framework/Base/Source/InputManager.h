@@ -10,6 +10,7 @@ using std::bitset;
 
 //Some Example Controls
 enum INPUT_TYPE {
+	//Movement
 	INPUT_MOVE_LEFT,
 	INPUT_MOVE_RIGHT,
 	INPUT_MOVE_UP,
@@ -17,6 +18,8 @@ enum INPUT_TYPE {
 
 	INPUT_JUMP,
 	INPUT_SHOOT,
+
+	INPUT_PLACE_TILE,
 
 	INPUT_QUIT,
 

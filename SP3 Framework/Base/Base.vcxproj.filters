@@ -96,6 +96,9 @@
     <ClCompile Include="Source\Sawblade.cpp">
       <Filter>Source Files\Gameplay</Filter>
     </ClCompile>
+    <ClCompile Include="Source\MapEditor.cpp">
+      <Filter>Source Files\Gameplay\MapEditor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\GraphicsManager.h">
@@ -221,6 +224,15 @@
     <ClInclude Include="Source\Tile.h">
       <Filter>Header Files\Gameplay\Tiles</Filter>
     </ClInclude>
+    <ClInclude Include="Source\MapEditor.h">
+      <Filter>Header Files\Gameplay\MapEditor</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ME_State.h">
+      <Filter>Header Files\Gameplay\MapEditor\States</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ME_State_Terrain.h">
+      <Filter>Header Files\Gameplay\MapEditor\States</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
@@ -330,6 +342,15 @@
     </Filter>
     <Filter Include="Header Files\Gameplay\Tiles">
       <UniqueIdentifier>{8b398f2d-c5dd-4258-8ddb-c75ab5a04390}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Gameplay\MapEditor">
+      <UniqueIdentifier>{f88ca92c-e36c-4d7a-968d-460e84c90c52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Gameplay\MapEditor\States">
+      <UniqueIdentifier>{9cd8bab6-b987-40d5-aae3-630cb0842ca5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Gameplay\MapEditor">
+      <UniqueIdentifier>{bbd4e64a-c241-4cf9-9cee-250c16cf91d7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

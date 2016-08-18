@@ -97,6 +97,10 @@ public:
 	float GetTopBorder() const;
 	float GetBottomBorder() const;
 
+	//Rows & Columns
+	int GetNumRows() const;
+	int GetNumColumns() const;
+
 	//Tile Position
 	int GetTile(const float& position) const;
 

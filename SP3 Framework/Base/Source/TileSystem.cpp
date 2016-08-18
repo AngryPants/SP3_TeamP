@@ -345,3 +345,15 @@ void TileSystem::SetRenderTilesColumn(const int& start, const int& end) {
 	}
 
 }
+
+int TileSystem::GetNumRows() const {
+
+	return numRows;
+
+}
+
+int TileSystem::GetNumColumns() const {
+
+	return numColumns;
+
+}
