@@ -30,12 +30,7 @@ float CollisionSystem::CircleCircle(Vector2 circlePos1, Vector2 circlePos2, floa
 	return t;
 }
 
-float CollisionSystem::LineCircle()
+float CollisionSystem::LineCircle(Vector2 circlePos1, Vector2 circlePos2, float circleScale2, float circleVel1, float circleVel2)
 {
-
-}
-
-float CollisionSystem::CircleSquare()
-{
-
+	return CircleCircle(circlePos1, circlePos2, 0, circleScale2, circleVel1, circleVel2);
 }
