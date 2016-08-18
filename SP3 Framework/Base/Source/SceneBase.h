@@ -4,12 +4,14 @@
 #include "Scene.h"
 #include "Camera2D.h"
 #include "Hero.h"
+#include "TileSystem.h"
 
 class SceneBase : public Scene {
 
 protected:
 	double minFPS;
 	Camera2D camera;
+	TileSystem tileSystem;
 	Hero* hero;
 
 private:

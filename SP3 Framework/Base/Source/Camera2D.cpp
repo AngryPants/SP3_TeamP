@@ -1,5 +1,4 @@
 #include "Camera2D.h"
-#include "TileMap.h"
 #include "Character.h"
 
 using namespace std;
@@ -10,12 +9,12 @@ Camera2D::Camera2D() {
 	position.SetZero();
 	up.Set(0, 1, 0);
 	SetOrtho();
-	SetOrthoSize(2.5);
+	SetOrthoSize(8);
 	SetFarClippingPlane(100);
 	SetNearClippingPlane(-100);
 	aspectRatio.Set(1024, 800);
 	followTarget = nullptr;
-	tileMap = nullptr;
+	tileSystem = nullptr;
 	deadZoneX = 0.25;
 	deadZoneY = 0.25;
 
@@ -36,15 +35,15 @@ void Camera2D::RemoveTarget() {
 
 }
 
-void Camera2D::SetTileMap(TileMap& tileMap) {
+void Camera2D::SetTileSystem(TileSystem& tileSystem) {
 
-	this->tileMap = &tileMap;
+	this->tileSystem = &tileSystem;
 
 }
 
-void Camera2D::RemoveTileMap() {
+void Camera2D::RemoveTileSystem() {
 
-	this->tileMap = nullptr;
+	this->tileSystem = nullptr;
 
 }
 
@@ -53,7 +52,7 @@ void Camera2D::Update(const double& deltaTime) {
 	if (followTarget == nullptr) {
 		cout << "Unable to update camera as no follow target was set." << endl;
 		return;
-	} else if (tileMap == nullptr) {
+	} else if (tileSystem == nullptr) {
 		cout << "Unable to update camera as no tileMap was set." << endl;
 		return;
 	}
@@ -63,7 +62,7 @@ void Camera2D::Update(const double& deltaTime) {
 	float distanceToTargetX = followTarget->position.x - position.x; //How far are we from the player.
 	float distanceToTargetY = followTarget->position.y - position.y;
 
-	if (distanceToTargetX > maxDistanceToTargetX) {	
+	if (distanceToTargetX > maxDistanceToTargetX) {
 		position.x = followTarget->position.x - maxDistanceToTargetX;
 	} else if (distanceToTargetX < -maxDistanceToTargetX) {
 		position.x = followTarget->position.x + maxDistanceToTargetX;
@@ -77,25 +76,34 @@ void Camera2D::Update(const double& deltaTime) {
 
 	//Border of our camera's view
 	float rightBorder = position.x + GetOrthoWidth();
-	if (rightBorder > tileMap->GetRightBorder()) {
-		position.x = tileMap->GetRightBorder() - GetOrthoWidth();
+	if (rightBorder > tileSystem->GetRightBorder()) {
+		position.x = tileSystem->GetRightBorder() - GetOrthoWidth();
 	}
 	//Border of our camera's view
 	float leftBorder = position.x - GetOrthoWidth();
-	if (leftBorder < tileMap->GetLeftBorder()) {
-		position.x = tileMap->GetLeftBorder() + GetOrthoWidth();
+	if (leftBorder < tileSystem->GetLeftBorder()) {
+		position.x = tileSystem->GetLeftBorder() + GetOrthoWidth();
 	}
 
 	//Border of our camera's view
 	float topBorder = position.y + orthoSize;
-	if (topBorder > tileMap->GetTopBorder()) {
-		position.y = tileMap->GetTopBorder() - orthoSize;
+	if (topBorder > tileSystem->GetTopBorder()) {
+		position.y = tileSystem->GetTopBorder() - orthoSize;
 	}
 	//Border of our camera's view
 	float bottomBorder = position.y - orthoSize;
-	if (bottomBorder < tileMap->GetBottomBorder()) {
-		position.y = tileMap->GetBottomBorder() + orthoSize;
+	if (bottomBorder < tileSystem->GetBottomBorder()) {
+		position.y = tileSystem->GetBottomBorder() + orthoSize;
 	}
-	
+
+	target.Set(position.x, position.y, position.z - 1);
+
+	rightBorder = position.x + GetOrthoWidth();
+	leftBorder = position.x - GetOrthoWidth();
+	topBorder = position.y + orthoSize;
+	bottomBorder = position.y - orthoSize;
+
+	tileSystem->SetRenderTilesColumn(tileSystem->GetTile(leftBorder), tileSystem->GetTile(rightBorder) + 1);
+	tileSystem->SetRenderTilesRow(tileSystem->GetTile(bottomBorder), tileSystem->GetTile(topBorder) + 1);
 
 }

@@ -1,7 +1,6 @@
 #ifndef TILE_H
 #define TILE_H
 
-#include "TileMap.h"
 #include "TileIndex.h"
 #include <exception>
 
@@ -22,19 +21,24 @@ public:
 	//Enum(s)
 	enum class TILE_TYPE
 	{
-		TILE_TERRAIN,
-		TILE_ITEMS,
-		TILE_HERO_SPAWN,
-		TILE_ENEMY_SPAWN,
-		TILE_NUM_ENEMIES,
-		TILE_SAWBLADE_INDEX,
-		TILE_SAWBLADE_NODE,
+		TERRAIN,
+		ITEM,
+		SIGN,
+		ENEMY_SPAWN,
+		NUM_ENEMIES,
+		SAWBLADE_INDEX,
+		SAWBLADE_NODE,
 	};
 
 	//Function(s)
-	template <TILE_TYPE type>
-	unsigned int GetTileValue() {
+	//Get the value of the tile of a certain type.
+	unsigned int GetTileValue(TILE_TYPE type) const {
 		return (0x000F << (4 * static_cast<unsigned int>(type))) & tileValue;
+	}
+
+	//Clear the value of the tile of a certain type.
+	void ClearTileValue(TILE_TYPE type) {
+		tileValue ^= (tileValue & (0x000F << (4 * static_cast<unsigned int>(type))));
 	}
 
 };

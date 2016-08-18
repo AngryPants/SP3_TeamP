@@ -4,6 +4,7 @@
 #include "EntityBase.h"
 #include "Mesh.h"
 #include "Vector2.h"
+#include "Texture.h"
 
 #include <map>
 

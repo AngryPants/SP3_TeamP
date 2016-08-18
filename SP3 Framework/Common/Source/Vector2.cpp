@@ -56,9 +56,9 @@ Vector2& Vector2::operator-=(const Vector2& rhs) {
 
 }
 
-Vector2 Vector2::operator-( void ) const {
+Vector2 Vector2::operator-(void) const {
 
-	return -(*this);
+	return Vector2(-this->x, -this->y);
 
 }
 

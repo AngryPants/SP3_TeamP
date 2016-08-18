@@ -6,6 +6,7 @@
 #include "MeshBuilder.h"
 #include "TextureManager.h"
 #include "Vector2.h"
+#include "TileSystem.h"
 
 class Character : public EntityBase {
 
@@ -18,6 +19,11 @@ protected:
 
 	//Mesh
 	SpriteAnimation* mesh;
+
+	Vector2 hotspots[4];
+
+	//Tile System
+	TileSystem* tileSystem;
 
 public:
 	bool isAlive;
@@ -39,9 +45,9 @@ public:
 	void SetDamage(const float& damage);
 	void SetFireRate(const float& fireRate);
 
-	//TileMap
-	void SetTileMap(TileMap& tilemap);
-	void RemoveTileMap();
+	//Others
+	void SetTileSystem(TileSystem& tileSystem);
+	void RemoveTileSystem();
 
 	//Virtual Function(s)
 	virtual void Update(const double& deltaTime);

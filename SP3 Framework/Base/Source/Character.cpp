@@ -1,7 +1,7 @@
 #include "Character.h"
 
 Character::Character() : isAlive(true), position(0, 0),
-health(1), speed(1), damage(0), fireRate(1), mesh(nullptr) {
+health(1), speed(1), damage(0), fireRate(1), mesh(nullptr), tileSystem(nullptr) {
 }
 
 Character::Character(bool bIsAlive, Vector2 position, int health, float speed, int damage, float fireRate) {
@@ -76,15 +76,14 @@ void Character::SetFireRate(const float& fireRate) {
 
 }
 
-//TileMap
-void Character::SetTileMap(TileMap& tileMap) {
+void Character::SetTileSystem(TileSystem& tileSystem) {
 
-	this->tileMap = &tileMap;
+	this->tileSystem = &tileSystem;
 
 }
 
-void Character::RemoveTileMap() {
+void Character::RemoveTileSystem() {
 
-	this->tileMap = nullptr;
+	this->tileSystem = nullptr;
 
 }
