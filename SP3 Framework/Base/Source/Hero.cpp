@@ -12,18 +12,68 @@ Hero::~Hero()
 
 void Hero::Update(const double &deltaTime)
 {
-	if (InputManager::GetInstance().GetInputInfo().keyDown[INPUT_MOVE_RIGHT]) 
+	// Left
+	for (int i = 0; i < tCollision.GetNumHotspotsHeight(); i++)
 	{
-		position.x += speed * deltaTime;
+		int minY = position.y - tCollision.GetDetectionHeight() * 0.5f;
+		Vector2 hotspotPosition;
+		hotspotPosition.x = position.x - tCollision.GetDetectionWidth() * 0.5f;
+		hotspotPosition.y = minY + i * tCollision.GetHotspotOffsetHeight();
+		// switch (TileStuff)
+		int tileX = tileSystem->GetTile(hotspotPosition.x);
+		int tileY = tileSystem->GetTile(hotspotPosition.y);
+
+		//CHeck if within boundaries
+
+		switch (tileSystem->tiles[tileY][tileX].GetTileValue(Tile::TILE_TYPE::TERRAIN)) 
+		{
+
+		}
+
+		Tile* tile = &tileSystem->tiles[tileY][tileX];
+		switch (tile->GetTileValue(Tile::TILE_TYPE::ITEM)) 
+		{
+		case TILE_CHECKPOINT_UNSET:
+		{
+			tile->ClearTileValue(Tile::TILE_TYPE::ITEM);
+			tile->tileValue |= TILE_CHECKPOINT_SET;
+			break;
+		}
+
+		}
+
+
 	}
-	if (InputManager::GetInstance().GetInputInfo().keyDown[INPUT_MOVE_LEFT])
+	// Right
+	for (int i = 0; i < tCollision.GetNumHotspotsHeight(); i++)
 	{
-		position.x += speed * deltaTime;
+		int minY = position.y - tCollision.GetDetectionHeight() * 0.5f;
+		Vector2 hotspotPosition;
+		hotspotPosition.x = position.x + tCollision.GetDetectionWidth() * 0.5f;
+		hotspotPosition.y = minY + i * tCollision.GetHotspotOffsetHeight();
+
+		// switch (TileStuff)
 	}
-	/*if (InputManager::GetInstance().GetInputInfo().keyDown[INPUT_SHOOT])
+	// Up
+	for (int i = 0; i < tCollision.GetNumHotspotsWidth(); i++)
 	{
-		bullet = new Bullet(true, position, 0, 10, 3, 10);
-	}*/
+		int minX = position.x - tCollision.GetDetectionWidth() * 0.5f;
+		Vector2 hotspotPosition;
+		hotspotPosition.x = minX + i * tCollision.GetHotspotOffsetWidth();
+		hotspotPosition.y = position.y + tCollision.GetDetectionHeight() * 0.5f;
+
+		// switch (TileStuff)
+	}
+	// Down
+	for (int i = 0; i < tCollision.GetNumHotspotsHeight(); i++)
+	{
+		int minX = position.x - tCollision.GetDetectionWidth() * 0.5f;
+		Vector2 hotspotPosition;
+		hotspotPosition.x = minX + i * tCollision.GetHotspotOffsetWidth();
+		hotspotPosition.y = position.y - tCollision.GetDetectionHeight() * 0.5f;
+
+		// switch (TileStuff)
+	}
 }
 
 void Hero::Render()

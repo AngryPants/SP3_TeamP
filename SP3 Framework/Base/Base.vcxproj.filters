@@ -99,6 +99,9 @@
     <ClCompile Include="Source\CollisionSystem.cpp">
       <Filter>Source Files\Others</Filter>
     </ClCompile>
+    <ClCompile Include="Source\TileCollider.cpp">
+      <Filter>Source Files\Gameplay\Tiles</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\GraphicsManager.h">
@@ -226,6 +229,9 @@
     </ClInclude>
     <ClInclude Include="Source\CollisionSystem.h">
       <Filter>Header Files\Others</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TileCollider.h">
+      <Filter>Header Files\Gameplay\Tiles</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

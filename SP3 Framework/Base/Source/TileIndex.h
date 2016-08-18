@@ -2,8 +2,8 @@
 #define TILE_INDEX_H
 
 enum TILE_INDEX {
-	//Terrain
 	TILE_NOTHING = 0, // 0
+	//Terrain
 	TILE_WALL_1 = 1, // 1
 	TILE_WALL_2 = 2, // 2
 	TILE_WALL_3 = 3, // 3

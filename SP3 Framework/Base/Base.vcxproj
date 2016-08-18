@@ -43,6 +43,7 @@
     <ClCompile Include="Source\ShaderProgram.cpp" />
     <ClCompile Include="Source\SpriteAnimation.cpp" />
     <ClCompile Include="Source\TextureManager.cpp" />
+    <ClCompile Include="Source\TileCollider.cpp" />
     <ClCompile Include="Source\TileSystem.cpp" />
     <ClCompile Include="Source\Utility.cpp" />
   </ItemGroup>
@@ -85,6 +86,7 @@
     <ClInclude Include="Source\Texture.h" />
     <ClInclude Include="Source\TextureManager.h" />
     <ClInclude Include="Source\Tile.h" />
+    <ClInclude Include="Source\TileCollider.h" />
     <ClInclude Include="Source\TileIndex.h" />
     <ClInclude Include="Source\TileSystem.h" />
     <ClInclude Include="Source\Utility.h" />

@@ -25,6 +25,7 @@ protected:
 	Animation animations[NUM_ANIMATION];
 	SpriteAnimation* mesh;
 	Texture texture;
+	TileCollider tCollision;
 
 	int lives;
 	Vector2 velocity;
