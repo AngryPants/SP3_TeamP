@@ -5,6 +5,7 @@
 #include "Character.h"
 #include "Bullet.h"
 #include "InputManager.h"
+#include "TileCollider.h"
 
 class Hero : public Character {
 

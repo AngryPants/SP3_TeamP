@@ -22,26 +22,12 @@ Kifellah::Kifellah() {
 	mesh = MeshBuilder::GetInstance().GenerateSpriteAnimation("Kifellah", 6, 10);
 	mesh->animation = &animations[IDLE];
 	texture.textureArray[0] = TextureManager::GetInstance().AddTexture("Kifellah", "Image//Cyborg_Shooter//Characters//Heroes//Hero_Kifellah.tga");
-
-	//Left	
-	hotspots[0].Set(-0.25f, 0.25f);
-	hotspots[1].Set(-0.25f, -0.25f);
-	//Right
-	hotspots[2].Set(0.25f, 0.25f);
-	hotspots[3].Set(0.25f, -0.25f);
-	//Up
-	hotspots[4].Set(-0.25f, 0.25f);
-	hotspots[5].Set(0.25f, 0.25f);
-	//Down
-	hotspots[6].Set(-0.25f, -0.25f);
-	hotspots[7].Set(0.25f, -0.25f);
-
 }
 
 Kifellah::~Kifellah() {
 }
 
-void Kifellah::Update(const double& deltaTime) 
+void Kifellah::Movement(const double &deltaTime)
 {
 	float textureScaleU = 0.0f;
 	float textureScaleV = 0.0f;
@@ -49,20 +35,20 @@ void Kifellah::Update(const double& deltaTime)
 
 	Vector2 acceleration;
 	bool shouldIdle = true;
-	if (InputManager::GetInstance().GetInputInfo().keyDown[INPUT_MOVE_RIGHT]) 
+	if (InputManager::GetInstance().GetInputInfo().keyDown[INPUT_MOVE_RIGHT])
 	{
 		shouldIdle = false;
-		if (textureScaleU != 1.0f) 
+		if (textureScaleU != 1.0f)
 		{
 			mesh->SetTextureScale(1.0f, 1.0f);
 		}
 		mesh->animation = &animations[RUN];
 		acceleration.x += InputManager::GetInstance().GetInputInfo().keyValue[INPUT_MOVE_RIGHT] * deltaTime * 50.0f;
-	} 
-	else if (InputManager::GetInstance().GetInputInfo().keyDown[INPUT_MOVE_LEFT]) 
+	}
+	else if (InputManager::GetInstance().GetInputInfo().keyDown[INPUT_MOVE_LEFT])
 	{
 		shouldIdle = false;
-		if (textureScaleU != -1.0f) 
+		if (textureScaleU != -1.0f)
 		{
 			mesh->SetTextureScale(-1.0f, 1.0f);
 		}
@@ -99,13 +85,60 @@ void Kifellah::Update(const double& deltaTime)
 		acceleration.x -= InputManager::GetInstance().GetInputInfo().keyValue[INPUT_MOVE_LEFT] * deltaTime * 50.0f;
 	}
 
-	if (shouldIdle) 
+	if (shouldIdle)
 	{
 		mesh->animation = &animations[IDLE];
 	}
 
 	position += acceleration * deltaTime * 20.0f;
+}
 
+void Kifellah::TileCollision()
+{
+	// Left
+	for (int i = 0; i < tCollision.GetNumHotspotsHeight(); i++)
+	{
+		int minY = position.y - tCollision.GetDetectionHeight() * 0.5f;
+		Vector2 hotspotPosition;
+		hotspotPosition.x = position.x - tCollision.GetDetectionWidth() * 0.5f;
+		hotspotPosition.y = minY + i * tCollision.GetHotspotOffsetHeight();
+		// switch (TileStuff)
+	}
+	// Right
+	for (int i = 0; i < tCollision.GetNumHotspotsHeight(); i++)
+	{
+		int minY = position.y - tCollision.GetDetectionHeight() * 0.5f;
+		Vector2 hotspotPosition;
+		hotspotPosition.x = position.x + tCollision.GetDetectionWidth() * 0.5f;
+		hotspotPosition.y = minY + i * tCollision.GetHotspotOffsetHeight();
+		
+		// switch (TileStuff)
+	}
+	// Up
+	for (int i = 0; i < tCollision.GetNumHotspotsWidth(); i++)
+	{
+		int minX = position.x - tCollision.GetDetectionWidth() * 0.5f;
+		Vector2 hotspotPosition;
+		hotspotPosition.x = minX + i * tCollision.GetHotspotOffsetWidth;
+		hotspotPosition.y = position.y + tCollision.GetDetectionHeight() * 0.5f;
+
+		// switch (TileStuff)
+	}
+	// Down
+	for (int i = 0; i < tCollision.GetNumHotspotsHeight(); i++)
+	{
+		int minX = position.x - tCollision.GetDetectionWidth() * 0.5f;
+		Vector2 hotspotPosition;
+		hotspotPosition.x = minX + i * tCollision.GetHotspotOffsetWidth;
+		hotspotPosition.y = position.y - tCollision.GetDetectionHeight() * 0.5f;
+
+		// switch (TileStuff)
+	}
+}
+
+void Kifellah::Update(const double& deltaTime) 
+{
+	Movement(deltaTime);
 	mesh->Update(deltaTime);
 }
 

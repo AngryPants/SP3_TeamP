@@ -16,16 +16,16 @@ public:
 	TileCollider();
 	virtual ~TileCollider();
 
-	void SetDetectionWidth(const float& detectionWidth);
+	void SetDetectionWidth(const float &detectionWidth);
 	float GetDetectionWidth() const;
 	
-	void SetDetectionHeight(const float& detectionHeight);
+	void SetDetectionHeight(const float &detectionHeight);
 	float GetDetectionHeight() const;
 
-	void SetNumHotspotsWidth(const int& numHotspots);
+	void SetNumHotspotsWidth(const int &numHotspots);
 	int GetNumHotspotsWidth() const;
 
-	void SetNumHotspotsHeight(const int& numHotspots);
+	void SetNumHotspotsHeight(const int &numHotspots);
 	int GetNumHotspotsHeight() const;
 
 	float GetHotspotOffsetWidth() const;

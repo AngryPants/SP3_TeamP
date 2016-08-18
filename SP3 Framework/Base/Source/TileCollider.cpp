@@ -8,7 +8,7 @@ TileCollider::~TileCollider()
 {
 }
 
-void TileCollider::SetDetectionWidth(const float& detectionWidth)
+void TileCollider::SetDetectionWidth(const float &detectionWidth)
 {
 	if (detectionWidth < 0)
 		this->detectionWidth = 0;
@@ -21,7 +21,7 @@ float TileCollider::GetDetectionWidth() const
 	return detectionWidth;
 }
 
-void TileCollider::SetDetectionHeight(const float& detectionHeight)
+void TileCollider::SetDetectionHeight(const float &detectionHeight)
 {
 	if (detectionHeight < 0)
 		this->detectionHeight = 0;
@@ -34,10 +34,10 @@ float TileCollider::GetDetectionHeight() const
 	return detectionHeight;
 }
 
-void TileCollider::SetNumHotspotsWidth(const int& numHotspots)
+void TileCollider::SetNumHotspotsWidth(const int &numHotspots)
 {
-	if (numHotspots < 1)
-		this->numHotspotsWidth = 1;
+	if (numHotspots < 2)
+		this->numHotspotsWidth = 2;
 	else
 		this->numHotspotsWidth = numHotspots;
 }
@@ -47,10 +47,10 @@ int TileCollider::GetNumHotspotsWidth() const
 	return numHotspotsWidth;
 }
 
-void TileCollider::SetNumHotspotsHeight(const int& numHotspots)
+void TileCollider::SetNumHotspotsHeight(const int &numHotspots)
 {
-	if (numHotspots < 1)
-		this->numHotspotsHeight = 1;
+	if (numHotspots < 2)
+		this->numHotspotsHeight = 2;
 	else
 		this->numHotspotsHeight = numHotspots;
 }
@@ -62,16 +62,10 @@ int TileCollider::GetNumHotspotsHeight() const
 
 float TileCollider::GetHotspotOffsetWidth() const
 {
-	if (numHotspotsWidth == 1)
-		return 0;
-	else
-		return (float)(detectionWidth / numHotspotsWidth - 1);
+	return (float)(detectionWidth / numHotspotsWidth - 1);
 }
 
 float TileCollider::GetHotspotOffsetHeight() const
 {
-	if (numHotspotsHeight == 1)
-		return 0;
-	else
-		return (float)(detectionHeight / numHotspotsHeight - 1);
+	return (float)(detectionHeight / numHotspotsHeight - 1);
 }

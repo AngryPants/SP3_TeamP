@@ -35,6 +35,10 @@ public:
 	void Render();
 	void RenderUI();
 
+	void Movement(const double &deltaTime);
+	void TileCollision();
+
+	TileCollider tCollision;
 };
 
 #endif
