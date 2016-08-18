@@ -96,6 +96,9 @@
     <ClCompile Include="Source\Sawblade.cpp">
       <Filter>Source Files\Gameplay</Filter>
     </ClCompile>
+    <ClCompile Include="Source\CollisionSystem.cpp">
+      <Filter>Source Files\Others</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\GraphicsManager.h">
@@ -220,6 +223,9 @@
     </ClInclude>
     <ClInclude Include="Source\Tile.h">
       <Filter>Header Files\Gameplay\TileMap</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CollisionSystem.h">
+      <Filter>Header Files\Others</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
