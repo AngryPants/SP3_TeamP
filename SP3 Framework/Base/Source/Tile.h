@@ -28,6 +28,7 @@ public:
 		NUM_ENEMIES,
 		SAWBLADE_INDEX,
 		SAWBLADE_NODE,
+		BODY_PARTS,
 	};
 
 	//Function(s)

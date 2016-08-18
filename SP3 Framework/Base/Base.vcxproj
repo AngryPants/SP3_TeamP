@@ -45,6 +45,7 @@
     <ClCompile Include="Source\TextureManager.cpp" />
     <ClCompile Include="Source\TileCollider.cpp" />
     <ClCompile Include="Source\TileSystem.cpp" />
+    <ClCompile Include="Source\GameInformation.cpp" />
     <ClCompile Include="Source\Utility.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -74,6 +75,7 @@
     <ClInclude Include="Source\Mesh.h" />
     <ClInclude Include="Source\MeshBuilder.h" />
     <ClInclude Include="Source\RenderHelper.h" />
+    <ClInclude Include="Source\GameInformation.h" />
     <ClInclude Include="Source\Sawblade.h" />
     <ClInclude Include="Source\Scene.h" />
     <ClInclude Include="Source\SceneBase.h" />

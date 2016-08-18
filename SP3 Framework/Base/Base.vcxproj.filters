@@ -101,6 +101,8 @@
     </ClCompile>
     <ClCompile Include="Source\TileCollider.cpp">
       <Filter>Source Files\Gameplay\Tiles</Filter>
+    <ClCompile Include="Source\GameInformation.cpp">
+      <Filter>Source Files\Others</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -232,6 +234,9 @@
     </ClInclude>
     <ClInclude Include="Source\TileCollider.h">
       <Filter>Header Files\Gameplay\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameInformation.h">
+      <Filter>Header Files\Others</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
