@@ -1,36 +1,27 @@
 #include "CollisionSystem.h"
 
-CollisionSystem::CollisionSystem()
+float CollisionSystem::CircleCircle(Vector2 circlePositionA, Vector2 circlePositionB, float circleRadiusA, float circleRadiusB, float circleVelocityA, float circleVelocityB)
 {
+	Vector2 relativeVelocity = circleVelocityA - circleVelocityB;
+	Vector2 relativeDirection = circlePositionA - circlePositionB; //Usually we do B - A but for this case A - B makes calculations easier.
+	float combinedRadius = circleRadiusA + circleRadiusB;
 
-}
-
-CollisionSystem::~CollisionSystem()
-{
-}
-
-float CollisionSystem::CircleCircle(Vector2 circlePos1, Vector2 circlePos2, float circleScale1, float circleScale2, float circleVel1, float circleVel2)
-{
-	Vector2 rel = circleVel1 - circleVel2;
-	Vector2 dir = circlePos1 - circlePos2;
-	float r = circleScale1 + circleScale2;
-	float dot = rel.Dot(dir);
-
-	if (dot > 0)
+	if (relativeVelocity.Dot(relativeDirection) > 0)
 		return -1;
 
-	float a = rel.LengthSquared();
-	float b = 2 * rel.Dot(dir);
-	float c = dir.LengthSquared() - r * r;
+	float a = relativeVelocity.LengthSquared();
+	float b = 2 * relativeVelocity.Dot(relativeDirection);
+	float c = relativeDirection.LengthSquared() - combinedRadius * combinedRadius;
 	float d = b * b - 4 * a * c;
 
 	float t = (-b - sqrt(d)) / (2 * a);
 	if (t < 0)
 		t = (-b + sqrt(d)) / (2 * a);
+	
 	return t;
 }
 
-float CollisionSystem::LineCircle(Vector2 circlePos1, Vector2 circlePos2, float circleScale2, float circleVel1, float circleVel2)
+float CollisionSystem::LineCircle(Vector2 linePosition, Vector2 circlePosition, float circleRadius, float lineVelocity, float circleVelocity)
 {
-	return CircleCircle(circlePos1, circlePos2, 0, circleScale2, circleVel1, circleVel2);
+	return CircleCircle(linePosition, circlePosition, 0, circleRadius, lineVelocity, circleVelocity);
 }

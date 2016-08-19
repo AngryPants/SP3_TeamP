@@ -12,11 +12,11 @@ class CollisionSystem : public Singleton<CollisionSystem>
 	friend class Singleton<CollisionSystem>;
 
 private:
-	CollisionSystem();
-	virtual ~CollisionSystem();
+	CollisionSystem() {}
+	virtual ~CollisionSystem() {}
 public:
-	static float CircleCircle(Vector2 circlePos1, Vector2 circlePos2, float circleScale1, float circleScale2, float circleVel1, float circleVel2);
-	static float LineCircle(Vector2 circlePos1, Vector2 circlePos2, float circleScale2, float circleVel1, float circleVel2);
+	static float CircleCircle(Vector2 circlePositionA, Vector2 circlePositionB, float circleRadiusA, float circleRadiusB, float circleVelocityA, float circleVelocityB);
+	static float LineCircle(Vector2 linePosition, Vector2 circlePosition, float circleRadius, float lineVelocity, float circleVelocity);
 };
 
 #endif

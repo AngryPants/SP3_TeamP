@@ -117,6 +117,13 @@ float Vector2::Length(void) const {
 
 }
 
+void Vector2::SetZero() {
+
+	this->x = 0.0f;
+	this->y = 0.0f;
+
+}
+
 float Vector2::LengthSquared() const {
 
 	return (this->x * this->x + this->y * this->y);

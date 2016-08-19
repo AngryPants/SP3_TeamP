@@ -1,17 +1,17 @@
 #include "Character.h"
 
-Character::Character() : isAlive(true), health(1), speed(1), damage(0), fireRate(1), mesh(nullptr), tileSystem(nullptr), scale(2,2)
+Character::Character()
 {
-}
-
-Character::Character(bool bIsAlive, Vector2 position, int health, float speed, int damage, float fireRate) 
-{	
-	this->isAlive = bIsAlive;
-	this->position = position;
-	this->health = health;
-	this->speed = speed;
-	this->damage = damage;
-	this->fireRate = fireRate;
+	this->isAlive = true;
+	this->position.SetZero();
+	this->scale.Set(1, 1);
+	this->health = 1;
+	this->speed = 1;
+	this->damage = 0;
+	this->fireRate = 1;
+	this->onGround = true;
+	this->mesh = nullptr;
+	this->tileSystem = nullptr;
 }
 
 Character::~Character() {

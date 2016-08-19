@@ -4,7 +4,9 @@
 #include "Scene.h"
 #include "Camera2D.h"
 #include "Hero.h"
+#include "TileIndex.h"
 #include "TileSystem.h"
+#include "Sawblade.h"
 
 class SceneBase : public Scene {
 
@@ -13,6 +15,12 @@ protected:
 	Camera2D camera;
 	TileSystem tileSystem;
 	Hero* hero;
+	vector<Sawblade> sawblades;
+
+	virtual void InitHero() = 0;
+	virtual void InitCamera() = 0;
+	virtual void InitEnemies() = 0;
+	virtual void InitSawblades();
 
 private:
 	void InitShader();

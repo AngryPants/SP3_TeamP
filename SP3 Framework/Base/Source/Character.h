@@ -14,8 +14,10 @@ protected:
 	//Stats
 	int health;
 	float speed;
-	int damage;	
+	int damage;
 	double fireRate;
+	
+	double minFPS;
 
 	//Mesh
 	SpriteAnimation* mesh;
@@ -25,14 +27,22 @@ protected:
 	//Tile System
 	TileSystem* tileSystem;
 
+	//Collision Detection
+	virtual void MoveLeft(const double& deltaTime) {};
+	virtual void MoveRight(const double& deltaTime) {};
+	virtual void MoveDown(const double& deltaTime) {};
+	virtual void MoveUp(const double& deltaTime) {};	
+
+	bool onGround;
+
 public:
 	bool isAlive;
 	Vector2 position;
 	Vector2 scale;
+	Vector2 velocity;
 
 	//Constructor(s) & Destructor
 	Character();
-	Character(bool isAlive, Vector2 position, int health, float speed, int damage, float fireRate);
 	virtual ~Character();
 
 	//Stats

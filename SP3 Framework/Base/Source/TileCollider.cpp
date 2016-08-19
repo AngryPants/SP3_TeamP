@@ -1,6 +1,10 @@
 #include "TileCollider.h"
 
-TileCollider::TileCollider() : detectionWidth(0), detectionHeight(0), numHotspotsWidth(0), numHotspotsHeight(0)
+TileCollider::TileCollider()
+:
+detectionWidth(1), detectionHeight(1),
+lengthWidth(0.9f), lengthHeight(0.9f),
+numHotspotsWidth(2), numHotspotsHeight(2)
 {
 }
 
@@ -10,8 +14,8 @@ TileCollider::~TileCollider()
 
 void TileCollider::SetDetectionWidth(const float &detectionWidth)
 {
-	if (detectionWidth < 0)
-		this->detectionWidth = 0;
+	if (detectionWidth < 0.0f)
+		this->detectionWidth = 0.0f;
 	else
 		this->detectionWidth = detectionWidth;
 }
@@ -23,8 +27,8 @@ float TileCollider::GetDetectionWidth() const
 
 void TileCollider::SetDetectionHeight(const float &detectionHeight)
 {
-	if (detectionHeight < 0)
-		this->detectionHeight = 0;
+	if (detectionHeight < 0.0f)
+		this->detectionHeight = 0.0f;
 	else
 		this->detectionHeight = detectionHeight;
 }
@@ -32,6 +36,42 @@ void TileCollider::SetDetectionHeight(const float &detectionHeight)
 float TileCollider::GetDetectionHeight() const
 {
 	return detectionHeight;
+}
+
+float TileCollider::GetHotspotOffsetWidth() const
+{
+	return lengthWidth / static_cast<float>(numHotspotsWidth - 1);
+}
+
+float TileCollider::GetHotspotOffsetHeight() const
+{
+	return lengthHeight / static_cast<float>(numHotspotsHeight - 1);
+}
+
+void TileCollider::SetLengthWidth(const float& lengthWidth)
+{
+	if (lengthWidth < 0.0f)
+		this->lengthWidth = 0.0f;
+	else
+		this->lengthWidth = lengthWidth;
+}
+
+float TileCollider::GetLengthWidth() const
+{
+	return lengthWidth;
+}
+
+void TileCollider::SetLengthHeight(const float& lengthHeight)
+{
+	if (lengthHeight < 0.0f)
+		this->lengthHeight = 0.0f;
+	else
+		this->lengthHeight = lengthHeight;
+}
+
+float TileCollider::GetLengthHeight() const
+{
+	return lengthHeight;
 }
 
 void TileCollider::SetNumHotspotsWidth(const int &numHotspots)
@@ -58,14 +98,4 @@ void TileCollider::SetNumHotspotsHeight(const int &numHotspots)
 int TileCollider::GetNumHotspotsHeight() const
 {
 	return numHotspotsHeight;
-}
-
-float TileCollider::GetHotspotOffsetWidth() const
-{
-	return (float)(detectionWidth / numHotspotsWidth - 1);
-}
-
-float TileCollider::GetHotspotOffsetHeight() const
-{
-	return (float)(detectionHeight / numHotspotsHeight - 1);
 }

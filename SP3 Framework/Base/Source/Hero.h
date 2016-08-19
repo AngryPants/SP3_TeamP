@@ -25,11 +25,22 @@ protected:
 	Animation animations[NUM_ANIMATION];
 	SpriteAnimation* mesh;
 	Texture texture;
-	TileCollider tCollision;
+	TileCollider tileCollider;
 
 	int lives;
 	int score;
-	Vector2 velocity;
+	float gravity;
+
+	//Debug
+	Mesh* debugMesh;
+
+	//Move
+	virtual void MoveLeft(const double& deltaTime);
+	virtual void MoveRight(const double& deltaTime);
+	virtual void MoveDown(const double& deltaTime);
+	virtual void MoveUp(const double& deltaTime);
+
+	virtual void PickUpItem(unsigned int& tileValue);
 
 public:
 	Hero();

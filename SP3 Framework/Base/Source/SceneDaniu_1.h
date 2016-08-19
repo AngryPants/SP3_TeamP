@@ -5,6 +5,12 @@
 
 class SceneDaniu_1 : public SceneBase {
 
+protected:
+	virtual void InitHero();
+	virtual void InitCamera();
+	virtual void InitEnemies();
+	virtual void InitSawblades();
+
 public:
 	//Constructor(s) & Destructor
 	SceneDaniu_1();

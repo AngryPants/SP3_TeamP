@@ -1,112 +1,51 @@
 #ifndef TILE_SYSTEM_H
 #define TILE_SYSTEM_H
 
-#include "EntityBase.h"
-#include "Tile.h"
-#include "SpriteAnimation.h"
-#include "Mesh.h"
-#include "Texture.h"
+#include <vector>
+#include <string>
 
-typedef vector<vector<Tile>> TileMap;
+using namespace std;
 
-class TileSystem : public EntityBase {
+typedef vector<vector<unsigned int> > TileMap;
+
+class TileSystem {
 
 private:
-	//Enum(s)
-	enum MESH_TYPE {
-		//Terrain
-		MESH_WALL_1,
-		MESH_WALL_2,
-		MESH_WALL_3,
-		
-		//Items
-		MESH_ACID,
-		MESH_SPIKE,
-		MESH_WRENCH,
-		MESH_HERO_SPAWN,
-		MESH_CHECKPOINT_UNSET,
-		MESH_CHECKPOINT_SET,
-		
-		//SIGNS
-		MESH_ARROW_LEFT,
-		MESH_ARROW_RIGHT,
-		MESH_ARROW_UP,
-		MESH_ARROW_DOWN,
-		MESH_WARNING,
-		MESH_WARNING_SAWBLADE,
-		MESH_WARNING_SPIKE,		
-		MESH_ALERT_TRAMPOLINE,		
-		MESH_ALERT_EXIT,
+	//Variable(s)
+	TileMap tileMap;
+	int numRows, numColumns;
+	float tileSize;
 
-		NUM_MESH,
-	};
+	//Boundaries
+	float boundaryLeft;
+	float boundaryRight;
+	float boundaryBottom;
+	float boundaryTop;	
 
-	Mesh* mesh;
-	Texture meshTextures[NUM_MESH];
-
-	enum SPRITE_TYPE {
-		//Items
-		SPRITE_COIN,
-		SPRITE_DOOR,
-		SPRITE_TRAMPOLINE,
-
-		NUM_SPRITE,
-	};
-	SpriteAnimation* sprite[NUM_SPRITE];
-	Animation animation[NUM_SPRITE];
-	Texture spriteTextures[NUM_SPRITE];
-
-	int numRows, numColumns; //Number of tiles in the map.
-	
-	float tileSize; //Tile Size
-
-	float leftBorder; //Left Most Of Our Map
-	float rightBorder; //Right Most Of Our Map
-	float topBorder; //Top Most Of Our Map
-	float bottomBorder; //Bottom Most Of Our Map
-	void UpdateBorders();
-
-	int renderStartTileRow;
-	int renderEndTileRow;
-	int renderStartTileColumn;
-	int renderEndTileColumn;
+	//Private Function(s)
+	void UpdateBoundaries();
 
 public:
-	//Variable(s)
-	TileMap tiles;
-
-	//Constructor
+	//Constructor(s) & Destructor
 	TileSystem();
 	virtual ~TileSystem();
 
-	//Virtual Function(s)
-	void Update(const double& deltaTime);
-	void Render();
-	void RenderUI();
-
 	//Function(s)
 	bool LoadFile(const string& filePath);
-
-	//Tile Size
-	void SetTileSize(const float& tileSize);
-	float GetTileSize() const;
-
-	//Map Borders
-	float GetLeftBorder() const;
-	float GetRightBorder() const;
-	float GetTopBorder() const;
-	float GetBottomBorder() const;
-
-	//Rows & Columns
 	int GetNumRows() const;
 	int GetNumColumns() const;
-
-	//Tile Position
+	void SetTileSize(const float& tileSize);
+	float GetTileSize() const;
+	float GetWidth() const;
+	float GetHeight() const;
 	int GetTile(const float& position) const;
+	float GetBoundaryLeft() const;
+	float GetBoundaryRight() const;
+	float GetBoundaryBottom() const;
+	float GetBoundaryTop() const;
 
-	//Tile Rendering
-	void SetRenderTilesRow(const int& start, const int& end);
-	void SetRenderTilesColumn(const int& start, const int& end);
+	//Editing Tiles
+	unsigned int& TileValue(const int& row, const int& col);
 
 };
 

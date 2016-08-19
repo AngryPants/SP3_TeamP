@@ -6,7 +6,7 @@
 using std::string;
 
 class EntityBase {
-	
+
 public:
 	//Variables
 	string name;

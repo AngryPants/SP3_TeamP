@@ -22,6 +22,15 @@ Kifellah::Kifellah() {
 	mesh = MeshBuilder::GetInstance().GenerateSpriteAnimation("Kifellah", 6, 10);
 	mesh->animation = &animations[IDLE];
 	texture.textureArray[0] = TextureManager::GetInstance().AddTexture("Kifellah", "Image//Cyborg_Shooter//Characters//Heroes//Hero_Kifellah.tga");
+
+	scale.Set(2, 2);
+	tileCollider.SetDetectionHeight(scale.y * 0.5f);
+	tileCollider.SetDetectionWidth(scale.x * 0.5f);
+	tileCollider.SetLengthHeight(scale.y * 0.45f);
+	tileCollider.SetLengthWidth(scale.x * 0.45f);
+	tileCollider.SetNumHotspotsHeight(2);
+	tileCollider.SetNumHotspotsWidth(2);
+
 }
 
 Kifellah::~Kifellah() 
@@ -34,7 +43,6 @@ void Kifellah::Update(const double& deltaTime)
 	float textureScaleV = 0.0f;
 	mesh->GetTextureScale(textureScaleU, textureScaleV);
 
-	Vector2 acceleration;
 	bool shouldIdle = true;
 	if (InputManager::GetInstance().GetInputInfo().keyDown[INPUT_MOVE_RIGHT]) 
 	{
@@ -44,7 +52,6 @@ void Kifellah::Update(const double& deltaTime)
 			mesh->SetTextureScale(1.0f, 1.0f);
 		}
 		mesh->animation = &animations[RUN];
-		acceleration.x += InputManager::GetInstance().GetInputInfo().keyValue[INPUT_MOVE_RIGHT] * deltaTime * 50.0f;
 	} 
 	else if (InputManager::GetInstance().GetInputInfo().keyDown[INPUT_MOVE_LEFT]) 
 	{
@@ -54,7 +61,6 @@ void Kifellah::Update(const double& deltaTime)
 			mesh->SetTextureScale(-1.0f, 1.0f);
 		}
 		mesh->animation = &animations[RUN];
-		acceleration.x -= InputManager::GetInstance().GetInputInfo().keyValue[INPUT_MOVE_LEFT] * deltaTime * 50.0f;
 	}
 	if (InputManager::GetInstance().GetInputInfo().keyDown[INPUT_JUMP])
 	{
@@ -73,7 +79,6 @@ void Kifellah::Update(const double& deltaTime)
 			mesh->SetTextureScale(1.0f, 1.0f);
 		}
 		mesh->animation = &animations[RUN_SHOOT];
-		acceleration.x += InputManager::GetInstance().GetInputInfo().keyValue[INPUT_MOVE_RIGHT] * deltaTime * 50.0f;
 	}
 	if (InputManager::GetInstance().GetInputInfo().keyDown[INPUT_MOVE_LEFT] && InputManager::GetInstance().GetInputInfo().keyDown[INPUT_JUMP])
 	{
@@ -83,7 +88,6 @@ void Kifellah::Update(const double& deltaTime)
 			mesh->SetTextureScale(-1.0f, 1.0f);
 		}
 		mesh->animation = &animations[RUN_SHOOT];
-		acceleration.x -= InputManager::GetInstance().GetInputInfo().keyValue[INPUT_MOVE_LEFT] * deltaTime * 50.0f;
 	}
 
 	if (shouldIdle) 
@@ -91,9 +95,9 @@ void Kifellah::Update(const double& deltaTime)
 		mesh->animation = &animations[IDLE];
 	}
 
-	position += acceleration * deltaTime * 20.0f;
-	Hero::Update(deltaTime);
 	mesh->Update(deltaTime);
+	Hero::Update(deltaTime);
+
 }
 
 void Kifellah::Render() 
@@ -101,6 +105,7 @@ void Kifellah::Render()
 	MS& modelStack = GraphicsManager::GetInstance().modelStack;
 	modelStack.PushMatrix();
 		modelStack.Translate(position.x, position.y, 0);
+		modelStack.Scale(scale.x, scale.y, 1);
 		RenderHelper::GetInstance().RenderMesh(*mesh, texture, false);
 	modelStack.PopMatrix();
 }

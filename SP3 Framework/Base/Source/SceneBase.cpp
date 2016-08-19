@@ -39,6 +39,9 @@ void SceneBase::InitShader() {
 
 }
 
+void SceneBase::InitSawblades() {
+}
+
 void SceneBase::Update(const double& deltaTime) {
 }
 

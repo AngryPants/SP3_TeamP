@@ -52,4 +52,21 @@ enum TILE_INDEX {
 	TILE_LEG = 0x40000000, //1073741824
 };
 
+//The different information store inside the tiles
+enum class TILE_INFO {
+	TERRAIN,
+	ITEM,
+	SIGN,
+	ENEMY_SPAWN,
+	NUM_ENEMIES,
+	SAWBLADE_INDEX,
+	SAWBLADE_NODE,
+	BODY_PARTS,
+};
+
+//Get the info value of a certain tile.
+unsigned int GetTileInfo(TILE_INFO infoType, const unsigned int& tileValue);
+//Clear the value of the tile of a certain type.
+void ClearTileValue(TILE_INFO type, unsigned int& tileValue);
+
 #endif

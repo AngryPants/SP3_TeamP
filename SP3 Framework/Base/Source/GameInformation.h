@@ -5,14 +5,15 @@
 #include <vector>
 #include <map>
 
-class GameInformation : public Singleton<GameInformation>
-{
+using namespace std;
+
+class GameInformation : public Singleton<GameInformation> {
 
 	friend class Singleton<GameInformation>;
 
 	private:
 		// Variable(s)
-		std::vector<int> highScore;
+		vector<int> highScore;
 
 		// Constructor(s) and destructor
 		GameInformation();
@@ -20,15 +21,19 @@ class GameInformation : public Singleton<GameInformation>
 
 	public:
 		// Variable(s)
-		std::map<TILE_INDEX, std::vector<std::string>> heroUnlocks;
+		map<TILE_INDEX, vector<string>> collectedParts;
 		
 		// Function(s)
 		// Checks if a new player can be unlocked
-		void UnlockPlayableCharacter(TILE_INDEX index, std::string name);
+		void CollectPart(TILE_INDEX index, std::string name);
 
 		// Set and get high score
-		void SetHighScore(int highscore);
-		const std::vector<int> &GetHighScore();
+		void SetHighScore(int score);
+		const vector<int>& GetHighScore();
+
+		bool SaveToFile(const string& fileName);
+		bool LoadFromFile(const string& fileName);
+
 };
 
 #endif

@@ -23,6 +23,7 @@ struct Vector2 : public Vector {
 
 	//Virtual Function(s)
 	virtual bool IsZero() const; //Check if data is 0.
+	virtual void SetZero();
 	virtual float Length() const; //Get Magnitude
 	virtual float LengthSquared() const; //Get Square of Magnitude
 

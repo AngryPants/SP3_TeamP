@@ -1,5 +1,6 @@
 #include "Camera2D.h"
 #include "Character.h"
+#include "MapRenderer.h"
 
 using namespace std;
 
@@ -75,35 +76,37 @@ void Camera2D::Update(const double& deltaTime) {
 	}
 
 	//Border of our camera's view
-	float rightBorder = position.x + GetOrthoWidth();
-	if (rightBorder > tileSystem->GetRightBorder()) {
-		position.x = tileSystem->GetRightBorder() - GetOrthoWidth();
+	float boundaryRight = position.x + GetOrthoWidth();
+	if (boundaryRight > tileSystem->GetBoundaryRight()) {
+		position.x = tileSystem->GetBoundaryRight() - GetOrthoWidth();
 	}
 	//Border of our camera's view
-	float leftBorder = position.x - GetOrthoWidth();
-	if (leftBorder < tileSystem->GetLeftBorder()) {
-		position.x = tileSystem->GetLeftBorder() + GetOrthoWidth();
+	float boundaryLeft = position.x - GetOrthoWidth();
+	if (boundaryLeft < tileSystem->GetBoundaryLeft()) {
+		position.x = tileSystem->GetBoundaryLeft() + GetOrthoWidth();
 	}
 
 	//Border of our camera's view
-	float topBorder = position.y + orthoSize;
-	if (topBorder > tileSystem->GetTopBorder()) {
-		position.y = tileSystem->GetTopBorder() - orthoSize;
+	float boundaryTop = position.y + orthoSize;
+	if (boundaryTop > tileSystem->GetBoundaryTop()) {
+		position.y = tileSystem->GetBoundaryTop() - orthoSize;
 	}
 	//Border of our camera's view
-	float bottomBorder = position.y - orthoSize;
-	if (bottomBorder < tileSystem->GetBottomBorder()) {
-		position.y = tileSystem->GetBottomBorder() + orthoSize;
+	float boundaryBottom = position.y - orthoSize;
+	if (boundaryBottom < tileSystem->GetBoundaryBottom()) {
+		position.y = tileSystem->GetBoundaryBottom() + orthoSize;
 	}
 
 	target.Set(position.x, position.y, position.z - 1);
 
-	rightBorder = position.x + GetOrthoWidth();
-	leftBorder = position.x - GetOrthoWidth();
-	topBorder = position.y + orthoSize;
-	bottomBorder = position.y - orthoSize;
+	boundaryRight = position.x + GetOrthoWidth();
+	boundaryLeft = position.x - GetOrthoWidth();
+	boundaryTop = position.y + orthoSize;
+	boundaryBottom = position.y - orthoSize;
 
-	tileSystem->SetRenderTilesColumn(tileSystem->GetTile(leftBorder), tileSystem->GetTile(rightBorder) + 1);
-	tileSystem->SetRenderTilesRow(tileSystem->GetTile(bottomBorder), tileSystem->GetTile(topBorder) + 1);
+	MapRenderer::GetInstance().SetStartRow(tileSystem->GetTile(boundaryBottom));
+	MapRenderer::GetInstance().SetEndRow(tileSystem->GetTile(boundaryTop) + 1);
+	MapRenderer::GetInstance().SetStartColumn(tileSystem->GetTile(boundaryLeft));
+	MapRenderer::GetInstance().SetEndColumn(tileSystem->GetTile(boundaryRight) + 1);
 
 }

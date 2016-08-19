@@ -20,6 +20,7 @@ public:
 
 	//Virtual Function(s)
 	virtual bool IsZero() const = 0; //Check if data is 0.
+	virtual void SetZero() = 0; //Set the data to 0
 	virtual float Length() const = 0; //Get Magnitude
 	virtual float LengthSquared() const = 0; //Get Square of Magnitude
 
