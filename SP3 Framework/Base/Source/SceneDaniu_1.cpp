@@ -69,9 +69,9 @@ void SceneDaniu_1::InitSawblades() {
 				continue;
 			if (sawbladeNodes == tileSystem.TileValue(row, col))
 			{
-				Sawblade tempSawBlade;
-				tempSawBlade.AddNode(sawbladeNodes, Vector2(row * tileSystem.GetTileSize(), col * tileSystem.GetTileSize()));
-				sawblades.insert(std::pair<int, Sawblade>(static_cast<int>(TILE_INFO::SAWBLADE_INDEX), tempSawBlade));			
+				Sawblade *tempSawBlade;
+				tempSawBlade->AddNode(sawbladeNodes, Vector2(row * tileSystem.GetTileSize(), col * tileSystem.GetTileSize()));
+				sawblades.insert(std::pair<int, Sawblade*>(static_cast<int>(TILE_INFO::SAWBLADE_INDEX), tempSawBlade));			
 			}
 		}
 	}
