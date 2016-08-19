@@ -81,6 +81,8 @@ bool ShaderProgram::SetActiveTexture(unsigned int index) {
 
 	glActiveTexture(GL_TEXTURE0 + index);
 
+	return true;
+
 }
 
 bool ShaderProgram::BindTexture(TextureID textureID) {

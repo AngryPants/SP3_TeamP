@@ -8,6 +8,7 @@
 #include "TileSystem.h"
 #include "Sawblade.h"
 #include <map>
+#include "GameManager.h"
 
 using std::map;
 
@@ -19,6 +20,7 @@ protected:
 	TileSystem tileSystem;
 	Hero* hero;
 	map<int, Sawblade*> sawblades;
+	GameManager gameManager;
 
 	virtual void InitHero() = 0;
 	virtual void InitCamera() = 0;

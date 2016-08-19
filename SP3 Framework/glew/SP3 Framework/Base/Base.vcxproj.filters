@@ -1,0 +1,369 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Source\AudioManager.cpp">
+      <Filter>Source Files\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Controller_Mouse.cpp">
+      <Filter>Source Files\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Controller_Keyboard.cpp">
+      <Filter>Source Files\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GraphicsManager.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ShaderProgram.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\LoadHmap.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\LoadOBJ.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\LoadTGA.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mesh.cpp">
+      <Filter>Source Files\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MeshBuilder.cpp">
+      <Filter>Source Files\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\RenderHelper.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TextureManager.cpp">
+      <Filter>Source Files\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SpriteAnimation.cpp">
+      <Filter>Source Files\SpriteAnimation</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SceneManager.cpp">
+      <Filter>Source Files\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SceneBase.cpp">
+      <Filter>Source Files\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Camera.cpp">
+      <Filter>Source Files\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\shader.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Utility.cpp">
+      <Filter>Source Files\Others</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Camera2D.cpp">
+      <Filter>Source Files\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Character.cpp">
+      <Filter>Source Files\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Hero.cpp">
+      <Filter>Source Files\Characters\Heroes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Enemy.cpp">
+      <Filter>Source Files\Characters\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Daniu.cpp">
+      <Filter>Source Files\Characters\Heroes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Seetwo.cpp">
+      <Filter>Source Files\Characters\Heroes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Bullet.cpp">
+      <Filter>Source Files\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EntityManager.cpp">
+      <Filter>Source Files\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Kifellah.cpp">
+      <Filter>Source Files\Characters\Heroes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SceneDaniu_1.cpp">
+      <Filter>Source Files\Scene\DaniuLevels</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TileSystem.cpp">
+      <Filter>Source Files\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Sawblade.cpp">
+      <Filter>Source Files\Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Application.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TileCollider.cpp">
+      <Filter>Source Files\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CollisionSystem.cpp">
+      <Filter>Source Files\Others</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameInformation.cpp">
+      <Filter>Source Files\Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MapRenderer.cpp">
+      <Filter>Source Files\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TileIndex.cpp">
+      <Filter>Source Files\Tiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\InputManager.cpp">
+      <Filter>Source Files\Input</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Source\GraphicsManager.h">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AudioManager.h">
+      <Filter>Header Files\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\RenderHelper.h">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Controller_Keyboard.h">
+      <Filter>Header Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Controller_Mouse.h">
+      <Filter>Header Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\InputManager.h">
+      <Filter>Header Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\LoadOBJ.h">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\LoadHmap.h">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\LoadTGA.h">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Animation.h">
+      <Filter>Header Files\SpriteAnimation</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Mesh.h">
+      <Filter>Header Files\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MeshBuilder.h">
+      <Filter>Header Files\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Material.h">
+      <Filter>Header Files\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Vertex.h">
+      <Filter>Header Files\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SpriteAnimation.h">
+      <Filter>Header Files\SpriteAnimation</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TextureManager.h">
+      <Filter>Header Files\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Texture.h">
+      <Filter>Header Files\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene.h">
+      <Filter>Header Files\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneBase.h">
+      <Filter>Header Files\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneManager.h">
+      <Filter>Header Files\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Application.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Camera.h">
+      <Filter>Header Files\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\shader.hpp">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Light.h">
+      <Filter>Header Files\Others</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Utility.h">
+      <Filter>Header Files\Others</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EntityBase.h">
+      <Filter>Header Files\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Camera2D.h">
+      <Filter>Header Files\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Character.h">
+      <Filter>Header Files\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Hero.h">
+      <Filter>Header Files\Characters\Heroes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Daniu.h">
+      <Filter>Header Files\Characters\Heroes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Seetwo.h">
+      <Filter>Header Files\Characters\Heroes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy.h">
+      <Filter>Header Files\Characters\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Bullet.h">
+      <Filter>Header Files\Bullets</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\EntityManager.h">
+      <Filter>Header Files\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Kifellah.h">
+      <Filter>Header Files\Characters\Heroes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneDaniu_1.h">
+      <Filter>Header Files\Scene\DaniuLevels</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ShaderProgram.h">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TileSystem.h">
+      <Filter>Header Files\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TileIndex.h">
+      <Filter>Header Files\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Sawblade.h">
+      <Filter>Header Files\Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Tile.h">
+      <Filter>Header Files\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CollisionSystem.h">
+      <Filter>Header Files\Others</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TileCollider.h">
+      <Filter>Header Files\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MapEditor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameInformation.h">
+      <Filter>Header Files\Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MapRenderer.h">
+      <Filter>Header Files\Tiles</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{58ec8d5d-76d5-4bae-8def-97f0108b8db7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4d08cfe9-f4ca-4c2c-a9f7-6005cae97e03}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Graphics">
+      <UniqueIdentifier>{1ece1264-3644-4e5f-b11c-88c8c795b16e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Graphics">
+      <UniqueIdentifier>{275e1bc0-9426-48a3-8645-800d7bd1ccb0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Audio">
+      <UniqueIdentifier>{dc40a86b-0a34-465f-b117-7eec0708f59f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Audio">
+      <UniqueIdentifier>{016b3e95-0cb6-43a2-98ff-d38d562c7e59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Input">
+      <UniqueIdentifier>{664cd4e5-7738-4b43-bf83-5743bbff58f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Mesh">
+      <UniqueIdentifier>{3ffd7100-0ab6-43c4-91f6-bf54be3317ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\SpriteAnimation">
+      <UniqueIdentifier>{b8f3479b-300b-49d6-8ef6-0e132e345305}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\SpriteAnimation">
+      <UniqueIdentifier>{2903984b-5578-4ef6-b3a0-12a6d8f851df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Mesh">
+      <UniqueIdentifier>{825a4534-62cc-4912-9c4b-92598af7c23d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Texture">
+      <UniqueIdentifier>{abf2717b-5eb9-4515-8ca3-f2f6af130b18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Gameplay">
+      <UniqueIdentifier>{e57160ba-ae31-412b-a9c8-3e7acb0f9ad2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Gameplay">
+      <UniqueIdentifier>{175e7cc8-e485-4eb0-b794-667b3592f3bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Others">
+      <UniqueIdentifier>{63c02688-a8ac-4757-9b96-75f1b20d4767}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Others">
+      <UniqueIdentifier>{96ba6cee-ae67-48b3-bfc5-ac88620a16c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Scene">
+      <UniqueIdentifier>{abd1aa03-43c9-4b38-a516-c90d0bff6e83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scene">
+      <UniqueIdentifier>{8020bce8-bbb6-4af1-b7c5-50ce94ae5721}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Camera">
+      <UniqueIdentifier>{0a3f3942-0b0c-48f7-aff1-376adf725962}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Camera">
+      <UniqueIdentifier>{5e3fa7a6-014e-4c5a-9129-a5d53f8804bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Entity">
+      <UniqueIdentifier>{0fb46dd4-e31e-4239-acd1-f85e3010a866}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entity">
+      <UniqueIdentifier>{f2c21d18-4475-4dd7-8753-d528f2d07f3d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Scene\DaniuLevels">
+      <UniqueIdentifier>{856064fe-8ae6-4e30-806a-570e64025e84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scene\DaniuLevels">
+      <UniqueIdentifier>{b9701e39-4536-4f87-b496-0935ebeb9b2d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Characters">
+      <UniqueIdentifier>{18ee08f9-f088-4a6e-bf10-1df968c11488}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Characters\Heroes">
+      <UniqueIdentifier>{959cbc48-ca56-4030-9407-5c568f1f0b57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Characters\Enemies">
+      <UniqueIdentifier>{92b370f2-bd20-4636-8e88-1086f204f1d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Tiles">
+      <UniqueIdentifier>{8b398f2d-c5dd-4258-8ddb-c75ab5a04390}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Characters">
+      <UniqueIdentifier>{96f1f0f1-fc92-4404-b807-360aa5d65a14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Characters\Heroes">
+      <UniqueIdentifier>{41b9da91-f3b2-490b-9618-154222e19285}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Characters\Enemies">
+      <UniqueIdentifier>{ae4fb2b9-f780-4d91-887f-afb52d42c7f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Bullet">
+      <UniqueIdentifier>{88f9ef95-7832-4baf-bf86-742e2bb5168b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Tiles">
+      <UniqueIdentifier>{892e0d2b-9f58-4c82-8405-928b736f00b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Texture">
+      <UniqueIdentifier>{02e80f52-fb51-4f50-9119-7a1155c63cad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Input">
+      <UniqueIdentifier>{f3f6ba48-634b-4673-a140-723b24bdc1c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Bullets">
+      <UniqueIdentifier>{6d918a1e-5e81-46c5-835d-7db59aac2cec}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

@@ -109,7 +109,7 @@ void TileSystem::SetTileSize(const float& tileSize) {
 	if (tileSize < 0) {
 		this->tileSize = 0.0f;
 	} else {
-		this->tileSize - tileSize;
+		this->tileSize = tileSize;
 	}
 
 	UpdateBoundaries();

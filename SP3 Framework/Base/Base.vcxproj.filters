@@ -115,6 +115,9 @@
     <ClCompile Include="Source\InputManager.cpp">
       <Filter>Source Files\Input</Filter>
     </ClCompile>
+    <ClCompile Include="Source\GameManager.cpp">
+      <Filter>Source Files\Gameplay</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\GraphicsManager.h">
@@ -254,6 +257,9 @@
     </ClInclude>
     <ClInclude Include="Source\MapRenderer.h">
       <Filter>Header Files\Tiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameManager.h">
+      <Filter>Header Files\Gameplay</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
