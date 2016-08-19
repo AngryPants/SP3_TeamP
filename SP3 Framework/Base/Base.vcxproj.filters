@@ -261,6 +261,9 @@
     <ClInclude Include="Source\GameManager.h">
       <Filter>Header Files\Gameplay</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Bullet_Red.h">
+      <Filter>Header Files\Bullets</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">

@@ -56,6 +56,7 @@
     <ClInclude Include="Source\Application.h" />
     <ClInclude Include="Source\AudioManager.h" />
     <ClInclude Include="Source\Bullet.h" />
+    <ClInclude Include="Source\Bullet_Red.h" />
     <ClInclude Include="Source\Camera.h" />
     <ClInclude Include="Source\Camera2D.h" />
     <ClInclude Include="Source\Character.h" />

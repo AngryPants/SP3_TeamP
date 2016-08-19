@@ -8,16 +8,11 @@
 
 class Bullet : public EntityBase {
 
-private:
-	Mesh* mesh;
-	Texture texture;
-
+protected:
 	//The position of the bullet
 	Vector2 position;
-	//The rotation of the bullet
-	float rotation;
 	//The speed of the bullet
-	float speed;
+	Vector2 velocity;
 	//The lifetime of the bullet
 	float lifetime;
 	//The damage of the bullet
@@ -26,8 +21,10 @@ private:
 
 public:
 	Bullet();
-	Bullet(bool isActive, Vector2 position, float rotation, float speed, float lifetime, int damage);
 	virtual ~Bullet();
+
+	void SetVelocity(float x, float y);
+	Vector2 GetVelocity() const;
 
 	//Virtual Function(s)
 	void Update(const double& deltaTime);

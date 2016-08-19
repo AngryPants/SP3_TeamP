@@ -30,8 +30,8 @@ Kifellah::Kifellah()
 	tileCollider.SetDetectionWidth(scale.x * 0.5f);
 	tileCollider.SetLengthHeight(scale.y * 0.45f);
 	tileCollider.SetLengthWidth(scale.x * 0.45f);
-	tileCollider.SetNumHotspotsHeight(4);
-	tileCollider.SetNumHotspotsWidth(4);
+	tileCollider.SetNumHotspotsHeight(3);
+	tileCollider.SetNumHotspotsWidth(3);
 
 	//scale.Set(4, 4);
 	//tileCollider.SetDetectionHeight(scale.y * 0.5f);
