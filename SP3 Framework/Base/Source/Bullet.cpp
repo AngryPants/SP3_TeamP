@@ -2,12 +2,12 @@
 
 Bullet::Bullet() : position(0, 0), rotation(0), speed(0), lifetime(0), damage(0)
 {
-	isActive = false;
+	isActive = true;
 }
 
-Bullet::Bullet(bool bIsActive, Vector2 position, float rotation, float speed, float lifetime, int damage)
+Bullet::Bullet(bool isActive, Vector2 position, float rotation, float speed, float lifetime, int damage)
 {
-	this->isActive = bIsActive;
+	this->isActive = isActive;
 	this->position = position;
 	this->rotation = rotation;
 	this->speed = speed;

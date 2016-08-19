@@ -15,10 +15,10 @@ class SceneBase : public Scene {
 
 protected:
 	double minFPS;
-	Camera2D camera;
+	Camera2D* camera;
 	TileSystem tileSystem;
 	Hero* hero;
-	map<int, Sawblade> sawblades;
+	map<int, Sawblade*> sawblades;
 
 	virtual void InitHero() = 0;
 	virtual void InitCamera() = 0;

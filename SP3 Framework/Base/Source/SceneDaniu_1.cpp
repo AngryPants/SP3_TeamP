@@ -44,9 +44,10 @@ void SceneDaniu_1::InitHero() {
 
 void SceneDaniu_1::InitCamera() {
 
-	camera.SetFollowTarget(*hero);
-	camera.SetTileSystem(tileSystem);
-	EntityManager::GetInstance().AddEntity(name, camera);
+	camera = new Camera2D();
+	camera->SetFollowTarget(*hero);
+	camera->SetTileSystem(tileSystem);
+	EntityManager::GetInstance().AddEntity(name, *camera);
 
 }
 
@@ -78,7 +79,7 @@ void SceneDaniu_1::Update(const double& deltaTime) {
 void SceneDaniu_1::Render() {
 
 	GraphicsManager::GetInstance().Update();
-	GraphicsManager::GetInstance().SetToCameraView(camera);
+	GraphicsManager::GetInstance().SetToCameraView(*camera);
 
 	EntityManager::GetInstance().Render(this->name);
 	EntityManager::GetInstance().RenderUI(this->name);
@@ -90,7 +91,5 @@ void SceneDaniu_1::Render() {
 void SceneDaniu_1::Exit() {
 
 	EntityManager::GetInstance().ClearScene(name);
-	delete hero;
-	hero = nullptr;
 
 }

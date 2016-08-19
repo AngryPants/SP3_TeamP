@@ -22,10 +22,11 @@ private:
 	float lifetime;
 	//The damage of the bullet
 	int damage;
+	bool isActive;
 
 public:
 	Bullet();
-	Bullet(bool bIsActive, Vector2 position, float rotation, float speed, float lifetime, int damage);
+	Bullet(bool isActive, Vector2 position, float rotation, float speed, float lifetime, int damage);
 	virtual ~Bullet();
 
 	//Virtual Function(s)

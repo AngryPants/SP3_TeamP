@@ -214,7 +214,7 @@
       <Filter>Header Files\Characters\Enemies</Filter>
     </ClInclude>
     <ClInclude Include="Source\Bullet.h">
-      <Filter>Header Files\Characters\Bullets</Filter>
+      <Filter>Header Files\Bullets</Filter>
     </ClInclude>
     <ClInclude Include="Source\EntityManager.h">
       <Filter>Header Files\Entity</Filter>
@@ -338,9 +338,6 @@
     <Filter Include="Header Files\Characters\Enemies">
       <UniqueIdentifier>{92b370f2-bd20-4636-8e88-1086f204f1d1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Characters\Bullets">
-      <UniqueIdentifier>{6d918a1e-5e81-46c5-835d-7db59aac2cec}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Tiles">
       <UniqueIdentifier>{8b398f2d-c5dd-4258-8ddb-c75ab5a04390}</UniqueIdentifier>
     </Filter>
@@ -364,6 +361,9 @@
     </Filter>
     <Filter Include="Header Files\Input">
       <UniqueIdentifier>{f3f6ba48-634b-4673-a140-723b24bdc1c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Bullets">
+      <UniqueIdentifier>{6d918a1e-5e81-46c5-835d-7db59aac2cec}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
