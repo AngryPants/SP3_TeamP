@@ -17,7 +17,7 @@ Kifellah::Kifellah()
 
 	animations[IDLE].Set(0, 9, true, 1.0, true);
 	animations[RUN].Set(10, 19, true, 1.0, true);
-	animations[JUMP].Set(20, 29, false, 0.5, true);
+	animations[JUMP].Set(20, 29, false, 1.0, true);
 	animations[SHOOT].Set(30, 34, true, 1 / fireRate, true);
 	animations[RUN_SHOOT].Set(40, 49, true, 1.0, true);
 	animations[DEAD].Set(50, 59, false, 1.0, true);
@@ -26,10 +26,10 @@ Kifellah::Kifellah()
 	texture.textureArray[0] = TextureManager::GetInstance().AddTexture("Kifellah", "Image//Cyborg_Shooter//Characters//Heroes//Hero_Kifellah.tga");
 
 	scale.Set(4, 4);
-	tileCollider.SetDetectionHeight(scale.y * 0.5f);
-	tileCollider.SetDetectionWidth(scale.x * 0.5f);
-	tileCollider.SetLengthHeight(scale.y * 0.45f);
-	tileCollider.SetLengthWidth(scale.x * 0.45f);
+	tileCollider.SetDetectionHeight(scale.y * 0.55f);
+	tileCollider.SetDetectionWidth(scale.x * 0.3f);
+	tileCollider.SetLengthHeight(scale.y * 0.50f);
+	tileCollider.SetLengthWidth(scale.x * 0.25f);
 	tileCollider.SetNumHotspotsHeight(4);
 	tileCollider.SetNumHotspotsWidth(4);
 
@@ -54,6 +54,15 @@ void Kifellah::Update(const double& deltaTime)
 	mesh->GetTextureScale(textureScaleU, textureScaleV);
 
 	bool shouldIdle = true;
+	if (InputManager::GetInstance().GetInputInfo().keyDown[INPUT_SHOOT])
+	{
+		shouldIdle = false;
+		if (textureScaleU != 1.0f)
+		{
+			mesh->SetTextureScale(1.0f, 1.0f);
+		}
+		mesh->animation = &animations[JUMP];
+	}
 	if (InputManager::GetInstance().GetInputInfo().keyDown[INPUT_MOVE_RIGHT]) 
 	{
 		shouldIdle = false;

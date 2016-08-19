@@ -10,8 +10,8 @@ Hero::Hero()
 	lives = 3;
 	score = 0;
 	gravity = -20.0f;
-	checkpointCol = 0;
-	checkpointRow = 0;
+	checkpointCol = 2;
+	checkpointRow = 4;
 	damageTaken = false;
 	damageTimer = 0;
 	hitTrampoline = false;

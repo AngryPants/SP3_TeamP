@@ -134,6 +134,8 @@ void MapRenderer::Render(TileSystem& tileSystem) {
 					case TILE_DOOR_CLOSE:
 						//RenderHelper::GetInstance().RenderMesh(*sprite[SPRITE_COIN], spriteTextures[SPRITE_COIN], false);
 						break;
+					case TILE_SPIKE:
+						RenderHelper::GetInstance().RenderMesh(*mesh, meshTextures[MESH_SPIKE], false);
 				}
 
 				modelStack.Translate(0, 0, 1);
