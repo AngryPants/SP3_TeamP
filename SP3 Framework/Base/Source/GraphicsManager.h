@@ -44,6 +44,7 @@ public:
 	//MVP
 	MS modelStack, viewStack, projectionStack;
 	void SetToCameraView(Camera& camera);
+	void SetToHUD(float left, float right, float down, float up, float near, float far);
 
 	//Shader
 	bool HasShader(const string& shaderName) const;

@@ -97,8 +97,9 @@ void SceneDaniu_1::Render() {
 
 	GraphicsManager::GetInstance().Update();
 	GraphicsManager::GetInstance().SetToCameraView(*camera);
-
 	EntityManager::GetInstance().Render(this->name);
+
+
 	EntityManager::GetInstance().RenderUI(this->name);
 
 	MapRenderer::GetInstance().Render(tileSystem);
