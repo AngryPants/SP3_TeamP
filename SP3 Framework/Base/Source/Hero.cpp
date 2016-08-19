@@ -443,7 +443,7 @@ void Hero::MoveRight(const double& deltaTime) {
 		terrain = GetTileInfo(TILE_INFO::TERRAIN, tileSystem->TileValue(hotspotTileRow, hotspotTileCol));
 		if (terrain != 0) {
 			//Yeah we did. Let's move back to a spot we can be at.
-			position.x = (currentCol * tileSystem->GetTileSize()) + ((tileSystem->GetTileSize() - tileCollider.GetDetectionWidth()) * 1.0f);
+			position.x = currentCol * tileSystem->GetTileSize() + (tileSystem->GetTileSize() - tileCollider.GetDetectionWidth()) * 0.5f;
 			velocity.x = 0;
 			break;
 		}

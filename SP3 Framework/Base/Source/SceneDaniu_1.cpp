@@ -4,6 +4,7 @@
 #include "GraphicsManager.h"
 #include "MapRenderer.h"
 #include "Kifellah.h"
+#include "TileIndex.h"
 
 SceneDaniu_1::SceneDaniu_1() : SceneBase ("Daniu Level 1") {
 }
@@ -53,6 +54,8 @@ void SceneDaniu_1::InitEnemies() {
 }
 
 void SceneDaniu_1::InitSawblades() {
+
+	
 
 }
 
