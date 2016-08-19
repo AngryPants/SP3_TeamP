@@ -3,8 +3,11 @@
 
 #include "SingletonTemplate.h"
 #include "ShaderProgram.h"
+#include <map>
 #include "MatrixStack.h"
 #include <GL/glew.h>
+
+using std::map;
 
 class Camera;
 

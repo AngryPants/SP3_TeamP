@@ -1,5 +1,6 @@
 #include "SceneBase.h"
 #include "GraphicsManager.h"
+#include "RenderHelper.h"
 
 SceneBase::SceneBase(const string& name) : Scene(name) {
 	
@@ -25,17 +26,12 @@ void SceneBase::Init() {
 
 void SceneBase::InitShader() {
 
-	//Initialise the shader.
-	if (!GraphicsManager::GetInstance().HasShader("Shadow")) {
-		GraphicsManager::GetInstance().AddShader("Shadow", "Shader//Shadow.vertexshader", "Shader//Shadow.fragmentshader");
-	}
-	GraphicsManager::GetInstance().SetActiveShader("Shadow");
-
-	//Update Shader Uniforms
-	GraphicsManager::GetInstance().GetActiveShader()->UpdateBool("lightEnabled", false);
-	GraphicsManager::GetInstance().GetActiveShader()->UpdateInt("numLights", 0);
-	GraphicsManager::GetInstance().GetActiveShader()->UpdateBool("fogParam.enabled", false);
-	GraphicsManager::GetInstance().GetActiveShader()->UpdateFloat("alphaDiscardValue", 0.1f);
+	//Initialise the Shader.
+	RenderHelper::GetInstance().LoadShader<SHADERS::SHADOW>();
+	RenderHelper::GetInstance().EnableLight(false);
+	RenderHelper::GetInstance().SetNumLights(0);
+	RenderHelper::GetInstance().EnableFog(false);
+	RenderHelper::GetInstance().SetAlphaDiscardValue(0.1f);
 
 }
 
