@@ -289,6 +289,13 @@ void RenderHelper::RenderMesh(Mesh& mesh, Texture& texture, const bool& enableLi
 
 }
 
+void RenderHelper::RenderMesh(Mesh& mesh, const bool& enableLight) {
+	
+	static Texture texture;
+	RenderMesh(mesh, texture, enableLight);
+
+}
+
 void RenderHelper::RenderText(Mesh& mesh, Texture& texture, const string& text, Color color) {
 
 	switch (currentShader) {

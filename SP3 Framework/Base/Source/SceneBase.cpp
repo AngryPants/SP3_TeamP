@@ -8,6 +8,7 @@ Scene(name),
 gameManager(name) {
 	
 	hero = nullptr;
+	debugMode = false;
 
 }
 
@@ -42,6 +43,17 @@ void SceneBase::InitSawblades() {
 }
 
 void SceneBase::Update(const double& deltaTime) {
+
+	if (debugMode) {
+		if (InputManager::GetInstance().GetInputInfo().keyDown[INPUT_WIREFRAME_OFF]) {
+			GraphicsManager::GetInstance().Disable<GraphicsManager::MODE::WIREFRAME>();
+			cout << "Wireframe Mode On" << endl;
+		} else if (InputManager::GetInstance().GetInputInfo().keyDown[INPUT_WIREFRAME_ON]) {
+			GraphicsManager::GetInstance().Enable<GraphicsManager::MODE::WIREFRAME>();
+			cout << "Wireframe Mode Off" << endl;
+		}
+	}
+
 }
 
 void SceneBase::Render() {

@@ -70,11 +70,20 @@ void InputManager::Update() {
 		inputInfo.keyReleased[INPUT_PLACE_TILE] = 1;
 	}
 
-	if (keyboard.IsKeyPressed(0x46)) {
+	if (keyboard.IsKeyPressed('F')) {
 		inputInfo.keyDown[INPUT_SHOOT] = 1;
 		inputInfo.keyValue[INPUT_SHOOT] = 1.0f;
-	} else if (keyboard.IsKeyReleased(0x46)) {
+	} else if (keyboard.IsKeyReleased('F')) {
 		inputInfo.keyReleased[INPUT_SHOOT] = 1;
+	}
+
+	if (keyboard.IsKeyPressed(VK_SHIFT) && keyboard.IsKeyPressed('1')) {
+		inputInfo.keyDown[INPUT_WIREFRAME_ON] = 1;
+		inputInfo.keyValue[INPUT_WIREFRAME_ON] = 1;
+	}
+	if (keyboard.IsKeyPressed(VK_SHIFT) && keyboard.IsKeyPressed('2')) {
+		inputInfo.keyDown[INPUT_WIREFRAME_OFF] = 1;
+		inputInfo.keyValue[INPUT_WIREFRAME_OFF] = 1;
 	}
 
 	/********************************************************************************************************************/

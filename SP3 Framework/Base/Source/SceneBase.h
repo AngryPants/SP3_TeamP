@@ -27,6 +27,8 @@ protected:
 	virtual void InitEnemies() = 0;
 	virtual void InitSawblades();
 
+	bool debugMode;
+
 private:
 	void InitShader();
 

@@ -26,6 +26,10 @@ private:
 
 	Vector2 hotspots[8];
 	bool onGround;
+	Mesh* healthMesh;
+	Mesh* healthBorder;
+	Mesh* healthText;
+	Texture textTexture;
 
 public:
 	Kifellah();

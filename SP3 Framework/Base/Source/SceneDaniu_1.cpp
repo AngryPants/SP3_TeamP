@@ -23,6 +23,8 @@ void SceneDaniu_1::Init() {
 	InitEnemies();
 	InitSawblades();
 
+	debugMode = true;
+
 }
 
 void SceneDaniu_1::InitHero() {
@@ -88,6 +90,8 @@ void SceneDaniu_1::Update(const double& deltaTime) {
 		frameTime = 1.0 / minFPS;
 	}
 
+	SceneBase::Update(deltaTime);
+
 	EntityManager::GetInstance().Update(name, frameTime);
 	AudioManager::GetInstance().Update();
 
@@ -100,11 +104,11 @@ void SceneDaniu_1::Render() {
 	GraphicsManager::GetInstance().Enable<GraphicsManager::MODE::DEPTH_TEST>();
 	EntityManager::GetInstance().Render(this->name);
 
+	MapRenderer::GetInstance().Render(tileSystem);
+
 	GraphicsManager::GetInstance().SetToHUD(-50, 50, -50, 50, -50, 50);
 	GraphicsManager::GetInstance().Disable<GraphicsManager::MODE::DEPTH_TEST>();
 	EntityManager::GetInstance().RenderUI(this->name);
-
-	MapRenderer::GetInstance().Render(tileSystem);
 
 }
 

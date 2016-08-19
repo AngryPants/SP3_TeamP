@@ -73,6 +73,7 @@ public:
 
 	//Rendering
 	void RenderMesh(Mesh& mesh, Texture& texture, const bool& enableLight);
+	void RenderMesh(Mesh& mesh, const bool& enableLight);
 	void RenderText(Mesh& mesh, Texture& texture, const string& text, Color color);
 
 };
