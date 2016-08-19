@@ -404,7 +404,7 @@ void Hero::MoveLeft(const double& deltaTime)
 		if (terrain != 0) 
 		{
 			//Yeah we did. Let's move back to a spot we can be at.
-			position.x = currentCol * tileSystem->GetTileSize() + (tileSystem->GetTileSize() - tileCollider.GetDetectionWidth()) * 0.5f;
+			position.x -= hotspot.x - (hotspotTileCol + 1) * tileSystem->GetTileSize() + tileSystem->GetTileSize() * 0.5f;
 			velocity.x = 0;
 			break;
 		}
@@ -491,7 +491,7 @@ void Hero::MoveRight(const double& deltaTime)
 		if (terrain != 0) 
 		{
 			//Yeah we did. Let's move back to a spot we can be at.
-			position.x = currentCol * tileSystem->GetTileSize() + (tileSystem->GetTileSize() - tileCollider.GetDetectionWidth()) * 0.5f;
+			position.x -= hotspot.x - (hotspotTileCol - 1) * tileSystem->GetTileSize() - tileSystem->GetTileSize() * 0.5f;
 			velocity.x = 0;
 			break;
 		}
@@ -578,7 +578,7 @@ void Hero::MoveDown(const double& deltaTime)
 		if (terrain != 0) 
 		{
 			//Yeah we did. Let's move back to a spot we can be at.
-			position.y = currentRow * tileSystem->GetTileSize() + (tileSystem->GetTileSize() - tileCollider.GetDetectionHeight()) * 0.5f;
+			position.y -= hotspot.y - (hotspotTileRow + 1) * tileSystem->GetTileSize() + tileSystem->GetTileSize() * 0.5f;
 			velocity.y = 0;
 			onGround = true;
 			break;
@@ -673,7 +673,7 @@ void Hero::MoveUp(const double& deltaTime)
 		if (terrain != 0)
 		{
 			//Yeah we did. Let's move back to a spot we can be at.
-			position.y = currentRow * tileSystem->GetTileSize() + (tileSystem->GetTileSize() - tileCollider.GetDetectionHeight()) * 0.5f;
+			position.y -= hotspot.y - (hotspotTileRow - 1) * tileSystem->GetTileSize() - tileSystem->GetTileSize() * 0.5f;
 			velocity.y = -velocity.y;
 			break;
 		}
