@@ -14,8 +14,10 @@ class Sawblade : public EntityBase {
 private:
 	float speed;
 	Vector2 position;
+	float radius;
 	bool initialized;
 	int damage;
+	Vector2 velocity;
 
 	Hero *hero;
 	Mesh *mesh;
@@ -24,12 +26,15 @@ private:
 	std::map<unsigned int, Vector2>::iterator nodeIter;
 	std::map<unsigned int, Vector2> nodes;
 
+	void SawbladeHeroChecker(float deltaTime);
+
 public:
 	//Constructor(s) & Destructor
 	Sawblade();
 	virtual ~Sawblade() {}
 
 	void AddNode(unsigned int index, Vector2 position);
+	
 
 	//Virtual Function(s)
 	void Update(const double &deltaTime);

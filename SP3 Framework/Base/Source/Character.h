@@ -41,6 +41,7 @@ public:
 	Vector2 position;
 	Vector2 scale;
 	Vector2 velocity;
+	float radius;
 
 	//Constructor(s) & Destructor
 	Character();

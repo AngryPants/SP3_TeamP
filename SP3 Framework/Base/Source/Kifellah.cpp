@@ -25,7 +25,7 @@ Kifellah::Kifellah()
 	mesh->animation = &animations[IDLE];
 	texture.textureArray[0] = TextureManager::GetInstance().AddTexture("Kifellah", "Image//Cyborg_Shooter//Characters//Heroes//Hero_Kifellah.tga");
 
-	scale.Set(4, 4);
+	scale.Set(radius, radius);
 	tileCollider.SetDetectionHeight(scale.y * 0.5f);
 	tileCollider.SetDetectionWidth(scale.x * 0.5f);
 	tileCollider.SetLengthHeight(scale.y * 0.45f);

@@ -15,6 +15,7 @@ Hero::Hero()
 	damageTaken = false;
 	damageTimer = 0;
 	hitTrampoline = false;
+	radius = 2.f;
 }
 
 Hero::~Hero()

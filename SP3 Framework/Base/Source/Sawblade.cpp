@@ -5,6 +5,7 @@
 #include "TextureManager.h"
 #include "RenderHelper.h"
 #include "CollisionSystem.h"
+#include "Character.h"
 
 Sawblade::Sawblade()
 {
@@ -13,9 +14,11 @@ Sawblade::Sawblade()
 	nodeIter = nodes.begin();
 	speed = 10.f;
 	damage = 10.f;
+	radius = 1.f;
+	velocity.Set(0, 0);
 
-	mesh = MeshBuilder::GetInstance().GenerateQuad("Kifellah", 6, 10);
-	texture.textureArray[0] = TextureManager::GetInstance().AddTexture("Kifellah", "Image//Cyborg_Shooter//Heroes//Kifellah.tga");
+	mesh = MeshBuilder::GetInstance().GenerateQuad("Sawblade", Color(1, 1, 1), 1.f);
+	texture.textureArray[0] = TextureManager::GetInstance().AddTexture("Sawblade", "Image//Cyborg_Shooter//Others//Saw.tga");
 }
 
 void Sawblade::AddNode(unsigned int index, Vector2 position)
@@ -23,7 +26,12 @@ void Sawblade::AddNode(unsigned int index, Vector2 position)
 	nodes.insert(std::pair<unsigned int, Vector2>(index, position));
 }
 
-
+void Sawblade::SawbladeHeroChecker(float deltaTime)
+{
+	float timeToCollision = CollisionSystem::CircleCircle(position, hero->position, radius, hero->radius, velocity, hero->velocity);
+	if (timeToCollision < deltaTime)
+		hero->TakeDamage(damage);
+}
 
 void Sawblade::Update(const double &deltaTime)
 {
@@ -48,7 +56,8 @@ void Sawblade::Update(const double &deltaTime)
 		return;
 	}
 
-	position += direction.Normalize() * speed * deltaTime;
+	velocity += direction.Normalize() * speed * deltaTime;
+	position += velocity;
 
 	if (direction.x < 0) {
 		if (position.x < nodeIter->second.x) {
@@ -71,6 +80,9 @@ void Sawblade::Update(const double &deltaTime)
 			position.y = nodeIter->second.y;
 		}
 	}
+
+	SawbladeHeroChecker(deltaTime);
+	
 }
 
 void Sawblade::Render()
@@ -78,6 +90,7 @@ void Sawblade::Render()
 	MS& modelStack = GraphicsManager::GetInstance().modelStack;
 	modelStack.PushMatrix();
 		modelStack.Translate(position.x, position.y, 0);
+		modelStack.Scale(radius, radius, 1);
 		RenderHelper::GetInstance().RenderMesh(*mesh, texture, false);
 	modelStack.PopMatrix();
 }
