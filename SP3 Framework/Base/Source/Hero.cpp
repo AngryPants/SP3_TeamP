@@ -746,9 +746,9 @@ void Hero::ItemInteraction(unsigned int& tileValue, float &hotspotX, float &hots
 		case TILE_SPIKE:
 			if (!damageTaken)
 			{
-				TakeDamage(20);
-				position.x += -velocity.x;
-				position.y += -velocity.y;
+				TakeDamage(20);				
+				velocity.x *= -1;
+				velocity.y *= -1;
 			}
 			break;
 		case TILE_WRENCH:
