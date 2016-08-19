@@ -68,6 +68,8 @@ void SceneDaniu_1::Update(const double& deltaTime) {
 
 	EntityManager::GetInstance().Update(name, frameTime);
 
+	AudioManager::GetInstance().Update();
+
 }
 
 void SceneDaniu_1::Render() {

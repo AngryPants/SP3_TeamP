@@ -3,11 +3,15 @@
 #include "TileIndex.h"
 #include "GraphicsManager.h"
 #include "RenderHelper.h"
+#include "AudioManager.h"
 
-Hero::Hero() : lives(3), score(0)
+Hero::Hero()
 {
+	lives = 3;
+	score = 0;
 	gravity = -20.0f;
-	debugMesh = MeshBuilder::GetInstance().GenerateSphere("Debug Sphere", Color(1, 0, 0), 8, 8, 1.0f);
+	checkpointCol = 0;
+	checkpointRow = 0;
 }
 
 Hero::~Hero()
@@ -600,8 +604,6 @@ void Hero::MoveUp(const double& deltaTime) {
 		terrain = GetTileInfo(TILE_INFO::TERRAIN, tileSystem->TileValue(hotspotTileRow, hotspotTileCol));
 		if (terrain != 0)
 		{
-			cout << "Player Position: " << position.x << " " << position.y << endl;
-			cout << "Hotspot Position: " << hotspot.x << " " << hotspot.y << endl;
 			//Yeah we did. Let's move back to a spot we can be at.
 			position.y = currentRow * tileSystem->GetTileSize() + (tileSystem->GetTileSize() - tileCollider.GetDetectionHeight()) * 0.5f;
 			velocity.y = -velocity.y;
@@ -656,6 +658,7 @@ void Hero::PickUpItem(unsigned int& tileValue)
 		case TILE_COIN:
 			score += 10; //Add our score.
 			ClearTileValue(TILE_INFO::ITEM, tileValue); //Remove the coin.
+			AudioManager::GetInstance().PlayAudio2D("Audio//Sound_Effects//Coin_Pickup.flac", false);
 			break;
 	}
 }

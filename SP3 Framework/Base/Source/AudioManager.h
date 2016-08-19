@@ -16,13 +16,11 @@ private:
 	vector<ISound*> audioList2D;
 	vector<ISound*> audioList3D;
 
-	//Constructor
+	//Constructor & Destructor
 	AudioManager();
-
-public:
-	//Destructor
 	virtual ~AudioManager();
 
+public:
 	//Function(s)
 	static AudioManager& GetInstance();
 	void Update();

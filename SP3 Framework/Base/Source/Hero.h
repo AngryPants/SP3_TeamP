@@ -31,8 +31,7 @@ protected:
 	int score;
 	float gravity;
 
-	//Debug
-	Mesh* debugMesh;
+	int checkpointRow, checkpointCol;
 
 	//Move
 	virtual void MoveLeft(const double& deltaTime);

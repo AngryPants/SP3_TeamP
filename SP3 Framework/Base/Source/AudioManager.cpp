@@ -71,7 +71,6 @@ bool AudioManager::PlayAudio3D(const char* audioFile, bool looped, float minDist
 									 vec3df(listenerDirection.x, listenerDirection.y, listenerDirection.z),
 									 vec3df(upVector.x, upVector.y, upVector.z));
 
-
 	ISound* soundPtr = audioEngine->play3D(audioFile, vec3df(soundPosition.x, soundPosition.y, soundPosition.z), looped, false, true);
 	soundPtr->setMinDistance(minDistance);
 	soundPtr->setMaxDistance(maxDistance);
