@@ -5,7 +5,6 @@
 #include "Mesh.h"
 #include "Vector2.h"
 #include "Texture.h"
-
 #include <map>
 
 class Sawblade : public EntityBase {
@@ -19,16 +18,20 @@ private:
 	Texture texture;
 
 	std::map<unsigned int, Vector2>::iterator nodeIter;
-
-public:
 	std::map<unsigned int, Vector2> nodes;
 
+public:
+	//Constructor(s) & Destructor
 	Sawblade();
 	virtual ~Sawblade() {}
 
+	void AddNode(unsigned int index, Vector2 position);
+
+	//Virtual Function(s)
 	void Update(const double &deltaTime);
 	void Render();
 	void RenderUI() {}
+
 };
 
 #endif

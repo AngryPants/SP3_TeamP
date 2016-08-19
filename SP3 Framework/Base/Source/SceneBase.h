@@ -7,15 +7,18 @@
 #include "TileIndex.h"
 #include "TileSystem.h"
 #include "Sawblade.h"
+#include <map>
+
+using std::map;
 
 class SceneBase : public Scene {
 
 protected:
 	double minFPS;
-	Camera2D camera;
+	Camera2D* camera;
 	TileSystem tileSystem;
 	Hero* hero;
-	vector<Sawblade> sawblades;
+	map<int, Sawblade*> sawblades;
 
 	virtual void InitHero() = 0;
 	virtual void InitCamera() = 0;

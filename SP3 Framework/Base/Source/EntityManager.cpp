@@ -15,11 +15,19 @@ void EntityManager::Update(const string& sceneName, const double& deltaTime) {
 
 	EntityList::iterator listIter = entityList.find(sceneName);
 	if (listIter == entityList.end()) {
+		cout << "Unable to update " << sceneName << " as it does not exist in the EntityManager." << endl;
 		return;
 	}
 
-	for (list<EntityBase*>::iterator entityIter = listIter->second.begin(); entityIter != listIter->second.end(); ++entityIter) {
-		(*entityIter)->Update(deltaTime);
+	for (list<EntityBase*>::iterator entityIter = listIter->second.begin(); entityIter != listIter->second.end();) {
+		if ((*entityIter)->IsDestroyed()) {
+			//Delete this entity.
+			delete (*entityIter);
+			entityIter = listIter->second.erase(entityIter);
+		} else {
+			(*entityIter)->Update(deltaTime);
+			 ++entityIter;
+		}
 	}
 
 }
@@ -109,6 +117,16 @@ void EntityManager::ClearScene(const string& sceneName) {
 		return;
 	}
 	
+	//Delete da stuff.
+	for (list<EntityBase*>::iterator entityIter = listIter->second.begin(); entityIter != listIter->second.end();) {
+		if (*entityIter) {
+			entityIter = listIter->second.erase(entityIter);
+		} else {
+			++entityIter;
+		}
+	}
+
+	//Delete da list.
 	entityList.erase(listIter);
 
 }

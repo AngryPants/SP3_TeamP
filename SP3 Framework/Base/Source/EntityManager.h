@@ -31,8 +31,8 @@ public:
 	void Update(const string& sceneName, const double& deltaTime);
 	void Render(const string& sceneName);
 	void RenderUI(const string& sceneName);
-	bool AddEntity(const string& sceneName, EntityBase& entityPtr);
-	bool RemoveEntity(const string& sceneName, EntityBase& entityPtr);
+	bool AddEntity(const string& sceneName, EntityBase& entity);
+	bool RemoveEntity(const string& sceneName, EntityBase& entity);
 	void ClearScene(const string& sceneName);
 
 };
