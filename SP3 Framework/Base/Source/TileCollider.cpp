@@ -1,11 +1,13 @@
 #include "TileCollider.h"
 
 TileCollider::TileCollider()
-:
-detectionWidth(1), detectionHeight(1),
-lengthWidth(0.9f), lengthHeight(0.9f),
-numHotspotsWidth(2), numHotspotsHeight(2)
 {
+	detectionWidth = 1;
+	detectionHeight = 1;
+	lengthWidth = 0.9f;
+	lengthHeight = 0.9f;
+	numHotspotsWidth = 2;
+	numHotspotsHeight = 2;
 }
 
 TileCollider::~TileCollider()

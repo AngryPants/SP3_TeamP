@@ -3,12 +3,14 @@
 #include "GraphicsManager.h"
 #include "RenderHelper.h"
 
-Kifellah::Kifellah() {
+Kifellah::Kifellah() 
+{
 	
 	name = "Kifellah";
 	speed = 15;
 	damage = 10;
-	health = 100;
+	maxHealth = 100;
+	health = maxHealth;
 	fireRate = 3.0;
 
 	onGround = true;
@@ -23,7 +25,7 @@ Kifellah::Kifellah() {
 	mesh->animation = &animations[IDLE];
 	texture.textureArray[0] = TextureManager::GetInstance().AddTexture("Kifellah", "Image//Cyborg_Shooter//Characters//Heroes//Hero_Kifellah.tga");
 
-	scale.Set(2, 2);
+	scale.Set(4, 4);
 	tileCollider.SetDetectionHeight(scale.y * 0.5f);
 	tileCollider.SetDetectionWidth(scale.x * 0.5f);
 	tileCollider.SetLengthHeight(scale.y * 0.45f);
@@ -52,8 +54,17 @@ void Kifellah::Update(const double& deltaTime)
 			mesh->SetTextureScale(1.0f, 1.0f);
 		}
 		mesh->animation = &animations[RUN];
-	} 
-	else if (InputManager::GetInstance().GetInputInfo().keyDown[INPUT_MOVE_LEFT]) 
+	}
+	else if (InputManager::GetInstance().GetInputInfo().keyDown[INPUT_JUMP] && InputManager::GetInstance().GetInputInfo().keyDown[INPUT_MOVE_RIGHT])
+	{
+		shouldIdle = false;
+		if (textureScaleU != 1.0f)
+		{
+			mesh->SetTextureScale(1.0f, 1.0f);
+		}
+		mesh->animation = &animations[JUMP];
+	}
+	if (InputManager::GetInstance().GetInputInfo().keyDown[INPUT_MOVE_LEFT]) 
 	{
 		shouldIdle = false;
 		if (textureScaleU != -1.0f) 
@@ -61,8 +72,17 @@ void Kifellah::Update(const double& deltaTime)
 			mesh->SetTextureScale(-1.0f, 1.0f);
 		}
 		mesh->animation = &animations[RUN];
+	}	
+	else if (InputManager::GetInstance().GetInputInfo().keyDown[INPUT_JUMP] && InputManager::GetInstance().GetInputInfo().keyDown[INPUT_MOVE_LEFT])
+	{
+		shouldIdle = false;
+		if (textureScaleU != -1.0f)
+		{
+			mesh->SetTextureScale(-1.0f, 1.0f);
+		}
+		mesh->animation = &animations[JUMP];
 	}
-	if (InputManager::GetInstance().GetInputInfo().keyDown[INPUT_JUMP])
+	if (InputManager::GetInstance().GetInputInfo().keyDown[INPUT_SHOOT])
 	{
 		shouldIdle = false;
 		if (textureScaleU != 1.0f)
@@ -71,7 +91,7 @@ void Kifellah::Update(const double& deltaTime)
 		}
 		mesh->animation = &animations[SHOOT];
 	}
-	if (InputManager::GetInstance().GetInputInfo().keyDown[INPUT_MOVE_RIGHT] && InputManager::GetInstance().GetInputInfo().keyDown[INPUT_JUMP])
+	if (InputManager::GetInstance().GetInputInfo().keyDown[INPUT_MOVE_RIGHT] && InputManager::GetInstance().GetInputInfo().keyDown[INPUT_SHOOT])
 	{
 		shouldIdle = false;
 		if (textureScaleU != 1.0f)
@@ -80,7 +100,7 @@ void Kifellah::Update(const double& deltaTime)
 		}
 		mesh->animation = &animations[RUN_SHOOT];
 	}
-	if (InputManager::GetInstance().GetInputInfo().keyDown[INPUT_MOVE_LEFT] && InputManager::GetInstance().GetInputInfo().keyDown[INPUT_JUMP])
+	if (InputManager::GetInstance().GetInputInfo().keyDown[INPUT_MOVE_LEFT] && InputManager::GetInstance().GetInputInfo().keyDown[INPUT_SHOOT])
 	{
 		shouldIdle = false;
 		if (textureScaleU != -1.0f)
@@ -95,9 +115,14 @@ void Kifellah::Update(const double& deltaTime)
 		mesh->animation = &animations[IDLE];
 	}
 
+	if (health > maxHealth)
+	{
+		health = maxHealth;
+	}
+
+	Hero::Respawn(maxHealth);
 	mesh->Update(deltaTime);
 	Hero::Update(deltaTime);
-
 }
 
 void Kifellah::Render() 

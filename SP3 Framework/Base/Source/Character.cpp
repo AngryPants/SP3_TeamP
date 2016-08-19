@@ -6,6 +6,7 @@ Character::Character()
 	this->position.SetZero();
 	this->scale.Set(1, 1);
 	this->health = 1;
+	this->maxHealth = 1;
 	this->speed = 1;
 	this->damage = 0;
 	this->fireRate = 1;
@@ -85,4 +86,9 @@ void Character::RemoveTileSystem() {
 
 	this->tileSystem = nullptr;
 
+}
+
+void Character::TakeDamage(const int &damage)
+{
+	this->health -= damage;
 }
