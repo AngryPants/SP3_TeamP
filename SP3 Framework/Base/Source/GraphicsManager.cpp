@@ -88,6 +88,16 @@ void GraphicsManager::SetToCameraView(Camera& camera) {
 
 }
 
+void GraphicsManager::SetToHUD(float left, float right, float down, float up, float near, float far) {
+
+	modelStack.LoadIdentity();
+	viewStack.LoadIdentity();
+	Mtx44 orthoMatrix;
+	orthoMatrix.SetToOrtho(left, right, down, up, near, far);
+	projectionStack.LoadMatrix(orthoMatrix);
+
+}
+
 //Shader
 bool GraphicsManager::HasShader(const string& shaderName) const {
 

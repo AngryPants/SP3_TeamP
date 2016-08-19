@@ -2,7 +2,10 @@
 #include "GraphicsManager.h"
 #include "RenderHelper.h"
 
-SceneBase::SceneBase(const string& name) : Scene(name) {
+SceneBase::SceneBase(const string& name)
+:
+Scene(name),
+gameManager(name) {
 	
 	hero = nullptr;
 

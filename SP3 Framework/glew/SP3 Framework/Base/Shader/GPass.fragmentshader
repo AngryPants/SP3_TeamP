@@ -1,0 +1,35 @@
+#version 330 core
+ 
+//Input Data
+in vec2 texCoord;
+ 
+// Ouput Data
+layout(location = 0) out float fragmentdepth;
+
+//Texture Uniforms
+const int MAX_TEXTURES = 8;
+uniform bool colorTextureEnabled[MAX_TEXTURES];
+uniform sampler2D colorTexture[MAX_TEXTURES];
+ 
+void main(){
+
+	float alphaValue = 0.0f;
+	int numEnabledTextures = 0;
+	for (int i = 0; i < MAX_TEXTURES; ++i) {
+		if (colorTextureEnabled[i] == true) {
+			vec4 color = texture2D(colorTexture[i], texCoord);
+			alphaValue += color.a;
+			++numEnabledTextures;
+		}
+	}
+	
+	if (numEnabledTextures > 0) {
+		alphaValue /= numEnabledTextures;
+		if (alphaValue < 0.1f) {
+			discard;
+		}
+	}
+
+    fragmentdepth = gl_FragCoord.z;
+	
+}

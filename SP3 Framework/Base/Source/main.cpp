@@ -1,14 +1,24 @@
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
 
+#ifdef _DEBUG
+   #ifndef DBG_NEW
+      #define DBG_NEW new ( _NORMAL_BLOCK , __FILE__ , __LINE__ )
+      #define new DBG_NEW
+   #endif
+#endif  // _DEBUG
 
 #include "Application.h"
 
-int main(void) {
+void main(void) {
 
 	Application &app = Application::GetInstance();
 	app.Init();
 	app.Run();
 	app.Exit();
 
-	return 0;
+	//Check for memory leaks.
+	_CrtDumpMemoryLeaks();
 
 }

@@ -23,6 +23,7 @@
     <ClCompile Include="Source\Daniu.cpp" />
     <ClCompile Include="Source\Enemy.cpp" />
     <ClCompile Include="Source\EntityManager.cpp" />
+    <ClCompile Include="Source\GameManager.cpp" />
     <ClCompile Include="Source\GraphicsManager.cpp" />
     <ClCompile Include="Source\Hero.cpp" />
     <ClCompile Include="Source\InputManager.cpp" />
@@ -55,6 +56,7 @@
     <ClInclude Include="Source\Application.h" />
     <ClInclude Include="Source\AudioManager.h" />
     <ClInclude Include="Source\Bullet.h" />
+    <ClInclude Include="Source\Bullet_Red.h" />
     <ClInclude Include="Source\Camera.h" />
     <ClInclude Include="Source\Camera2D.h" />
     <ClInclude Include="Source\Character.h" />
@@ -65,6 +67,7 @@
     <ClInclude Include="Source\Enemy.h" />
     <ClInclude Include="Source\EntityBase.h" />
     <ClInclude Include="Source\EntityManager.h" />
+    <ClInclude Include="Source\GameManager.h" />
     <ClInclude Include="Source\GraphicsManager.h" />
     <ClInclude Include="Source\Hero.h" />
     <ClInclude Include="Source\InputManager.h" />

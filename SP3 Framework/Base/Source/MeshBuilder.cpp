@@ -417,8 +417,8 @@ Mesh* MeshBuilder::GenerateSkyPlane(const std::string &meshName, Color color, un
 	//Calculate the indices
 	int index = 0;
 	
-	for (int i = 0; i < numSlices; ++i) {
-		for (int j = 0; j < numSlices; ++j) {
+	for (unsigned int i = 0; i < numSlices; ++i) {
+		for (unsigned int j = 0; j < numSlices; ++j) {
 			int startvert = (i * (numSlices + 1) + j);
 			index_buffer_data.push_back(startvert); //Triangle 1
 			index_buffer_data.push_back(startvert + 1);

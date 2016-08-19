@@ -12,6 +12,8 @@ ShaderProgram* GetShader() {
 		throw std::exception("Unable to render as no active shader has been set.");
 	}
 
+	return shaderProgram;
+	
 }
 
 ShaderProgram::FloatMat4x4 ToOpenglStruct(const Mtx44& matrix) {

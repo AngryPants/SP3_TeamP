@@ -15,6 +15,7 @@ Hero::Hero()
 	damageTaken = false;
 	damageTimer = 0;
 	hitTrampoline = false;
+	radius = 2.f;
 }
 
 Hero::~Hero()
@@ -58,234 +59,6 @@ void Hero::Update(const double &deltaTime)
 	this->velocity += acceleration * deltaTime;
 	this->velocity.x = Math::Clamp(this->velocity.x, -speed, speed); //Limit our horizontal speed.
 	this->velocity.y = Math::Clamp(this->velocity.y, -27.0f, 27.0f);
-
-	/*
-	//Collision Checking
-	//Find out the size difference between the tiles and us.
-	Vector2 sizeDiff;
-	sizeDiff.x = tileSystem->GetTileSize() - scale.x;
-	sizeDiff.y = tileSystem->GetTileSize() - scale.y;
-	//Position of the hotspot we're checking.
-	Vector2 hotspotPosition;
-	//Which tile our hotspot is in
-	int tileX = 0;
-	int tileY = 0;
-
-	//Left
-	float minY = position.y - tileCollider.GetDetectionHeight() * 0.5f; //Lowest position for our hotspots.
-	for (int i = 0; i < tileCollider.GetNumHotspotsHeight(); i++)
-	{
-		//Find out the position of our hotspot.
-		hotspotPosition.x = position.x - tileCollider.GetDetectionWidth() * 0.5f;
-		hotspotPosition.y = minY + i * tileCollider.GetHotspotOffsetHeight();
-		
-		//Make sure our hotspot is within the map boundaries
-		if (hotspotPosition.x < tileSystem->GetLeftBorder()) {
-			position.x = tileSystem->GetLeftBorder() + scale.x * 0.5f;
-			continue;
-		}
-
-		//Find out which tile our hotspot is in.
-		tileX = tileSystem->GetTile(hotspotPosition.x);
-		tileY = tileSystem->GetTile(hotspotPosition.y);
-
-		Tile* tile = &tileSystem->tiles[tileY][tileX];
-
-		if (hotspotPosition.x < tileSystem->GetLeftBorder())
-			position.x = tileX * tileSystem->GetTileSize() + sizeDiff.x * 0.5f;
-
-		switch (tile->GetTileValue(Tile::TILE_TYPE::TERRAIN))
-		{
-			case TILE_WALL_1:
-				position.x = tileX * tileSystem->GetTileSize() + sizeDiff.x * 0.5f;
-				break;
-			case TILE_WALL_2:
-				position.x = tileX * tileSystem->GetTileSize() + sizeDiff.x * 0.5f;
-				break;
-			case TILE_WALL_3:
-				position.x = tileX * tileSystem->GetTileSize() + sizeDiff.x * 0.5f;
-				break;
-		}
-
-		switch (tile->GetTileValue(Tile::TILE_TYPE::ITEM))
-		{
-			case TILE_COIN:
-				tile->ClearTileValue(Tile::TILE_TYPE::ITEM);
-				score++;
-				break;
-			case TILE_CHECKPOINT_UNSET:
-				tile->ClearTileValue(Tile::TILE_TYPE::ITEM);
-				tile->tileValue |= TILE_CHECKPOINT_SET;
-				break;		
-		}
-	}
-	// Right
-	for (int i = 0; i < tileCollider.GetNumHotspotsHeight(); i++)
-	{
-		int minY = position.y - tileCollider.GetDetectionHeight() * 0.5f;
-		Vector2 hotspotPosition;
-		hotspotPosition.x = position.x + tileCollider.GetDetectionWidth() * 0.5f;
-		hotspotPosition.y = minY + i * tileCollider.GetHotspotOffsetHeight();
-
-		int tileX = tileSystem->GetTile(hotspotPosition.x);
-		int tileY = tileSystem->GetTile(hotspotPosition.y);
-
-		Tile* tile = &tileSystem->tiles[tileY][tileX];
-
-		Vector2 sizeDiff;
-		sizeDiff.x = tileSystem->GetTileSize() - scale.x;
-		sizeDiff.y = tileSystem->GetTileSize() - scale.y;
-
-		if (hotspotPosition.x > tileSystem->GetRightBorder())
-			position.x = tileX * tileSystem->GetTileSize() + sizeDiff.x * 0.5f;
-
-		switch (tile->GetTileValue(Tile::TILE_TYPE::TERRAIN))
-		{
-		case TILE_WALL_1:
-		{
-			position.x = tileX * tileSystem->GetTileSize() + sizeDiff.x * 0.5f;
-			break;
-		}
-		case TILE_WALL_2:
-		{
-			position.x = tileX * tileSystem->GetTileSize() + sizeDiff.x * 0.5f;
-			break;
-		}
-		case TILE_WALL_3:
-		{
-			position.x = tileX * tileSystem->GetTileSize() + sizeDiff.x * 0.5f;
-			break;
-		}
-		}
-
-		switch (tile->GetTileValue(Tile::TILE_TYPE::ITEM))
-		{
-		case TILE_COIN:
-		{
-			tile->ClearTileValue(Tile::TILE_TYPE::ITEM);
-			score++;
-			break;
-		}
-		case TILE_CHECKPOINT_UNSET:
-		{
-			tile->ClearTileValue(Tile::TILE_TYPE::ITEM);
-			tile->tileValue |= TILE_CHECKPOINT_SET;
-			break;
-		}
-		}
-	}
-
-	// Up
-	for (int i = 0; i < tileCollider.GetNumHotspotsWidth(); i++)
-	{
-		int minX = position.x - tileCollider.GetDetectionWidth() * 0.5f;
-		Vector2 hotspotPosition;
-		hotspotPosition.x = minX + i * tileCollider.GetHotspotOffsetWidth();
-		hotspotPosition.y = position.y + tileCollider.GetDetectionHeight() * 0.5f;
-
-		int tileX = tileSystem->GetTile(hotspotPosition.x);
-		int tileY = tileSystem->GetTile(hotspotPosition.y);
-
-		Tile* tile = &tileSystem->tiles[tileY][tileX];
-
-		Vector2 sizeDiff;
-		sizeDiff.x = tileSystem->GetTileSize() - scale.x;
-		sizeDiff.y = tileSystem->GetTileSize() - scale.y;
-
-		if (hotspotPosition.y > tileSystem->GetTopBorder())
-			position.y = tileY * tileSystem->GetTileSize() + sizeDiff.y * 0.5f;
-
-		switch (tile->GetTileValue(Tile::TILE_TYPE::TERRAIN))
-		{
-		case TILE_WALL_1:
-		{
-			position.y = tileY * tileSystem->GetTileSize() + sizeDiff.y * 0.5f;
-			break;
-		}
-		case TILE_WALL_2:
-		{
-			position.y = tileY * tileSystem->GetTileSize() + sizeDiff.y * 0.5f;
-			break;
-		}
-		case TILE_WALL_3:
-		{
-			position.y = tileY * tileSystem->GetTileSize() + sizeDiff.y * 0.5f;
-			break;
-		}
-		}
-
-		switch (tile->GetTileValue(Tile::TILE_TYPE::ITEM))
-		{
-		case TILE_COIN:
-		{
-			tile->ClearTileValue(Tile::TILE_TYPE::ITEM);
-			score++;
-			break;
-		}
-		case TILE_CHECKPOINT_UNSET:
-		{
-			tile->ClearTileValue(Tile::TILE_TYPE::ITEM);
-			tile->tileValue |= TILE_CHECKPOINT_SET;
-			break;
-		}
-		}
-	}
-	// Down
-	for (int i = 0; i < tileCollider.GetNumHotspotsHeight(); i++)
-	{
-		int minX = position.x - tileCollider.GetDetectionWidth() * 0.5f;
-		Vector2 hotspotPosition;
-		hotspotPosition.x = minX + i * tileCollider.GetHotspotOffsetWidth();
-		hotspotPosition.y = position.y - tileCollider.GetDetectionHeight() * 0.5f;
-
-		int tileX = tileSystem->GetTile(hotspotPosition.x);
-		int tileY = tileSystem->GetTile(hotspotPosition.y);
-
-		Tile* tile = &tileSystem->tiles[tileY][tileX];
-
-		Vector2 sizeDiff;
-		sizeDiff.x = tileSystem->GetTileSize() - scale.x;
-		sizeDiff.y = tileSystem->GetTileSize() - scale.y;
-
-		if (hotspotPosition.y < tileSystem->GetBottomBorder())
-			position.y = tileY * tileSystem->GetTileSize() + sizeDiff.y * 0.5f;
-
-		switch (tile->GetTileValue(Tile::TILE_TYPE::TERRAIN))
-		{
-		case TILE_WALL_1:
-		{
-			position.y = tileY * tileSystem->GetTileSize() + sizeDiff.y * 0.5f;
-			break;
-		}
-		case TILE_WALL_2:
-		{
-			position.y = tileY * tileSystem->GetTileSize() + sizeDiff.y * 0.5f;
-			break;
-		}
-		case TILE_WALL_3:
-		{
-			position.y = tileY * tileSystem->GetTileSize() + sizeDiff.y * 0.5f;
-			break;
-		}
-		}
-
-		switch (tile->GetTileValue(Tile::TILE_TYPE::ITEM))
-		{
-		case TILE_COIN:
-		{
-			tile->ClearTileValue(Tile::TILE_TYPE::ITEM);
-			score++;
-			break;
-		}
-		case TILE_CHECKPOINT_UNSET:
-		{
-			tile->ClearTileValue(Tile::TILE_TYPE::ITEM);
-			tile->tileValue |= TILE_CHECKPOINT_SET;
-			break;
-		}
-		}
-	}
-	*/
 
 	//Move Along Y-Axis
 	if (velocity.y > 0) 
@@ -738,6 +511,11 @@ void Hero::ItemInteraction(unsigned int& tileValue, float &hotspotX, float &hots
 			checkpointCol = tileSystem->GetTile(hotspotX);
 			ClearTileValue(TILE_INFO::ITEM, tileValue);
 			tileValue |= TILE_CHECKPOINT_SET;
+			AudioManager::GetInstance().PlayAudio2D("Audio//Sound_Effects//Checkpoint.flac", false);
+			break;
+		case TILE_HERO_SPAWN:
+			checkpointRow = tileSystem->GetTile(hotspotY);
+			checkpointCol = tileSystem->GetTile(hotspotX);
 			AudioManager::GetInstance().PlayAudio2D("Audio//Sound_Effects//Checkpoint.flac", false);
 			break;
 		case TILE_ACID:
