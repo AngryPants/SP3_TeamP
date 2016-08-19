@@ -5,6 +5,8 @@
 #include "Mesh.h"
 #include "Vector2.h"
 #include "Texture.h"
+#include "Hero.h"
+
 #include <map>
 
 class Sawblade : public EntityBase {
@@ -13,7 +15,9 @@ private:
 	float speed;
 	Vector2 position;
 	bool initialized;
+	int damage;
 
+	Hero *hero;
 	Mesh *mesh;
 	Texture texture;
 

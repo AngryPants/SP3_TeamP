@@ -73,6 +73,8 @@ void InputManager::Update() {
 	if (keyboard.IsKeyPressed(0x46)) {
 		inputInfo.keyDown[INPUT_SHOOT] = 1;
 		inputInfo.keyValue[INPUT_SHOOT] = 1.0f;
+	} else if (keyboard.IsKeyReleased(0x46)) {
+		inputInfo.keyReleased[INPUT_SHOOT] = 1;
 	}
 
 	/********************************************************************************************************************/

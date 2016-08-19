@@ -56,7 +56,25 @@ void SceneDaniu_1::InitEnemies() {
 
 void SceneDaniu_1::InitSawblades() {
 
-	
+	// Get the position of the nodes for sawblade's movement
+	for (int row = 0; row < tileSystem.GetNumRows(); ++row)
+	{
+		for (int col = 0; col < tileSystem.GetNumColumns(); ++col)
+		{
+			unsigned int sawbladeIndex = GetTileInfo(TILE_INFO::SAWBLADE_INDEX, tileSystem.TileValue(row, col));
+			if (sawbladeIndex == 0)
+				continue;
+			unsigned int sawbladeNodes = GetTileInfo(TILE_INFO::SAWBLADE_NODE, tileSystem.TileValue(row, col));
+			if (sawbladeNodes == 0)
+				continue;
+			if (sawbladeNodes == tileSystem.TileValue(row, col))
+			{
+				Sawblade *tempSawBlade;
+				tempSawBlade->AddNode(sawbladeNodes, Vector2(row * tileSystem.GetTileSize(), col * tileSystem.GetTileSize()));
+				sawblades.insert(std::pair<int, Sawblade*>(static_cast<int>(TILE_INFO::SAWBLADE_INDEX), tempSawBlade));			
+			}
+		}
+	}
 
 }
 

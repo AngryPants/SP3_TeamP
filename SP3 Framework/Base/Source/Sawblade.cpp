@@ -4,6 +4,7 @@
 #include "GraphicsManager.h"
 #include "TextureManager.h"
 #include "RenderHelper.h"
+#include "CollisionSystem.h"
 
 Sawblade::Sawblade()
 {
@@ -11,10 +12,18 @@ Sawblade::Sawblade()
 	initialized = false;
 	nodeIter = nodes.begin();
 	speed = 10.f;
+	damage = 10.f;
 
 	mesh = MeshBuilder::GetInstance().GenerateQuad("Kifellah", 6, 10);
 	texture.textureArray[0] = TextureManager::GetInstance().AddTexture("Kifellah", "Image//Cyborg_Shooter//Heroes//Kifellah.tga");
 }
+
+void Sawblade::AddNode(unsigned int index, Vector2 position)
+{
+	nodes.insert(std::pair<unsigned int, Vector2>(index, position));
+}
+
+
 
 void Sawblade::Update(const double &deltaTime)
 {

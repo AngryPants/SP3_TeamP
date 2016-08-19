@@ -32,14 +32,16 @@ protected:
 	float gravity;
 
 	int checkpointRow, checkpointCol;
-
+	bool damageTaken;
+	float damageTimer;
+	bool hitTrampoline;
 	//Move
 	virtual void MoveLeft(const double& deltaTime);
 	virtual void MoveRight(const double& deltaTime);
 	virtual void MoveDown(const double& deltaTime);
 	virtual void MoveUp(const double& deltaTime);
 
-	virtual void PickUpItem(unsigned int& tileValue);
+	virtual void ItemInteraction(unsigned int& tileValue, float &hotspotX, float &hotspotY);
 
 public:
 	Hero();
@@ -51,7 +53,8 @@ public:
 
 	int GetLives() const;
 	void SetLives(const int& lives);
-
+	virtual void TakeDamage(const int &damage);
+	void Respawn(const int maxHealth);
 };
 
 #endif

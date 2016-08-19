@@ -13,6 +13,7 @@ class Character : public EntityBase {
 protected:
 	//Stats
 	int health;
+	int maxHealth;
 	float speed;
 	int damage;
 	double fireRate;
@@ -64,7 +65,7 @@ public:
 	virtual void Update(const double& deltaTime);
 	virtual void Render();
 	virtual void RenderUI();
-
+	virtual void TakeDamage(const int &damage);
 };
 
 #endif
