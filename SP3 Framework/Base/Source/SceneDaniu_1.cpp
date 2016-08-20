@@ -57,22 +57,25 @@ void SceneDaniu_1::InitEnemies() {
 void SceneDaniu_1::InitSawblades() {
 
 	// Get the position of the nodes for sawblade's movement
-	for (int row = 0; row < tileSystem.GetNumRows(); ++row)
-	{
-		for (int col = 0; col < tileSystem.GetNumColumns(); ++col)
-		{
+	for (int row = 0; row < tileSystem.GetNumRows(); ++row) {
+		for (int col = 0; col < tileSystem.GetNumColumns(); ++col) {
 			unsigned int sawbladeIndex = GetTileInfo(TILE_INFO::SAWBLADE_INDEX, tileSystem.TileValue(row, col));
 			if (sawbladeIndex == 0)
 				continue;
-			unsigned int sawbladeNodes = GetTileInfo(TILE_INFO::SAWBLADE_NODE, tileSystem.TileValue(row, col));
-			if (sawbladeNodes == 0)
-				continue;
-			if (sawbladeNodes == tileSystem.TileValue(row, col))
-			{
-				Sawblade *tempSawBlade;
-				tempSawBlade->AddNode(sawbladeNodes, Vector2(row * tileSystem.GetTileSize(), col * tileSystem.GetTileSize()));
-				sawblades.insert(std::pair<int, Sawblade*>(static_cast<int>(TILE_INFO::SAWBLADE_INDEX), tempSawBlade));			
-			}
+
+			unsigned int nodeIndex = GetTileInfo(TILE_INFO::SAWBLADE_NODE, tileSystem.TileValue(row, col));
+			Vector2 nodePosition(col * tileSystem.GetTileSize(), row * tileSystem.GetTileSize());
+
+			std::map<int, Sawblade*>::iterator sawbladeIter = sawblades.find(sawbladeIndex);
+			if (sawbladeIter == sawblades.end()) {
+				Sawblade *sawBlade = new Sawblade();
+				sawBlade->AddNode(nodeIndex, nodePosition);
+				sawblades.insert(std::pair<int, Sawblade*>(sawbladeIndex, sawBlade));
+				sawBlade->SetHero(*hero);
+				EntityManager::GetInstance().AddEntity(name, *sawBlade);
+			} else {
+				sawbladeIter->second->AddNode(nodeIndex, nodePosition);
+			}			
 		}
 	}
 
@@ -98,13 +101,12 @@ void SceneDaniu_1::Render() {
 	GraphicsManager::GetInstance().Update();
 	GraphicsManager::GetInstance().SetToCameraView(*camera);
 	GraphicsManager::GetInstance().Enable<GraphicsManager::MODE::DEPTH_TEST>();
+	MapRenderer::GetInstance().Render(tileSystem);
 	EntityManager::GetInstance().Render(this->name);
 
 	GraphicsManager::GetInstance().SetToHUD(-50, 50, -50, 50, -50, 50);
 	GraphicsManager::GetInstance().Disable<GraphicsManager::MODE::DEPTH_TEST>();
 	EntityManager::GetInstance().RenderUI(this->name);
-
-	MapRenderer::GetInstance().Render(tileSystem);
 
 }
 

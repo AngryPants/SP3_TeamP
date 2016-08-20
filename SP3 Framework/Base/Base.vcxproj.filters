@@ -40,9 +40,6 @@
     <ClCompile Include="Source\SpriteAnimation.cpp">
       <Filter>Source Files\SpriteAnimation</Filter>
     </ClCompile>
-    <ClCompile Include="Source\SceneManager.cpp">
-      <Filter>Source Files\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="Source\SceneBase.cpp">
       <Filter>Source Files\Scene</Filter>
     </ClCompile>
@@ -117,6 +114,9 @@
     </ClCompile>
     <ClCompile Include="Source\GameManager.cpp">
       <Filter>Source Files\Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SceneManager.cpp">
+      <Filter>Source Files\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
