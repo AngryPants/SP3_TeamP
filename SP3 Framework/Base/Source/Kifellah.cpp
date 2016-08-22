@@ -59,12 +59,15 @@ void Kifellah::Render()
 		modelStack.Translate(position.x, position.y, 0);
 		modelStack.Scale(4, 4, 1);
 		if (currentDirection == MOVE_DIRECTION::RIGHT) {
-			animationFSM.GetMesh().SetTextureScale(1, 1);
+			SpriteAnimation* sprite = &animationFSM.GetMesh();
+			sprite->SetTextureScale(1, 1);
+			sprite->SetTextureOffset(0, 0);
 		} else if (currentDirection == MOVE_DIRECTION::LEFT) {
 			//To flip the texture, we need to scale it then translate.
 			SpriteAnimation* sprite = &animationFSM.GetMesh();
 			sprite->SetTextureScale(-1, 1);
 			if (sprite->column != 0) {
+				sprite->textureOffset[1] = 0;
 				sprite->textureOffset[0] = (static_cast<float>((sprite->currentFrame) % sprite->column) * 2 + 1) / sprite->column;
 			}
 		}
@@ -93,7 +96,7 @@ void Kifellah::Shoot() {
 			bullet.lifetime = 5.0f;
 			bullet.position = position;
 			if (currentDirection == MOVE_DIRECTION::LEFT) {
-				 bullet.position.x -= 1.4f;
+				bullet.position.x -= 1.4f;
 				bullet.velocity.Set(-20, 0);
 			} else if (currentDirection == MOVE_DIRECTION::RIGHT) {
 				bullet.position.x += 1.4f;
