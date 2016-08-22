@@ -2,19 +2,19 @@
 #define AUDIO_SYSTEM_H
 
 #include "irrKlang.h"
-#include <vector>
+#include <set>
 #include "Vector3.h"
 
 using namespace irrklang;
-using std::vector;
+using std::set;
 
 class AudioManager {
 
 private:
 	//Variable(s)
 	ISoundEngine* audioEngine;
-	vector<ISound*> audioList2D;
-	vector<ISound*> audioList3D;
+	set<ISound*> audioList2D;
+	set<ISound*> audioList3D;
 
 	//Constructor & Destructor
 	AudioManager();
@@ -31,6 +31,7 @@ public:
 	bool UpdateAudio3D(const char* audioFile, Vector3 soundPosition);
 	bool UpdateListener3D(Vector3 listenerPosition, Vector3 listenerDirection, Vector3 upVector = Vector3(0, 1, 0));
 	bool ClearAudioList3D();
+	void SetVolumeAll(const float& volume);
 
 };
 
