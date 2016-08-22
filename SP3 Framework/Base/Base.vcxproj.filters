@@ -112,6 +112,12 @@
     <ClCompile Include="Source\Sawblade.cpp">
       <Filter>Source Files\Obstacles</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Daniu.cpp">
+      <Filter>Source Files\Characters\Heroes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Seetwo.cpp">
+      <Filter>Source Files\Characters\Heroes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\GraphicsManager.h">
@@ -248,6 +254,18 @@
     </ClInclude>
     <ClInclude Include="Source\AnimationFSM.h">
       <Filter>Header Files\AnimationFSM</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Daniu.h">
+      <Filter>Header Files\Entity\Game\Characters\Heroes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AnimationFSM_Daniu.h">
+      <Filter>Header Files\AnimationFSM</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AnimationFSM_Seetwo.h">
+      <Filter>Header Files\AnimationFSM</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Seetwo.h">
+      <Filter>Header Files\Entity\Game\Characters\Heroes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
