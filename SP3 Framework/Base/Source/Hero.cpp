@@ -16,6 +16,11 @@ Hero::Hero(const string& name, const string& sceneName) : Character(name, sceneN
 	canBoost = true;
 
 	enemies = nullptr;
+
+	mesh = MeshBuilder::GetInstance().GenerateQuad("Quad");
+
+	hpBorder.textureArray[0] = TextureManager::GetInstance().AddTexture("border", "Image//Cyborg_Shooter//Characters//Heroes//HP_Border.tga");
+	hpBar.textureArray[0] = TextureManager::GetInstance().AddTexture("bar", "Image//Cyborg_Shooter//Characters//Heroes//HP_Bar.tga");
 }
 
 Hero::~Hero() {
@@ -117,6 +122,23 @@ void Hero::Render()
 
 void Hero::RenderUI()
 {
+	MS& modelStack = GraphicsManager::GetInstance().modelStack;
+
+	float hpBarScale = 34 * (static_cast<float>(health) / static_cast<float>(maxHealth));
+	hpBarScale = Math::Max(0.01f, hpBarScale);
+	float hpBarPosition = -50 + hpBarScale * 0.5 + 9;
+	modelStack.PushMatrix();
+		modelStack.Translate(hpBarPosition, 46, 0);	
+		modelStack.Scale(hpBarScale, 8, 1);
+		RenderHelper::GetInstance().RenderMesh(*mesh, hpBar, false);
+	modelStack.PopMatrix(); 
+	
+	modelStack.PushMatrix();
+		modelStack.Translate(-27, 46, 0);
+		modelStack.Scale(46, 8, 1);
+		RenderHelper::GetInstance().RenderMesh(*mesh, hpBorder, false);
+	modelStack.PopMatrix();
+	
 }
 
 int Hero::GetLives() const
