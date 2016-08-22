@@ -109,6 +109,17 @@ void RenderTextDelegate(Mesh& mesh, Texture& texture, const string& text, Color 
 	shaderProgram->SetActiveTexture(0);
 	shaderProgram->BindTexture(texture.textureArray[0]);
 
+	//Update Texture Coordinates
+	ShaderProgram::FloatVec2 textureOffset;
+	textureOffset.vec[0] = mesh.textureOffset[0];
+	textureOffset.vec[1] = mesh.textureOffset[1];
+	shaderProgram->Update(shadowUniforms.textureOffset, textureOffset);
+
+	ShaderProgram::FloatVec2 textureScale;
+	textureScale.vec[0] = mesh.textureScale[0];
+	textureScale.vec[1] = mesh.textureScale[1];
+	shaderProgram->Update(shadowUniforms.textureScale, textureScale);
+
 	for (unsigned i = 0; i < text.length(); ++i) {
 
 		Mtx44 characterSpacing;
@@ -172,6 +183,17 @@ void RenderMeshDelegate(Mesh& mesh, Texture& texture, const bool& enableLight, c
 
 	}
 
+	//Update Texture Coordinates
+	ShaderProgram::FloatVec2 textureOffset;
+	textureOffset.vec[0] = mesh.textureOffset[0];
+	textureOffset.vec[1] = mesh.textureOffset[1];
+	shaderProgram->Update(shadowUniforms.textureOffset, textureOffset);
+
+	ShaderProgram::FloatVec2 textureScale;
+	textureScale.vec[0] = mesh.textureScale[0];
+	textureScale.vec[1] = mesh.textureScale[1];
+	shaderProgram->Update(shadowUniforms.textureScale, textureScale);
+
 	mesh.Render();
 
 	for (unsigned int i = 0; i < MAX_TEXTURES; ++i) {
@@ -223,6 +245,8 @@ void RenderHelper::LoadShadowShader() {
 		shadowUniforms.lightEnabled = shaderProgram->GetUniformID("lightEnabled");
 		shadowUniforms.fogEnabled = shaderProgram->GetUniformID("fogParam.enabled");
 		shadowUniforms.alphaDiscardValue = shaderProgram->GetUniformID("alphaDiscardValue");
+		shadowUniforms.textureOffset = shaderProgram->GetUniformID("textureOffset");
+		shadowUniforms.textureScale = shaderProgram->GetUniformID("textureScale");
 	} else {
 		GraphicsManager::GetInstance().SetActiveShader("Shadow");
 	}
@@ -280,11 +304,9 @@ void RenderHelper::SetAlphaDiscardValue(const float alphaValue) {
 void RenderHelper::RenderMesh(Mesh& mesh, Texture& texture, const bool& enableLight) {
 
 	switch (currentShader) {
-
-	case SHADERS::SHADOW:
-		RenderMeshDelegate(mesh, texture, enableLight, shadowUniforms);
-		break;
-
+		case SHADERS::SHADOW:
+			RenderMeshDelegate(mesh, texture, enableLight, shadowUniforms);
+			break;
 	}
 
 }
@@ -299,11 +321,9 @@ void RenderHelper::RenderMesh(Mesh& mesh, const bool& enableLight) {
 void RenderHelper::RenderText(Mesh& mesh, Texture& texture, const string& text, Color color) {
 
 	switch (currentShader) {
-
-	case SHADERS::SHADOW:
-		RenderTextDelegate(mesh, texture, text, color, shadowUniforms);
-		break;
-
+		case SHADERS::SHADOW:
+			RenderTextDelegate(mesh, texture, text, color, shadowUniforms);
+			break;
 	}
-	
+
 }

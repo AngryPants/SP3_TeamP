@@ -7,11 +7,10 @@ Mesh::Mesh(const std::string &meshName) : name(meshName), mode(DRAW_TRIANGLES) {
 	glGenBuffers(1, &vertexBuffer);
 	glGenBuffers(1, &indexBuffer);
 	
-	textureOffsetU = 0.0f;
-	textureOffsetV = 0.0f;
-	textureScaleU = 1.0f;
-	textureScaleV = 1.0f;
-	textureRotation = 0.0f;
+	textureOffset[0] = 0.0f;
+	textureOffset[1] = 0.0f;
+	textureScale[0] = 1.0f;
+	textureScale[1] = 1.0f;
 
 }
 
@@ -87,10 +86,10 @@ void Mesh::Render(unsigned offset, unsigned count) {
 
 void Mesh::SetTextureOffset(const float& u, const float& v) {
 
-	textureOffsetU = u;
-	textureOffsetV = v;
+	textureOffset[0] = u;
+	textureOffset[1] = v;
 
-	//Bind our mesh's vertex buffer so that we can modify it.
+	/*//Bind our mesh's vertex buffer so that we can modify it.
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
 	//Replace the texture coordinates' data.
 	for (size_t i = 0; i < vertexSize && i < texCoords.size(); ++i) {
@@ -99,23 +98,23 @@ void Mesh::SetTextureOffset(const float& u, const float& v) {
 		sizeof(TexCoord), &texCoord);
 	}
 	//Unbind our mesh.
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);*/
 
 }
 
 void Mesh::GetTextureOffset(float& u, float& v) const {
 
-	u = textureOffsetU;
-	v = textureOffsetV;
+	u = textureOffset[0];
+	v = textureOffset[1];
 
 }
 
 void Mesh::SetTextureScale(const float& u, const float& v) {
 
-	textureScaleU = u;
-	textureScaleV = v;
+	textureScale[0] = u;
+	textureScale[1] = v;
 
-	//Bind our mesh's vertex buffer so that we can modify it.
+	/*//Bind our mesh's vertex buffer so that we can modify it.
 	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
 	//Replace the texture coordinates' data.
 	for (size_t i = 0; i < vertexSize && i < texCoords.size(); ++i) {
@@ -124,36 +123,35 @@ void Mesh::SetTextureScale(const float& u, const float& v) {
 		sizeof(TexCoord), &texCoord);
 	}
 	//Unbind our mesh.
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);*/
 
 }
 
 void Mesh::GetTextureScale(float& u, float& v) const {
 
-	u = textureScaleU;
-	v = textureOffsetV;
+	u = textureScale[0];
+	v = textureOffset[1];
 
 }
 
-void Mesh::SetTextureRotation(const float& rotation) {
+//void Mesh::UpdateTexCoords() {
 
-	textureRotation = rotation;
+	////Bind our mesh's vertex buffer so that we can modify it.
+	//glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+	////Replace the texture coordinates' data.
+	//TexCoord texCoord;
+	//for (size_t i = 0; i < vertexSize && i < texCoords.size(); ++i) {
+	//	texCoord = texCoords[i];
+	//	texCoord.u *= textureScaleU; //Scale
+	//	texCoord.v *= textureScaleV; //Scale
+	//	texCoord.u += textureOffsetU;
+	//	texCoord.v += textureOffsetV;
+	//	glBufferSubData(GL_ARRAY_BUFFER, (sizeof(Vertex) - sizeof(TexCoord)) + (i * sizeof(Vertex)),
+	//	sizeof(TexCoord), &texCoord);
+	//}
+	////Unbind our mesh.
+	//glBindBuffer(GL_ARRAY_BUFFER, 0);
+	//
+	//texCoordUpdated = true;
 
-	//Bind our mesh's vertex buffer so that we can modify it.
-	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-	//Replace the texture coordinates' data.
-	for (size_t i = 0; i < vertexSize && i < texCoords.size(); ++i) {
-		TexCoord texCoord(texCoords[i].u * cos(rotation), texCoords[i].v * sin(rotation));
-		glBufferSubData(GL_ARRAY_BUFFER, (sizeof(Vertex) - sizeof(TexCoord)) + (i * sizeof(Vertex)),
-		sizeof(TexCoord), &texCoord);
-	}
-	//Unbind our mesh.
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-}
-
-void Mesh::GetTextureRotation(float& rotation) const {
-
-	rotation = this->textureRotation;
-
-}
+//}

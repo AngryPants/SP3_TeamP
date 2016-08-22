@@ -125,9 +125,9 @@ Mesh* MeshBuilder::GenerateQuad(const std::string &meshName, Color color, float 
 	mesh->mode = Mesh::DRAW_TRIANGLE_STRIP;
 
 	//TexCoords
-	for (size_t i = 0; i < vertex_buffer_data.size(); ++i) {
+	/*for (size_t i = 0; i < vertex_buffer_data.size(); ++i) {
 		mesh->texCoords.push_back(vertex_buffer_data[i].texCoord);
-	}
+	}*/
 
 	meshMap.insert(pair<string, Mesh*>(meshName, mesh));
 
@@ -252,9 +252,9 @@ Mesh* MeshBuilder::GenerateCube(const std::string &meshName, Color color, float 
 	mesh->mode = Mesh::DRAW_TRIANGLES;
 
 	//TexCoords
-	for (size_t i = 0; i < vertex_buffer_data.size(); ++i) {
+	/*for (size_t i = 0; i < vertex_buffer_data.size(); ++i) {
 		mesh->texCoords.push_back(vertex_buffer_data[i].texCoord);
-	}
+	}*/
 
 	meshMap.insert(pair<string, Mesh*>(meshName, mesh));
 
@@ -304,9 +304,9 @@ Mesh* MeshBuilder::GenerateRing(const std::string &meshName, Color color, unsign
 	mesh->vertexSize = vertex_buffer_data.size();
 	mesh->indexSize = index_buffer_data.size();
 	//TexCoords
-	for (size_t i = 0; i < vertex_buffer_data.size(); ++i) {
+	/*for (size_t i = 0; i < vertex_buffer_data.size(); ++i) {
 		mesh->texCoords.push_back(vertex_buffer_data[i].texCoord);
-	}
+	}*/
 
 	meshMap.insert(pair<string, Mesh*>(meshName, mesh));
 
@@ -377,9 +377,9 @@ Mesh* MeshBuilder::GenerateSphere(const std::string &meshName, Color color, unsi
 	mesh->vertexSize = vertex_buffer_data.size();
 	mesh->indexSize = index_buffer_data.size();
 	//TexCoords
-	for (size_t i = 0; i < vertex_buffer_data.size(); ++i) {
+	/*for (size_t i = 0; i < vertex_buffer_data.size(); ++i) {
 		mesh->texCoords.push_back(vertex_buffer_data[i].texCoord);
-	}
+	}*/
 
 	meshMap.insert(pair<string, Mesh*>(meshName, mesh));
 
@@ -463,9 +463,9 @@ Mesh* MeshBuilder::GenerateSkyPlane(const std::string &meshName, Color color, un
 	mesh->indexSize = index_buffer_data.size();
 	mesh->mode = Mesh::DRAW_TRIANGLES;
 	//TexCoords
-	for (size_t i = 0; i < vertex_buffer_data.size(); ++i) {
+	/*for (size_t i = 0; i < vertex_buffer_data.size(); ++i) {
 		mesh->texCoords.push_back(vertex_buffer_data[i].texCoord);
-	}
+	}*/
 
 	meshMap.insert(pair<string, Mesh*>(meshName, mesh));
 
@@ -508,9 +508,9 @@ Mesh* MeshBuilder::GenerateOBJ(const std::string &meshName, const std::string& f
 	mesh->vertexSize = vertex_buffer_data.size();
 	mesh->indexSize = index_buffer_data.size();
 	//TexCoords
-	for (size_t i = 0; i < vertex_buffer_data.size(); ++i) {
+	/*for (size_t i = 0; i < vertex_buffer_data.size(); ++i) {
 		mesh->texCoords.push_back(vertex_buffer_data[i].texCoord);
-	}
+	}*/
 
 	meshMap.insert(pair<string, Mesh*>(meshName, mesh));
 
@@ -578,9 +578,9 @@ Mesh* MeshBuilder::GenerateText(const std::string &meshName, unsigned numRow, un
 	mesh->indexSize = index_buffer_data.size();
 	mesh->mode = Mesh::DRAW_TRIANGLES;
 	//TexCoords
-	for (size_t i = 0; i < vertex_buffer_data.size(); ++i) {
+	/*for (size_t i = 0; i < vertex_buffer_data.size(); ++i) {
 		mesh->texCoords.push_back(vertex_buffer_data[i].texCoord);
-	}
+	}*/
 
 	meshMap.insert(pair<string, Mesh*>(meshName, mesh));
 
@@ -678,9 +678,9 @@ Mesh* MeshBuilder::GenerateTerrain(const std::string &meshName, const std::strin
 	mesh->indexSize = index_buffer_data.size();
 	mesh->mode = Mesh::DRAW_TRIANGLES;
 	//TexCoords
-	for (size_t i = 0; i < vertex_buffer_data.size(); ++i) {
+	/*for (size_t i = 0; i < vertex_buffer_data.size(); ++i) {
 		mesh->texCoords.push_back(vertex_buffer_data[i].texCoord);
-	}
+	}*/
 
 	meshMap.insert(pair<string, Mesh*>(meshName, mesh));
 
@@ -755,9 +755,9 @@ SpriteAnimation* MeshBuilder::GenerateSpriteAnimation(const string& meshName, un
 	mesh->indexSize = index_buffer_data.size();
 	mesh->mode = Mesh::DRAW_TRIANGLES;
 	//TexCoords
-	for (size_t i = 0; i < vertex_buffer_data.size(); ++i) {
+	/*for (size_t i = 0; i < vertex_buffer_data.size(); ++i) {
 		mesh->texCoords.push_back(vertex_buffer_data[i].texCoord);
-	}
+	}*/
 
 	spriteMap.insert(pair<string, SpriteAnimation*>(meshName, mesh));
 

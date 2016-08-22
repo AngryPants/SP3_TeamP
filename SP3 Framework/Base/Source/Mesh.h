@@ -11,11 +11,6 @@ using std::vector;
 
 struct Mesh {
 
-private:
-	float textureOffsetU, textureOffsetV;
-	float textureScaleU, textureScaleV;
-	float textureRotation;
-
 public:
 	//Enum(s)
 	enum DRAW_MODE {
@@ -28,12 +23,16 @@ public:
 	//Variable(s)
 	const std::string name;
 	DRAW_MODE mode;
-	vector<TexCoord> texCoords;
+	//vector<TexCoord> texCoords;
 	unsigned int vertexBuffer;
 	unsigned int vertexSize; //Number of vertices.
 	unsigned int indexBuffer;
 	unsigned int indexSize;
 	Material material;
+
+	//Texture Coordinates
+	float textureOffset[2]; //0 = u, 1 = v
+	float textureScale[2]; //0 = u, 1 = v
 
 	//Constructor(s) & Destructor
 	Mesh(const std::string &meshName);
@@ -43,8 +42,6 @@ public:
 	void GetTextureOffset(float& u, float& v) const;
 	void SetTextureScale(const float& u, const float& v);
 	void GetTextureScale(float& u, float& v) const;
-	void SetTextureRotation(const float& rotation);
-	void GetTextureRotation(float& rotation) const;
 
 	//Function(s)
 	virtual void Render();

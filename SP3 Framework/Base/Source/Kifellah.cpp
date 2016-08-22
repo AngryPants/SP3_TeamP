@@ -41,11 +41,11 @@ void Kifellah::Update(const double& deltaTime)
 	animationFSM.SetIsMoving(isMoving);
 	animationFSM.SetIsShooting(isShooting);
 	animationFSM.SetOnGround(onGround);
-	if (currentDirection == MOVE_DIRECTION::RIGHT) {
+	/*if (currentDirection == MOVE_DIRECTION::RIGHT) {
 		animationFSM.SetDirection(AnimationFSM_Kifellah::MOVE_DIRECTION::RIGHT);
 	} else if (currentDirection == MOVE_DIRECTION::LEFT) {
 		animationFSM.SetDirection(AnimationFSM_Kifellah::MOVE_DIRECTION::LEFT);
-	}
+	}*/
 	animationFSM.Update(deltaTime);
 
 	//Hero::Respawn();
@@ -58,6 +58,16 @@ void Kifellah::Render()
 	modelStack.PushMatrix();
 		modelStack.Translate(position.x, position.y, 0);
 		modelStack.Scale(4, 4, 1);
+		if (currentDirection == MOVE_DIRECTION::RIGHT) {
+			animationFSM.GetMesh().SetTextureScale(1, 1);
+		} else if (currentDirection == MOVE_DIRECTION::LEFT) {
+			//To flip the texture, we need to scale it then translate.
+			SpriteAnimation* sprite = &animationFSM.GetMesh();
+			sprite->SetTextureScale(-1, 1);
+			if (sprite->column != 0) {
+				sprite->textureOffset[0] = (static_cast<float>((sprite->currentFrame) % sprite->column) * 2 + 1) / sprite->column;
+			}
+		}
 		RenderHelper::GetInstance().RenderMesh(animationFSM.GetMesh(), animationFSM.GetTexture(), false);
 	modelStack.PopMatrix();
 }

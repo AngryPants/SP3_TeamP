@@ -315,8 +315,6 @@ public:
 
 	void Update(const UniformID uniformID, const bool transpose, const DoubleMat4x4& value, const unsigned number);
 
-	//And Many More... (Not really. I'm too lazy to do the rest.)
-
 };
 
 #endif

@@ -15,9 +15,9 @@ public:
 	};
 
 	//Public Function(s)
-	void SetDirection(MOVE_DIRECTION direction) {
+	/*void SetDirection(MOVE_DIRECTION direction) {
 		currentDirection = direction;
-	}
+	}*/
 	void SetIsMoving(bool isMoving) {
 		this->isMoving[STATE_PREVIOUS] = this->isMoving[STATE_CURRENT];
 		this->isMoving[STATE_CURRENT] = isMoving;
@@ -50,7 +50,7 @@ public:
 
 	//Constructor(s) & Destructor
 	AnimationFSM_Kifellah() {
-		currentDirection = MOVE_DIRECTION::RIGHT;
+		//currentDirection = MOVE_DIRECTION::RIGHT;
 		
 		for (unsigned int i = 0; i < static_cast<unsigned int>(NUM_STATE); ++i) {
 			isMoving[i] = false;
@@ -95,7 +95,7 @@ private:
 	bool isShooting[NUM_STATE];
 	bool onGround[NUM_STATE];
 	ANIMATION animationState[NUM_STATE];
-	MOVE_DIRECTION currentDirection;
+	//MOVE_DIRECTION currentDirection;
 
 	//Load all our SpriteAnimations, Animations & Textures.
 	void InitAnimation() {
@@ -179,13 +179,6 @@ private:
 		//Reset if we need to.
 		if (resetAnimation) {
 			mesh->Reset(true);
-		}
-
-		//How about the direction of the mesh?
-		if (currentDirection == MOVE_DIRECTION::RIGHT) {
-			mesh->SetTextureScale(1, 1);
-		} else if (currentDirection == MOVE_DIRECTION::LEFT) {
-			mesh->SetTextureScale(-1, 1);
 		}
 	}
 

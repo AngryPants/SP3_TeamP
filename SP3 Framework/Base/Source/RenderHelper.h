@@ -19,7 +19,6 @@ class RenderHelper : public Singleton<RenderHelper> {
 
 public:
 	struct ShadowUniforms {
-
 		UniformID modelView;
 		UniformID modelViewProjection;
 		UniformID modelViewInverseTranspose;
@@ -35,7 +34,8 @@ public:
 		UniformID lightEnabled;
 		UniformID fogEnabled;
 		UniformID alphaDiscardValue;
-
+		UniformID textureOffset;
+		UniformID textureScale;
 	};
 
 private:

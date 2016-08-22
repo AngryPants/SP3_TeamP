@@ -23,6 +23,7 @@ struct TexCoord
 	TexCoord(const float& u = 0, const float& v = 0) {Set(u, v);}
 	TexCoord(const TexCoord& rhs) {Set(rhs.u, rhs.v);}
 	void Set(const float& u, const float& v) {this->u = u; this->v = v;}
+	TexCoord& operator=(const TexCoord& rhs) {this->u = rhs.u; this->v = rhs.v; return *this;}
 };
 
 struct Vertex 
