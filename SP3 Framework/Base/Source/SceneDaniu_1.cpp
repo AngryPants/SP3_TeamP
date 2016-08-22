@@ -4,6 +4,8 @@
 #include "GraphicsManager.h"
 #include "MapRenderer.h"
 #include "Kifellah.h"
+#include "Daniu.h"
+#include "Seetwo.h"
 #include "TileIndex.h"
 
 SceneDaniu_1::SceneDaniu_1() : SceneBase ("Daniu Level 1") {
@@ -30,6 +32,8 @@ void SceneDaniu_1::Init() {
 
 void SceneDaniu_1::InitHero() {
 
+	//hero = new Seetwo(name);
+	//hero = new Daniu(name);
 	hero = new Kifellah(name);
 	hero->SetTileSystem(tileSystem);
 

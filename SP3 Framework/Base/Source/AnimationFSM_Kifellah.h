@@ -45,7 +45,7 @@ public:
 		UpdateAnimation();
 		if (mesh != nullptr) {
 			mesh->Update(deltaTime);
-		}		
+		}
 	}
 
 	//Constructor(s) & Destructor

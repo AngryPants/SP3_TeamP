@@ -8,7 +8,7 @@
 Kifellah::Kifellah(const string& sceneName) : Hero("Kifellah", sceneName)
 {
 
-	maxSpeed = 5;
+	maxSpeed = 7;
 	damage = 10;
 	maxHealth = 100;
 	health = maxHealth;
@@ -41,11 +41,6 @@ void Kifellah::Update(const double& deltaTime)
 	animationFSM.SetIsMoving(isMoving);
 	animationFSM.SetIsShooting(isShooting);
 	animationFSM.SetOnGround(onGround);
-	/*if (currentDirection == MOVE_DIRECTION::RIGHT) {
-		animationFSM.SetDirection(AnimationFSM_Kifellah::MOVE_DIRECTION::RIGHT);
-	} else if (currentDirection == MOVE_DIRECTION::LEFT) {
-		animationFSM.SetDirection(AnimationFSM_Kifellah::MOVE_DIRECTION::LEFT);
-	}*/
 	animationFSM.Update(deltaTime);
 
 	//Hero::Respawn();

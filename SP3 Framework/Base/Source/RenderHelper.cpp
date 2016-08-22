@@ -106,9 +106,6 @@ void RenderTextDelegate(Mesh& mesh, Texture& texture, const string& text, Color 
 	shaderProgram->Update(shadowUniforms.colorTextureEnabled, booleans, MAX_TEXTURES);
 	shaderProgram->Update(shadowUniforms.colorTexture, ids, MAX_TEXTURES);
 
-	shaderProgram->SetActiveTexture(0);
-	shaderProgram->BindTexture(texture.textureArray[0]);
-
 	//Update Texture Coordinates
 	ShaderProgram::FloatVec2 textureOffset;
 	textureOffset.vec[0] = mesh.textureOffset[0];
@@ -119,6 +116,9 @@ void RenderTextDelegate(Mesh& mesh, Texture& texture, const string& text, Color 
 	textureScale.vec[0] = mesh.textureScale[0];
 	textureScale.vec[1] = mesh.textureScale[1];
 	shaderProgram->Update(shadowUniforms.textureScale, textureScale);
+
+	shaderProgram->SetActiveTexture(0);
+	shaderProgram->BindTexture(texture.textureArray[0]);
 
 	for (unsigned i = 0; i < text.length(); ++i) {
 
@@ -149,6 +149,17 @@ void RenderMeshDelegate(Mesh& mesh, Texture& texture, const bool& enableLight, c
 	shaderProgram->Update(shadowUniforms.modelViewInverseTranspose, false, ToOpenglStruct(modelView_inverse_transpose));
 
 	shaderProgram->Update(shadowUniforms.lightEnabled, enableLight);
+
+	//Update Texture Coordinates
+	ShaderProgram::FloatVec2 textureOffset;
+	textureOffset.vec[0] = mesh.textureOffset[0];
+	textureOffset.vec[1] = mesh.textureOffset[1];
+	shaderProgram->Update(shadowUniforms.textureOffset, textureOffset);
+
+	ShaderProgram::FloatVec2 textureScale;
+	textureScale.vec[0] = mesh.textureScale[0];
+	textureScale.vec[1] = mesh.textureScale[1];
+	shaderProgram->Update(shadowUniforms.textureScale, textureScale);
 
 	if (enableLight) {
 
@@ -182,17 +193,6 @@ void RenderMeshDelegate(Mesh& mesh, Texture& texture, const bool& enableLight, c
 		shaderProgram->Update(shadowUniforms.colorTextureEnabled, booleans, MAX_TEXTURES);
 
 	}
-
-	//Update Texture Coordinates
-	ShaderProgram::FloatVec2 textureOffset;
-	textureOffset.vec[0] = mesh.textureOffset[0];
-	textureOffset.vec[1] = mesh.textureOffset[1];
-	shaderProgram->Update(shadowUniforms.textureOffset, textureOffset);
-
-	ShaderProgram::FloatVec2 textureScale;
-	textureScale.vec[0] = mesh.textureScale[0];
-	textureScale.vec[1] = mesh.textureScale[1];
-	shaderProgram->Update(shadowUniforms.textureScale, textureScale);
 
 	mesh.Render();
 

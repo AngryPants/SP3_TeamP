@@ -349,6 +349,11 @@ bool Hero::TakeDamage(const int &damage)
 	return false;
 }
 
+void Hero::Knockback(const Vector2 &knockback)
+{
+	velocity += knockback;
+}
+
 void Hero::ItemInteraction(const double& deltaTime) {
 
 	//Check our centre
@@ -432,8 +437,12 @@ void Hero::ItemInteraction(int row, int column, const double& deltaTime) {
 			break;
 		case TILE_SPIKE: {
 			if (TakeDamage(20)) {
-				velocity.x *= -1;
-				velocity.y *= -1;
+				/*velocity.x *= -1;
+				velocity.y *= -1;*/
+				if (velocity.LengthSquared() > Math::EPSILON)
+					Knockback(-velocity.Normalized() * 25);
+				else
+					Knockback(Vector2(-1, 0) * 25);
 			}
 		}
 			break;
