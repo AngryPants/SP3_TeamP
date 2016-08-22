@@ -91,7 +91,7 @@ void Kifellah::Shoot() {
 			bullet.lifetime = 5.0f;
 			bullet.position = position;
 			if (currentDirection == MOVE_DIRECTION::LEFT) {
-				 bullet.position.x -= 1.4f;
+				bullet.position.x -= 1.4f;
 				bullet.velocity.Set(-20, 0);
 			} else if (currentDirection == MOVE_DIRECTION::RIGHT) {
 				bullet.position.x += 1.4f;
