@@ -37,7 +37,7 @@ void Sawblade::AddNode(unsigned int index, Vector2 position)
 	nodes.insert(std::pair<unsigned int, Vector2>(index, position));
 }
 
-void Sawblade::DamageTargets(const double& deltaTime)
+void Sawblade::DamageTarget(const double& deltaTime)
 {
 	
 	if (target == nullptr)
@@ -49,7 +49,17 @@ void Sawblade::DamageTargets(const double& deltaTime)
 	if (target->isActive) {
 		float timeToCollision = CollisionSystem::CircleCircle(position, target->position, radius, target->GetCollisionRadius(), velocity, target->velocity);
 		if (timeToCollision > 0.0f && timeToCollision < static_cast<float>(deltaTime)) {
-			target->TakeDamage(damage);
+			if (target->TakeDamage(damage))
+			{
+				Vector2 knockback;
+				knockback = (target->position - this->position).Normalize() * 25;
+				if (knockback.LengthSquared() > Math::EPSILON)
+					target->Knockback(knockback);
+				else
+				{
+					target->Knockback(Vector2(-1, 0) * 25);
+				}
+			}
 		}
 	}
 
@@ -64,7 +74,7 @@ void Sawblade::Update(const double &deltaTime)
 	}
 
 	MoveToNode(deltaTime);
-	DamageTargets(deltaTime);
+	DamageTarget(deltaTime);
 	
 }
 

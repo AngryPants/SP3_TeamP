@@ -8,7 +8,7 @@
 Kifellah::Kifellah(const string& sceneName) : Hero("Kifellah", sceneName)
 {
 
-	maxSpeed = 5;
+	maxSpeed = 7;
 	damage = 10;
 	maxHealth = 100;
 	health = maxHealth;

@@ -8,9 +8,9 @@
 Seetwo::Seetwo(const string& sceneName) : Hero("Seetwo", sceneName)
 {
 
-	maxSpeed = 5;
+	maxSpeed = 4;
 	damage = 10;
-	maxHealth = 100;
+	maxHealth = 150;
 	health = maxHealth;
 	fireRate = 3.0;
 
@@ -91,16 +91,17 @@ void Seetwo::Shoot() {
 			bullet.targets = enemies;
 			bullet.lifetime = 5.0f;
 			bullet.position = position;
+			bullet.position.y += 0.4f;
 			if (currentDirection == MOVE_DIRECTION::LEFT) {
-				bullet.position.x -= 1.4f;
+				bullet.position.x -= 1.6f;				
 				bullet.velocity.Set(-20, 0);
 			}
 			else if (currentDirection == MOVE_DIRECTION::RIGHT) {
-				bullet.position.x += 1.4f;
+				bullet.position.x += 1.6f;
 				bullet.velocity.Set(20, 0);
 			}
 			bullet.mesh = MeshBuilder::GetInstance().GenerateQuad("Bullet");
-			bullet.texture.textureArray[0] = TextureManager::GetInstance().AddTexture("Bullet Yellow", "Image//Cyborg_Shooter//Bullets//Bullet_Yellow.tga");
+			bullet.texture.textureArray[0] = TextureManager::GetInstance().AddTexture("Bullet Yellow", "Image//Cyborg_Shooter//Bullets//Bullet_Blue.tga");
 			AudioManager::GetInstance().PlayAudio2D("Audio//Sound_Effects//Weapons//Gun_Kifellah.flac", false);
 		}
 	}

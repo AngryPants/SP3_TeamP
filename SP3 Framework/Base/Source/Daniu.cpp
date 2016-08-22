@@ -8,8 +8,8 @@
 Daniu::Daniu(const string& sceneName) : Hero("Daniu", sceneName)
 {
 
-	maxSpeed = 5;
-	damage = 10;
+	maxSpeed = 4;
+	damage = 15;
 	maxHealth = 100;
 	health = maxHealth;
 	fireRate = 3.0;
@@ -105,7 +105,7 @@ void Daniu::Shoot() {
 				bullet.velocity.Set(20, 0);
 			}
 			bullet.mesh = MeshBuilder::GetInstance().GenerateQuad("Bullet");
-			bullet.texture.textureArray[0] = TextureManager::GetInstance().AddTexture("Bullet Yellow", "Image//Cyborg_Shooter//Bullets//Bullet_Yellow.tga");
+			bullet.texture.textureArray[0] = TextureManager::GetInstance().AddTexture("Bullet Yellow", "Image//Cyborg_Shooter//Bullets//Bullet_Red.tga");
 			AudioManager::GetInstance().PlayAudio2D("Audio//Sound_Effects//Weapons//Gun_Kifellah.flac", false);
 		}
 	}

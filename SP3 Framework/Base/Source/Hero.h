@@ -50,6 +50,7 @@ public:
 
 	virtual void Shoot() {};
 	virtual bool TakeDamage(const int &damage);
+	virtual void Knockback(const Vector2 &knockback);
 	void Respawn();
 
 	Mesh *mesh;

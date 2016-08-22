@@ -78,6 +78,7 @@ public:
 	virtual void Render() {}
 	virtual void RenderUI() {}
 	virtual bool TakeDamage(const int &damage);
+	virtual void Knockback(const Vector2 &knockback);
 
 };
 

@@ -28,7 +28,7 @@ private:
 	std::map<unsigned int, Vector2> nodes;
 	std::map<unsigned int, Vector2>::iterator destinationNode;
 
-	void DamageTargets(const double& deltaTime);
+	void DamageTarget(const double& deltaTime);
 	void MoveToNode(const double& deltaTime);
 
 public:
