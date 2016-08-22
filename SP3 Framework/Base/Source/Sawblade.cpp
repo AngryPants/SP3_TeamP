@@ -7,7 +7,7 @@
 #include "CollisionSystem.h"
 #include "Character.h"
 
-Sawblade::Sawblade()
+Sawblade::Sawblade(const string& sceneName) : GameEntity("Sawblade", sceneName)
 {
 	name = "Sawblade";
 	initialized = false;
@@ -18,12 +18,18 @@ Sawblade::Sawblade()
 	rotation = 0;
 
 	damage = 10;
-	radius = 5.0f;
+	radius = 1.5f;
+
+	target = nullptr;
 
 	mesh = MeshBuilder::GetInstance().GenerateQuad("Sawblade", Color(1, 1, 1), 1.f);
-	texture.textureArray[0] = TextureManager::GetInstance().AddTexture("Sawblade", "Image//Cyborg_Shooter//Others//Saw.tga");
+	texture.textureArray[0] = TextureManager::GetInstance().AddTexture("Sawblade", "Image//Cyborg_Shooter//Others//Sawblade.tga");
+}
 
-	hero = nullptr;
+void Sawblade::Reset() {
+
+	this->initialized = false;
+
 }
 
 void Sawblade::AddNode(unsigned int index, Vector2 position)
@@ -31,28 +37,34 @@ void Sawblade::AddNode(unsigned int index, Vector2 position)
 	nodes.insert(std::pair<unsigned int, Vector2>(index, position));
 }
 
-void Sawblade::DamageHero(const double& deltaTime)
+void Sawblade::DamageTargets(const double& deltaTime)
 {
-	if (hero == nullptr) {
+	
+	if (target == nullptr)
+	{
 		cout << "Unable to update sawblade as no hero was attached." << endl;
 		return;
 	}
 
-	float timeToCollision = CollisionSystem::CircleCircle(position, hero->position, radius, hero->radius, velocity, hero->velocity);
-	if (timeToCollision < deltaTime)
-		hero->TakeDamage(damage);
+	if (target->isActive) {
+		float timeToCollision = CollisionSystem::CircleCircle(position, target->position, radius, target->GetCollisionRadius(), velocity, target->velocity);
+		if (timeToCollision > 0.0f && timeToCollision < static_cast<float>(deltaTime)) {
+			target->TakeDamage(damage);
+		}
+	}
+
 }
 
 void Sawblade::Update(const double &deltaTime)
 {
 	
-	rotation += deltaTime * 720.0f;
+	rotation += static_cast<float>(deltaTime) * 720.0f;
 	while (rotation > 360.0f) {
 		rotation -= 360.0f;
 	}
 
 	MoveToNode(deltaTime);
-	DamageHero(deltaTime);
+	DamageTargets(deltaTime);
 	
 }
 
@@ -66,28 +78,32 @@ void Sawblade::MoveToNode(const double& deltaTime) {
 
 	if (!initialized)
 	{
+		//Set ourselves to the first node.
 		position = nodes.begin()->second;
+		//Our destination node needs to be the second node.
 		destinationNode = nodes.begin();
 		++destinationNode;
-		speed = 10.f;
+		//Make sure we don't reset ourselves again the next update.
 		initialized = true;		
 	}
 	
+	//Make sure our node is valid.
 	if (destinationNode == nodes.end()) {
 		destinationNode = nodes.begin();
 	}
 
-	//We're already at the node.
+	//Find out what is the direction we should be going.
 	Vector2 direction = destinationNode->second - position;
+
+	//Are we already at destination Node?
 	if (direction.LengthSquared() < Math::EPSILON) {
+		//We're already at the node. No need to move.
 		++destinationNode;
 		return;
 	}
 
 	velocity = direction.Normalized() * speed;
-	position += velocity * deltaTime;
-
-	cout << velocity.x << " " << velocity.y <<endl;
+	position += velocity * static_cast<float>(deltaTime);
 
 	if (velocity.x < 0) {
 		if (position.x < destinationNode->second.x) {
@@ -113,25 +129,13 @@ void Sawblade::MoveToNode(const double& deltaTime) {
 
 }
 
-void Sawblade::SetHero(Hero& hero) {
-
-	this->hero = &hero;
-
-}
-
-void Sawblade::RemoveHero() {
-
-	this->hero = nullptr;
-
-}
-
 void Sawblade::Render()
 {
 	MS& modelStack = GraphicsManager::GetInstance().modelStack;
 	modelStack.PushMatrix();
 		modelStack.Translate(position.x, position.y, 0);
 		modelStack.Rotate(rotation, 0, 0, 1);
-		modelStack.Scale(radius, radius, 1);
+		modelStack.Scale(radius * 2.0f, radius * 2.0f, 1);
 		RenderHelper::GetInstance().RenderMesh(*mesh, texture, false);
 	modelStack.PopMatrix();
 }

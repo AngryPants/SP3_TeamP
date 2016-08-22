@@ -21,7 +21,7 @@ private:
 		//Items
 		MESH_ACID,
 		MESH_SPIKE,
-		MESH_WRENCH,
+		MESH_HEALTH,
 		MESH_HERO_SPAWN,
 		MESH_CHECKPOINT_UNSET,
 		MESH_CHECKPOINT_SET,
@@ -45,7 +45,9 @@ private:
 
 	enum SPRITE_TYPE {
 		SPRITE_COIN,
-		SPRITE_DOOR,
+		SPRITE_DOOR_OPEN,
+		SPRITE_DOOR_CLOSE,
+		SPRITE_BOOSTPAD,
 
 		NUM_SPRITE,
 	};
@@ -67,7 +69,9 @@ public:
 	void SetStartColumn(const int& startColumn);
 	void SetEndColumn(const int& endColumn);
 
+	void Update(const double& deltaTime);
 	void Render(TileSystem& tileSystem);
+	void Reset();
 
 };
 

@@ -61,7 +61,7 @@ public:
 	AspectRatio aspectRatio;
 
 	//Constructor(s) & Destructor
-	Camera();
+	Camera(const string& name, const string& sceneName);
 	virtual ~Camera();
 
 	void SetFOV(const float& FOV);

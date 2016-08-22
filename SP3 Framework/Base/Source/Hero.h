@@ -10,51 +10,48 @@
 class Hero : public Character {
 
 protected:
-	//Enum(s)
-	enum ANIMATION_TYPE {
-		IDLE,
-		RUN,
-		JUMP,
-		SHOOT,
-		RUN_SHOOT,
-		DEAD,
-
-		NUM_ANIMATION,
-	};
-
-	Animation animations[NUM_ANIMATION];
-	SpriteAnimation* mesh;
-	Texture texture;
-	TileCollider tileCollider;
-
+	//Stats
 	int lives;
 	int score;
 	float gravity;
+	TileCoord checkpoint;
 
-	int checkpointRow, checkpointCol;
-	bool damageTaken;
-	float damageTimer;
-	bool hitTrampoline;
 	//Move
+	virtual void Move(const double& deltaTime);
 	virtual void MoveLeft(const double& deltaTime);
 	virtual void MoveRight(const double& deltaTime);
 	virtual void MoveDown(const double& deltaTime);
 	virtual void MoveUp(const double& deltaTime);
 
-	virtual void ItemInteraction(unsigned int& tileValue, float &hotspotX, float &hotspotY);
+	//Item Interaction
+	bool canBoost; //Make sure we don't go too fast on boostpads
+	virtual void ItemInteraction(const double& deltaTime);
+	virtual void ItemInteraction(int row, int column, const double& deltaTime);
 
 public:
-	Hero();
+	vector<Character*>* enemies;
+
+	Hero(const string& name, const string& sceneName);
 	virtual ~Hero();
 
 	virtual void Update(const double &deltaTime);
 	virtual void Render();
 	virtual void RenderUI();
 
+	//Stats
 	int GetLives() const;
 	void SetLives(const int& lives);
-	virtual void TakeDamage(const int &damage);
-	void Respawn(const int maxHealth);
+	
+	int GetScore() const;
+	void SetScore(const int& score);
+
+	void SetCheckpoint(int row, int column);
+	TileCoord GetCheckpoint() const;
+
+	virtual void Shoot() {};
+	virtual bool TakeDamage(const int &damage);
+	void Respawn();
+
 };
 
 #endif

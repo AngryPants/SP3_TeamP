@@ -16,7 +16,7 @@ private:
 
 public:
 	//Construcor(s) & Destructor
-	Camera2D();
+	Camera2D(const string& sceneName);
 	virtual ~Camera2D();
 
 	//Function(s)

@@ -1,72 +1,84 @@
-#pragma once
 #ifndef CHARACTER_H
 #define CHARACTER_H
 
-#include "EntityBase.h"
+#include "GameEntity.h"
+#include "Bullet.h"
 #include "MeshBuilder.h"
 #include "TextureManager.h"
 #include "Vector2.h"
 #include "TileSystem.h"
+#include "TileCollider.h"
 
-class Character : public EntityBase {
+class GameManager;
+
+class Character : public GameEntity {
 
 protected:
 	//Stats
-	int health;
 	int maxHealth;
-	float speed;
+	int health;
+	float maxSpeed;
 	int damage;
-	double fireRate;
-	
-	double minFPS;
+	float fireRate;
+	float damageCooldown; //How long until we can take damage again.
+	float shootingCooldown; //How long until we can shoot again.
 
-	//Mesh
-	SpriteAnimation* mesh;
-
-	Vector2 hotspots[4];
+	//Bullets
+	vector<Bullet*> bullets;
+	virtual Bullet& FetchBullet();
+	float collisionRadius; //The radius of which the character will collide with bullets etc.
 
 	//Tile System
 	TileSystem* tileSystem;
+	TileCollider tileCollider;
 
-	//Collision Detection
+	//What Direction Are We Facing?
+	enum class MOVE_DIRECTION {
+		LEFT,
+		RIGHT,
+	};
+
+	MOVE_DIRECTION currentDirection;
+	bool onGround;
+	bool isShooting;
+	bool isMoving;
+
+	//Movement
 	virtual void MoveLeft(const double& deltaTime) {};
 	virtual void MoveRight(const double& deltaTime) {};
 	virtual void MoveDown(const double& deltaTime) {};
-	virtual void MoveUp(const double& deltaTime) {};	
-
-	bool onGround;
+	virtual void MoveUp(const double& deltaTime) {};
 
 public:
-	bool isAlive;
-	Vector2 position;
-	Vector2 scale;
-	Vector2 velocity;
-	float radius;
+	bool isDead;
 
 	//Constructor(s) & Destructor
-	Character();
+	Character(const string& name, const string& sceneName);
 	virtual ~Character();
 
 	//Stats
-	int GetHealth() const;
-	float GetSpeed() const;
-	int GetDamage() const;
-	float GetFireRate() const;
-
 	void SetHealth(const int& health);
 	void SetSpeed(const float& speed);
-	void SetDamage(const float& damage);
+	void SetDamage(const int& damage);
 	void SetFireRate(const float& fireRate);
+	void SetCollisionRadius(const float& collisionRadius);
+
+	int GetHealth() const;
+	float GetMaxSpeed() const;
+	int GetDamage() const;
+	float GetFireRate() const;
+	float GetCollisionRadius() const;
 
 	//Others
-	void SetTileSystem(TileSystem& tileSystem);
+	void SetTileSystem(TileSystem& tileSystem); //The tile system that the character will interact with.
 	void RemoveTileSystem();
 
 	//Virtual Function(s)
-	virtual void Update(const double& deltaTime);
-	virtual void Render();
-	virtual void RenderUI();
-	virtual void TakeDamage(const int &damage);
+	virtual void Update(const double& deltaTime) {}
+	virtual void Render() {}
+	virtual void RenderUI() {}
+	virtual bool TakeDamage(const int &damage);
+
 };
 
 #endif

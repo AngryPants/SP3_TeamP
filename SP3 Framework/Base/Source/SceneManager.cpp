@@ -92,6 +92,7 @@ bool SceneManager::AddScene(const string& sceneName, Scene& scene) {
 
 	if (CheckSceneExist(sceneName)) {
 		cout << "Unable to add scene: " << sceneName << " as it already exist in the SceneManager.\n Please ensure that all scenes have unique names." << endl;	
+		throw std::exception("A scene was initialised twice, or 2 scenes have the same name.");
 		return false;
 	}
 

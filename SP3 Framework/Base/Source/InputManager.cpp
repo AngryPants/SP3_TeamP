@@ -66,14 +66,15 @@ void InputManager::Update() {
 	} else if (keyboard.IsKeyReleased(VK_UP)) {
 		inputInfo.keyReleased[INPUT_MOVE_UP] = 1;
 	}
+	
 	if (keyboard.IsKeyReleased(VK_RETURN)) {
-		inputInfo.keyReleased[INPUT_PLACE_TILE] = 1;
+		inputInfo.keyReleased[INPUT_SELECT] = 1;
 	}
 
-	if (keyboard.IsKeyPressed(0x46)) {
+	if (keyboard.IsKeyPressed('C')) {
 		inputInfo.keyDown[INPUT_SHOOT] = 1;
 		inputInfo.keyValue[INPUT_SHOOT] = 1.0f;
-	} else if (keyboard.IsKeyReleased(0x46)) {
+	} else if (keyboard.IsKeyReleased('C')) {
 		inputInfo.keyReleased[INPUT_SHOOT] = 1;
 	}
 

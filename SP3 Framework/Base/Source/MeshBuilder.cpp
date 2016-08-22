@@ -9,6 +9,25 @@
 
 using namespace std;
 
+MeshBuilder::MeshBuilder() {
+}
+
+MeshBuilder::~MeshBuilder() {
+
+	for (MeshMap::iterator meshIter = meshMap.begin(); meshIter != meshMap.end(); ++meshIter) {
+		if (meshIter->second != nullptr) {
+			delete meshIter->second;
+		}
+	}
+
+	for (SpriteMap::iterator spriteIter = spriteMap.begin(); spriteIter != spriteMap.end(); ++spriteIter) {
+		if (spriteIter->second != nullptr) {
+			delete spriteIter->second;
+		}
+	}
+
+}
+
 bool MeshBuilder::CheckMeshExist(const string& meshName) const {
 
 	return meshMap.count(meshName) != 0;

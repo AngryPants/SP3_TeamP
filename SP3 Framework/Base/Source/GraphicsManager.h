@@ -38,7 +38,7 @@ public:
 		BLENDING,
 		WIREFRAME,
 		DEPTH_TEST,
-		//MODE_STENCIL_TEST,
+		//STENCIL_TEST,
 	};
 
 	//MVP

@@ -21,4 +21,6 @@ void main(void) {
 	//Check for memory leaks.
 	_CrtDumpMemoryLeaks();
 
+	system("pause");
+
 }

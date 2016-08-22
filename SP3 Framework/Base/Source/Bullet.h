@@ -1,30 +1,40 @@
 #ifndef BULLET_H
 #define BULLET_H
 
-#include "EntityBase.h"
 #include "Mesh.h"
 #include "Texture.h"
 #include "Vector2.h"
+#include "GameEntity.h"
+#include "TileSystem.h"
 
-class Bullet : public EntityBase {
+class Character;
 
-protected:
-	//The position of the bullet
-	Vector2 position;
-	//The speed of the bullet
-	Vector2 velocity;
-	//The lifetime of the bullet
-	float lifetime;
-	//The damage of the bullet
-	int damage;
-	bool isActive;
+class Bullet : public GameEntity {
+
+private:
+	//Private Functions
+	void DamageTargets(const double& deltaTime);
+	void CheckCollisionWithWall();
 
 public:
-	Bullet();
-	virtual ~Bullet();
+	//Variable(s)
+	int damage; //Damage of bullet.
+	double lifetime; //How long until bullet despawns.
+	float radius; //What is the effective radius of the bullet.
 
-	void SetVelocity(float x, float y);
-	Vector2 GetVelocity() const;
+	//Mesh & Texture.
+	Mesh* mesh;
+	Texture texture;
+	
+	//What characters can the bullet hit?
+	vector<Character*>* targets;
+
+	//Check for collision with walls etc.
+	TileSystem* tileSystem;
+
+	//Constructor(s) & Destructor
+	Bullet(const string& sceneName);
+	virtual ~Bullet();
 
 	//Virtual Function(s)
 	void Update(const double& deltaTime);

@@ -28,6 +28,10 @@ private:
 	MeshMap meshMap;
 	SpriteMap spriteMap;
 
+	//Constructor(s) & Destructor
+	MeshBuilder();
+	virtual ~MeshBuilder();
+
 public:
 	bool CheckMeshExist(const string& meshName) const;
 	bool CheckSpriteAnimationExist(const string& spriteName) const;

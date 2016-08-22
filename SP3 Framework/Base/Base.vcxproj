@@ -20,8 +20,7 @@
     <ClCompile Include="Source\CollisionSystem.cpp" />
     <ClCompile Include="Source\Controller_Keyboard.cpp" />
     <ClCompile Include="Source\Controller_Mouse.cpp" />
-    <ClCompile Include="Source\Daniu.cpp" />
-    <ClCompile Include="Source\Enemy.cpp" />
+    <ClCompile Include="Source\EntityBase.cpp" />
     <ClCompile Include="Source\EntityManager.cpp" />
     <ClCompile Include="Source\GameManager.cpp" />
     <ClCompile Include="Source\GraphicsManager.cpp" />
@@ -39,7 +38,6 @@
     <ClCompile Include="Source\SceneBase.cpp" />
     <ClCompile Include="Source\SceneDaniu_1.cpp" />
     <ClCompile Include="Source\SceneManager.cpp" />
-    <ClCompile Include="Source\Seetwo.cpp" />
     <ClCompile Include="Source\shader.cpp" />
     <ClCompile Include="Source\ShaderProgram.cpp" />
     <ClCompile Include="Source\SpriteAnimation.cpp" />
@@ -53,20 +51,20 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Animation.h" />
+    <ClInclude Include="Source\AnimationFSM.h" />
+    <ClInclude Include="Source\AnimationFSM_Kifellah.h" />
     <ClInclude Include="Source\Application.h" />
     <ClInclude Include="Source\AudioManager.h" />
     <ClInclude Include="Source\Bullet.h" />
-    <ClInclude Include="Source\Bullet_Red.h" />
     <ClInclude Include="Source\Camera.h" />
     <ClInclude Include="Source\Camera2D.h" />
     <ClInclude Include="Source\Character.h" />
     <ClInclude Include="Source\CollisionSystem.h" />
     <ClInclude Include="Source\Controller_Keyboard.h" />
     <ClInclude Include="Source\Controller_Mouse.h" />
-    <ClInclude Include="Source\Daniu.h" />
-    <ClInclude Include="Source\Enemy.h" />
     <ClInclude Include="Source\EntityBase.h" />
     <ClInclude Include="Source\EntityManager.h" />
+    <ClInclude Include="Source\GameEntity.h" />
     <ClInclude Include="Source\GameManager.h" />
     <ClInclude Include="Source\GraphicsManager.h" />
     <ClInclude Include="Source\Hero.h" />
@@ -76,7 +74,6 @@
     <ClInclude Include="Source\LoadHmap.h" />
     <ClInclude Include="Source\LoadOBJ.h" />
     <ClInclude Include="Source\LoadTGA.h" />
-    <ClInclude Include="Source\MapEditor.h" />
     <ClInclude Include="Source\Material.h" />
     <ClInclude Include="Source\Mesh.h" />
     <ClInclude Include="Source\MeshBuilder.h" />
@@ -87,13 +84,11 @@
     <ClInclude Include="Source\SceneBase.h" />
     <ClInclude Include="Source\SceneDaniu_1.h" />
     <ClInclude Include="Source\SceneManager.h" />
-    <ClInclude Include="Source\Seetwo.h" />
     <ClInclude Include="Source\shader.hpp" />
     <ClInclude Include="Source\ShaderProgram.h" />
     <ClInclude Include="Source\SpriteAnimation.h" />
     <ClInclude Include="Source\Texture.h" />
     <ClInclude Include="Source\TextureManager.h" />
-    <ClInclude Include="Source\Tile.h" />
     <ClInclude Include="Source\TileCollider.h" />
     <ClInclude Include="Source\TileIndex.h" />
     <ClInclude Include="Source\MapRenderer.h" />

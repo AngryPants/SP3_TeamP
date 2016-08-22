@@ -16,26 +16,30 @@ void SceneDaniu_1::Init() {
 
 	SceneBase::Init();
 
-	tileSystem.LoadFile("Levels//Daniu//Daniu_Level_1.csv");
+	tileSystem.LoadFile("Level//Daniu//Daniu_Level_1.csv");
 
 	InitHero();
 	InitCamera();
 	InitEnemies();
 	InitSawblades();
 
+	//AudioManager::GetInstance().PlayAudio2D("Audio//BGM//BGM_Daniu.mp3", true);
+	MapRenderer::GetInstance().Reset();
+
 }
 
 void SceneDaniu_1::InitHero() {
 
-	hero = new Kifellah();
+	hero = new Kifellah(name);
 	hero->SetTileSystem(tileSystem);
-	EntityManager::GetInstance().AddEntity(name, *hero);
 
 	//Spawn the player.
 	for (int row = 0; row < tileSystem.GetNumRows(); ++row) {
 		for (int col = 0; col < tileSystem.GetNumColumns(); ++col) {
 			if (GetTileInfo(TILE_INFO::ITEM, tileSystem.TileValue(row, col)) == TILE_HERO_SPAWN) {
 				hero->position.Set(col * tileSystem.GetTileSize(), row * tileSystem.GetTileSize());
+				hero->SetCheckpoint(row, col);
+				break;
 			}
 		}
 	}
@@ -44,10 +48,9 @@ void SceneDaniu_1::InitHero() {
 
 void SceneDaniu_1::InitCamera() {
 
-	camera = new Camera2D();
+	camera = new Camera2D(name);
 	camera->SetFollowTarget(*hero);
 	camera->SetTileSystem(tileSystem);
-	EntityManager::GetInstance().AddEntity(name, *camera);
 
 }
 
@@ -68,11 +71,10 @@ void SceneDaniu_1::InitSawblades() {
 
 			std::map<int, Sawblade*>::iterator sawbladeIter = sawblades.find(sawbladeIndex);
 			if (sawbladeIter == sawblades.end()) {
-				Sawblade *sawBlade = new Sawblade();
+				Sawblade *sawBlade = new Sawblade(name);
 				sawBlade->AddNode(nodeIndex, nodePosition);
 				sawblades.insert(std::pair<int, Sawblade*>(sawbladeIndex, sawBlade));
-				sawBlade->SetHero(*hero);
-				EntityManager::GetInstance().AddEntity(name, *sawBlade);
+				sawBlade->target = hero;
 			} else {
 				sawbladeIter->second->AddNode(nodeIndex, nodePosition);
 			}			
@@ -91,8 +93,12 @@ void SceneDaniu_1::Update(const double& deltaTime) {
 		frameTime = 1.0 / minFPS;
 	}
 
-	EntityManager::GetInstance().Update(name, frameTime);
+	//Hero* testHero = new Kifellah(name);
+	//testHero->Destroy();
+
 	AudioManager::GetInstance().Update();
+	EntityManager::GetInstance().Update(name, frameTime);
+	MapRenderer::GetInstance().Update(deltaTime);
 
 }
 
@@ -101,6 +107,7 @@ void SceneDaniu_1::Render() {
 	GraphicsManager::GetInstance().Update();
 	GraphicsManager::GetInstance().SetToCameraView(*camera);
 	GraphicsManager::GetInstance().Enable<GraphicsManager::MODE::DEPTH_TEST>();
+	RenderBackground();
 	MapRenderer::GetInstance().Render(tileSystem);
 	EntityManager::GetInstance().Render(this->name);
 
@@ -112,6 +119,6 @@ void SceneDaniu_1::Render() {
 
 void SceneDaniu_1::Exit() {
 
-	EntityManager::GetInstance().ClearScene(name);
+	SceneBase::Exit();
 
 }

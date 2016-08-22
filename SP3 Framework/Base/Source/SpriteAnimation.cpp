@@ -19,6 +19,7 @@ void SpriteAnimation::Update(double deltaTime) {
 
 	if (animation == nullptr) {
 		std::cout << name << " has no animation attached." << std::endl;
+		return;
 	}
 
 	if (!animation->animActive || animation->animTime < Math::EPSILON || row == 0 || column == 0) {
@@ -27,7 +28,7 @@ void SpriteAnimation::Update(double deltaTime) {
 	
 	this->currentTime += deltaTime;
 	
-	unsigned int numFrame;
+	unsigned int numFrame = 0;
 	if (animation->endFrame > animation->startFrame) {
 		numFrame = animation->endFrame - animation->startFrame + 1;
 	} else {
@@ -36,18 +37,30 @@ void SpriteAnimation::Update(double deltaTime) {
 	
 	double frameTime = animation->animTime / static_cast<float>(numFrame);
 	currentFrame = static_cast<unsigned int>(currentTime / frameTime) + animation->startFrame;
-
 	currentFrame %= (row * column);
 
 	if (currentTime > animation->animTime) {
-		animation->ended = true;
-
+		if (currentFrame != animation->endFrame) {
+			currentFrame = animation->endFrame;
+		}
 		if (animation->loop == false) {
 			animation->animActive = false;
+		} else {
+			Reset(true);
 		}
-		currentTime = 0.0;
-		//currentFrame = animation->startFrame;
 	}
+
+}
+
+void SpriteAnimation::Reset(bool animActive) {
+
+	if (animation == nullptr) {
+		std::cout << name << " has no animation attached." << std::endl;
+	}
+
+	currentFrame = animation->startFrame;
+	animation->animActive = true;
+	currentTime = 0.0;
 
 }
 

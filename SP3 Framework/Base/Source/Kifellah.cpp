@@ -2,45 +2,26 @@
 #include "MeshBuilder.h"
 #include "GraphicsManager.h"
 #include "RenderHelper.h"
+#include "GameManager.h"
+#include "AudioManager.h"
 
-Kifellah::Kifellah() 
+Kifellah::Kifellah(const string& sceneName) : Hero("Kifellah", sceneName)
 {
-	
-	name = "Kifellah";
-	speed = 15;
+
+	maxSpeed = 5;
 	damage = 10;
 	maxHealth = 100;
 	health = maxHealth;
 	fireRate = 3.0;
 
-	onGround = true;
-
-	animations[IDLE].Set(0, 9, true, 1.0, true);
-	animations[RUN].Set(10, 19, true, 1.0, true);
-	animations[JUMP].Set(20, 29, false, 0.5, true);
-	animations[SHOOT].Set(30, 34, true, 1 / fireRate, true);
-	animations[RUN_SHOOT].Set(40, 49, true, 1.0, true);
-	animations[DEAD].Set(50, 59, false, 1.0, true);
-	mesh = MeshBuilder::GetInstance().GenerateSpriteAnimation("Kifellah", 6, 10);
-	mesh->animation = &animations[IDLE];
-	texture.textureArray[0] = TextureManager::GetInstance().AddTexture("Kifellah", "Image//Cyborg_Shooter//Characters//Heroes//Hero_Kifellah.tga");
-
-	radius = 1.5f;
-	scale.Set(4, 4);
-	tileCollider.SetDetectionHeight(scale.y * 0.5f);
-	tileCollider.SetDetectionWidth(scale.x * 0.5f);
-	tileCollider.SetLengthHeight(scale.y * 0.45f);
-	tileCollider.SetLengthWidth(scale.x * 0.45f);
-	tileCollider.SetNumHotspotsHeight(3);
-	tileCollider.SetNumHotspotsWidth(3);
-
-	//scale.Set(4, 4);
-	//tileCollider.SetDetectionHeight(scale.y * 0.5f);
-	//tileCollider.SetDetectionWidth(scale.x * 0.5f);
-	//tileCollider.SetLengthHeight(scale.y * 0.45f);
-	//tileCollider.SetLengthWidth(scale.x * 0.45f);
-	//tileCollider.SetNumHotspotsHeight(8);
-	//tileCollider.SetNumHotspotsWidth(8);
+	collisionRadius = 1.0f;
+	
+	tileCollider.SetDetectionHeight(2.0f);
+	tileCollider.SetLengthHeight(1.9f);
+	tileCollider.SetDetectionWidth(1.0f);
+	tileCollider.SetLengthWidth(0.9f);
+	tileCollider.SetNumHotspotsHeight(4);
+	tileCollider.SetNumHotspotsWidth(4);
 
 }
 
@@ -50,88 +31,25 @@ Kifellah::~Kifellah()
 
 void Kifellah::Update(const double& deltaTime) 
 {
-	float textureScaleU = 0.0f;
-	float textureScaleV = 0.0f;
-	mesh->GetTextureScale(textureScaleU, textureScaleV);
-
-	bool shouldIdle = true;
-	if (InputManager::GetInstance().GetInputInfo().keyDown[INPUT_MOVE_RIGHT]) 
-	{
-		shouldIdle = false;
-		if (textureScaleU != 1.0f) 
-		{
-			mesh->SetTextureScale(1.0f, 1.0f);
-		}
-		mesh->animation = &animations[RUN];
-	}
-	else if (InputManager::GetInstance().GetInputInfo().keyDown[INPUT_JUMP] && InputManager::GetInstance().GetInputInfo().keyDown[INPUT_MOVE_RIGHT])
-	{
-		shouldIdle = false;
-		if (textureScaleU != 1.0f)
-		{
-			mesh->SetTextureScale(1.0f, 1.0f);
-		}
-		mesh->animation = &animations[JUMP];
-	}
-	if (InputManager::GetInstance().GetInputInfo().keyDown[INPUT_MOVE_LEFT]) 
-	{
-		shouldIdle = false;
-		if (textureScaleU != -1.0f) 
-		{
-			mesh->SetTextureScale(-1.0f, 1.0f);
-		}
-		mesh->animation = &animations[RUN];
-	}	
-	else if (InputManager::GetInstance().GetInputInfo().keyDown[INPUT_JUMP] && InputManager::GetInstance().GetInputInfo().keyDown[INPUT_MOVE_LEFT])
-	{
-		shouldIdle = false;
-		if (textureScaleU != -1.0f)
-		{
-			mesh->SetTextureScale(-1.0f, 1.0f);
-		}
-		mesh->animation = &animations[JUMP];
-	}
-	if (InputManager::GetInstance().GetInputInfo().keyDown[INPUT_SHOOT])
-	{
-		shouldIdle = false;
-		if (textureScaleU != 1.0f)
-		{
-			mesh->SetTextureScale(1.0f, 1.0f);
-		}
-		mesh->animation = &animations[SHOOT];
-	}
-	if (InputManager::GetInstance().GetInputInfo().keyDown[INPUT_MOVE_RIGHT] && InputManager::GetInstance().GetInputInfo().keyDown[INPUT_SHOOT])
-	{
-		shouldIdle = false;
-		if (textureScaleU != 1.0f)
-		{
-			mesh->SetTextureScale(1.0f, 1.0f);
-		}
-		mesh->animation = &animations[RUN_SHOOT];
-	}
-	if (InputManager::GetInstance().GetInputInfo().keyDown[INPUT_MOVE_LEFT] && InputManager::GetInstance().GetInputInfo().keyDown[INPUT_SHOOT])
-	{
-		shouldIdle = false;
-		if (textureScaleU != -1.0f)
-		{
-			mesh->SetTextureScale(-1.0f, 1.0f);
-		}
-		mesh->animation = &animations[RUN_SHOOT];
-	}
-
-	if (shouldIdle) 
-	{
-		mesh->animation = &animations[IDLE];
-	}
-
-	if (health > maxHealth)
-	{
+	if (health > maxHealth) {
 		health = maxHealth;
 	}
 
-	Hero::Respawn(maxHealth);
-	mesh->Update(deltaTime);
 	Hero::Update(deltaTime);
+
+	//Update AnimationFSM
+	animationFSM.SetIsMoving(isMoving);
+	animationFSM.SetIsShooting(isShooting);
+	animationFSM.SetOnGround(onGround);
+	if (currentDirection == MOVE_DIRECTION::RIGHT) {
+		animationFSM.SetDirection(AnimationFSM_Kifellah::MOVE_DIRECTION::RIGHT);
+	} else if (currentDirection == MOVE_DIRECTION::LEFT) {
+		animationFSM.SetDirection(AnimationFSM_Kifellah::MOVE_DIRECTION::LEFT);
+	}
+	animationFSM.Update(deltaTime);
+
+	//Hero::Respawn();
+	
 }
 
 void Kifellah::Render() 
@@ -139,11 +57,42 @@ void Kifellah::Render()
 	MS& modelStack = GraphicsManager::GetInstance().modelStack;
 	modelStack.PushMatrix();
 		modelStack.Translate(position.x, position.y, 0);
-		modelStack.Scale(scale.x, scale.y, 1);
-		RenderHelper::GetInstance().RenderMesh(*mesh, texture, false);
+		modelStack.Scale(4, 4, 1);
+		RenderHelper::GetInstance().RenderMesh(animationFSM.GetMesh(), animationFSM.GetTexture(), false);
 	modelStack.PopMatrix();
 }
 
 void Kifellah::RenderUI() {
+
+}
+
+void Kifellah::Shoot() {
+
+	if (InputManager::GetInstance().GetInputInfo().keyDown[INPUT_SHOOT]) {
+		isShooting = true;
+		if (shootingCooldown <= 0.0) {
+			shootingCooldown = 1.0 / fireRate;
+			Bullet& bullet = FetchBullet();			
+			bullet.isActive = true;
+			bullet.damage = 20.0f;
+			bullet.radius = 0.15f;
+			bullet.tileSystem = tileSystem;
+			bullet.targets = enemies;
+			bullet.lifetime = 5.0f;
+			bullet.position = position;
+			if (currentDirection == MOVE_DIRECTION::LEFT) {
+				 bullet.position.x -= 1.4f;
+				bullet.velocity.Set(-20, 0);
+			} else if (currentDirection == MOVE_DIRECTION::RIGHT) {
+				bullet.position.x += 1.4f;
+				bullet.velocity.Set(20, 0);
+			}
+			bullet.mesh = MeshBuilder::GetInstance().GenerateQuad("Bullet");
+			bullet.texture.textureArray[0] = TextureManager::GetInstance().AddTexture("Bullet Yellow", "Image//Cyborg_Shooter//Bullets//Bullet_Yellow.tga");
+			AudioManager::GetInstance().PlayAudio2D("Audio//Sound_Effects//Weapons//Gun_Kifellah.flac", false);
+		}
+	} else {
+		isShooting = false;
+	}
 
 }

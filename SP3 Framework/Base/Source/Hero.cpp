@@ -5,41 +5,62 @@
 #include "RenderHelper.h"
 #include "AudioManager.h"
 
-Hero::Hero()
+Hero::Hero(const string& name, const string& sceneName) : Character(name, sceneName)
 {
+	//Stats
 	lives = 3;
 	score = 0;
 	gravity = -20.0f;
-	checkpointCol = 0;
-	checkpointRow = 0;
-	damageTaken = false;
-	damageTimer = 0;
-	hitTrampoline = false;
-	radius = 2.f;
+	damageCooldown = 0;
+	shootingCooldown = 0.0;
+	canBoost = true;
+
+	enemies = nullptr;
 }
 
-Hero::~Hero()
-{
+Hero::~Hero() {
 }
 
 void Hero::Update(const double &deltaTime)
 {
-	if (tileSystem == nullptr) 
+	
+	damageCooldown = Math::Max(0.0f, damageCooldown -= static_cast<float>(deltaTime));
+	shootingCooldown = Math::Max(0.0f, shootingCooldown -= static_cast<float>(deltaTime));
+	canBoost = true;
+
+	Move(deltaTime);
+	ItemInteraction(deltaTime);
+	Shoot();
+	
+	if (health <= 0) {
+		Respawn();
+	}
+
+}
+
+void Hero::Move(const double& deltaTime) {
+
+	if (tileSystem == nullptr)
 	{
 		cout << "Unable to update hero as no tileSystem was linked." << endl;
 		return;
 	}
 
 	Vector2 acceleration;
-
 	//Running
 	if (InputManager::GetInstance().GetInputInfo().keyDown[INPUT_MOVE_RIGHT]) 
 	{
 		acceleration.x += 20.0f * InputManager::GetInstance().GetInputInfo().keyValue[INPUT_MOVE_RIGHT];
+		isMoving = true;
+		currentDirection = MOVE_DIRECTION::RIGHT;
 	} 
 	else if (InputManager::GetInstance().GetInputInfo().keyDown[INPUT_MOVE_LEFT]) 
 	{
-		acceleration.x -= 20.0f * InputManager::GetInstance().GetInputInfo().keyValue[INPUT_MOVE_LEFT];
+		acceleration.x -= 20.0f * InputManager::GetInstance().GetInputInfo().keyValue[INPUT_MOVE_LEFT];		
+		isMoving = true;
+		currentDirection = MOVE_DIRECTION::LEFT;
+	} else {
+		isMoving = false;
 	}
 
 	//Jumping
@@ -49,69 +70,45 @@ void Hero::Update(const double &deltaTime)
 		onGround = false;
 		acceleration.y += 800.0f * InputManager::GetInstance().GetInputInfo().keyValue[INPUT_JUMP];
 	}
-	if (hitTrampoline)
-	{
-		onGround = false;
-		acceleration.y += 1600;
-		hitTrampoline = false;
-	}
 	
-	this->velocity += acceleration * deltaTime;
-	this->velocity.x = Math::Clamp(this->velocity.x, -speed, speed); //Limit our horizontal speed.
+	this->velocity += acceleration * static_cast<float>(deltaTime);
+	this->velocity.x = Math::Clamp(this->velocity.x, -maxSpeed, maxSpeed); //Limit our horizontal speed.
 	this->velocity.y = Math::Clamp(this->velocity.y, -27.0f, 27.0f);
 
 	//Move Along Y-Axis
-	if (velocity.y > 0) 
-	{
+	if (velocity.y > 0) {
 		MoveUp(deltaTime);
-	} 
-	else 
-	{
+	} else {
 		MoveDown(deltaTime);
 	}
-
+	
 	//Move along X-Axis
-	if (velocity.x > 0) 
-	{
+	if (velocity.x > 0) {
 		MoveRight(deltaTime);
-	} 
-	else 
-	{
+	} else {
 		MoveLeft(deltaTime);
 	}
 
 	//Bounds Checking
-	if (position.x < tileSystem->GetBoundaryLeft()) 
-	{
+	if (position.x < tileSystem->GetBoundaryLeft()) {
 		position.x = tileSystem->GetBoundaryLeft();
 		velocity.x = 0;
-	} 
-	else if (position.x > tileSystem->GetBoundaryRight()) 
-	{
+	} else if (position.x > tileSystem->GetBoundaryRight()) {
 		position.x = tileSystem->GetBoundaryRight();
 		velocity.x = 0;
 	}
-	if (position.y < tileSystem->GetBoundaryBottom()) 
-	{
+	if (position.y < tileSystem->GetBoundaryBottom()) {
 		position.y = tileSystem->GetBoundaryBottom();
 		velocity.y = 0;
-	} 
-	else if (position.y > tileSystem->GetBoundaryTop()) 
-	{
+	} else if (position.y > tileSystem->GetBoundaryTop()) {
 		position.y = tileSystem->GetBoundaryTop();
 		velocity.y = 0;
 	}
 
-	velocity.x *= (1.0 - deltaTime * 3.0f);
+	if (!isMoving) {
+		velocity.x *= static_cast<float>(Math::Clamp(1.0 - deltaTime * 5.0, 0.0, 1.0));
+	}
 
-	if (damageTaken)
-	{
-		damageTimer += deltaTime;
-	}
-	if (damageTimer > 2)
-	{
-		damageTaken = false;
-	}
 }
 
 void Hero::Render()
@@ -132,86 +129,52 @@ void Hero::SetLives(const int& lives)
 	this->lives = lives;
 }
 
-void Hero::MoveLeft(const double& deltaTime) 
+int Hero::GetScore() const
 {
-	//What is the tile coordinates of our hero now?
-	int currentCol = tileSystem->GetTile(position.x);
-	int currentRow = tileSystem->GetTile(position.y);
-	
-	//Which tile our hotspot is in
-	int hotspotTileCol = 0;
-	int hotspotTileRow = 0;
+	return this->score;
+}
 
-	//The type of things in the tile
-	int terrain = 0;
-	int item = 0;
+void Hero::SetScore(const int& score)
+{
+	this->score = score;
+}
+
+void Hero::MoveLeft(const double& deltaTime) {
 
 	//Move Along the X Axis
-	position.x += velocity.x * deltaTime;
+	position.x += velocity.x * static_cast<float>(deltaTime);
 
 	//Starting position of the hotspots we're checking.
 	Vector2 hotspot(position.x - tileCollider.GetDetectionWidth() * 0.5f, position.y - tileCollider.GetLengthHeight() * 0.5f);
+	TileCoord hotspotTile;
+	unsigned int terrain = 0;
 
-	//Check for collision against walls or falling through the map.
-	for (int i = 0; i < tileCollider.GetNumHotspotsWidth(); ++i) 
-	{		
+	//Check for collision against walls.
+	for (int i = 0; i < tileCollider.GetNumHotspotsHeight(); ++i) {
 		//Which tile our hotspot is in
-		hotspotTileCol = tileSystem->GetTile(hotspot.x);
-		hotspotTileRow = tileSystem->GetTile(hotspot.y);
+		hotspotTile.Set(tileSystem->GetTile(hotspot.y), tileSystem->GetTile(hotspot.x));
 
 		//Check if we're within the map's bounds.
-		if (hotspotTileCol < 0 || hotspotTileCol >= tileSystem->GetNumColumns()) 
-		{
-			//We aren't. Don't bother with this hotspot.
-			continue;
-		} 
-		else if (hotspotTileRow < 0 || hotspotTileRow >= tileSystem->GetNumRows()) 
-		{
-			//We aren't. Don't bother with this hotspot.
-			continue;
+		if (hotspotTile.column < 0 || hotspotTile.column >= tileSystem->GetNumColumns()) {
+			//Update the position of the hotspot.
+			hotspot.y += tileCollider.GetHotspotOffsetHeight();
+			continue; //We aren't. Don't bother with this hotspot.
+		} else if (hotspotTile.row < 0 || hotspotTile.row >= tileSystem->GetNumRows()) {
+			//Update the position of the hotspot.
+			hotspot.y += tileCollider.GetHotspotOffsetHeight();
+			continue; //We aren't. Don't bother with this hotspot.
 		}
 
 		//Okay, we're within the map's boundaries.
 		//Let's see if we hit any walls.
-		terrain = GetTileInfo(TILE_INFO::TERRAIN, tileSystem->TileValue(hotspotTileRow, hotspotTileCol));
-		if (terrain != 0) 
-		{
+		terrain = GetTileInfo(TILE_INFO::TERRAIN, tileSystem->TileValue(hotspotTile.row, hotspotTile.column));
+		if (terrain != 0) {
 			//Yeah we did. Let's move back to a spot we can be at.
-			position.x -= hotspot.x - (hotspotTileCol + 1) * tileSystem->GetTileSize() + tileSystem->GetTileSize() * 0.5f;
+			//position.x += (tileSystem->GetTileSize() * (0.5f + static_cast<float>(hotspotTile.column))) - hotspot.x;
+			position.x = (static_cast<float>(hotspotTile.column) + 0.5f) * tileSystem->GetTileSize() + tileCollider.GetDetectionWidth() * 0.5f;
 			velocity.x = 0;
 			break;
 		}
-
-		//Update the position of the hotspot.
-		hotspot.y += tileCollider.GetHotspotOffsetHeight();
-	}
-
-	//Okay now that we are the position we actually should be at.
-	//Starting position of the hotspots we're checking.
-	hotspot.Set(position.x - tileCollider.GetDetectionWidth() * 0.5f, position.y - tileCollider.GetLengthHeight() * 0.5f);
-
-	//Let's check if we've picked up any items
-	for (int i = 0; i < tileCollider.GetNumHotspotsWidth(); ++i) 
-	{
-		//Which tile our hotspot is in
-		hotspotTileCol = tileSystem->GetTile(hotspot.x);
-		hotspotTileRow = tileSystem->GetTile(hotspot.y);
-
-		//Check if we're within the map's bounds.
-		if (hotspotTileCol < 0 || hotspotTileCol >= tileSystem->GetNumColumns()) 
-		{
-			//We aren't. Don't bother with this hotspot.
-			continue;
-		} 
-		else if (hotspotTileRow < 0 || hotspotTileRow >= tileSystem->GetNumRows()) 
-		{
-			//We aren't. Don't bother with this hotspot.
-			continue;
-		}
-
-		//Okay, we're within the map's boundaries.
-		//Let's see if we can pick up any item
-		ItemInteraction(tileSystem->TileValue(hotspotTileRow, hotspotTileCol), hotspot.x, hotspot.y);
 
 		//Update the position of the hotspot.
 		hotspot.y += tileCollider.GetHotspotOffsetHeight();
@@ -219,52 +182,38 @@ void Hero::MoveLeft(const double& deltaTime)
 
 }
 
-void Hero::MoveRight(const double& deltaTime) 
-{
-	//What is the tile coordinates of our hero now?
-	int currentCol = tileSystem->GetTile(position.x);
-	int currentRow = tileSystem->GetTile(position.y);
-	
-	//Which tile our hotspot is in
-	int hotspotTileCol = 0;
-	int hotspotTileRow = 0;
-
-	//The type of things in the tile
-	int terrain = 0;
-	int item = 0;
+void Hero::MoveRight(const double& deltaTime) {
 
 	//Move Along the X Axis
-	position.x += velocity.x * deltaTime;
+	position.x += velocity.x * static_cast<float>(deltaTime);
 
 	//Starting position of the hotspots we're checking.
 	Vector2 hotspot(position.x + tileCollider.GetDetectionWidth() * 0.5f, position.y - tileCollider.GetLengthHeight() * 0.5f);
+	TileCoord hotspotTile;
+	unsigned int terrain = 0;
 
 	//Check for collision against walls or falling through the map.
-	for (int i = 0; i < tileCollider.GetNumHotspotsWidth(); ++i) 
-	{		
+	for (int i = 0; i < tileCollider.GetNumHotspotsWidth(); ++i) {		
 		//Which tile our hotspot is in
-		hotspotTileCol = tileSystem->GetTile(hotspot.x);
-		hotspotTileRow = tileSystem->GetTile(hotspot.y);
+		hotspotTile.Set(tileSystem->GetTile(hotspot.y), tileSystem->GetTile(hotspot.x));
 
 		//Check if we're within the map's bounds.
-		if (hotspotTileCol < 0 || hotspotTileCol >= tileSystem->GetNumColumns()) 
-		{
-			//We aren't. Don't bother with this hotspot.
-			continue;
-		} 
-		else if (hotspotTileRow < 0 || hotspotTileRow >= tileSystem->GetNumRows()) 
-		{
-			//We aren't. Don't bother with this hotspot.
-			continue;
+		if (hotspotTile.column < 0 || hotspotTile.column >= tileSystem->GetNumColumns()) {
+			//Update the position of the hotspot.
+			hotspot.y += tileCollider.GetHotspotOffsetHeight();
+			continue; //We aren't. Don't bother with this hotspot.
+		} else if (hotspotTile.row < 0 || hotspotTile.row >= tileSystem->GetNumRows()) {
+			//Update the position of the hotspot.
+			hotspot.y += tileCollider.GetHotspotOffsetHeight();
+			continue; //We aren't. Don't bother with this hotspot.
 		}
 
 		//Okay, we're within the map's boundaries.
 		//Let's see if we hit any walls.
-		terrain = GetTileInfo(TILE_INFO::TERRAIN, tileSystem->TileValue(hotspotTileRow, hotspotTileCol));
-		if (terrain != 0) 
-		{
+		terrain = GetTileInfo(TILE_INFO::TERRAIN, tileSystem->TileValue(hotspotTile.row, hotspotTile.column));
+		if (terrain != 0) {
 			//Yeah we did. Let's move back to a spot we can be at.
-			position.x -= hotspot.x - (hotspotTileCol - 1) * tileSystem->GetTileSize() - tileSystem->GetTileSize() * 0.5f;
+			position.x = (static_cast<float>(hotspotTile.column - 1) + 0.5f) * tileSystem->GetTileSize() - tileCollider.GetDetectionWidth() * 0.5f;
 			velocity.x = 0;
 			break;
 		}
@@ -272,129 +221,48 @@ void Hero::MoveRight(const double& deltaTime)
 		//Update the position of the hotspot.
 		hotspot.y += tileCollider.GetHotspotOffsetHeight();
 	}
-
-	//Okay now that we are the position we actually should be at.
-	//Starting position of the hotspots we're checking.
-	hotspot.Set(position.x + tileCollider.GetDetectionWidth() * 0.5f, position.y - tileCollider.GetLengthHeight() * 0.5f);
-
-	//Let's check if we've picked up any items
-	for (int i = 0; i < tileCollider.GetNumHotspotsWidth(); ++i) 
-	{
-		//Which tile our hotspot is in
-		hotspotTileCol = tileSystem->GetTile(hotspot.x);
-		hotspotTileRow = tileSystem->GetTile(hotspot.y);
-
-		//Check if we're within the map's bounds.
-		if (hotspotTileCol < 0 || hotspotTileCol >= tileSystem->GetNumColumns()) 
-		{
-			//We aren't. Don't bother with this hotspot.
-			continue;
-		} 
-		else if (hotspotTileRow < 0 || hotspotTileRow >= tileSystem->GetNumRows()) 
-		{
-			//We aren't. Don't bother with this hotspot.
-			continue;
-		}
-
-		//Okay, we're within the map's boundaries.
-		//Let's see if we can pick up any item
-		ItemInteraction(tileSystem->TileValue(hotspotTileRow, hotspotTileCol), hotspot.x, hotspot.y);
-
-		//Update the position of the hotspot.
-		hotspot.y += tileCollider.GetHotspotOffsetHeight();
-	}
-
 }
 
 void Hero::MoveDown(const double& deltaTime) 
 {
-	//What is the tile coordinates of our hero now?
-	int currentCol = tileSystem->GetTile(position.x);
-	int currentRow = tileSystem->GetTile(position.y);
-	
-	//Which tile our hotspot is in
-	int hotspotTileCol = 0;
-	int hotspotTileRow = 0;
-
-	//The type of things in the tile
-	int terrain = 0;
-	int item = 0;
-
 	//Move Along the Y Axis
-	position.y += velocity.y * deltaTime;
+	position.y += velocity.y * static_cast<float>(deltaTime);
 
 	//Starting position of the hotspots we're checking.
 	Vector2 hotspot(position.x - tileCollider.GetLengthWidth() * 0.5f, position.y - tileCollider.GetDetectionHeight() * 0.5f);
+	TileCoord hotspotTile;
+	unsigned int terrain = 0;
 
 	//Check for collision against walls or falling through the map.
 	for (int i = 0; i < tileCollider.GetNumHotspotsWidth(); ++i) 
 	{
 		//Which tile our hotspot is in
-		hotspotTileCol = tileSystem->GetTile(hotspot.x);
-		hotspotTileRow = tileSystem->GetTile(hotspot.y);
-
+		hotspotTile.Set(tileSystem->GetTile(hotspot.y), tileSystem->GetTile(hotspot.x));
 		//Check if we're within the map's bounds.
-		if (hotspotTileCol < 0 || hotspotTileCol >= tileSystem->GetNumColumns()) 
-		{
-			//We aren't. Don't bother with this hotspot.
-			continue;
-		} 
-		else if (hotspotTileRow < 0 || hotspotTileRow >= tileSystem->GetNumRows()) 
-		{
-			//We aren't. Don't bother with this hotspot.
-			continue;
+		if (hotspotTile.column < 0 || hotspotTile.column >= tileSystem->GetNumColumns()) {
+			//Update the position of the hotspot.
+			hotspot.x += tileCollider.GetHotspotOffsetWidth();
+			continue; //We aren't. Don't bother with this hotspot.
+		} else if (hotspotTile.row < 0 || hotspotTile.row >= tileSystem->GetNumRows()) {
+			//Update the position of the hotspot.
+			hotspot.x += tileCollider.GetHotspotOffsetWidth();
+			continue; //We aren't. Don't bother with this hotspot.
 		}
 
 		//Okay, we're within the map's boundaries.
 		//Let's see if we hit any walls.
-		terrain = GetTileInfo(TILE_INFO::TERRAIN, tileSystem->TileValue(hotspotTileRow, hotspotTileCol));
-		if (terrain != 0) 
-		{
+		terrain = GetTileInfo(TILE_INFO::TERRAIN, tileSystem->TileValue(hotspotTile.row, hotspotTile.column));
+		if (terrain != 0) {
 			//Yeah we did. Let's move back to a spot we can be at.
-			position.y -= hotspot.y - (hotspotTileRow + 1) * tileSystem->GetTileSize() + tileSystem->GetTileSize() * 0.5f;
+			position.y = (tileSystem->GetTileSize() * (0.5f + static_cast<float>(hotspotTile.row))) + tileCollider.GetDetectionHeight() * 0.5f;
 			velocity.y = 0;
 			onGround = true;
 			break;
-		}
-		else if (velocity.y != 0)
-		{
+		} else if (velocity.y != 0) {
+			onGround = false;
+		} else {
 			onGround = false;
 		}
-		else
-		{
-			onGround = false;
-		}
-
-		//Update the position of the hotspot.
-		hotspot.x += tileCollider.GetHotspotOffsetWidth();
-	}
-
-	//Okay now that we are the position we actually should be at.
-	//Starting position of the hotspots we're checking.
-	hotspot.Set(position.x - tileCollider.GetLengthWidth() * 0.5f, position.y - tileCollider.GetDetectionHeight() * 0.5f);
-
-	//Let's check if we've picked up any items
-	for (int i = 0; i < tileCollider.GetNumHotspotsWidth(); ++i) 
-	{
-		//Which tile our hotspot is in
-		hotspotTileCol = tileSystem->GetTile(hotspot.x);
-		hotspotTileRow = tileSystem->GetTile(hotspot.y);
-
-		//Check if we're within the map's bounds.
-		if (hotspotTileCol < 0 || hotspotTileCol >= tileSystem->GetNumColumns()) 
-		{
-			//We aren't. Don't bother with this hotspot.
-			continue;
-		} 
-		else if (hotspotTileRow < 0 || hotspotTileRow >= tileSystem->GetNumRows()) 
-		{
-			//We aren't. Don't bother with this hotspot.
-			continue;
-		}
-
-		//Okay, we're within the map's boundaries.
-		//Let's see if we can pick up any item
-		ItemInteraction(tileSystem->TileValue(hotspotTileRow, hotspotTileCol), hotspot.x, hotspot.y);
 
 		//Update the position of the hotspot.
 		hotspot.x += tileCollider.GetHotspotOffsetWidth();
@@ -403,50 +271,41 @@ void Hero::MoveDown(const double& deltaTime)
 
 void Hero::MoveUp(const double& deltaTime) 
 {
-	//What is the tile coordinates of our hero now?
-	int currentCol = tileSystem->GetTile(position.x);
-	int currentRow = tileSystem->GetTile(position.y);
-	
-	//Which tile our hotspot is in
-	int hotspotTileCol = 0;
-	int hotspotTileRow = 0;
-
-	//The type of things in the tile
-	int terrain = 0;
-	int item = 0;
-
 	//Move Along the Y Axis
-	position.y += velocity.y * deltaTime;
+	position.y += velocity.y * static_cast<float>(deltaTime);
 
 	//Starting position of the hotspots we're checking.
 	Vector2 hotspot(position.x - tileCollider.GetLengthWidth() * 0.5f, position.y + tileCollider.GetDetectionHeight() * 0.5f);
+	unsigned int terrain = 0;
+	TileCoord hotspotTile;
 
 	//Check for collision against walls or falling through the map.
 	for (int i = 0; i < tileCollider.GetNumHotspotsWidth(); ++i)
 	{		
 		//Which tile our hotspot is in
-		hotspotTileCol = tileSystem->GetTile(hotspot.x);
-		hotspotTileRow = tileSystem->GetTile(hotspot.y);
+		hotspotTile.Set(tileSystem->GetTile(hotspot.y), tileSystem->GetTile(hotspot.x));
 
 		//Check if we're within the map's bounds.
-		if (hotspotTileCol < 0 || hotspotTileCol >= tileSystem->GetNumColumns())
-		{
-			//We aren't. Don't bother with this hotspot.
-			continue;
+		if (hotspotTile.column < 0 || hotspotTile.column >= tileSystem->GetNumColumns())
+		{			
+			//Update the position of the hotspot.
+			hotspot.x += tileCollider.GetHotspotOffsetWidth();
+			continue; //We aren't. Don't bother with this hotspot.
 		}
-		else if (hotspotTileRow < 0 || hotspotTileRow >= tileSystem->GetNumRows())
+		else if (hotspotTile.row < 0 || hotspotTile.row >= tileSystem->GetNumRows())
 		{
-			//We aren't. Don't bother with this hotspot.
-			continue;
+			//Update the position of the hotspot.
+			hotspot.x += tileCollider.GetHotspotOffsetWidth();
+			continue; //We aren't. Don't bother with this hotspot.
 		}
 
 		//Okay, we're within the map's boundaries.
 		//Let's see if we hit any walls.
-		terrain = GetTileInfo(TILE_INFO::TERRAIN, tileSystem->TileValue(hotspotTileRow, hotspotTileCol));
+		terrain = GetTileInfo(TILE_INFO::TERRAIN, tileSystem->TileValue(hotspotTile.row, hotspotTile.column));
 		if (terrain != 0)
 		{
 			//Yeah we did. Let's move back to a spot we can be at.
-			position.y -= hotspot.y - (hotspotTileRow - 1) * tileSystem->GetTileSize() - tileSystem->GetTileSize() * 0.5f;
+			position.y = (static_cast<float>(hotspotTile.row - 1) + 0.5f) * tileSystem->GetTileSize() - tileCollider.GetDetectionHeight() * 0.5f;
 			velocity.y = -velocity.y;
 			break;
 		}
@@ -455,103 +314,166 @@ void Hero::MoveUp(const double& deltaTime)
 		hotspot.x += tileCollider.GetHotspotOffsetWidth();
 	}
 
-	//Okay now that we are the position we actually should be at.
-	//Starting position of the hotspots we're checking.
-	hotspot.Set(position.x - tileCollider.GetLengthWidth() * 0.5f, position.y + tileCollider.GetDetectionHeight() * 0.5f);
+}
 
-	//Let's check if we've picked up any items
-	for (int i = 0; i < tileCollider.GetNumHotspotsWidth(); ++i)
-	{
-		//Which tile our hotspot is in
-		hotspotTileCol = tileSystem->GetTile(hotspot.x);
-		hotspotTileRow = tileSystem->GetTile(hotspot.y);
+bool Hero::TakeDamage(const int &damage)
+{
+	if (damageCooldown <= 0.0) {
+		health -= damage;
+		damageCooldown = 1.0f;
+		return true;
+	}
+	
+	return false;
+}
 
-		//Check if we're within the map's bounds.
-		if (hotspotTileCol < 0 || hotspotTileCol >= tileSystem->GetNumColumns())
-		{
-			//We aren't. Don't bother with this hotspot.
-			continue;
-		}
-		else if (hotspotTileRow < 0 || hotspotTileRow >= tileSystem->GetNumRows())
-		{
-			//We aren't. Don't bother with this hotspot.
-			continue;
-		}
+void Hero::ItemInteraction(const double& deltaTime) {
 
-		//Okay, we're within the map's boundaries.
-		//Let's see if we can pick up any item
-		ItemInteraction(tileSystem->TileValue(hotspotTileRow, hotspotTileCol), hotspot.x, hotspot.y);
+	//Check our centre
+	ItemInteraction(tileSystem->GetTile(position.y), tileSystem->GetTile(position.x), deltaTime);
+		
+	//Check Left
+	Vector2 hotspot(position.x - tileCollider.GetDetectionWidth() * 0.5f, position.y - tileCollider.GetLengthHeight() * 0.5f);	
+	for (int i = 0; i < tileCollider.GetNumHotspotsHeight(); ++i) {		
+		ItemInteraction(tileSystem->GetTile(hotspot.y), tileSystem->GetTile(hotspot.x), deltaTime);
+		//Update the position of the hotspot.
+		hotspot.y += tileCollider.GetHotspotOffsetHeight();
+	}
 
+	//Check Right
+	hotspot.Set(position.x + tileCollider.GetDetectionWidth() * 0.5f, position.y - tileCollider.GetLengthHeight() * 0.5f);	
+	for (int i = 0; i < tileCollider.GetNumHotspotsHeight(); ++i) {		
+		ItemInteraction(tileSystem->GetTile(hotspot.y), tileSystem->GetTile(hotspot.x), deltaTime);
+		//Update the position of the hotspot.
+		hotspot.y += tileCollider.GetHotspotOffsetHeight();
+	}
+
+	//Check Down
+	hotspot.Set(position.x - tileCollider.GetLengthWidth() * 0.5f, position.y - tileCollider.GetDetectionHeight() * 0.5f);	
+	for (int i = 0; i < tileCollider.GetNumHotspotsWidth(); ++i) {		
+		ItemInteraction(tileSystem->GetTile(hotspot.y), tileSystem->GetTile(hotspot.x), deltaTime);
 		//Update the position of the hotspot.
 		hotspot.x += tileCollider.GetHotspotOffsetWidth();
 	}
+
+	//Check Up
+	hotspot.Set(position.x - tileCollider.GetLengthWidth() * 0.5f, position.y + tileCollider.GetDetectionHeight() * 0.5f);	
+	for (int i = 0; i < tileCollider.GetNumHotspotsWidth(); ++i) {		
+		ItemInteraction(tileSystem->GetTile(hotspot.y), tileSystem->GetTile(hotspot.x), deltaTime);
+		//Update the position of the hotspot.
+		hotspot.x += tileCollider.GetHotspotOffsetWidth();
+	}
+
 }
 
-void Hero::TakeDamage(const int &damage)
-{
-	health -= damage;
-	damageTaken = true;
-}
+//Interact with the item on the map at these tile coordinates
+void Hero::ItemInteraction(int row, int column, const double& deltaTime) {
 
-void Hero::ItemInteraction(unsigned int& tileValue, float &hotspotX, float &hotspotY)
-{
-	int item = GetTileInfo(TILE_INFO::ITEM, tileValue);
-	switch (item)
-	{
+	if (row < 0 || row >= tileSystem->GetNumRows()) {
+		return;
+	} else if (column < 0 || column >= tileSystem->GetNumColumns()) {
+		return;
+	} else if (tileSystem == nullptr) {
+		return;
+	}
+
+	unsigned int& tileValue = tileSystem->TileValue(row, column);
+	unsigned int item = GetTileInfo(TILE_INFO::ITEM, tileValue);
+
+	switch (item) {
 		case 0:
 			//Do nothing.
 			break;
-		case TILE_COIN:
+		case TILE_COIN: {
 			score += 10; //Add our score.
 			ClearTileValue(TILE_INFO::ITEM, tileValue); //Remove the coin.
-			AudioManager::GetInstance().PlayAudio2D("Audio//Sound_Effects//Coin_Pickup.flac", false);
+			AudioManager::GetInstance().PlayAudio2D("Audio//Sound_Effects//Items//Coin_Pickup.flac", false);
+		}
 			break;
-		case TILE_CHECKPOINT_UNSET:
-			checkpointRow = tileSystem->GetTile(hotspotY);
-			checkpointCol = tileSystem->GetTile(hotspotX);
+		case TILE_CHECKPOINT_UNSET: {
+			checkpoint.Set(row, column);
 			ClearTileValue(TILE_INFO::ITEM, tileValue);
 			tileValue |= TILE_CHECKPOINT_SET;
-			AudioManager::GetInstance().PlayAudio2D("Audio//Sound_Effects//Checkpoint.flac", false);
+			AudioManager::GetInstance().PlayAudio2D("Audio//Sound_Effects//Items//Checkpoint.flac", false);
+		}
 			break;
-		case TILE_HERO_SPAWN:
-			checkpointRow = tileSystem->GetTile(hotspotY);
-			checkpointCol = tileSystem->GetTile(hotspotX);
-			AudioManager::GetInstance().PlayAudio2D("Audio//Sound_Effects//Checkpoint.flac", false);
+		/*case TILE_HERO_SPAWN: {
+			if (checkpoint.row != row || checkpoint.column != column) {
+				checkpoint.Set(row, column);
+				AudioManager::GetInstance().PlayAudio2D("Audio//Sound_Effects//Items//Checkpoint.flac", false);
+			}
+		}*/
 			break;
-		case TILE_ACID:
+		case TILE_ACID: {
 			health = 0;
+		}
 			break;
-		case TILE_SPIKE:
-			if (!damageTaken)
-			{
-				TakeDamage(20);				
+		case TILE_SPIKE: {
+			if (TakeDamage(20)) {
 				velocity.x *= -1;
 				velocity.y *= -1;
 			}
+		}
 			break;
-		case TILE_WRENCH:
+		case TILE_HEALTH: {
 			health += 40;
 			ClearTileValue(TILE_INFO::ITEM, tileValue);
+		}
 			break;
-		case TILE_TRAMPOLINE:
-			hitTrampoline = true;
+		case TILE_BOOSTPAD_LEFT: {
+			if (canBoost) {
+				velocity.x -= 200.0f * deltaTime;
+				canBoost = false;
+			}
+		}
+			break;
+		case TILE_BOOSTPAD_RIGHT: {
+			if (canBoost) {
+				velocity.x += 200.0f * deltaTime;
+				canBoost = false;
+			}
+		}
+			break;
+		case TILE_BOOSTPAD_DOWN: {
+			if (canBoost) {
+				velocity.y -= 200.0f * deltaTime;
+				canBoost = false;
+			}
+		}
+			break;
+		case TILE_BOOSTPAD_UP: {
+			if (canBoost) {
+				velocity.y += 200.0f * deltaTime;
+				canBoost = false;
+			}
+		}
 			break;
 	}
+
 }
 
-void Hero::Respawn(const int maxHealth)
-{
-	if (health <= 0)
-		isAlive = false;
-	if (lives > 0 && !isAlive)
-	{
-		lives--;
-		position.Set(checkpointCol, checkpointRow);
+void Hero::SetCheckpoint(int row, int column) {
+
+	this->checkpoint.row = row;
+	this->checkpoint.column = column;
+
+}
+
+TileCoord Hero::GetCheckpoint() const {
+
+	return this->checkpoint;
+
+}
+
+void Hero::Respawn() {
+
+	if (lives > 0) {
+		--lives;
+		position.Set(checkpoint.column * tileSystem->GetTileSize(), checkpoint.row * tileSystem->GetTileSize());
 		health = maxHealth;
-		isAlive = true;
+		isActive = true;
+	} else {
+		isDead = true;
 	}
-	if (lives <= 0)
-	{
-		//game over
-	}
+
 }

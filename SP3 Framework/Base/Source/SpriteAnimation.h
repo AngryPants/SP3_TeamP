@@ -21,6 +21,7 @@ public:
 
 	//Function(s)
 	void Update(double deltaTime);
+	void Reset(bool animActive);
 	virtual void Render();
 
 };

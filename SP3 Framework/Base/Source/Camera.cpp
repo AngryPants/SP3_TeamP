@@ -18,7 +18,7 @@ using std::endl;
 
 //Constructor(s) & Destructor
 
-Camera::Camera() : EntityBase("Camera") {
+Camera::Camera(const string& name, const string& sceneName) : EntityBase(name, sceneName) {
 
 	this->position.SetZero();
 	this->up.Set(0, 1, 0);

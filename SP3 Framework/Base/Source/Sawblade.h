@@ -5,11 +5,11 @@
 #include "Mesh.h"
 #include "Vector2.h"
 #include "Texture.h"
-#include "Hero.h"
+#include "Character.h"
 
 #include <map>
 
-class Sawblade : public EntityBase {
+class Sawblade : public GameEntity {
 
 private:
 	//Variable(s)
@@ -19,29 +19,27 @@ private:
 	Vector2 velocity;
 	float speed;
 	float rotation;
+	Mesh *mesh;
+	Texture texture;
 
 	float radius;
 	int damage;
-	
-	Hero *hero;
-	
-	Mesh *mesh;
-	Texture texture;
 
 	std::map<unsigned int, Vector2> nodes;
 	std::map<unsigned int, Vector2>::iterator destinationNode;
 
-	void DamageHero(const double& deltaTime);
+	void DamageTargets(const double& deltaTime);
 	void MoveToNode(const double& deltaTime);
 
 public:
+	Character* target;
+
 	//Constructor(s) & Destructor
-	Sawblade();
+	Sawblade(const string& sceneName);
 	virtual ~Sawblade() {}
 
+	void Reset();
 	void AddNode(unsigned int index, Vector2 position);
-	void SetHero(Hero& hero);
-	void RemoveHero();
 
 	//Virtual Function(s)
 	void Update(const double &deltaTime);

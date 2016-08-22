@@ -23,7 +23,7 @@ MapRenderer::MapRenderer() {
 	//Items
 	meshTextures[MESH_ACID].textureArray[0] = TextureManager::GetInstance().AddTexture("Acid", "Image//Cyborg_Shooter//Tiles//Items//Item_Acid.tga");
 	meshTextures[MESH_SPIKE].textureArray[0] = TextureManager::GetInstance().AddTexture("Spike", "Image//Cyborg_Shooter//Tiles//Items//Item_Spike.tga");
-	meshTextures[MESH_WRENCH].textureArray[0] = TextureManager::GetInstance().AddTexture("Wrench", "Image//Cyborg_Shooter//Tiles//Items//Item_Wrench.tga");
+	meshTextures[MESH_HEALTH].textureArray[0] = TextureManager::GetInstance().AddTexture("Health", "Image//Cyborg_Shooter//Tiles//Items//Item_Health.tga");
 	meshTextures[MESH_HERO_SPAWN].textureArray[0] = TextureManager::GetInstance().AddTexture("Hero Spawn", "Image//Cyborg_Shooter//Tiles//Items//Item_Hero_Spawn.tga");
 	meshTextures[MESH_CHECKPOINT_SET].textureArray[0] = TextureManager::GetInstance().AddTexture("Checkpoint Unset", "Image//Cyborg_Shooter//Tiles//Items//Item_Checkpoint_Unset.tga");
 	meshTextures[MESH_CHECKPOINT_UNSET].textureArray[0] = TextureManager::GetInstance().AddTexture("Checkpoint Set", "Image//Cyborg_Shooter//Tiles//Items//Item_Checkpoint_Set.tga");
@@ -40,24 +40,26 @@ MapRenderer::MapRenderer() {
 	meshTextures[MESH_ALERT_EXIT].textureArray[0] = TextureManager::GetInstance().AddTexture("Acid", "Image//Cyborg_Shooter//Tiles//Signs//Sign_Alert_Exit.tga");
 
 	//Sprite
-	animation[SPRITE_COIN].Set(0, 3, true, 1.0, true);
+	animation[SPRITE_COIN].Set(0, 3, true, 0.4, true);
 	sprite[SPRITE_COIN] = MeshBuilder::GetInstance().GenerateSpriteAnimation("Coin", 1, 4);
 	sprite[SPRITE_COIN]->animation = &animation[SPRITE_COIN];
-		
-	animation[SPRITE_DOOR].Set(0, 3, false, 1.0, false);
-	sprite[SPRITE_DOOR] = MeshBuilder::GetInstance().GenerateSpriteAnimation("Door", 1, 4);
-	sprite[SPRITE_DOOR]->animation = &animation[SPRITE_DOOR];
-
-	/*animation[SPRITE_TRAMPOLINE].Set(0, 4, false, 1.0, false);
-	sprite[SPRITE_TRAMPOLINE] = MeshBuilder::GetInstance().GenerateSpriteAnimation("Trampoline", 1, 5);
-	sprite[SPRITE_TRAMPOLINE]->animation = &animation[SPRITE_TRAMPOLINE];*/
-
-	//Sprite Textures
 	spriteTextures[SPRITE_COIN].textureArray[0] = TextureManager::GetInstance().AddTexture("Coin", "Image//Cyborg_Shooter//Tiles//Items//Item_Coin.tga");
-	spriteTextures[SPRITE_DOOR].textureArray[0] = TextureManager::GetInstance().AddTexture("Door", "Image//Cyborg_Shooter//Tiles//Items//Item_Door.tga");
-	//spriteTextures[SPRITE_TRAMPOLINE].textureArray[0] = TextureManager::GetInstance().AddTexture("Trampoline", "Image//Cyborg_Shooter//Tiles//Items//Item_Trampoline.tga");
-	
 
+	animation[SPRITE_DOOR_OPEN].Set(0, 3, false, 0.5, true);
+	sprite[SPRITE_DOOR_OPEN] = MeshBuilder::GetInstance().GenerateSpriteAnimation("Door Open", 2, 2);
+	sprite[SPRITE_DOOR_OPEN]->animation = &animation[SPRITE_DOOR_OPEN];
+	spriteTextures[SPRITE_DOOR_OPEN].textureArray[0] = TextureManager::GetInstance().AddTexture("Door Open", "Image//Cyborg_Shooter//Tiles//Items//Item_Door_Open.tga");
+
+	animation[SPRITE_DOOR_CLOSE].Set(0, 3, false, 0.5, true);
+	sprite[SPRITE_DOOR_CLOSE] = MeshBuilder::GetInstance().GenerateSpriteAnimation("Door Close", 2, 2);
+	sprite[SPRITE_DOOR_CLOSE]->animation = &animation[SPRITE_DOOR_CLOSE];
+	spriteTextures[SPRITE_DOOR_CLOSE].textureArray[0] = TextureManager::GetInstance().AddTexture("Door Close", "Image//Cyborg_Shooter//Tiles//Items//Item_Door_Close.tga");
+
+	animation[SPRITE_BOOSTPAD].Set(0, 4, true, 0.25, true);
+	sprite[SPRITE_BOOSTPAD] = MeshBuilder::GetInstance().GenerateSpriteAnimation("Boost Pad", 2, 2);
+	sprite[SPRITE_BOOSTPAD]->animation = &animation[SPRITE_BOOSTPAD];
+	spriteTextures[SPRITE_BOOSTPAD].textureArray[0] = TextureManager::GetInstance().AddTexture("Boost Pad", "Image//Cyborg_Shooter//Tiles//Items//Item_Boostpad.tga");	
+	
 }
 
 MapRenderer::~MapRenderer() {
@@ -84,6 +86,14 @@ void MapRenderer::SetStartColumn(const int& startColumn) {
 void MapRenderer::SetEndColumn(const int& endColumn) {
 
 	this->endColumn = endColumn;
+
+}
+
+void MapRenderer::Update(const double& deltaTime) {
+
+	for (unsigned int i = 0; i < NUM_SPRITE; ++i) {
+		sprite[i]->Update(deltaTime);
+	}
 
 }
 
@@ -128,11 +138,50 @@ void MapRenderer::Render(TileSystem& tileSystem) {
 					case TILE_COIN:
 						RenderHelper::GetInstance().RenderMesh(*sprite[SPRITE_COIN], spriteTextures[SPRITE_COIN], false);
 						break;
+					case TILE_ACID:
+						RenderHelper::GetInstance().RenderMesh(*mesh, meshTextures[MESH_ACID], false);
+						break;
+					case TILE_SPIKE:
+						RenderHelper::GetInstance().RenderMesh(*mesh, meshTextures[MESH_SPIKE], false);
+						break;
+					case TILE_HERO_SPAWN:
+						RenderHelper::GetInstance().RenderMesh(*mesh, meshTextures[MESH_HERO_SPAWN], false);
+						break;
+					case TILE_CHECKPOINT_UNSET: 
+						RenderHelper::GetInstance().RenderMesh(*mesh, meshTextures[MESH_CHECKPOINT_UNSET], false);
+						break;
+					case TILE_CHECKPOINT_SET:
+						RenderHelper::GetInstance().RenderMesh(*mesh, meshTextures[MESH_CHECKPOINT_SET], false);
+						break;				
 					case TILE_DOOR_OPEN:
-						//RenderHelper::GetInstance().RenderMesh(*sprite[SPRITE_COIN], spriteTextures[SPRITE_COIN], false);
+						RenderHelper::GetInstance().RenderMesh(*sprite[SPRITE_DOOR_OPEN], spriteTextures[SPRITE_DOOR_OPEN], false);
 						break;
 					case TILE_DOOR_CLOSE:
-						//RenderHelper::GetInstance().RenderMesh(*sprite[SPRITE_COIN], spriteTextures[SPRITE_COIN], false);
+						RenderHelper::GetInstance().RenderMesh(*sprite[SPRITE_DOOR_CLOSE], spriteTextures[SPRITE_DOOR_CLOSE], false);
+						break;
+					case TILE_BOOSTPAD_LEFT:
+						modelStack.PushMatrix();
+							modelStack.Rotate(180, 0, 0, 1);
+							RenderHelper::GetInstance().RenderMesh(*sprite[SPRITE_BOOSTPAD], spriteTextures[SPRITE_BOOSTPAD], false);
+						modelStack.PopMatrix();
+						break;
+					case TILE_BOOSTPAD_RIGHT:
+						RenderHelper::GetInstance().RenderMesh(*sprite[SPRITE_BOOSTPAD], spriteTextures[SPRITE_BOOSTPAD], false);
+						break;
+					case TILE_BOOSTPAD_DOWN:
+						modelStack.PushMatrix();
+							modelStack.Rotate(270, 0, 0, 1);
+							RenderHelper::GetInstance().RenderMesh(*sprite[SPRITE_BOOSTPAD], spriteTextures[SPRITE_BOOSTPAD], false);
+						modelStack.PopMatrix();
+						break;
+					case TILE_BOOSTPAD_UP:
+						modelStack.PushMatrix();
+							modelStack.Rotate(90, 0, 0, 1);
+							RenderHelper::GetInstance().RenderMesh(*sprite[SPRITE_BOOSTPAD], spriteTextures[SPRITE_BOOSTPAD], false);
+						modelStack.PopMatrix();
+						break;
+					case TILE_HEALTH:
+						RenderHelper::GetInstance().RenderMesh(*mesh, meshTextures[MESH_HEALTH], false);
 						break;
 				}
 
@@ -171,6 +220,14 @@ void MapRenderer::Render(TileSystem& tileSystem) {
 				}
 			modelStack.PopMatrix();
 		}
+	}
+
+}
+
+void MapRenderer::Reset() {
+
+	for (unsigned int i = 0; i < NUM_SPRITE; ++i) {
+		sprite[i]->Reset(true);
 	}
 
 }

@@ -3,32 +3,15 @@
 #define KIFELLAH_H
 
 #include "Hero.h"
-#include "SpriteAnimation.h"
+#include "AnimationFSM_Kifellah.h"
 
 class Kifellah : public Hero {
 
 private:
-	/*
-
-	****4*************5****
-	***********************
-	0*********************2
-	***********************
-	***********************
-	***********C***********
-	***********************
-	***********************
-	1*********************3
-	***********************
-	****6*************7****
-
-	*/
-
-	Vector2 hotspots[8];
-	bool onGround;
+	AnimationFSM_Kifellah animationFSM;
 
 public:
-	Kifellah();
+	Kifellah(const string& sceneName);
 	virtual ~Kifellah();
 
 	void Update(const double &deltaTime);
@@ -38,7 +21,8 @@ public:
 	void Movement(const double &deltaTime);
 	void TileCollision();
 
-	TileCollider tCollision;
+	virtual void Shoot();
+
 };
 
 #endif

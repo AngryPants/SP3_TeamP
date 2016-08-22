@@ -4,7 +4,7 @@
 
 using namespace std;
 
-Camera2D::Camera2D() {
+Camera2D::Camera2D(const string& sceneName) : Camera("Camera2D", sceneName) {
 
 	target.Set(0, 0, -1);
 	position.SetZero();

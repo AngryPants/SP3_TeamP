@@ -9,7 +9,6 @@ public:
 	unsigned int endFrame;
 	bool loop;
 	double animTime;
-	bool ended;
 	bool animActive;
 
 	//Constructor(s) & Destructor

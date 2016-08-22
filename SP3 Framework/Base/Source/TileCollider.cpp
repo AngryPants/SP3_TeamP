@@ -56,6 +56,9 @@ void TileCollider::SetLengthWidth(const float& lengthWidth)
 		this->lengthWidth = 0.0f;
 	else
 		this->lengthWidth = lengthWidth;
+
+	if (this->lengthWidth >= this->detectionWidth)
+		this->lengthWidth = this->detectionWidth * 0.9f;
 }
 
 float TileCollider::GetLengthWidth() const
@@ -69,6 +72,9 @@ void TileCollider::SetLengthHeight(const float& lengthHeight)
 		this->lengthHeight = 0.0f;
 	else
 		this->lengthHeight = lengthHeight;
+
+	if (this->lengthHeight >= this->detectionHeight)
+		this->lengthHeight = this->detectionHeight * 0.9f;
 }
 
 float TileCollider::GetLengthHeight() const
