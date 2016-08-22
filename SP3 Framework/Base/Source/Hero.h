@@ -52,6 +52,9 @@ public:
 	virtual bool TakeDamage(const int &damage);
 	void Respawn();
 
+	Mesh *mesh;
+	Texture hpBorder;
+	Texture hpBar;
 };
 
 #endif

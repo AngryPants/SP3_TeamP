@@ -74,6 +74,8 @@ void Kifellah::Render()
 
 void Kifellah::RenderUI() {
 
+	Hero::RenderUI();
+
 }
 
 void Kifellah::Shoot() {
