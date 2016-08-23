@@ -113,8 +113,21 @@ void Seetwo::Shoot() {
 
 void Seetwo::SpecialAbility(const double &deltaTime)
 {
+	Hero::SpecialAbility(deltaTime);
+	static double accumulatedTime = 0;
 	if (GetAbilityActive())
+		accumulatedTime += deltaTime * 10;
+	// Check if ability is available, add ability score over time if both are not true
+	if (accumulatedTime > 1 && GetAbilityActive())
 	{
-
+		accumulatedTime -= 1;
+		currentHealth += maxHealth * 0.5 * 0.02;
+		AddAbilityScore(-1);
+		cout << currentHealth << endl;
+	}
+	// Deactivates the ability if it was active and the score is above 5
+	if (GetAbilityActive() && GetAbilityScore() <= 0)
+	{
+		SetAbilityActive(false);
 	}
 }

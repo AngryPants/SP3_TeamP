@@ -9,13 +9,15 @@
 
 class Hero : public Character {
 
-protected:
-	//Stats
-	int lives;
-	int score;
+private:
 	int abilityScore;
 	bool abilityAvailable;
 	bool abilityActive;
+
+protected:
+	//Stats
+	int lives;
+	int score;	
 	TileCoord checkpoint;
 
 	//Movement

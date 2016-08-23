@@ -16,8 +16,8 @@ class Character : public GameEntity {
 
 protected:
 	//Health
-	int currentHealth;
-	int maxHealth;	
+	float currentHealth;
+	float maxHealth;	
 
 	//Movement	
 	bool isMoving;
@@ -57,10 +57,10 @@ public:
 	virtual ~Character();
 
 	//Health
-	void SetHealth(const int& health);
-	int GetHealth() const;
-	void SetMaxHealth(const int& maxHealth);
-	int GetMaxHealth() const;
+	void SetHealth(const float& health);
+	float GetHealth() const;
+	void SetMaxHealth(const float& maxHealth);
+	float GetMaxHealth() const;
 
 	//Movement (Maximum Horizontal Speed)
 	void SetMaxSpeed(const float& speed);

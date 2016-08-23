@@ -106,3 +106,27 @@ void Kifellah::Shoot() {
 	}
 
 }
+
+void Kifellah::SpecialAbility(const double &deltaTime)
+{
+	Hero::SpecialAbility(deltaTime);
+	if (GetAbilityScore() <= 0)
+		SetAbilityActive(false);
+}
+
+bool Kifellah::TakeDamage(const int &damage)
+{
+	if (damageCooldown <= 0.0 && !GetAbilityActive())
+	{
+		this->currentHealth -= damage;
+		damageCooldown = 0.5f;
+		return true;
+	}
+	if (damageCooldown <= 0.0 && GetAbilityActive())
+	{
+		AddAbilityScore(-damage);
+		damageCooldown = 0.5f;
+		return true;
+	}
+	return false;
+}

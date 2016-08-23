@@ -421,21 +421,23 @@ bool Hero::TakeDamage(const int &damage)
 
 void Hero::SpecialAbility(const double &deltaTime)
 {
+	// Special Ability
 	int maxAbilityScore = 50;
 	// Stops ability score from exceeding max value
 	if (abilityScore > maxAbilityScore)
 		abilityScore = maxAbilityScore;
 
 	static double accumulatedTime = 0;
-	accumulatedTime += deltaTime * 10.25;
+	if (!abilityAvailable && !abilityActive)
+		accumulatedTime += deltaTime * 10.25;
 	// Check if ability is available, add ability score over time if both are not true
-	while (accumulatedTime > 1 && !abilityActive)
+	if (accumulatedTime > 1 && !abilityAvailable && !abilityActive)
 	{
 		accumulatedTime -= 1;
 		++abilityScore;
-	}	
+	}
 	// Check if ability is active, and makes it available if it is not active and the ability score is greater than 50
-	if (!abilityAvailable && abilityScore >= maxAbilityScore)
+	if (!abilityAvailable && !abilityActive && abilityScore >= maxAbilityScore)
 	{
 		abilityAvailable = true;
 	}
@@ -445,17 +447,6 @@ void Hero::SpecialAbility(const double &deltaTime)
 		abilityActive = true;
 		abilityAvailable = false;
 	}
-	while (accumulatedTime > 1 && abilityActive)
-	{
-		accumulatedTime -= 1;
-		--abilityScore;
-	}
-	// Deactivates the ability if it was active and the score is above 5
-	if (abilityActive && abilityScore <= 0)
-	{
-		abilityActive = false;
-	}
-	
 }
 
 //Item Interaction
