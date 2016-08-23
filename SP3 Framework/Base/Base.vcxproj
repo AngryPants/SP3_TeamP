@@ -58,9 +58,12 @@
     <ClInclude Include="Source\AIStrategy_Idle.h" />
     <ClInclude Include="Source\Animation.h" />
     <ClInclude Include="Source\AnimationFSM.h" />
+    <ClInclude Include="Source\AnimationFSM_Brawler.h" />
     <ClInclude Include="Source\AnimationFSM_Daniu.h" />
+    <ClInclude Include="Source\AnimationFSM_Gunner.h" />
     <ClInclude Include="Source\AnimationFSM_Kifellah.h" />
     <ClInclude Include="Source\AnimationFSM_Seetwo.h" />
+    <ClInclude Include="Source\AnimationFSM_Turret.h" />
     <ClInclude Include="Source\Application.h" />
     <ClInclude Include="Source\AudioManager.h" />
     <ClInclude Include="Source\Bullet.h" />

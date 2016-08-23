@@ -282,6 +282,15 @@
     <ClInclude Include="Source\AIStrategy_Idle.h">
       <Filter>Header Files\Game\Characters\AICharacters\AIStrategy</Filter>
     </ClInclude>
+    <ClInclude Include="Source\AnimationFSM_Turret.h">
+      <Filter>Header Files\AnimationFSM</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AnimationFSM_Gunner.h">
+      <Filter>Header Files\AnimationFSM</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AnimationFSM_Brawler.h">
+      <Filter>Header Files\AnimationFSM</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
