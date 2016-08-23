@@ -38,7 +38,7 @@ Character::Character(const string& name, const string& sceneName) : GameEntity(n
 Character::~Character() {}
 
 //Health
-void Character::SetHealth(const int& health)
+void Character::SetHealth(const float& health)
 {
 	this->currentHealth = health;
 	if (this->currentHealth > this->maxHealth) {
@@ -46,19 +46,19 @@ void Character::SetHealth(const int& health)
 	}
 }
 
-int Character::GetHealth() const
+float Character::GetHealth() const
 {
 	return this->currentHealth;
 }
 
-void Character::SetMaxHealth(const int& maxHealth) {
+void Character::SetMaxHealth(const float& maxHealth) {
 	this->maxHealth = maxHealth;
 	if (this->currentHealth > this->maxHealth) {
 		this->currentHealth = this->maxHealth;
 	}
 }
 
-int Character::GetMaxHealth() const {
+float Character::GetMaxHealth() const {
 	return this->maxHealth;
 }
 

@@ -1,8 +1,6 @@
 #ifndef AI_STRATEGY_H
 #define AI_STRATEGY_H
 
-class AICharacter;
-
 class AIStrategy {
 
 public:

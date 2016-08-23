@@ -41,7 +41,8 @@ public:
 	Mesh* GenerateAxes(const std::string &meshName);
 	Mesh* GenerateQuad(const std::string &meshName, Color color = Color(1, 1, 1), float length = 1.0f);
 	Mesh* GenerateCube(const std::string &meshName, Color color, float length = 1.0f);
-	Mesh* GenerateRing(const std::string &meshName, Color color, unsigned numSlice, float outerR = 1.0f, float innerR = 0.0f);
+	Mesh* GenerateRing(const std::string &meshName, Color color, unsigned numSlice, float outerR = 1.0f, float innerR = 0.5f);
+	Mesh* GenerateCircle(const string& meshName, Color color, unsigned int numSlice, float radius = 0.5f);
 	Mesh* GenerateSphere(const std::string &meshName, Color color, unsigned numStack, unsigned numSlice, float radius = 1.0f);
 	Mesh* GenerateSkyPlane(const std::string &meshName, Color color, unsigned int numSlices, float planetRadius, float atmosphereRadius, float uTile, float vTile);
 	Mesh* GenerateOBJ(const std::string &meshName, const std::string& filePath);

@@ -67,7 +67,6 @@ void Bullet::DamageTargets(const double& deltaTime) {
 
 //Despawn the bullet if it hits a wall.
 void Bullet::CheckCollisionWithWall() {
-	
 	if (tileSystem == nullptr) {
 		return;
 	}
@@ -89,12 +88,10 @@ void Bullet::CheckCollisionWithWall() {
 	if (terrain != 0) {
 		isActive = false;
 	}
-
 }
 
 void Bullet::Render()
 {
-
 	if (mesh == nullptr || !isActive) {
 		return;
 	}
@@ -107,7 +104,6 @@ void Bullet::Render()
 		modelStack.Scale(renderScale, renderScale, 1);
 		RenderHelper::GetInstance().RenderMesh(*mesh, texture, false);
 	modelStack.PopMatrix();
-
 }
 
 void Bullet::RenderUI()

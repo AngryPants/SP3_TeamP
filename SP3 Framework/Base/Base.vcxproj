@@ -11,7 +11,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\AIStrategy_Idle.cpp" />
     <ClCompile Include="Source\Application.cpp" />
     <ClCompile Include="Source\AudioManager.cpp" />
     <ClCompile Include="Source\Bullet.cpp" />
@@ -50,12 +49,11 @@
     <ClCompile Include="Source\TileIndex.cpp" />
     <ClCompile Include="Source\TileSystem.cpp" />
     <ClCompile Include="Source\GameInformation.cpp" />
+    <ClCompile Include="Source\Turret.cpp" />
     <ClCompile Include="Source\Utility.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\AICharacter.h" />
     <ClInclude Include="Source\AIStrategy.h" />
-    <ClInclude Include="Source\AIStrategy_Idle.h" />
     <ClInclude Include="Source\Animation.h" />
     <ClInclude Include="Source\AnimationFSM.h" />
     <ClInclude Include="Source\AnimationFSM_Brawler.h" />
@@ -107,6 +105,7 @@
     <ClInclude Include="Source\TileIndex.h" />
     <ClInclude Include="Source\MapRenderer.h" />
     <ClInclude Include="Source\TileSystem.h" />
+    <ClInclude Include="Source\Turret.h" />
     <ClInclude Include="Source\Utility.h" />
     <ClInclude Include="Source\Vertex.h" />
   </ItemGroup>

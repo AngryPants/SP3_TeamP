@@ -118,8 +118,8 @@
     <ClCompile Include="Source\Seetwo.cpp">
       <Filter>Source Files\Characters\Heroes</Filter>
     </ClCompile>
-    <ClCompile Include="Source\AIStrategy_Idle.cpp">
-      <Filter>Source Files\Characters\AICharacter\AIStrategy</Filter>
+    <ClCompile Include="Source\Turret.cpp">
+      <Filter>Source Files\Characters\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -276,12 +276,6 @@
     <ClInclude Include="Source\AIStrategy.h">
       <Filter>Header Files\Game\Characters\AICharacters\AIStrategy</Filter>
     </ClInclude>
-    <ClInclude Include="Source\AICharacter.h">
-      <Filter>Header Files\Game\Characters\AICharacters</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\AIStrategy_Idle.h">
-      <Filter>Header Files\Game\Characters\AICharacters\AIStrategy</Filter>
-    </ClInclude>
     <ClInclude Include="Source\AnimationFSM_Turret.h">
       <Filter>Header Files\AnimationFSM</Filter>
     </ClInclude>
@@ -290,6 +284,9 @@
     </ClInclude>
     <ClInclude Include="Source\AnimationFSM_Brawler.h">
       <Filter>Header Files\AnimationFSM</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Turret.h">
+      <Filter>Header Files\Game\Characters\AICharacters\Enemies</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -413,17 +410,11 @@
     <Filter Include="Header Files\Game\Characters\AICharacters\Enemies">
       <UniqueIdentifier>{6597849e-6746-47df-a751-391ab00032c8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Characters\AICharacter">
-      <UniqueIdentifier>{7856988b-3a6a-4fdf-b6e2-8dc1e66c1a06}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Characters\AICharacter\AIStrategy">
-      <UniqueIdentifier>{1a5efbfc-d538-468b-ad35-1004bf426611}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Characters\AICharacter\Enemies">
-      <UniqueIdentifier>{6ad80f7c-d8e3-416e-bbcc-e23d9af8027d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Game\Characters\AICharacters\AIStrategy">
       <UniqueIdentifier>{72baeb72-5658-4842-a971-07d4f5708a35}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Characters\Enemy">
+      <UniqueIdentifier>{469e4e10-5c1d-4ffc-b6de-dec5411ab709}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

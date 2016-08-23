@@ -262,7 +262,13 @@ Mesh* MeshBuilder::GenerateCube(const std::string &meshName, Color color, float 
 
 }
 
-Mesh* MeshBuilder::GenerateRing(const std::string &meshName, Color color, unsigned numSlice, float outerR, float innerR) {
+Mesh* MeshBuilder::GenerateCircle(const string& meshName, Color color, unsigned int numSlice, float radius) {
+
+	return GenerateRing(meshName, color, numSlice, radius, 0.0f);
+
+}
+
+Mesh* MeshBuilder::GenerateRing(const std::string &meshName, Color color, unsigned int numSlice, float outerR, float innerR) {
 
 	Mesh* mesh = GetMesh(meshName);
 	if (mesh != nullptr) {
@@ -276,13 +282,15 @@ Mesh* MeshBuilder::GenerateRing(const std::string &meshName, Color color, unsign
 	v.normal.Set(0, 0, 1);
 
 	float degreePerSlice = 360.f / numSlice;
-	for(unsigned int slice = 0; slice < numSlice + 1; ++slice) {
+	for (unsigned int slice = 0; slice < numSlice + 1; ++slice) {
 		float theta = slice * degreePerSlice;
-		
 		v.pos.Set(outerR * cos(Math::DegreeToRadian(theta)), outerR * sin(Math::DegreeToRadian(theta)), 0);
+		v.texCoord.Set(cos(Math::DegreeToRadian(theta)), sin(Math::DegreeToRadian(theta)));
+
 		vertex_buffer_data.push_back(v);
 		
 		v.pos.Set(innerR * cos(Math::DegreeToRadian(theta)), innerR * sin(Math::DegreeToRadian(theta)), 0);
+		v.texCoord.Set((innerR / outerR) * cos(Math::DegreeToRadian(theta)), (innerR / outerR) * sin(Math::DegreeToRadian(theta)));
 		vertex_buffer_data.push_back(v);
 	}
 	for(unsigned int slice = 0; slice < numSlice + 1; ++slice) {

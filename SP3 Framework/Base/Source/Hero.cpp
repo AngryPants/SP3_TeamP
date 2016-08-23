@@ -374,6 +374,9 @@ bool Hero::TakeDamage(const int &damage)
 	}	
 }
 
+void Hero::SpecialAbility() {
+}
+
 //Item Interaction
 void Hero::ItemInteraction(const double& deltaTime) {
 
