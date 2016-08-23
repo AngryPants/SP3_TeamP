@@ -16,6 +16,7 @@
 
 //Include Scenes
 #include "SceneDaniu_1.h"
+#include "SceneMainMenu.h"
 
 GLFWwindow* m_window;
 const unsigned char maxFPS = 60; //Maximum FPS of this game.
@@ -133,8 +134,8 @@ void Application::Init() {
 void Application::Run() {
 
 	//Main Loop
-	Scene* scene = new SceneDaniu_1();
-	SceneManager::GetInstance().SetActiveScene("Daniu Level 1");
+	Scene* scene = new SceneMainMenu();
+	SceneManager::GetInstance().SetActiveScene("Main Menu");
 
 	m_timer.startTimer(); //Start timer to calculate how long it takes to render this frame
 	while (glfwWindowShouldClose(m_window) == false && quit == false) {
@@ -144,13 +145,13 @@ void Application::Run() {
 		SceneManager::GetInstance().Update(elapsedTime);
 
 		//Threads
-		if (accumulatedTime[UPDATE_USER_INPUT] >= 0.03) {
+		//if (accumulatedTime[UPDATE_USER_INPUT] >= 0.03) {
 			InputManager::GetInstance().Update();
 			if (InputManager::GetInstance().GetInputInfo().keyDown[INPUT_QUIT] == true) {
 				quit = true;
 			}
 			accumulatedTime[UPDATE_USER_INPUT] = 0.0;
-		}
+		//}
 
 		SceneManager::GetInstance().Render();
 		glfwSwapBuffers(m_window); //Swap buffers

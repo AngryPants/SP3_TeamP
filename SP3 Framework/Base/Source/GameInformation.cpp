@@ -2,6 +2,7 @@
 
 GameInformation::GameInformation()
 {
+	volume = 1.0f;
 }
 
 GameInformation::~GameInformation()
@@ -46,4 +47,14 @@ bool GameInformation::SaveToFile(const string& fileName)
 bool GameInformation::LoadFromFile(const string& fileName)
 {
 	return false;
+}
+
+void GameInformation::SetVolume(float volume)
+{
+	this->volume = volume;
+}
+
+float GameInformation::GetVolume()
+{
+	return volume;
 }

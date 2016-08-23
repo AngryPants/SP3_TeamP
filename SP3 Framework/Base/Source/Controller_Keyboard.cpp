@@ -33,6 +33,8 @@ bool Controller_Keyboard::IsKeyReleased(unsigned int key) {
 
 void Controller_Keyboard::ReadInput() {
 
+	previousState.reset();
+
 	for (int i = 0; i < MAX_KEYS; ++i) {
 		previousState[i] = currentState[i];
 	}

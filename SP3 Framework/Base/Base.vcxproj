@@ -32,12 +32,14 @@
     <ClCompile Include="Source\LoadOBJ.cpp" />
     <ClCompile Include="Source\LoadTGA.cpp" />
     <ClCompile Include="Source\main.cpp" />
+    <ClCompile Include="Source\MainMenu.cpp" />
     <ClCompile Include="Source\Mesh.cpp" />
     <ClCompile Include="Source\MeshBuilder.cpp" />
     <ClCompile Include="Source\RenderHelper.cpp" />
     <ClCompile Include="Source\Sawblade.cpp" />
     <ClCompile Include="Source\SceneBase.cpp" />
     <ClCompile Include="Source\SceneDaniu_1.cpp" />
+    <ClCompile Include="Source\SceneMainMenu.cpp" />
     <ClCompile Include="Source\SceneManager.cpp" />
     <ClCompile Include="Source\Seetwo.cpp" />
     <ClCompile Include="Source\shader.cpp" />
@@ -78,6 +80,7 @@
     <ClInclude Include="Source\GameManager.h" />
     <ClInclude Include="Source\GraphicsManager.h" />
     <ClInclude Include="Source\Hero.h" />
+    <ClInclude Include="Source\InGameMenu.h" />
     <ClInclude Include="Source\InputManager.h" />
     <ClInclude Include="Source\Kifellah.h" />
     <ClInclude Include="Source\Light.h" />
@@ -94,6 +97,8 @@
     <ClInclude Include="Source\Scene.h" />
     <ClInclude Include="Source\SceneBase.h" />
     <ClInclude Include="Source\SceneDaniu_1.h" />
+    <ClInclude Include="Source\MainMenu.h" />
+    <ClInclude Include="Source\SceneMainMenu.h" />
     <ClInclude Include="Source\SceneManager.h" />
     <ClInclude Include="Source\Seetwo.h" />
     <ClInclude Include="Source\shader.hpp" />

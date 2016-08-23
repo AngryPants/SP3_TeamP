@@ -35,7 +35,7 @@ void SceneBase::InitShader() {
 	RenderHelper::GetInstance().SetNumLights(0);
 	RenderHelper::GetInstance().EnableFog(false);
 	RenderHelper::GetInstance().SetAlphaDiscardValue(0.1f);
-
+	
 }
 
 void SceneBase::Update(const double& deltaTime) {

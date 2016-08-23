@@ -41,14 +41,20 @@ void InputManager::Update() {
 	if (keyboard.IsKeyPressed(VK_LEFT)) {
 		inputInfo.keyDown[INPUT_MOVE_LEFT] = 1;
 		inputInfo.keyValue[INPUT_MOVE_LEFT] = 1.0f;
+		inputInfo.keyDown[INPUT_MENU_LEFT] = 1;
+		inputInfo.keyValue[INPUT_MENU_LEFT] = 1.0f;
 	} else if (keyboard.IsKeyReleased(VK_LEFT)) {
 		inputInfo.keyReleased[INPUT_MOVE_LEFT] = 1;
+		inputInfo.keyReleased[INPUT_MENU_LEFT] = 1;
 	}
 	if (keyboard.IsKeyPressed(VK_RIGHT)) {
 		inputInfo.keyDown[INPUT_MOVE_RIGHT] = 1;
 		inputInfo.keyValue[INPUT_MOVE_RIGHT] = 1.0f;
+		inputInfo.keyDown[INPUT_MENU_RIGHT] = 1;
+		inputInfo.keyValue[INPUT_MENU_RIGHT] = 1.0f;
 	} else if (keyboard.IsKeyReleased(VK_RIGHT)) {
 		inputInfo.keyReleased[INPUT_MOVE_RIGHT] = 1;
+		inputInfo.keyReleased[INPUT_MENU_RIGHT] = 1;
 	}
 	if (keyboard.IsKeyPressed(VK_SPACE)) {
 		inputInfo.keyDown[INPUT_JUMP] = 1;
@@ -57,17 +63,26 @@ void InputManager::Update() {
 	if (keyboard.IsKeyPressed(VK_DOWN)) {
 		inputInfo.keyDown[INPUT_MOVE_DOWN] = 1;
 		inputInfo.keyValue[INPUT_MOVE_DOWN] = 1.0f;
+		inputInfo.keyDown[INPUT_MENU_DOWN] = 1;
+		inputInfo.keyValue[INPUT_MENU_DOWN] = 1.0f;
 	} else if (keyboard.IsKeyReleased(VK_DOWN)) {
 		inputInfo.keyReleased[INPUT_MOVE_DOWN] = 1;
+		inputInfo.keyReleased[INPUT_MENU_DOWN] = 1;
 	}
 	if (keyboard.IsKeyPressed(VK_UP)) {
 		inputInfo.keyDown[INPUT_MOVE_UP] = 1;
 		inputInfo.keyValue[INPUT_MOVE_UP] = 1.0f;
+		inputInfo.keyDown[INPUT_MENU_UP] = 1;
+		inputInfo.keyValue[INPUT_MENU_UP] = 1.0f;
 	} else if (keyboard.IsKeyReleased(VK_UP)) {
 		inputInfo.keyReleased[INPUT_MOVE_UP] = 1;
+		inputInfo.keyReleased[INPUT_MENU_UP] = 1;
 	}
 	
-	if (keyboard.IsKeyReleased(VK_RETURN)) {
+	if (keyboard.IsKeyPressed(VK_RETURN)) {
+		inputInfo.keyDown[INPUT_SELECT] = 1;
+		inputInfo.keyValue[INPUT_SELECT] = 1.f;
+	} else if (keyboard.IsKeyReleased(VK_RETURN)) {
 		inputInfo.keyReleased[INPUT_SELECT] = 1;
 	}
 
