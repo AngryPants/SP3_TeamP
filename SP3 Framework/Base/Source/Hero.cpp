@@ -11,6 +11,9 @@ Hero::Hero(const string& name, const string& sceneName) : Character(name, sceneN
 	//Stats
 	lives = 3;
 	score = 0;
+	abilityScore = 0;
+	abilityAvailable = false;
+	abilityActive = false;
 
 	//Movement
 	gravity = -20.0f;
@@ -23,8 +26,13 @@ Hero::Hero(const string& name, const string& sceneName) : Character(name, sceneN
 
 	//Mesh & Textures
 	mesh = MeshBuilder::GetInstance().GenerateQuad("Quad");
-	healthBarBorder.textureArray[0] = TextureManager::GetInstance().AddTexture("border", "Image//Cyborg_Shooter//Characters//Heroes//HP_Border.tga");
-	healthBar.textureArray[0] = TextureManager::GetInstance().AddTexture("bar", "Image//Cyborg_Shooter//Characters//Heroes//HP_Bar.tga");
+	healthBarBorder.textureArray[0] = TextureManager::GetInstance().AddTexture("borderHealth", "Image//Cyborg_Shooter//Characters//Heroes//HP_Border.tga");
+	healthBarGreen.textureArray[0] = TextureManager::GetInstance().AddTexture("barGreen", "Image//Cyborg_Shooter//Characters//Heroes//HP_BarGreen.tga");
+	healthBarYellow.textureArray[0] = TextureManager::GetInstance().AddTexture("barYellow", "Image//Cyborg_Shooter//Characters//Heroes//HP_BarYellow.tga");
+	healthBarRed.textureArray[0] = TextureManager::GetInstance().AddTexture("barRed", "Image//Cyborg_Shooter//Characters//Heroes//HP_BarRed.tga");
+	abilityBarBorder.textureArray[0] = TextureManager::GetInstance().AddTexture("borderAbility", "Image//Cyborg_Shooter//Characters//Heroes//MP_Border.tga");
+	abilityBarCharging.textureArray[0] = TextureManager::GetInstance().AddTexture("barCharging", "Image//Cyborg_Shooter//Characters//Heroes//Ability_BarCharging.tga");
+	abilityBarFull.textureArray[0] = TextureManager::GetInstance().AddTexture("barFull", "Image//Cyborg_Shooter//Characters//Heroes//Ability_BarFull.tga");
 }
 
 Hero::~Hero() {
@@ -54,7 +62,43 @@ void Hero::SetScore(const int& score)
 void Hero::AddScore(const int& score) {
 
 	this->score += score;
+	AddAbilityScore(score * 0.25);
 
+}
+
+int Hero::GetAbilityScore() const
+{
+	return abilityScore;
+}
+
+void Hero::SetAbilityScore(const int& abilityScore)
+{
+	this->abilityScore = abilityScore;
+}
+
+void Hero::AddAbilityScore(const int& abilityScore)
+{
+	this->abilityScore += abilityScore;
+}
+
+bool Hero::GetAbilityAvailable() const
+{
+	return abilityAvailable;
+}
+
+void Hero::SetAbilityAvailable(const bool& abilityAvailable)
+{
+	this->abilityAvailable = abilityAvailable;
+}
+
+bool Hero::GetAbilityActive() const
+{
+	return abilityActive;
+}
+
+void Hero::SetAbilityActive(const bool& abilityActive)
+{
+	this->abilityActive = abilityActive;
 }
 
 void Hero::SetCheckpoint(int row, int column) {
@@ -302,6 +346,7 @@ void Hero::Move(const double& deltaTime) {
 	}
 
 	result = CheckCollisionDown();
+	onGround = false;
 	for (unsigned int i = 0; i < result.size(); ++i) {
 		unsigned int terrain = GetTileInfo(TILE_INFO::TERRAIN, result[i]);
 		if (terrain != 0) {
@@ -374,6 +419,45 @@ bool Hero::TakeDamage(const int &damage)
 	}	
 }
 
+void Hero::SpecialAbility(const double &deltaTime)
+{
+	int maxAbilityScore = 50;
+	// Stops ability score from exceeding max value
+	if (abilityScore > maxAbilityScore)
+		abilityScore = maxAbilityScore;
+
+	static double accumulatedTime = 0;
+	accumulatedTime += deltaTime * 10.25;
+	// Check if ability is available, add ability score over time if both are not true
+	while (accumulatedTime > 1 && !abilityActive)
+	{
+		accumulatedTime -= 1;
+		++abilityScore;
+	}	
+	// Check if ability is active, and makes it available if it is not active and the ability score is greater than 50
+	if (!abilityAvailable && abilityScore >= maxAbilityScore)
+	{
+		abilityAvailable = true;
+	}
+	// Sets the ability to active if the 'Z' button is pressed and the ability is available
+	if (abilityAvailable && InputManager::GetInstance().GetInputInfo().keyDown[INPUT_ABILITY])
+	{
+		abilityActive = true;
+		abilityAvailable = false;
+	}
+	while (accumulatedTime > 1 && abilityActive)
+	{
+		accumulatedTime -= 1;
+		--abilityScore;
+	}
+	// Deactivates the ability if it was active and the score is above 5
+	if (abilityActive && abilityScore <= 0)
+	{
+		abilityActive = false;
+	}
+	
+}
+
 //Item Interaction
 void Hero::ItemInteraction(const double& deltaTime) {
 
@@ -434,7 +518,7 @@ void Hero::ItemInteraction(int row, int column, const double& deltaTime) {
 			//Do nothing.
 			break;
 		case TILE_COIN: {
-			score += 10; //Add our score.
+			AddScore(10); //Add our score.
 			ClearTileValue(TILE_INFO::ITEM, tileValue); //Remove the coin.
 			AudioManager::GetInstance().PlayAudio2D("Audio//Sound_Effects//Items//Coin_Pickup.flac", false);
 		}
@@ -527,6 +611,7 @@ void Hero::Update(const double &deltaTime)
 
 	Move(deltaTime);
 	ItemInteraction(deltaTime);
+	SpecialAbility(deltaTime);
 	Shoot();
 	
 	if (currentHealth <= 0)
@@ -549,7 +634,12 @@ void Hero::RenderUI()
 	modelStack.PushMatrix();
 		modelStack.Translate(hpBarPosition, 46, 0);	
 		modelStack.Scale(hpBarScale, 8, 1);
-		RenderHelper::GetInstance().RenderMesh(*mesh, healthBar, false);
+		if (currentHealth >= maxHealth * 0.667)
+			RenderHelper::GetInstance().RenderMesh(*mesh, healthBarGreen, false);
+		else if (currentHealth >= maxHealth * 0.333)
+ 			RenderHelper::GetInstance().RenderMesh(*mesh, healthBarYellow, false);
+		else
+			RenderHelper::GetInstance().RenderMesh(*mesh, healthBarRed, false);
 	modelStack.PopMatrix(); 
 	
 	modelStack.PushMatrix();
@@ -558,4 +648,21 @@ void Hero::RenderUI()
 		RenderHelper::GetInstance().RenderMesh(*mesh, healthBarBorder, false);
 	modelStack.PopMatrix();
 	
+	float abilityBarScale = 34 * (static_cast<float>(abilityScore) / static_cast<float>(50));
+	abilityBarScale = Math::Max(0.01f, abilityBarScale);
+	float abilityBarPosition = -50 + abilityBarScale * 0.5 + 9;
+	modelStack.PushMatrix();
+		modelStack.Translate(abilityBarPosition, 40, 0);
+		modelStack.Scale(abilityBarScale, 8, 1);
+		if (!abilityAvailable)
+			RenderHelper::GetInstance().RenderMesh(*mesh, abilityBarCharging, false);
+		else if (abilityAvailable)
+			RenderHelper::GetInstance().RenderMesh(*mesh, abilityBarFull, false);
+	modelStack.PopMatrix();
+
+	modelStack.PushMatrix();
+		modelStack.Translate(-27, 40, 0);
+		modelStack.Scale(46, 8, 1);
+		RenderHelper::GetInstance().RenderMesh(*mesh, abilityBarBorder, false);
+	modelStack.PopMatrix();
 }

@@ -110,3 +110,11 @@ void Seetwo::Shoot() {
 	}
 
 }
+
+void Seetwo::SpecialAbility(const double &deltaTime)
+{
+	if (GetAbilityActive())
+	{
+
+	}
+}
