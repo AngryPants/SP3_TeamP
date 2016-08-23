@@ -11,7 +11,7 @@ Seetwo::Seetwo(const string& sceneName) : Hero("Seetwo", sceneName)
 	maxSpeed = 4;
 	damage = 10;
 	maxHealth = 150;
-	health = maxHealth;
+	currentHealth = maxHealth;
 	fireRate = 3.0;
 
 	collisionRadius = 1.0f;
@@ -31,8 +31,8 @@ Seetwo::~Seetwo()
 
 void Seetwo::Update(const double& deltaTime)
 {
-	if (health > maxHealth) {
-		health = maxHealth;
+	if (currentHealth > maxHealth) {
+		currentHealth = maxHealth;
 	}
 
 	Hero::Update(deltaTime);
@@ -53,12 +53,12 @@ void Seetwo::Render()
 	modelStack.PushMatrix();
 	modelStack.Translate(position.x, position.y, 0);
 	modelStack.Scale(4, 4, 1);
-	if (currentDirection == MOVE_DIRECTION::RIGHT) {
+	if (currentDirection == FACING_DIRECTION::RIGHT) {
 		SpriteAnimation* sprite = &animationFSM.GetMesh();
 		sprite->SetTextureScale(1, 1);
 		sprite->SetTextureOffset(0, 0);
 	}
-	else if (currentDirection == MOVE_DIRECTION::LEFT) {
+	else if (currentDirection == FACING_DIRECTION::LEFT) {
 		//To flip the texture, we need to scale it then translate.
 		SpriteAnimation* sprite = &animationFSM.GetMesh();
 		sprite->SetTextureScale(-1, 1);
@@ -86,17 +86,17 @@ void Seetwo::Shoot() {
 			Bullet& bullet = FetchBullet();
 			bullet.isActive = true;
 			bullet.damage = 20.0f;
-			bullet.radius = 0.15f;
+			bullet.radius = 0.3f;
 			bullet.tileSystem = tileSystem;
 			bullet.targets = enemies;
 			bullet.lifetime = 5.0f;
 			bullet.position = position;
 			bullet.position.y += 0.4f;
-			if (currentDirection == MOVE_DIRECTION::LEFT) {
+			if (currentDirection == FACING_DIRECTION::LEFT) {
 				bullet.position.x -= 1.6f;				
 				bullet.velocity.Set(-20, 0);
 			}
-			else if (currentDirection == MOVE_DIRECTION::RIGHT) {
+			else if (currentDirection == FACING_DIRECTION::RIGHT) {
 				bullet.position.x += 1.6f;
 				bullet.velocity.Set(20, 0);
 			}

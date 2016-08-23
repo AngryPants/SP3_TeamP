@@ -17,21 +17,21 @@ private:
 	void CheckCollisionWithWall();
 
 public:
-	//Variable(s)
+	//Stats
 	int damage; //Damage of bullet.
 	double lifetime; //How long until bullet despawns.
 	float radius; //What is the effective radius of the bullet.
 
-	//Mesh & Texture.
-	Mesh* mesh;
-	Texture texture;
-	
 	//What characters can the bullet hit?
 	vector<Character*>* targets;
 
 	//Check for collision with walls etc.
 	TileSystem* tileSystem;
 
+	//Mesh & Texture.
+	Mesh* mesh;
+	Texture texture;
+	
 	//Constructor(s) & Destructor
 	Bullet(const string& sceneName);
 	virtual ~Bullet();

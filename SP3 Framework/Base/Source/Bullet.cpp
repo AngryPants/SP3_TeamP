@@ -8,15 +8,20 @@
 
 Bullet::Bullet(const string& sceneName) : GameEntity("Bullet", sceneName)
 {
-	isActive = false;
-	
+	//Stats
 	damage = 1;
 	lifetime = 1.0;
-	radius = 0.0f;
+	radius = 0.1f;
 
-	mesh = nullptr;
+	//What can the bullet hit?
 	targets = nullptr;
+
+	//Check for collision with walls etc.
 	tileSystem = nullptr;
+
+	//Mesh & Texture
+	mesh = nullptr;
+
 }
 
 Bullet::~Bullet()
@@ -87,7 +92,8 @@ void Bullet::CheckCollisionWithWall() {
 
 }
 
-void Bullet::Render() {
+void Bullet::Render()
+{
 
 	if (mesh == nullptr || !isActive) {
 		return;
@@ -104,5 +110,6 @@ void Bullet::Render() {
 
 }
 
-void Bullet::RenderUI() {
+void Bullet::RenderUI()
+{
 }

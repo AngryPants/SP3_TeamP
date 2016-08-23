@@ -118,6 +118,9 @@
     <ClCompile Include="Source\Seetwo.cpp">
       <Filter>Source Files\Characters\Heroes</Filter>
     </ClCompile>
+    <ClCompile Include="Source\AIStrategy_Idle.cpp">
+      <Filter>Source Files\Characters\AICharacter\AIStrategy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\GraphicsManager.h">
@@ -202,19 +205,19 @@
       <Filter>Header Files\Camera</Filter>
     </ClInclude>
     <ClInclude Include="Source\Character.h">
-      <Filter>Header Files\Entity\Game\Characters</Filter>
+      <Filter>Header Files\Game\Characters</Filter>
     </ClInclude>
     <ClInclude Include="Source\Hero.h">
-      <Filter>Header Files\Entity\Game\Characters\Heroes</Filter>
+      <Filter>Header Files\Game\Characters\Heroes</Filter>
     </ClInclude>
     <ClInclude Include="Source\Bullet.h">
-      <Filter>Header Files\Entity\Game\Bullets</Filter>
+      <Filter>Header Files\Game\Bullets</Filter>
     </ClInclude>
     <ClInclude Include="Source\EntityManager.h">
       <Filter>Header Files\Entity</Filter>
     </ClInclude>
     <ClInclude Include="Source\Kifellah.h">
-      <Filter>Header Files\Entity\Game\Characters\Heroes</Filter>
+      <Filter>Header Files\Game\Characters\Heroes</Filter>
     </ClInclude>
     <ClInclude Include="Source\SceneDaniu_1.h">
       <Filter>Header Files\Scene\DaniuLevels</Filter>
@@ -244,10 +247,10 @@
       <Filter>Header Files\Gameplay</Filter>
     </ClInclude>
     <ClInclude Include="Source\Sawblade.h">
-      <Filter>Header Files\Entity\Game\Obstacles</Filter>
+      <Filter>Header Files\Game\Obstacles</Filter>
     </ClInclude>
     <ClInclude Include="Source\GameEntity.h">
-      <Filter>Header Files\Entity\Game</Filter>
+      <Filter>Header Files\Game</Filter>
     </ClInclude>
     <ClInclude Include="Source\AnimationFSM_Kifellah.h">
       <Filter>Header Files\AnimationFSM</Filter>
@@ -256,7 +259,7 @@
       <Filter>Header Files\AnimationFSM</Filter>
     </ClInclude>
     <ClInclude Include="Source\Daniu.h">
-      <Filter>Header Files\Entity\Game\Characters\Heroes</Filter>
+      <Filter>Header Files\Game\Characters\Heroes</Filter>
     </ClInclude>
     <ClInclude Include="Source\AnimationFSM_Daniu.h">
       <Filter>Header Files\AnimationFSM</Filter>
@@ -265,7 +268,19 @@
       <Filter>Header Files\AnimationFSM</Filter>
     </ClInclude>
     <ClInclude Include="Source\Seetwo.h">
-      <Filter>Header Files\Entity\Game\Characters\Heroes</Filter>
+      <Filter>Header Files\Game\Characters\Heroes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy.h">
+      <Filter>Header Files\Game\Characters\AICharacters\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AIStrategy.h">
+      <Filter>Header Files\Game\Characters\AICharacters\AIStrategy</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AICharacter.h">
+      <Filter>Header Files\Game\Characters\AICharacters</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AIStrategy_Idle.h">
+      <Filter>Header Files\Game\Characters\AICharacters\AIStrategy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -365,23 +380,41 @@
     <Filter Include="Source Files\Scene\DaniuLevels">
       <UniqueIdentifier>{b9701e39-4536-4f87-b496-0935ebeb9b2d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Entity\Game">
-      <UniqueIdentifier>{93eb0cff-13e1-4ef3-9b2c-bf774be9173f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Entity\Game\Bullets">
-      <UniqueIdentifier>{6d918a1e-5e81-46c5-835d-7db59aac2cec}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Entity\Game\Characters">
-      <UniqueIdentifier>{18ee08f9-f088-4a6e-bf10-1df968c11488}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Entity\Game\Characters\Heroes">
-      <UniqueIdentifier>{959cbc48-ca56-4030-9407-5c568f1f0b57}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Entity\Game\Obstacles">
-      <UniqueIdentifier>{09836863-a44c-42ea-a1a5-e9668759a2aa}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\AnimationFSM">
       <UniqueIdentifier>{804fbf79-dd3b-4658-93cb-380f18bf8bfb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game">
+      <UniqueIdentifier>{93eb0cff-13e1-4ef3-9b2c-bf774be9173f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Obstacles">
+      <UniqueIdentifier>{09836863-a44c-42ea-a1a5-e9668759a2aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Bullets">
+      <UniqueIdentifier>{6d918a1e-5e81-46c5-835d-7db59aac2cec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Characters">
+      <UniqueIdentifier>{18ee08f9-f088-4a6e-bf10-1df968c11488}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Characters\Heroes">
+      <UniqueIdentifier>{959cbc48-ca56-4030-9407-5c568f1f0b57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Characters\AICharacters">
+      <UniqueIdentifier>{52839878-97c3-40a1-b57b-5d64f5bbba5b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Characters\AICharacters\Enemies">
+      <UniqueIdentifier>{6597849e-6746-47df-a751-391ab00032c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Characters\AICharacter">
+      <UniqueIdentifier>{7856988b-3a6a-4fdf-b6e2-8dc1e66c1a06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Characters\AICharacter\AIStrategy">
+      <UniqueIdentifier>{1a5efbfc-d538-468b-ad35-1004bf426611}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Characters\AICharacter\Enemies">
+      <UniqueIdentifier>{6ad80f7c-d8e3-416e-bbcc-e23d9af8027d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Characters\AICharacters\AIStrategy">
+      <UniqueIdentifier>{72baeb72-5658-4842-a971-07d4f5708a35}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

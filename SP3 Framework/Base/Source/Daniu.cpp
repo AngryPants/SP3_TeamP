@@ -11,7 +11,7 @@ Daniu::Daniu(const string& sceneName) : Hero("Daniu", sceneName)
 	maxSpeed = 4;
 	damage = 15;
 	maxHealth = 100;
-	health = maxHealth;
+	currentHealth = maxHealth;
 	fireRate = 3.0;
 
 	collisionRadius = 1.0f;
@@ -31,8 +31,8 @@ Daniu::~Daniu()
 
 void Daniu::Update(const double& deltaTime)
 {
-	if (health > maxHealth) {
-		health = maxHealth;
+	if (currentHealth > maxHealth) {
+		currentHealth = maxHealth;
 	}
 
 	Hero::Update(deltaTime);
@@ -58,12 +58,12 @@ void Daniu::Render()
 	modelStack.PushMatrix();
 	modelStack.Translate(position.x, position.y, 0);
 	modelStack.Scale(4, 4, 1);
-	if (currentDirection == MOVE_DIRECTION::RIGHT) {
+	if (currentDirection == FACING_DIRECTION::RIGHT) {
 		SpriteAnimation* sprite = &animationFSM.GetMesh();
 		sprite->SetTextureScale(1, 1);
 		sprite->SetTextureOffset(0, 0);
 	}
-	else if (currentDirection == MOVE_DIRECTION::LEFT) {
+	else if (currentDirection == FACING_DIRECTION::LEFT) {
 		//To flip the texture, we need to scale it then translate.
 		SpriteAnimation* sprite = &animationFSM.GetMesh();
 		sprite->SetTextureScale(-1, 1);
@@ -96,11 +96,11 @@ void Daniu::Shoot() {
 			bullet.targets = enemies;
 			bullet.lifetime = 5.0f;
 			bullet.position = position;
-			if (currentDirection == MOVE_DIRECTION::LEFT) {
+			if (currentDirection == FACING_DIRECTION::LEFT) {
 				bullet.position.x -= 1.4f;
 				bullet.velocity.Set(-20, 0);
 			}
-			else if (currentDirection == MOVE_DIRECTION::RIGHT) {
+			else if (currentDirection == FACING_DIRECTION::RIGHT) {
 				bullet.position.x += 1.4f;
 				bullet.velocity.Set(20, 0);
 			}

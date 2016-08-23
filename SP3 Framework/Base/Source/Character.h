@@ -8,77 +8,89 @@
 #include "Vector2.h"
 #include "TileSystem.h"
 #include "TileCollider.h"
+#include <set>
 
-class GameManager;
+using std::set;
 
 class Character : public GameEntity {
 
 protected:
-	//Stats
-	int maxHealth;
-	int health;
+	//Health
+	int currentHealth;
+	int maxHealth;	
+
+	//Movement	
+	bool isMoving;
 	float maxSpeed;
-	int damage;
-	float fireRate;
-	float damageCooldown; //How long until we can take damage again.
+	bool onGround;
+	float gravity;
+
+	//Combat
+	bool isShooting;
+	int damage; //How much damage do we deal.
+	float fireRate;	//How many bullets per second can we shoot
 	float shootingCooldown; //How long until we can shoot again.
+	float damageCooldown; //How long until we can take damage again.
+	float collisionRadius; //The radius of which the character will collide with bullets etc.
 
 	//Bullets
 	vector<Bullet*> bullets;
-	virtual Bullet& FetchBullet();
-	float collisionRadius; //The radius of which the character will collide with bullets etc.
+	virtual Bullet& FetchBullet();	
 
 	//Tile System
 	TileSystem* tileSystem;
 	TileCollider tileCollider;
-
-	//What Direction Are We Facing?
-	enum class MOVE_DIRECTION {
+	
+public:
+	//Direction
+	enum class FACING_DIRECTION {
 		LEFT,
 		RIGHT,
 	};
+	FACING_DIRECTION currentDirection;
 
-	MOVE_DIRECTION currentDirection;
-	bool onGround;
-	bool isShooting;
-	bool isMoving;
-
-	//Movement
-	virtual void MoveLeft(const double& deltaTime) {};
-	virtual void MoveRight(const double& deltaTime) {};
-	virtual void MoveDown(const double& deltaTime) {};
-	virtual void MoveUp(const double& deltaTime) {};
-
-public:
+	//Is the character alive?
 	bool isDead;
 
 	//Constructor(s) & Destructor
 	Character(const string& name, const string& sceneName);
 	virtual ~Character();
 
-	//Stats
+	//Health
 	void SetHealth(const int& health);
-	void SetSpeed(const float& speed);
-	void SetDamage(const int& damage);
-	void SetFireRate(const float& fireRate);
-	void SetCollisionRadius(const float& collisionRadius);
-
 	int GetHealth() const;
-	float GetMaxSpeed() const;
-	int GetDamage() const;
-	float GetFireRate() const;
-	float GetCollisionRadius() const;
+	void SetMaxHealth(const int& maxHealth);
+	int GetMaxHealth() const;
 
-	//Others
+	//Movement (Maximum Horizontal Speed)
+	void SetMaxSpeed(const float& speed);
+	float GetMaxSpeed() const;
+
+	//Combat
+	void SetDamage(const int& damage);
+	int GetDamage() const;
+	void SetFireRate(const float& fireRate);
+	float GetFireRate() const;
+	void SetCollisionRadius(const float& collisionRadius);
+	float GetCollisionRadius() const;	
+	virtual bool TakeDamage(const int &damage);
+	virtual void Knockback(const Vector2 &knockback);
+
+	//Tile System
 	void SetTileSystem(TileSystem& tileSystem); //The tile system that the character will interact with.
 	void RemoveTileSystem();
 
+	//Collision Detection
+	virtual vector<unsigned int>& CheckCollisionUp();
+	virtual vector<unsigned int>& CheckCollisionDown();
+	virtual vector<unsigned int>& CheckCollisionLeft();
+	virtual vector<unsigned int>& CheckCollisionRight();
+	virtual unsigned int& CheckCollisionCentre();
+
 	//Virtual Function(s)
-	virtual void Update(const double& deltaTime) {}
+	virtual void Update(const double& deltaTime);
 	virtual void Render() {}
 	virtual void RenderUI() {}
-	virtual bool TakeDamage(const int &damage);
-	virtual void Knockback(const Vector2 &knockback);
 
 };
 

@@ -9,13 +9,13 @@ class GameEntity : public EntityBase {
 
 public:
 	//Variable(s)
-	Vector2 velocity;
-	Vector2 position;
-	bool isActive;
+	bool isActive; //Is this entity currently active.
+	Vector2 velocity; //How fast this entity is moving.
+	Vector2 position; //Where this entity is.
 
 	//Constructor(s) & Destructor
 	GameEntity(const string& name, const string& sceneName) : EntityBase(name, sceneName) {
-		isActive = true;
+		isActive = false;
 	}
 	virtual ~GameEntity() {}
 
