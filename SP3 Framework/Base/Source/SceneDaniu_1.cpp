@@ -25,16 +25,16 @@ void SceneDaniu_1::Init() {
 	InitEnemies();
 	InitSawblades();
 
-	AudioManager::GetInstance().PlayAudio2D("Audio//BGM//BGM_Daniu.mp3", true);
+	//AudioManager::GetInstance().PlayAudio2D("Audio//BGM//BGM_Daniu.mp3", true);
 	MapRenderer::GetInstance().Reset();
 
 }
 
 void SceneDaniu_1::InitHero() {
 
-	//hero = new Seetwo(name);
+	hero = new Seetwo(name);
 	//hero = new Daniu(name);
-	hero = new Kifellah(name);
+	//hero = new Kifellah(name);
 	hero->SetTileSystem(tileSystem);
 
 	//Spawn the player.

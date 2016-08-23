@@ -22,7 +22,8 @@ public:
 	void TileCollision();
 
 	virtual void Shoot();
-
+	virtual void SpecialAbility(const double &deltaTime);
+	virtual bool TakeDamage(const int &damage);
 };
 
 #endif

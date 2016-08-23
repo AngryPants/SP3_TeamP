@@ -114,3 +114,26 @@ void Daniu::Shoot() {
 	}
 
 }
+
+void Daniu::SpecialAbility(const double &deltaTime)
+{
+	Hero::SpecialAbility(deltaTime);
+	if (GetAbilityActive())
+		fireRate = 6.0;
+	else
+		fireRate = 3.0;
+
+	static double accumulatedTime = 0;
+	if (GetAbilityActive())
+		accumulatedTime += deltaTime * 10;
+	if (accumulatedTime > 1)
+	{
+		accumulatedTime -= 1;
+		AddAbilityScore(-1);
+	}
+	// Deactivates the ability if it was active and the score is above 5
+	if (GetAbilityActive() && GetAbilityScore() <= 0)
+	{
+		SetAbilityActive(false);
+	}
+}

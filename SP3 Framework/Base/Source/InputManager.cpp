@@ -78,6 +78,14 @@ void InputManager::Update() {
 		inputInfo.keyReleased[INPUT_SHOOT] = 1;
 	}
 
+	if (keyboard.IsKeyPressed('Z')) {
+		inputInfo.keyDown[INPUT_ABILITY] = 1;
+		inputInfo.keyValue[INPUT_ABILITY] = 1.0f;
+	}
+	else if (keyboard.IsKeyReleased('Z')) {
+		inputInfo.keyReleased[INPUT_ABILITY] = 1;
+	}
+
 	/********************************************************************************************************************/
 	//Do not touch anything below unless you know what you're doing.
 	/********************************************************************************************************************/

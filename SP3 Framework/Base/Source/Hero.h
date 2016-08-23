@@ -9,10 +9,15 @@
 
 class Hero : public Character {
 
+private:
+	int abilityScore;
+	bool abilityAvailable;
+	bool abilityActive;
+
 protected:
 	//Stats
 	int lives;
-	int score;
+	int score;	
 	TileCoord checkpoint;
 
 	//Movement
@@ -29,8 +34,13 @@ protected:
 
 	//Mesh & Textures
 	Mesh* mesh;
-	Texture healthBar;
+	Texture healthBarGreen;
+	Texture healthBarYellow;
+	Texture healthBarRed;
 	Texture healthBarBorder;
+	Texture abilityBarCharging;
+	Texture abilityBarFull;
+	Texture abilityBarBorder;
 
 public:
 	//Constructor(s) & Destructor
@@ -41,7 +51,7 @@ public:
 	vector<Character*>* enemies;
 	virtual void Shoot();
 	virtual bool TakeDamage(const int &damage);
-	virtual void SpecialAbility();
+	virtual void SpecialAbility(const double &deltaTime);
 
 	//Stats
 	int GetLives() const;
@@ -49,6 +59,13 @@ public:
 	int GetScore() const;
 	void SetScore(const int& score);
 	void AddScore(const int& score);
+	int GetAbilityScore() const;
+	void SetAbilityScore(const int& abilityScore);
+	void AddAbilityScore(const int& abilityScore);
+	bool GetAbilityAvailable() const;
+	void SetAbilityAvailable(const bool& abilityAvailable);
+	bool GetAbilityActive() const;
+	void SetAbilityActive(const bool& abilityActive);
 	void SetCheckpoint(int row, int column);
 	TileCoord GetCheckpoint() const;
 
