@@ -37,7 +37,8 @@ void Turret::AlertAllies(const double& deltaTime) {
 
 }
 
-void Turret::Attack()
-{
+void Turret::Attack() {
 	
+	cout << name << " is attacking." << endl;
+
 }

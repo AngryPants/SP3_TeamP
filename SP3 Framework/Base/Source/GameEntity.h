@@ -19,6 +19,9 @@ public:
 	}
 	virtual ~GameEntity() {}
 
+	//Virtual Function(s)
+	virtual void Reset() {}
+
 };
 
 #endif

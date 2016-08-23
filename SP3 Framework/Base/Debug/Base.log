@@ -1,9 +1,124 @@
-﻿Build started 8/23/2016 3:45:17 PM.
-     1>Project "C:\Users\Administrator\Desktop\Studio Project 3\SP3 Framework\Base\Base.vcxproj" on node 2 (Build target(s)).
-     1>Link:
-         Base.vcxproj -> C:\Users\Administrator\Desktop\Studio Project 3\SP3 Framework\Debug\Base.exe
-     1>Done Building Project "C:\Users\Administrator\Desktop\Studio Project 3\SP3 Framework\Base\Base.vcxproj" (Build target(s)).
+﻿Build started 23/8/2016 4:36:33 PM.
+     1>Project "D:\School Work\Studio Projects\Studio Project 3\SP3 Framework\Base\Base.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"D:\School Work\Studio Projects\Studio Project 3\SP3 Framework\/Common/Source" /I"D:\School Work\Studio Projects\Studio Project 3\SP3 Framework\/glew/include" /I"D:\School Work\Studio Projects\Studio Project 3\SP3 Framework\/glfw/include" /I"D:\School Work\Studio Projects\Studio Project 3\SP3 Framework\/irrKlang/include" /ZI /nologo /W3 /WX- /Od /Oy- /D _VARIADIC_MAX=10 /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Source\Application.cpp Source\AudioManager.cpp Source\Bullet.cpp Source\Camera.cpp Source\Camera2D.cpp Source\Character.cpp Source\CollisionSystem.cpp Source\Controller_Keyboard.cpp Source\Controller_Mouse.cpp Source\Daniu.cpp Source\EntityBase.cpp Source\EntityManager.cpp Source\GameManager.cpp Source\GraphicsManager.cpp Source\Hero.cpp Source\InputManager.cpp Source\Kifellah.cpp Source\LoadHmap.cpp Source\LoadOBJ.cpp Source\LoadTGA.cpp Source\main.cpp Source\Mesh.cpp Source\MeshBuilder.cpp Source\RenderHelper.cpp Source\Sawblade.cpp Source\SceneBase.cpp Source\SceneDaniu_1.cpp Source\SceneManager.cpp Source\Seetwo.cpp Source\shader.cpp Source\ShaderProgram.cpp Source\SpriteAnimation.cpp Source\TextureManager.cpp Source\TileCollider.cpp Source\MapRenderer.cpp Source\TileIndex.cpp Source\TileSystem.cpp Source\GameInformation.cpp Source\Turret.cpp Source\Utility.cpp
+         Utility.cpp
+         Turret.cpp
+         GameInformation.cpp
+         TileSystem.cpp
+     1>d:\school work\studio projects\studio project 3\sp3 framework\base\source\tilesystem.cpp(72): warning C4018: '>' : signed/unsigned mismatch
+         TileIndex.cpp
+         MapRenderer.cpp
+         TileCollider.cpp
+         TextureManager.cpp
+         SpriteAnimation.cpp
+         ShaderProgram.cpp
+     1>d:\school work\studio projects\studio project 3\sp3 framework\base\source\shaderprogram.cpp(327): warning C4244: 'argument' : conversion from 'const double' to 'GLfloat', possible loss of data
+     1>d:\school work\studio projects\studio project 3\sp3 framework\base\source\shaderprogram.cpp(333): warning C4244: 'argument' : conversion from 'const double' to 'GLfloat', possible loss of data
+     1>d:\school work\studio projects\studio project 3\sp3 framework\base\source\shaderprogram.cpp(339): warning C4244: 'argument' : conversion from 'const double' to 'GLfloat', possible loss of data
+     1>d:\school work\studio projects\studio project 3\sp3 framework\base\source\shaderprogram.cpp(345): warning C4244: 'argument' : conversion from 'const double' to 'GLfloat', possible loss of data
+         shader.cpp
+         Seetwo.cpp
+     1>d:\school work\studio projects\studio project 3\sp3 framework\base\source\seetwo.cpp(85): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>d:\school work\studio projects\studio project 3\sp3 framework\base\source\seetwo.cpp(88): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+     1>d:\school work\studio projects\studio project 3\sp3 framework\base\source\seetwo.cpp(124): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
+         SceneManager.cpp
+         SceneDaniu_1.cpp
+         SceneBase.cpp
+         Sawblade.cpp
+         RenderHelper.cpp
+         MeshBuilder.cpp
+     1>d:\school work\studio projects\studio project 3\sp3 framework\base\source\meshbuilder.cpp(430): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>d:\school work\studio projects\studio project 3\sp3 framework\base\source\meshbuilder.cpp(431): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+         Mesh.cpp
+         main.cpp
+         Generating Code...
+         Compiling...
+         LoadTGA.cpp
+         LoadOBJ.cpp
+         LoadHmap.cpp
+         Kifellah.cpp
+     1>d:\school work\studio projects\studio project 3\sp3 framework\base\source\kifellah.cpp(84): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>d:\school work\studio projects\studio project 3\sp3 framework\base\source\kifellah.cpp(87): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+         InputManager.cpp
+         Hero.cpp
+     1>d:\school work\studio projects\studio project 3\sp3 framework\base\source\hero.cpp(65): warning C4244: 'argument' : conversion from 'double' to 'const int', possible loss of data
+     1>d:\school work\studio projects\studio project 3\sp3 framework\base\source\hero.cpp(334): warning C4244: '+=' : conversion from 'const double' to 'float', possible loss of data
+     1>d:\school work\studio projects\studio project 3\sp3 framework\base\source\hero.cpp(360): warning C4244: '+=' : conversion from 'const double' to 'float', possible loss of data
+     1>d:\school work\studio projects\studio project 3\sp3 framework\base\source\hero.cpp(552): warning C4244: '-=' : conversion from 'const double' to 'float', possible loss of data
+     1>d:\school work\studio projects\studio project 3\sp3 framework\base\source\hero.cpp(559): warning C4244: '+=' : conversion from 'const double' to 'float', possible loss of data
+     1>d:\school work\studio projects\studio project 3\sp3 framework\base\source\hero.cpp(566): warning C4244: '-=' : conversion from 'const double' to 'float', possible loss of data
+     1>d:\school work\studio projects\studio project 3\sp3 framework\base\source\hero.cpp(573): warning C4244: '+=' : conversion from 'const double' to 'float', possible loss of data
+     1>d:\school work\studio projects\studio project 3\sp3 framework\base\source\hero.cpp(623): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>d:\school work\studio projects\studio project 3\sp3 framework\base\source\hero.cpp(643): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+         GraphicsManager.cpp
+         GameManager.cpp
+         EntityManager.cpp
+         EntityBase.cpp
+         Daniu.cpp
+     1>d:\school work\studio projects\studio project 3\sp3 framework\base\source\daniu.cpp(90): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
+     1>d:\school work\studio projects\studio project 3\sp3 framework\base\source\daniu.cpp(93): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
+         Controller_Mouse.cpp
+         Controller_Keyboard.cpp
+         CollisionSystem.cpp
+         Character.cpp
+     1>d:\school work\studio projects\studio project 3\sp3 framework\base\source\character.cpp(142): warning C4018: '>' : signed/unsigned mismatch
+     1>d:\school work\studio projects\studio project 3\sp3 framework\base\source\character.cpp(185): warning C4018: '<' : signed/unsigned mismatch
+     1>d:\school work\studio projects\studio project 3\sp3 framework\base\source\character.cpp(226): warning C4018: '<' : signed/unsigned mismatch
+     1>d:\school work\studio projects\studio project 3\sp3 framework\base\source\character.cpp(266): warning C4018: '<' : signed/unsigned mismatch
+     1>d:\school work\studio projects\studio project 3\sp3 framework\base\source\character.cpp(307): warning C4018: '<' : signed/unsigned mismatch
+         Camera2D.cpp
+         Camera.cpp
+         Bullet.cpp
+         AudioManager.cpp
+         Application.cpp
+         Generating Code...
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\School Work\Studio Projects\Studio Project 3\SP3 Framework\Debug\Base.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:"D:\School Work\Studio Projects\Studio Project 3\SP3 Framework\Debug" /LIBPATH:"D:\School Work\Studio Projects\Studio Project 3\SP3 Framework\/glfw/lib-msvc100" /LIBPATH:"D:\School Work\Studio Projects\Studio Project 3\SP3 Framework\/glew/lib" /LIBPATH:"D:\School Work\Studio Projects\Studio Project 3\SP3 Framework\/irrKlang/lib" Common.lib winmm.lib opengl32.lib glu32.lib glew32.lib glfw3.lib irrKlang.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\School Work\Studio Projects\Studio Project 3\SP3 Framework\Debug\Base.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\School Work\Studio Projects\Studio Project 3\SP3 Framework\Debug\Base.lib" /MACHINE:X86 Debug\Application.obj
+         Debug\AudioManager.obj
+         Debug\Bullet.obj
+         Debug\Camera.obj
+         Debug\Camera2D.obj
+         Debug\Character.obj
+         Debug\CollisionSystem.obj
+         Debug\Controller_Keyboard.obj
+         Debug\Controller_Mouse.obj
+         Debug\Daniu.obj
+         Debug\EntityBase.obj
+         Debug\EntityManager.obj
+         Debug\GameManager.obj
+         Debug\GraphicsManager.obj
+         Debug\Hero.obj
+         Debug\InputManager.obj
+         Debug\Kifellah.obj
+         Debug\LoadHmap.obj
+         Debug\LoadOBJ.obj
+         Debug\LoadTGA.obj
+         Debug\main.obj
+         Debug\Mesh.obj
+         Debug\MeshBuilder.obj
+         Debug\RenderHelper.obj
+         Debug\Sawblade.obj
+         Debug\SceneBase.obj
+         Debug\SceneDaniu_1.obj
+         Debug\SceneManager.obj
+         Debug\Seetwo.obj
+         Debug\shader.obj
+         Debug\ShaderProgram.obj
+         Debug\SpriteAnimation.obj
+         Debug\TextureManager.obj
+         Debug\TileCollider.obj
+         Debug\MapRenderer.obj
+         Debug\TileIndex.obj
+         Debug\TileSystem.obj
+         Debug\GameInformation.obj
+         Debug\Turret.obj
+         Debug\Utility.obj
+     1>Application.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/OPT:LBR' specification
+     1>LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
+         Base.vcxproj -> D:\School Work\Studio Projects\Studio Project 3\SP3 Framework\Debug\Base.exe
+     1>Done Building Project "D:\School Work\Studio Projects\Studio Project 3\SP3 Framework\Base\Base.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.07
+Time Elapsed 00:00:19.16

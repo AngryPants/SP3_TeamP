@@ -1,6 +1,8 @@
 #ifndef AI_STRATEGY_H
 #define AI_STRATEGY_H
 
+class Enemy;
+
 class AIStrategy {
 
 public:
@@ -8,7 +10,7 @@ public:
 	AIStrategy() {}
 	virtual ~AIStrategy() {}
 
-	virtual void Update(AICharacter& ai) = 0;
+	virtual void Update(Enemy& ai, const double& deltaTime) = 0;
 
 };
 

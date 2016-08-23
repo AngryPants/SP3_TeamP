@@ -25,7 +25,7 @@ void SceneDaniu_1::Init() {
 	InitEnemies();
 	InitSawblades();
 
-	//AudioManager::GetInstance().PlayAudio2D("Audio//BGM//BGM_Daniu.mp3", true);
+	AudioManager::GetInstance().PlayAudio2D("Audio//BGM//BGM_Daniu.mp3", true);
 	MapRenderer::GetInstance().Reset();
 
 }

@@ -288,6 +288,9 @@
     <ClInclude Include="Source\Turret.h">
       <Filter>Header Files\Game\Characters\AICharacters\Enemies</Filter>
     </ClInclude>
+    <ClInclude Include="Source\AIStrategy_Alerting.h">
+      <Filter>Header Files\Game\Characters\AICharacters\AIStrategy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">

@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\AIStrategy.h" />
+    <ClInclude Include="Source\AIStrategy_Alerting.h" />
     <ClInclude Include="Source\Animation.h" />
     <ClInclude Include="Source\AnimationFSM.h" />
     <ClInclude Include="Source\AnimationFSM_Brawler.h" />

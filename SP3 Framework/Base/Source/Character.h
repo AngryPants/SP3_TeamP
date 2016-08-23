@@ -91,6 +91,9 @@ public:
 	virtual void Update(const double& deltaTime);
 	virtual void Render() {}
 	virtual void RenderUI() {}
+	virtual void Reset() {
+		currentHealth = maxHealth;
+	}
 
 };
 
