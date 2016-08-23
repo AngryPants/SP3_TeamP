@@ -119,7 +119,7 @@ bool Character::TakeDamage(const int &damage)
 
 void Character::Knockback(const Vector2 &knockback)
 {
-	velocity += knockback;
+	velocity = knockback;
 }
 
 //Tile System

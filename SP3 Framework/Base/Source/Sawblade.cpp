@@ -17,7 +17,7 @@ Sawblade::Sawblade(const string& sceneName) : GameEntity("Sawblade", sceneName)
 	speed = 10.f;
 	rotation = 0;
 
-	damage = 10;
+	damage = 30;
 	radius = 1.5f;
 
 	target = nullptr;

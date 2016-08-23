@@ -33,8 +33,8 @@ void SceneDaniu_1::Init() {
 void SceneDaniu_1::InitHero() {
 
 	//hero = new Seetwo(name);
-	hero = new Daniu(name);
-	//hero = new Kifellah(name);
+	//hero = new Daniu(name);
+	hero = new Kifellah(name);
 	hero->SetTileSystem(tileSystem);
 
 	//Spawn the player.

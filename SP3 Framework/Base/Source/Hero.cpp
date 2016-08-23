@@ -452,13 +452,13 @@ void Hero::ItemInteraction(int row, int column, const double& deltaTime) {
 		}
 			break;
 		case TILE_SPIKE: {
-			if (TakeDamage(20)) {
+			if (TakeDamage(10)) {
 				/*velocity.x *= -1;
 				velocity.y *= -1;*/
 				if (velocity.LengthSquared() > Math::EPSILON)
-					Knockback(-velocity.Normalized() * 25);
+					Knockback(-velocity.Normalized() * 10);
 				else
-					Knockback(Vector2(-1, 0) * 25);
+					Knockback(Vector2(1, 0) * 10);
 			}
 		}
 			break;
@@ -506,6 +506,7 @@ void Hero::Respawn() {
 		--lives;
 		position.Set(checkpoint.column * tileSystem->GetTileSize(), checkpoint.row * tileSystem->GetTileSize());
 		currentHealth = maxHealth;
+		velocity.SetZero();
 		isActive = true;
 	} else {
 		isDead = true;
