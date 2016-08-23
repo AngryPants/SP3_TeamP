@@ -36,3 +36,8 @@ void Turret::AlertAllies(const double& deltaTime) {
 	}
 
 }
+
+void Turret::Attack()
+{
+	
+}

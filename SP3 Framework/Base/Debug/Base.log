@@ -1,84 +1,9 @@
-﻿Build started 23/8/2016 3:39:26 PM.
-     1>Project "D:\School Work\Studio Projects\Studio Project 3\SP3 Framework\Base\Base.vcxproj" on node 2 (Build target(s)).
-     1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"D:\School Work\Studio Projects\Studio Project 3\SP3 Framework\/Common/Source" /I"D:\School Work\Studio Projects\Studio Project 3\SP3 Framework\/glew/include" /I"D:\School Work\Studio Projects\Studio Project 3\SP3 Framework\/glfw/include" /I"D:\School Work\Studio Projects\Studio Project 3\SP3 Framework\/irrKlang/include" /ZI /nologo /W3 /WX- /Od /Oy- /D _VARIADIC_MAX=10 /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Source\Application.cpp Source\AudioManager.cpp Source\Bullet.cpp Source\Camera.cpp Source\Camera2D.cpp Source\Character.cpp Source\CollisionSystem.cpp Source\Controller_Keyboard.cpp Source\Controller_Mouse.cpp Source\Daniu.cpp Source\EntityBase.cpp Source\EntityManager.cpp Source\GameManager.cpp Source\GraphicsManager.cpp Source\Hero.cpp Source\InputManager.cpp Source\Kifellah.cpp Source\LoadHmap.cpp Source\LoadOBJ.cpp Source\LoadTGA.cpp Source\main.cpp Source\Mesh.cpp Source\MeshBuilder.cpp Source\RenderHelper.cpp Source\Sawblade.cpp Source\SceneBase.cpp Source\SceneDaniu_1.cpp Source\SceneManager.cpp Source\Seetwo.cpp Source\shader.cpp Source\ShaderProgram.cpp Source\SpriteAnimation.cpp Source\TextureManager.cpp Source\TileCollider.cpp Source\MapRenderer.cpp Source\TileIndex.cpp Source\TileSystem.cpp Source\GameInformation.cpp Source\Turret.cpp Source\Utility.cpp
-         Utility.cpp
-         Turret.cpp
-         GameInformation.cpp
-         TileSystem.cpp
-     1>d:\school work\studio projects\studio project 3\sp3 framework\base\source\tilesystem.cpp(72): warning C4018: '>' : signed/unsigned mismatch
-         TileIndex.cpp
-         MapRenderer.cpp
-         TileCollider.cpp
-         TextureManager.cpp
-         SpriteAnimation.cpp
-         ShaderProgram.cpp
-     1>d:\school work\studio projects\studio project 3\sp3 framework\base\source\shaderprogram.cpp(327): warning C4244: 'argument' : conversion from 'const double' to 'GLfloat', possible loss of data
-     1>d:\school work\studio projects\studio project 3\sp3 framework\base\source\shaderprogram.cpp(333): warning C4244: 'argument' : conversion from 'const double' to 'GLfloat', possible loss of data
-     1>d:\school work\studio projects\studio project 3\sp3 framework\base\source\shaderprogram.cpp(339): warning C4244: 'argument' : conversion from 'const double' to 'GLfloat', possible loss of data
-     1>d:\school work\studio projects\studio project 3\sp3 framework\base\source\shaderprogram.cpp(345): warning C4244: 'argument' : conversion from 'const double' to 'GLfloat', possible loss of data
-         shader.cpp
-         Seetwo.cpp
-     1>d:\school work\studio projects\studio project 3\sp3 framework\base\source\seetwo.cpp(85): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>d:\school work\studio projects\studio project 3\sp3 framework\base\source\seetwo.cpp(88): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
-     1>d:\school work\studio projects\studio project 3\sp3 framework\base\source\seetwo.cpp(124): warning C4244: '+=' : conversion from 'double' to 'float', possible loss of data
-         SceneManager.cpp
-         SceneDaniu_1.cpp
-         SceneBase.cpp
-         Sawblade.cpp
-         RenderHelper.cpp
-         MeshBuilder.cpp
-     1>d:\school work\studio projects\studio project 3\sp3 framework\base\source\meshbuilder.cpp(430): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
-     1>d:\school work\studio projects\studio project 3\sp3 framework\base\source\meshbuilder.cpp(431): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
-         Mesh.cpp
-         main.cpp
-         Generating Code...
-         Compiling...
-         LoadTGA.cpp
-         LoadOBJ.cpp
-         LoadHmap.cpp
-         Kifellah.cpp
-     1>d:\school work\studio projects\studio project 3\sp3 framework\base\source\kifellah.cpp(84): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>d:\school work\studio projects\studio project 3\sp3 framework\base\source\kifellah.cpp(87): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
-         InputManager.cpp
-         Hero.cpp
-     1>d:\school work\studio projects\studio project 3\sp3 framework\base\source\hero.cpp(299): warning C4244: '+=' : conversion from 'const double' to 'float', possible loss of data
-     1>d:\school work\studio projects\studio project 3\sp3 framework\base\source\hero.cpp(325): warning C4244: '+=' : conversion from 'const double' to 'float', possible loss of data
-     1>d:\school work\studio projects\studio project 3\sp3 framework\base\source\hero.cpp(387): error C2143: syntax error : missing ';' before '}'
-     1>d:\school work\studio projects\studio project 3\sp3 framework\base\source\hero.cpp(387): error C2761: 'void Hero::SpecialAbility(const double &)' : member function redeclaration not allowed
-     1>d:\school work\studio projects\studio project 3\sp3 framework\base\source\hero.cpp(387): error C2059: syntax error : '}'
-     1>d:\school work\studio projects\studio project 3\sp3 framework\base\source\hero.cpp(390): error C2143: syntax error : missing ';' before '{'
-     1>d:\school work\studio projects\studio project 3\sp3 framework\base\source\hero.cpp(390): error C2447: '{' : missing function header (old-style formal list?)
-     1>d:\school work\studio projects\studio project 3\sp3 framework\base\source\hero.cpp(490): warning C4244: '-=' : conversion from 'const double' to 'float', possible loss of data
-     1>d:\school work\studio projects\studio project 3\sp3 framework\base\source\hero.cpp(497): warning C4244: '+=' : conversion from 'const double' to 'float', possible loss of data
-     1>d:\school work\studio projects\studio project 3\sp3 framework\base\source\hero.cpp(504): warning C4244: '-=' : conversion from 'const double' to 'float', possible loss of data
-     1>d:\school work\studio projects\studio project 3\sp3 framework\base\source\hero.cpp(511): warning C4244: '+=' : conversion from 'const double' to 'float', possible loss of data
-     1>d:\school work\studio projects\studio project 3\sp3 framework\base\source\hero.cpp(561): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
-     1>d:\school work\studio projects\studio project 3\sp3 framework\base\source\hero.cpp(581): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
-         GraphicsManager.cpp
-         GameManager.cpp
-         EntityManager.cpp
-         EntityBase.cpp
-         Daniu.cpp
-     1>d:\school work\studio projects\studio project 3\sp3 framework\base\source\daniu.cpp(90): warning C4244: '=' : conversion from 'double' to 'float', possible loss of data
-     1>d:\school work\studio projects\studio project 3\sp3 framework\base\source\daniu.cpp(93): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
-         Controller_Mouse.cpp
-         Controller_Keyboard.cpp
-         CollisionSystem.cpp
-         Character.cpp
-     1>d:\school work\studio projects\studio project 3\sp3 framework\base\source\character.cpp(142): warning C4018: '>' : signed/unsigned mismatch
-     1>d:\school work\studio projects\studio project 3\sp3 framework\base\source\character.cpp(185): warning C4018: '<' : signed/unsigned mismatch
-     1>d:\school work\studio projects\studio project 3\sp3 framework\base\source\character.cpp(226): warning C4018: '<' : signed/unsigned mismatch
-     1>d:\school work\studio projects\studio project 3\sp3 framework\base\source\character.cpp(266): warning C4018: '<' : signed/unsigned mismatch
-     1>d:\school work\studio projects\studio project 3\sp3 framework\base\source\character.cpp(307): warning C4018: '<' : signed/unsigned mismatch
-         Camera2D.cpp
-         Camera.cpp
-         Bullet.cpp
-         AudioManager.cpp
-         Application.cpp
-         Generating Code...
-     1>Done Building Project "D:\School Work\Studio Projects\Studio Project 3\SP3 Framework\Base\Base.vcxproj" (Build target(s)) -- FAILED.
+﻿Build started 8/23/2016 3:45:17 PM.
+     1>Project "C:\Users\Administrator\Desktop\Studio Project 3\SP3 Framework\Base\Base.vcxproj" on node 2 (Build target(s)).
+     1>Link:
+         Base.vcxproj -> C:\Users\Administrator\Desktop\Studio Project 3\SP3 Framework\Debug\Base.exe
+     1>Done Building Project "C:\Users\Administrator\Desktop\Studio Project 3\SP3 Framework\Base\Base.vcxproj" (Build target(s)).
 
-Build FAILED.
+Build succeeded.
 
-Time Elapsed 00:00:17.21
+Time Elapsed 00:00:00.07

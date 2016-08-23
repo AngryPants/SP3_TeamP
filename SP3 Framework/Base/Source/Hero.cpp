@@ -65,6 +65,41 @@ void Hero::AddScore(const int& score) {
 
 }
 
+int Hero::GetAbilityScore() const
+{
+	return abilityScore;
+}
+
+void Hero::SetAbilityScore(const int& abilityScore)
+{
+	this->abilityScore = abilityScore;
+}
+
+void Hero::AddAbilityScore(const int& abilityScore)
+{
+	this->abilityScore += abilityScore;
+}
+
+bool Hero::GetAbilityAvailable() const
+{
+	return abilityAvailable;
+}
+
+void Hero::SetAbilityAvailable(const bool& abilityAvailable)
+{
+	this->abilityAvailable = abilityAvailable;
+}
+
+bool Hero::GetAbilityActive() const
+{
+	return abilityActive;
+}
+
+void Hero::SetAbilityActive(const bool& abilityActive)
+{
+	this->abilityActive = abilityActive;
+}
+
 void Hero::SetCheckpoint(int row, int column) {
 
 	this->checkpoint.row = row;
@@ -384,6 +419,33 @@ bool Hero::TakeDamage(const int &damage)
 }
 
 void Hero::SpecialAbility(const double &deltaTime)
+{
+	// Special Ability
+	int maxAbilityScore = 50;
+	// Stops ability score from exceeding max value
+	if (abilityScore > maxAbilityScore)
+		abilityScore = maxAbilityScore;
+
+	static double accumulatedTime = 0;
+	if (!abilityAvailable && !abilityActive)
+		accumulatedTime += deltaTime * 10.25;
+	// Check if ability is available, add ability score over time if both are not true
+	if (accumulatedTime > 1 && !abilityAvailable && !abilityActive)
+	{
+		accumulatedTime -= 1;
+		++abilityScore;
+	}
+	// Check if ability is active, and makes it available if it is not active and the ability score is greater than 50
+	if (!abilityAvailable && !abilityActive && abilityScore >= maxAbilityScore)
+	{
+		abilityAvailable = true;
+	}
+	// Sets the ability to active if the 'Z' button is pressed and the ability is available
+	if (abilityAvailable && InputManager::GetInstance().GetInputInfo().keyDown[INPUT_ABILITY])
+	{
+		abilityActive = true;
+		abilityAvailable = false;
+	}
 }
 
 //Item Interaction
