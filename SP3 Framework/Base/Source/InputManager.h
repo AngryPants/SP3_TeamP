@@ -19,7 +19,6 @@ enum INPUT_TYPE {
 	INPUT_JUMP,
 	INPUT_SHOOT,
 
-	
 	INPUT_ABILITY,
 
 	// Menu Choosing
