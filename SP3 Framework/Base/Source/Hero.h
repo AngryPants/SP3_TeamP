@@ -41,12 +41,14 @@ public:
 	vector<Character*>* enemies;
 	virtual void Shoot();
 	virtual bool TakeDamage(const int &damage);
+	virtual void SpecialAbility();
 
 	//Stats
 	int GetLives() const;
 	void SetLives(const int& lives);	
 	int GetScore() const;
 	void SetScore(const int& score);
+	void AddScore(const int& score);
 	void SetCheckpoint(int row, int column);
 	TileCoord GetCheckpoint() const;
 

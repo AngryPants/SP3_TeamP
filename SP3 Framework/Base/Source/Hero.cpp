@@ -51,6 +51,12 @@ void Hero::SetScore(const int& score)
 	this->score = score;
 }
 
+void Hero::AddScore(const int& score) {
+
+	this->score += score;
+
+}
+
 void Hero::SetCheckpoint(int row, int column) {
 
 	this->checkpoint.row = row;
