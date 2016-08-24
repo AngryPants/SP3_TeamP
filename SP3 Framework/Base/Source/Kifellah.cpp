@@ -23,6 +23,9 @@ Kifellah::Kifellah(const string& sceneName) : Hero("Kifellah", sceneName)
 	tileCollider.SetNumHotspotsHeight(4);
 	tileCollider.SetNumHotspotsWidth(4);
 
+	//Mesh & Textures
+	mesh = MeshBuilder::GetInstance().GenerateQuad("Quad");
+	specialAbility.textureArray[0] = TextureManager::GetInstance().AddTexture("abilityKifellah", "Image//Cyborg_Shooter//Characters//Heroes//Kifellah_Shield.tga");
 }
 
 Kifellah::~Kifellah() 
@@ -68,6 +71,15 @@ void Kifellah::Render()
 		}
 		RenderHelper::GetInstance().RenderMesh(animationFSM.GetMesh(), animationFSM.GetTexture(), false);
 	modelStack.PopMatrix();
+
+	if (GetAbilityActive())
+	{
+		modelStack.PushMatrix();
+			modelStack.Translate(position.x, position.y, 0);
+			modelStack.Scale(4, 4, 1);
+			RenderHelper::GetInstance().RenderMesh(*mesh, specialAbility, false);
+		modelStack.PopMatrix();
+	}
 }
 
 void Kifellah::RenderUI() {

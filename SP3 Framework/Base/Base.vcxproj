@@ -34,6 +34,7 @@
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\Mesh.cpp" />
     <ClCompile Include="Source\MeshBuilder.cpp" />
+    <ClCompile Include="Source\Particles.cpp" />
     <ClCompile Include="Source\RenderHelper.cpp" />
     <ClCompile Include="Source\Sawblade.cpp" />
     <ClCompile Include="Source\SceneBase.cpp" />
@@ -88,6 +89,7 @@
     <ClInclude Include="Source\Mesh.h" />
     <ClInclude Include="Source\MeshBuilder.h" />
     <ClInclude Include="Source\Enemy.h" />
+    <ClInclude Include="Source\Particles.h" />
     <ClInclude Include="Source\RenderHelper.h" />
     <ClInclude Include="Source\GameInformation.h" />
     <ClInclude Include="Source\Sawblade.h" />

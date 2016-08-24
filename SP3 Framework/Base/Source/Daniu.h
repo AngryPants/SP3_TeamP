@@ -9,7 +9,9 @@ class Daniu : public Hero {
 
 private:
 	AnimationFSM_Daniu animationFSM;
-
+	//Mesh & Textures
+	Mesh* mesh;
+	Texture specialAbility;
 public:
 	Daniu(const string& sceneName);
 	virtual ~Daniu();

@@ -9,7 +9,9 @@ class Kifellah : public Hero {
 
 private:
 	AnimationFSM_Kifellah animationFSM;
-
+	//Mesh & Textures
+	Mesh* mesh;
+	Texture specialAbility;
 public:
 	Kifellah(const string& sceneName);
 	virtual ~Kifellah();

@@ -23,6 +23,9 @@ Daniu::Daniu(const string& sceneName) : Hero("Daniu", sceneName)
 	tileCollider.SetNumHotspotsHeight(4);
 	tileCollider.SetNumHotspotsWidth(4);
 
+	//Mesh & Textures
+	mesh = MeshBuilder::GetInstance().GenerateQuad("Quad");
+	specialAbility.textureArray[0] = TextureManager::GetInstance().AddTexture("abilityDaniu", "Image//Cyborg_Shooter//Characters//Heroes//Daniu_Overlay.tga");
 }
 
 Daniu::~Daniu()
@@ -79,7 +82,15 @@ void Daniu::Render()
 void Daniu::RenderUI() {
 
 	Hero::RenderUI();
-
+	MS& modelStack = GraphicsManager::GetInstance().modelStack;
+	if (GetAbilityActive())
+	{
+		modelStack.PushMatrix();
+		modelStack.Translate(0, 0, 0);
+		modelStack.Scale(100, 100, 1);
+		RenderHelper::GetInstance().RenderMesh(*mesh, specialAbility, false);
+		modelStack.PopMatrix();
+	}
 }
 
 void Daniu::Shoot() {

@@ -23,6 +23,14 @@ Seetwo::Seetwo(const string& sceneName) : Hero("Seetwo", sceneName)
 	tileCollider.SetNumHotspotsHeight(4);
 	tileCollider.SetNumHotspotsWidth(4);
 
+	//Mesh & Textures
+	mesh = MeshBuilder::GetInstance().GenerateQuad("Quad");
+	specialAbility.textureArray[0] = TextureManager::GetInstance().AddTexture("abilitySeetwo", "Image//Cyborg_Shooter//Characters//Heroes//Seetwo_Particle.tga");
+
+	// Particles
+	gravity.Set(0.f, 4.9f, 0.f);
+	particleCount = 0;
+	maxParticles = 100;
 }
 
 Seetwo::~Seetwo()
@@ -36,6 +44,7 @@ void Seetwo::Update(const double& deltaTime)
 	}
 
 	Hero::Update(deltaTime);
+	UpdateParticles(deltaTime);
 
 	//Update AnimationFSM
 	animationFSM.SetIsMoving(isMoving);
@@ -50,6 +59,11 @@ void Seetwo::Update(const double& deltaTime)
 void Seetwo::Render()
 {
 	MS& modelStack = GraphicsManager::GetInstance().modelStack;
+	if (GetAbilityActive())
+	{
+		RenderParticles();
+	}
+
 	modelStack.PushMatrix();
 	modelStack.Translate(position.x, position.y, 0);
 	modelStack.Scale(4, 4, 1);
@@ -123,11 +137,86 @@ void Seetwo::SpecialAbility(const double &deltaTime)
 		accumulatedTime -= 1;
 		currentHealth += maxHealth * 0.5 * 0.02;
 		AddAbilityScore(-1);
-		cout << currentHealth << endl;
+		//cout << currentHealth << endl;
 	}
 	// Deactivates the ability if it was active and the score is above 5
 	if (GetAbilityActive() && GetAbilityScore() <= 0)
 	{
 		SetAbilityActive(false);
+	}
+}
+
+void Seetwo::UpdateParticles(double dt)
+{
+	if (particleCount < maxParticles)
+	{
+		ParticleObject *particle = GetParticle();
+		particle->type = ParticleObject_TYPE::P_ABILITY_SEETWO;
+		particle->scale.Set(0.25, 0.25, 1);
+		particle->vel.Set(0.1, 0.1, 0);
+		particle->rotationSpeed = Math::RandFloatMinMax(-20.0f, 20.0f);
+		particle->pos.Set(position.x + Math::RandFloatMinMax(-1.5f, 1.35f), position.y + Math::RandFloatMinMax(-1.5f, 1.5f), 0);
+	}
+
+	for (std::vector<ParticleObject*>::iterator it = particleList.begin(); it != particleList.end(); ++it)
+	{
+		ParticleObject *particle = (ParticleObject *)*it;
+		if (particle->active)
+		{
+			if (particle->type == ParticleObject_TYPE::P_ABILITY_SEETWO)
+			{
+				particle->vel += gravity * (float)dt;
+				particle->pos += particle->vel * (float)dt * 10.f;
+			}
+			if (particle->pos.y < (position.y - 1.35) || particle->pos.y > (position.y + 1.25))
+			{
+				particle->active = false;
+				particleCount -= 1;
+			}
+		}
+	}
+}
+
+ParticleObject *Seetwo::GetParticle(void)
+{
+	for (std::vector<ParticleObject*>::iterator it = particleList.begin(); it != particleList.end(); ++it)
+	{
+		ParticleObject *particle = (ParticleObject *)*it;
+		if (!particle->active)
+		{
+			particle->active = true;
+			particleCount += 1;
+			return particle;
+		}
+	}
+
+	for (unsigned int i = 0; i <= 10; ++i)
+	{
+		ParticleObject *particle = new ParticleObject(ParticleObject_TYPE::P_ABILITY_SEETWO);
+		particleList.push_back(particle);
+	}
+
+	ParticleObject *particle = particleList.back();
+	particle->active = true;
+	particleCount += 1;
+	return particle;
+}
+
+void Seetwo::RenderParticles()
+{
+	MS& modelStack = GraphicsManager::GetInstance().modelStack;
+
+	for (std::vector<ParticleObject*>::iterator it = particleList.begin(); it != particleList.end(); ++it)
+	{
+		ParticleObject *particle = (ParticleObject *)*it;
+		if (particle->active)
+		{
+			modelStack.PushMatrix();
+			modelStack.Translate(particle->pos.x, particle->pos.y, particle->pos.z);
+			modelStack.Rotate(particle->rotation, 0, 0, 1);
+			modelStack.Scale(particle->scale.x, particle->scale.y, particle->scale.z);
+			RenderHelper::GetInstance().RenderMesh(*mesh, specialAbility, false);
+			modelStack.PopMatrix();
+		}
 	}
 }

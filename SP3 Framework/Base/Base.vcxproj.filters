@@ -121,6 +121,9 @@
     <ClCompile Include="Source\Turret.cpp">
       <Filter>Source Files\Characters\Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Particles.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\GraphicsManager.h">
@@ -287,6 +290,9 @@
     </ClInclude>
     <ClInclude Include="Source\Turret.h">
       <Filter>Header Files\Game\Characters\AICharacters\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Particles.h">
+      <Filter>Header Files\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

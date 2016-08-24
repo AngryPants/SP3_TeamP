@@ -4,12 +4,21 @@
 
 #include "Hero.h"
 #include "AnimationFSM_Seetwo.h"
+#include "Particles.h"
 
 class Seetwo : public Hero {
 
 private:
 	AnimationFSM_Seetwo animationFSM;
+	//Mesh & Textures
+	Mesh* mesh;
+	Texture specialAbility;
 
+	// Particles
+	vector<ParticleObject*> particleList; // Used to store particles
+	Vector3 gravity; // Gravity affecting the particles
+	int particleCount; // Number of particles
+	unsigned int maxParticles; // Max number of particles
 public:
 	Seetwo(const string& sceneName);
 	virtual ~Seetwo();
@@ -20,6 +29,11 @@ public:
 
 	void Movement(const double &deltaTime);
 	void TileCollision();
+
+	// Particles
+	void UpdateParticles(double dt);
+	ParticleObject *GetParticle(void);
+	void RenderParticles();
 
 	virtual void Shoot();
 	virtual void SpecialAbility(const double &deltaTime);

@@ -62,7 +62,7 @@ void Hero::SetScore(const int& score)
 void Hero::AddScore(const int& score) {
 
 	this->score += score;
-
+	AddAbilityScore(score * 0.25);
 }
 
 int Hero::GetAbilityScore() const
