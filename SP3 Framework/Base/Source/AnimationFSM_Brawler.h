@@ -26,10 +26,10 @@ public:
 		this->isShooting[STATE_PREVIOUS] = this->isShooting[STATE_CURRENT];
 		this->isShooting[STATE_CURRENT] = isShooting;
 	}
-	void SetOnGround(bool onGround) {
+	/*void SetOnGround(bool onGround) {
 		this->onGround[STATE_PREVIOUS] = this->onGround[STATE_CURRENT];
 		this->onGround[STATE_CURRENT] = onGround;
-	}
+	}*/
 	void SetIsDead(bool isDead) {
 		this->isDead = isDead;
 	}
@@ -56,7 +56,7 @@ public:
 		for (unsigned int i = 0; i < static_cast<unsigned int>(NUM_STATE); ++i) {
 			isMoving[i] = false;
 			isShooting[i] = false;
-			onGround[i] = true;
+			//onGround[i] = true;
 			isDead = false;
 		}
 
@@ -89,7 +89,7 @@ private:
 
 	//Player States
 	bool isMoving[NUM_STATE];
-	bool onGround[NUM_STATE];
+	//bool onGround[NUM_STATE];
 	bool isShooting[NUM_STATE];
 	bool isDead;
 	ANIMATION animationState[NUM_STATE];
@@ -100,10 +100,10 @@ private:
 		texture.textureArray[0] = TextureManager::GetInstance().AddTexture("Brawler", "Image//Cyborg_Shooter//Characters//Enemies//Enemy_Brawler.tga");
 		mesh = MeshBuilder::GetInstance().GenerateSpriteAnimation("Brawler", 4, 11);
 		mesh->animation = &animation[IDLE];
-		animation[IDLE].Set(4, 11, 0, 6, true, 1.0, true);
-		animation[WALKING].Set(4, 11, 12, 22, true, 1.0, true);
-		animation[SHOOTING].Set(4, 11, 23, 32, true, 1.0 / 3.0, true);
-		animation[DEAD].Set(4, 11, 34, 38, false, 1.0, true);
+		animation[IDLE].Set(4, 11, 0, 5, true, 1.0, true);
+		animation[WALKING].Set(4, 11, 11, 21, true, 1.0, true);
+		animation[SHOOTING].Set(4, 22, 31, 32, true, 1.0 / 3.0, true);
+		animation[DEAD].Set(4, 11, 33, 37, false, 1.0, true);
 	}
 
 	void UpdateAnimation() {
@@ -126,18 +126,19 @@ private:
 		if (isDead) {
 			animationState[STATE_CURRENT] = DEAD;
 		}
-		else if (!isMoving[STATE_CURRENT] && onGround[STATE_CURRENT] && !isShooting[STATE_CURRENT]) {
+		else if (!isMoving[STATE_CURRENT] && !isShooting[STATE_CURRENT]) {
 			//cout << "IDLE" << endl;
 			animationState[STATE_CURRENT] = IDLE;
 		}
-		else if (isMoving[STATE_CURRENT] && onGround[STATE_CURRENT] && !isShooting[STATE_CURRENT]) {
+		else if (isShooting[STATE_CURRENT]) {
+			//cout << "SHOOTING" << endl;
+			animationState[STATE_CURRENT] = SHOOTING;
+		}		
+		else if (isMoving[STATE_CURRENT]) {
 			//cout << "RUNNING" << endl;
 			animationState[STATE_CURRENT] = WALKING;
 		}
-		else if (!isMoving[STATE_CURRENT] && onGround[STATE_CURRENT] && isShooting[STATE_CURRENT]) {
-			//cout << "SHOOTING" << endl;
-			animationState[STATE_CURRENT] = SHOOTING;
-		}
+		
 
 		mesh->animation = &animation[animationState[STATE_CURRENT]];
 

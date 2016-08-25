@@ -8,6 +8,8 @@ Enemy::Enemy(const string& name, const string& sceneName) : Character(name, scen
 		
 	alertRadius = 5.0f;
 	alertTime = 5.0f;
+	alertTimer = alertTime;
+	hasAlertedAllies = false;
 	isAlerted = false;
 	
 	attackRange = 10.0f;	

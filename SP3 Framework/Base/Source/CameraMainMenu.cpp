@@ -16,42 +16,36 @@ CameraMainMenu::~CameraMainMenu() {
 void CameraMainMenu::Roll(const float& rotation) {
 
 	this->rotation.z += rotation;
-	CalculateVectors();
 
 }
 
 void CameraMainMenu::SetRoll(const float& rotation) {
 
 	this->rotation.z = rotation;
-	CalculateVectors();
 
 }
 
 void CameraMainMenu::Pitch(const float& rotation) {
 
 	this->rotation.x += rotation;
-	CalculateVectors();
 
 }
 
 void CameraMainMenu::SetPitch(const float& rotation) {
 
 	this->rotation.x = rotation;
-	CalculateVectors();
 
 }
 
 void CameraMainMenu::Yaw(const float& rotation) {
 
 	this->rotation.y += rotation;
-	CalculateVectors();
 
 }
 
 void CameraMainMenu::SetYaw(const float& rotation) {
 
 	this->rotation.y = rotation;
-	CalculateVectors();
 
 }
 
@@ -78,5 +72,11 @@ void CameraMainMenu::CalculateVectors() {
 	upMatrix.SetToTranslation(0, 1, 0);
 	upMatrix =  rotationMatrix[Y] * rotationMatrix[X] * rotationMatrix[Z] * upMatrix;
 	up.Set(upMatrix.a[12], upMatrix.a[13], upMatrix.a[14]);
+
+}
+
+void CameraMainMenu::Update(const double& deltaTime) {
+
+	CalculateVectors();
 
 }

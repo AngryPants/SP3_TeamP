@@ -312,11 +312,11 @@ void Hero::Move(const double& deltaTime) {
 	if (InputManager::GetInstance().GetInputInfo().keyDown[INPUT_MOVE_RIGHT]) 
 	{
 		FaceRight();
-		acceleration = GetForwardDirection() * 20.0f * InputManager::GetInstance().GetInputInfo().keyValue[INPUT_MOVE_RIGHT];
+		acceleration = GetForwardDirection() * 300.0f * InputManager::GetInstance().GetInputInfo().keyValue[INPUT_MOVE_RIGHT];
 		isMoving = true;
 	} else if (InputManager::GetInstance().GetInputInfo().keyDown[INPUT_MOVE_LEFT]) {
 		FaceLeft();
-		acceleration = GetForwardDirection() * 20.0f * InputManager::GetInstance().GetInputInfo().keyValue[INPUT_MOVE_LEFT];
+		acceleration = GetForwardDirection() * 300.0f * InputManager::GetInstance().GetInputInfo().keyValue[INPUT_MOVE_LEFT];
 		isMoving = true;
 	}
 
@@ -330,6 +330,19 @@ void Hero::Move(const double& deltaTime) {
 
 	//cout << "Hero Acceleration: " << acceleration << endl;
 	this->velocity += acceleration * static_cast<float>(deltaTime);
+
+	//Friction
+	float frictionCoefficient = 0.5f;
+	float frictionAcceleration = (std::abs(gravity) * frictionCoefficient);
+	//cout << "Brawler: Friction Acceleration: " << frictionAcceleration * deltaTime << endl;
+	if (std::abs(velocity.x) > Math::EPSILON) {
+		if (velocity.x < 0.0f) {
+			velocity.x = Math::Min(0.0f, velocity.x + frictionAcceleration * static_cast<float>(deltaTime));
+		} else if (velocity.x > 0.0f) {
+			velocity.x = Math::Max(0.0f, velocity.x - frictionAcceleration * static_cast<float>(deltaTime));
+		}
+	}
+
 	this->velocity.x = Math::Clamp(this->velocity.x, -maxSpeed, maxSpeed); //Limit our horizontal speed.
 	this->velocity.y = Math::Clamp(this->velocity.y, -27.0f, 27.0f);
 	//cout << "Hero Velocity: " << this->velocity << endl;
@@ -365,22 +378,20 @@ void Hero::Move(const double& deltaTime) {
 	result = CheckCollisionLeft();
 	for (unsigned int i = 0; i < result.size(); ++i) {
 		unsigned int terrain = GetTileInfo(TILE_INFO::TERRAIN, result[i]);
-		if (terrain != 0) {
+		if (terrain != TILE_NOTHING) {
 			int tileCol = tileSystem->GetTile(position.x - tileCollider.GetDetectionWidth() * 0.5f);
 			position.x = (static_cast<float>(tileCol) + 0.5f) * tileSystem->GetTileSize() + (tileCollider.GetDetectionWidth() * 0.5f);
 			velocity.x = 0;
-			break;
 			break;
 		}
 	}
 	result = CheckCollisionRight();
 	for (unsigned int i = 0; i < result.size(); ++i) {
 		unsigned int terrain = GetTileInfo(TILE_INFO::TERRAIN, result[i]);
-		if (terrain != 0) {
+		if (terrain != TILE_NOTHING) {
 			int tileCol = tileSystem->GetTile(position.x + tileCollider.GetDetectionWidth() * 0.5f);
 			position.x = (static_cast<float>(tileCol - 1) + 0.5f) * tileSystem->GetTileSize() - (tileCollider.GetDetectionWidth() * 0.5f);
 			velocity.x = 0;
-			break;
 			break;
 		}
 	}
@@ -401,9 +412,9 @@ void Hero::Move(const double& deltaTime) {
 		velocity.y = 0;
 	}
 
-	if (!isMoving) {
+	/*if (!isMoving) {
 		velocity.x *= static_cast<float>(Math::Clamp(1.0 - deltaTime * 5.0, 0.0, 1.0));
-	}
+	}*/
 
 }
 

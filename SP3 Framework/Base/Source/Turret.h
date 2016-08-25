@@ -17,7 +17,7 @@ private:
 	AnimationFSM_Turret animationFSM;
 
 	//Movement
-	void Move(const double& deltaTime);
+	void Fall(const double& deltaTime);
 
 	//Patrol
 	float patrolTime;
@@ -26,7 +26,9 @@ private:
 	//Combat
 	float cannotSeePlayerTimer;
 	void Combat(const double& deltaTime);
+	virtual void Attack();
 
+	//Dead
 	void Dead(const double& deltaTime);
 
 public:
@@ -35,12 +37,8 @@ public:
 	virtual ~Turret();
 		
 	//Combat
-	virtual void Attack();
 	virtual bool TakeDamage(const int& damage);
-
-	//Movement
-	virtual void MoveLeft();
-	virtual void MoveRight();
+	virtual void Alert();
 
 	//Virtual Function(s)
 	virtual void Update(const double& deltaTime);

@@ -16,9 +16,12 @@ protected:
 	float viewRange;
 	
 	//Combat
+	bool hasAlertedAllies;
+	float alertTimer;
 	float alertTime; //How long it takes for us to alert the rest.
 	float alertRadius; //How far we can alert.
 	float attackRange;
+	virtual void Attack() = 0;
 
 	//The target of the AI.
 	Hero* target;
@@ -61,8 +64,6 @@ public:
 	void SetState(AIState* state);
 
 	//Movement
-	virtual void MoveLeft() = 0;
-	virtual void MoveRight() = 0;
 	bool IsOnEdgeLeft();
 	bool IsOnEdgeRight();
 	bool HitWallRight();
@@ -72,14 +73,13 @@ public:
 	//Combat
 	virtual void Alert();
 	virtual void UnAlert();
-	virtual void Attack() = 0;
 
 	//Virtual Function(s)
 	virtual void Update(const double& deltaTime) = 0;
 	virtual void UpdateBullets(const double& deltaTime);
 	virtual void Render() {}
 	virtual void RenderUI() {}
-	virtual void RenderBullets() = 0;
+	virtual void RenderBullets() {}
 	virtual void Reset() = 0;
 
 };

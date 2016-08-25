@@ -69,13 +69,7 @@ void Turret::Attack() {
 }
 
 //Movement
-void Turret::MoveLeft() {
-}
-
-void Turret::MoveRight() {
-}
-
-void Turret::Move(const double& deltaTime) {
+void Turret::Fall(const double& deltaTime) {
 
 	//Turret can only fall.
 	Vector2 acceleration(0, gravity);
@@ -102,9 +96,12 @@ void Turret::Move(const double& deltaTime) {
 void Turret::Update(const double& deltaTime) {
 
 	Character::Update(deltaTime);	
-	Move(deltaTime);
-
+	Fall(deltaTime);
 	isAttacking = false;
+
+	if (currentHealth <= 0.0f) {
+		currentState = STATE::DEAD;
+	}
 
 	switch (currentState) {
 		case STATE::PATROL: {
@@ -119,10 +116,6 @@ void Turret::Update(const double& deltaTime) {
 			Dead(deltaTime);
 		}
 		break;
-	}
-
-	if (currentHealth <= 0.0f) {
-		currentState = STATE::DEAD;
 	}
 
 	UpdateBullets(deltaTime);
@@ -193,6 +186,7 @@ void Turret::Patrol(const double& deltaTime) {
 	}
 
 	if (CanSeePlayer()) {
+		isAlerted = true;
 		currentState = STATE::COMBAT;
 	}
 
@@ -217,6 +211,7 @@ void Turret::Combat(const double& deltaTime) {
 	} else {
 		cannotSeePlayerTimer = 5.0f;
 		currentState = STATE::PATROL;
+		isAlerted = false;
 	}
 
 }
@@ -225,7 +220,9 @@ void Turret::Dead(const double& deltaTime) {
 
 	if (!isDead) {
 		isDead = true;
-		target->AddScore(100);
+		if (target != nullptr) {
+			target->AddScore(100);
+		}
 	}
 
 }
@@ -256,5 +253,12 @@ bool Turret::TakeDamage(const int& damage) {
 	}
 
 	return tookDamage;
+
+}
+
+void Turret::Alert() {
+
+	Enemy::Alert();
+	currentState = STATE::COMBAT;
 
 }

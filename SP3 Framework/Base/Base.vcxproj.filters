@@ -137,7 +137,13 @@
       <Filter>Source Files\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="Source\Turret.cpp">
-      <Filter>Source Files\Game\Characters\Heroes</Filter>
+      <Filter>Source Files\Game\Characters\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Brawler.cpp">
+      <Filter>Source Files\Game\Characters\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CameraMainMenu.cpp">
+      <Filter>Source Files\Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -321,6 +327,9 @@
     <ClInclude Include="Source\Particles.h">
       <Filter>Header Files\Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="Source\CameraMainMenu.h">
+      <Filter>Header Files\Camera</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
@@ -428,9 +437,6 @@
     <Filter Include="Source Files\Game\Bullet">
       <UniqueIdentifier>{88f9ef95-7832-4baf-bf86-742e2bb5168b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Game\Characters\Heroes">
-      <UniqueIdentifier>{959cbc48-ca56-4030-9407-5c568f1f0b57}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Game\Characters\Enemies">
       <UniqueIdentifier>{6597849e-6746-47df-a751-391ab00032c8}</UniqueIdentifier>
     </Filter>
@@ -457,6 +463,9 @@
     </Filter>
     <Filter Include="Source Files\Menu">
       <UniqueIdentifier>{2fc09192-93c0-4b0c-b680-9746953ec5ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Characters\Heroes">
+      <UniqueIdentifier>{959cbc48-ca56-4030-9407-5c568f1f0b57}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
