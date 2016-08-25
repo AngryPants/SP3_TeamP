@@ -17,6 +17,7 @@ public:
 
 	//Function(s)
 	static bool IsEqual(const float& a, const float& b);
+	bool IsUnitVector() const;
 
 	//Virtual Function(s)
 	virtual bool IsZero() const = 0; //Check if data is 0.

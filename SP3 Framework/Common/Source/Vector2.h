@@ -2,6 +2,7 @@
 #define VECTOR2_H
 
 #include "Vector.h"
+#include <iostream>
 
 struct Vector2 : public Vector {
 
@@ -18,6 +19,7 @@ struct Vector2 : public Vector {
 	Vector2 operator*(const float& scalar) const; //Scalar multiplication
 	Vector2& operator*=(const float& scalar); //Scalar multiplication
 	float Dot(const Vector2& rhs) const; //Dot product
+	float AngleBetween(const Vector2& rhs) const;
 	Vector2 Normalized(void); //Return a copy of this vector, normalized
 	Vector2& Normalize();
 
@@ -26,6 +28,9 @@ struct Vector2 : public Vector {
 	virtual void SetZero();
 	virtual float Length() const; //Get Magnitude
 	virtual float LengthSquared() const; //Get Square of Magnitude
+
+	friend std::ostream& operator<<(std::ostream& os, Vector2& rhs);
+	friend Vector2 operator*(float scalar, const Vector2& rhs); //what is this for?
 
 };
 

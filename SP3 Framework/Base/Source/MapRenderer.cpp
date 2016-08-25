@@ -40,22 +40,22 @@ MapRenderer::MapRenderer() {
 	meshTextures[MESH_ALERT_EXIT].textureArray[0] = TextureManager::GetInstance().AddTexture("Acid", "Image//Cyborg_Shooter//Tiles//Signs//Sign_Alert_Exit.tga");
 
 	//Sprite
-	animation[SPRITE_COIN].Set(0, 3, true, 0.4, true);
+	animation[SPRITE_COIN].Set(1, 4, 0, 3, true, 0.4, true);
 	sprite[SPRITE_COIN] = MeshBuilder::GetInstance().GenerateSpriteAnimation("Coin", 1, 4);
 	sprite[SPRITE_COIN]->animation = &animation[SPRITE_COIN];
 	spriteTextures[SPRITE_COIN].textureArray[0] = TextureManager::GetInstance().AddTexture("Coin", "Image//Cyborg_Shooter//Tiles//Items//Item_Coin.tga");
 
-	animation[SPRITE_DOOR_OPEN].Set(0, 3, false, 0.5, true);
+	animation[SPRITE_DOOR_OPEN].Set(2, 2, 0, 3, false, 0.5, true);
 	sprite[SPRITE_DOOR_OPEN] = MeshBuilder::GetInstance().GenerateSpriteAnimation("Door Open", 2, 2);
 	sprite[SPRITE_DOOR_OPEN]->animation = &animation[SPRITE_DOOR_OPEN];
 	spriteTextures[SPRITE_DOOR_OPEN].textureArray[0] = TextureManager::GetInstance().AddTexture("Door Open", "Image//Cyborg_Shooter//Tiles//Items//Item_Door_Open.tga");
 
-	animation[SPRITE_DOOR_CLOSE].Set(0, 3, false, 0.5, true);
+	animation[SPRITE_DOOR_CLOSE].Set(2, 2, 0, 3, false, 0.5, true);
 	sprite[SPRITE_DOOR_CLOSE] = MeshBuilder::GetInstance().GenerateSpriteAnimation("Door Close", 2, 2);
 	sprite[SPRITE_DOOR_CLOSE]->animation = &animation[SPRITE_DOOR_CLOSE];
 	spriteTextures[SPRITE_DOOR_CLOSE].textureArray[0] = TextureManager::GetInstance().AddTexture("Door Close", "Image//Cyborg_Shooter//Tiles//Items//Item_Door_Close.tga");
 
-	animation[SPRITE_BOOSTPAD].Set(0, 4, true, 0.25, true);
+	animation[SPRITE_BOOSTPAD].Set(2, 2, 0, 4, true, 0.25, true);
 	sprite[SPRITE_BOOSTPAD] = MeshBuilder::GetInstance().GenerateSpriteAnimation("Boost Pad", 2, 2);
 	sprite[SPRITE_BOOSTPAD]->animation = &animation[SPRITE_BOOSTPAD];
 	spriteTextures[SPRITE_BOOSTPAD].textureArray[0] = TextureManager::GetInstance().AddTexture("Boost Pad", "Image//Cyborg_Shooter//Tiles//Items//Item_Boostpad.tga");	

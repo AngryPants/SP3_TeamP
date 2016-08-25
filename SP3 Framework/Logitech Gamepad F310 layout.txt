@@ -1,0 +1,24 @@
+Logitech Gamepad F310 layout
+Num axes: 5
+Num buttons: 14
+
+axes[00] = left_stick_left(negative) && left_stick_right(positive)
+axes[01] = left_stick_down(negative) && left_stick_up(positive)
+axes[02] = right_trigger(negative) && left_trigger(positive)
+axes[03] = right_stick_up(negative) && right_stick_down(positive)
+axes[04] = right_stick_left(negative) && right_stick_right(positive)
+
+buttons[00] = Button A
+buttons[01] = Button B
+buttons[02] = Button X
+buttons[03] = Button Y
+buttons[04] = Left Bumper
+buttons[05] = Right Bumper
+buttons[06] = Back
+buttons[07] = Start
+buttons[08] = Left Stick
+buttons[09] = Right Stick
+buttons[10] = D-pad Up
+buttons[11] = D-pad Right
+buttons[12] = D-pad Down
+buttons[13] = D-pad Left

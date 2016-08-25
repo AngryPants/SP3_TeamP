@@ -3,18 +3,21 @@
 
 #include "irrKlang.h"
 #include <set>
+#include <map>
+#include <string>
 #include "Vector3.h"
 
+using std::string;
 using namespace irrklang;
 using std::set;
+using std::map;
 
 class AudioManager {
 
 private:
 	//Variable(s)
 	ISoundEngine* audioEngine;
-	set<ISound*> audioList2D;
-	set<ISound*> audioList3D;
+	set<ISound*> audioList;
 
 	//Constructor & Destructor
 	AudioManager();
@@ -24,14 +27,13 @@ public:
 	//Function(s)
 	static AudioManager& GetInstance();
 	void Update();
-	bool PlayAudio2D(const char* audioFile, bool looped);
-	bool ClearAudioList2D();
-	bool PlayAudio3D(const char* audioFile, bool looped, float minDistance, float maxDistance, Vector3 listenerPosition, Vector3 listenerDirection, Vector3 soundPosition, Vector3 upVector = Vector3(0, 1, 0));
-	bool PlayAudio3D(const char* audioFile, bool looped, float minDistance, Vector3 listenerPosition, Vector3 listenerDirection, Vector3 soundPosition, Vector3 upVector = Vector3(0, 1, 0));
-	bool UpdateAudio3D(const char* audioFile, Vector3 soundPosition);
+	bool PlayAudio2D(const string& audioFile, bool looped);
+	bool PlayAudio3D(const string& audioFile, bool looped, float minDistance, float maxDistance, Vector3 listenerPosition, Vector3 listenerDirection, Vector3 soundPosition, Vector3 upVector = Vector3(0, 1, 0));
+	bool PlayAudio3D(const string& audioFile, bool looped, float minDistance, Vector3 listenerPosition, Vector3 listenerDirection, Vector3 soundPosition, Vector3 upVector = Vector3(0, 1, 0));
+	bool UpdateAudio3D(const string& audioFile, Vector3 soundPosition);
 	bool UpdateListener3D(Vector3 listenerPosition, Vector3 listenerDirection, Vector3 upVector = Vector3(0, 1, 0));
-	bool ClearAudioList3D();
-	void SetVolumeAll(const float& volume);
+	bool ClearAudioList();
+	void SetVolumeAll(const float& volume); //Only works a bit.
 
 };
 

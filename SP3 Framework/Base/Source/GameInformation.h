@@ -14,6 +14,7 @@ class GameInformation : public Singleton<GameInformation> {
 	private:
 		// Variable(s)
 		vector<int> highScore;
+		float volume;
 
 		// Constructor(s) and destructor
 		GameInformation();
@@ -34,6 +35,9 @@ class GameInformation : public Singleton<GameInformation> {
 		bool SaveToFile(const string& fileName);
 		bool LoadFromFile(const string& fileName);
 
+		// Setting volume
+		void SetVolume(float volume);
+		float GetVolume();
 };
 
 #endif

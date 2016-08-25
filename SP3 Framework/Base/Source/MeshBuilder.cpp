@@ -251,11 +251,6 @@ Mesh* MeshBuilder::GenerateCube(const std::string &meshName, Color color, float 
 	mesh->indexSize = index_buffer_data.size();
 	mesh->mode = Mesh::DRAW_TRIANGLES;
 
-	//TexCoords
-	/*for (size_t i = 0; i < vertex_buffer_data.size(); ++i) {
-		mesh->texCoords.push_back(vertex_buffer_data[i].texCoord);
-	}*/
-
 	meshMap.insert(pair<string, Mesh*>(meshName, mesh));
 
 	return mesh;
@@ -284,16 +279,15 @@ Mesh* MeshBuilder::GenerateRing(const std::string &meshName, Color color, unsign
 	float degreePerSlice = 360.f / numSlice;
 	for (unsigned int slice = 0; slice < numSlice + 1; ++slice) {
 		float theta = slice * degreePerSlice;
-		v.pos.Set(outerR * cos(Math::DegreeToRadian(theta)), outerR * sin(Math::DegreeToRadian(theta)), 0);
+		v.pos.Set(outerR * cos(Math::DegreeToRadian(theta)), -outerR * sin(Math::DegreeToRadian(theta)), 0);
 		v.texCoord.Set(cos(Math::DegreeToRadian(theta)), sin(Math::DegreeToRadian(theta)));
-
 		vertex_buffer_data.push_back(v);
 		
-		v.pos.Set(innerR * cos(Math::DegreeToRadian(theta)), innerR * sin(Math::DegreeToRadian(theta)), 0);
+		v.pos.Set(innerR * cos(Math::DegreeToRadian(theta)), -innerR * sin(Math::DegreeToRadian(theta)), 0);
 		v.texCoord.Set((innerR / outerR) * cos(Math::DegreeToRadian(theta)), (innerR / outerR) * sin(Math::DegreeToRadian(theta)));
 		vertex_buffer_data.push_back(v);
 	}
-	for(unsigned int slice = 0; slice < numSlice + 1; ++slice) {
+	for (unsigned int slice = 0; slice < numSlice + 1; ++slice) {
 		index_buffer_data.push_back(2 * slice + 0);
 		index_buffer_data.push_back(2 * slice + 1);
 	}
@@ -311,10 +305,6 @@ Mesh* MeshBuilder::GenerateRing(const std::string &meshName, Color color, unsign
 	mesh->mode = Mesh::DRAW_TRIANGLE_STRIP;
 	mesh->vertexSize = vertex_buffer_data.size();
 	mesh->indexSize = index_buffer_data.size();
-	//TexCoords
-	/*for (size_t i = 0; i < vertex_buffer_data.size(); ++i) {
-		mesh->texCoords.push_back(vertex_buffer_data[i].texCoord);
-	}*/
 
 	meshMap.insert(pair<string, Mesh*>(meshName, mesh));
 

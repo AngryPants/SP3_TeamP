@@ -9,6 +9,7 @@ class Seetwo : public Hero {
 
 private:
 	AnimationFSM_Seetwo animationFSM;
+	double abilityAccumulatedTime;
 
 public:
 	Seetwo(const string& sceneName);
@@ -17,11 +18,12 @@ public:
 	void Update(const double &deltaTime);
 	void Render();
 	void RenderUI();
+	void RenderBullets();
 
 	void Movement(const double &deltaTime);
 	void TileCollision();
 
-	virtual void Shoot();
+	virtual void Attack();
 	virtual void SpecialAbility(const double &deltaTime);
 };
 

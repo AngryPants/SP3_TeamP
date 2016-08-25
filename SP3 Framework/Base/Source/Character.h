@@ -13,6 +13,13 @@
 using std::set;
 
 class Character : public GameEntity {
+	
+private:
+	//Where our character is facing
+	Vector2 forwardDirection;
+
+	//Bullet
+	int bulletIndex;
 
 protected:
 	//Health
@@ -26,29 +33,24 @@ protected:
 	float gravity;
 
 	//Combat
-	bool isShooting;
+	bool isAttacking;
 	int damage; //How much damage do we deal.
 	float fireRate;	//How many bullets per second can we shoot
-	float shootingCooldown; //How long until we can shoot again.
+	float attackCooldown; //How long until we can shoot again.
 	float damageCooldown; //How long until we can take damage again.
+	float damageCooldownTimer;
 	float collisionRadius; //The radius of which the character will collide with bullets etc.
 
 	//Bullets
 	vector<Bullet*> bullets;
-	virtual Bullet& FetchBullet();	
+	Bullet& FetchBullet();
+	virtual void RenderBullets() = 0;
 
 	//Tile System
 	TileSystem* tileSystem;
 	TileCollider tileCollider;
 	
 public:
-	//Direction
-	enum class FACING_DIRECTION {
-		LEFT,
-		RIGHT,
-	};
-	FACING_DIRECTION currentDirection;
-
 	//Is the character alive?
 	bool isDead;
 
@@ -65,6 +67,10 @@ public:
 	//Movement (Maximum Horizontal Speed)
 	void SetMaxSpeed(const float& speed);
 	float GetMaxSpeed() const;
+	//bool IsMovingBackwards() const;
+	Vector2 GetForwardDirection() const; //Where our character is facing
+	void FaceLeft();
+	void FaceRight();
 
 	//Combat
 	void SetDamage(const int& damage);
@@ -73,6 +79,7 @@ public:
 	float GetFireRate() const;
 	void SetCollisionRadius(const float& collisionRadius);
 	float GetCollisionRadius() const;	
+	virtual void Attack() = 0;
 	virtual bool TakeDamage(const int &damage);
 	virtual void Knockback(const Vector2 &knockback);
 
@@ -81,10 +88,10 @@ public:
 	void RemoveTileSystem();
 
 	//Collision Detection
-	virtual vector<unsigned int>& CheckCollisionUp();
-	virtual vector<unsigned int>& CheckCollisionDown();
-	virtual vector<unsigned int>& CheckCollisionLeft();
-	virtual vector<unsigned int>& CheckCollisionRight();
+	virtual vector<unsigned int> CheckCollisionUp();
+	virtual vector<unsigned int> CheckCollisionDown();
+	virtual vector<unsigned int> CheckCollisionLeft();
+	virtual vector<unsigned int> CheckCollisionRight();
 	virtual unsigned int& CheckCollisionCentre();
 
 	//Virtual Function(s)

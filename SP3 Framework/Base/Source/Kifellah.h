@@ -17,11 +17,12 @@ public:
 	void Update(const double &deltaTime);
 	void Render();
 	void RenderUI();
+	void RenderBullets();
 
 	void Movement(const double &deltaTime);
 	void TileCollision();
 
-	virtual void Shoot();
+	virtual void Attack();
 	virtual void SpecialAbility(const double &deltaTime);
 	virtual bool TakeDamage(const int &damage);
 };

@@ -284,6 +284,13 @@ float Vector3::LengthSquared (void ) const
 	return x * x + y * y + z * z;
 }
 
+//Find the angle between these 2 vector3 in degrees.
+float Vector3::AngleBetween(const Vector3& rhs) const {
+
+	return Math::RadianToDegree( acos(Dot(rhs) / (Length() * rhs.Length()) ) );
+
+}
+
 /******************************************************************************/
 /*!
 \brief
@@ -389,7 +396,7 @@ Vector3& Vector3::Normalize( void ) throw( DivideByZero )
 
 std::ostream& operator<< (std::ostream& os, Vector3& rhs)
 {
-	os << "[ " << rhs.x << ", " << rhs.y << ", " << rhs.z << " ]";
+	os << "[" << rhs.x << ", " << rhs.y << ", " << rhs.z << "]";
 	return os;
 }
 

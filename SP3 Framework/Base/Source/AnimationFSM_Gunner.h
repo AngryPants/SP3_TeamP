@@ -35,6 +35,7 @@ public:
 	}
 
 	SpriteAnimation& GetMesh() {
+		mesh->animation = &animation[animationState[STATE_CURRENT]];
 		return *this->mesh;
 	}
 	Texture& GetTexture() {
@@ -99,10 +100,10 @@ private:
 		texture.textureArray[0] = TextureManager::GetInstance().AddTexture("Gunner", "Image//Cyborg_Shooter//Characters//Enemies//Enemy_Gunner.tga");
 		mesh = MeshBuilder::GetInstance().GenerateSpriteAnimation("Gunner", 4, 9);
 		mesh->animation = &animation[IDLE];
-		animation[IDLE].Set(0, 6, true, 1.0, true);
-		animation[WALKING].Set(10, 18, true, 1.0, true);
-		animation[SHOOTING].Set(19, 22, true, 1.0 / 3.0, true);
-		animation[DEAD].Set(28, 32, false, 1.0, true);
+		animation[IDLE].Set(4, 9, 0, 6, true, 1.0, true);
+		animation[WALKING].Set(4, 9, 10, 18, true, 1.0, true);
+		animation[SHOOTING].Set(4, 9, 19, 22, true, 1.0 / 3.0, true);
+		animation[DEAD].Set(4, 9, 28, 32, false, 1.0, true);
 	}
 
 	void UpdateAnimation() {

@@ -1,10 +1,28 @@
+/******************************************************************************/
+/*!
+\file	InputManager.cpp
+\author	Muhammad Shafik Bin Mazlinan
+\par	email: cyboryxmen\@yahoo.com
+\brief
+Contains the implementation of the input manager.
+
+*/
+/******************************************************************************/
+
 #include "InputManager.h"
 
 //Input Devices
 #include "Controller_Keyboard.h"
 #include "Controller_Mouse.h"
+#include "Controller_Gamepad.h"
+#include <iostream>
+
+using namespace controller;
 
 InputManager::InputManager() {
+
+	inputInfo.Reset();
+
 }
 
 InputManager::~InputManager() {
@@ -16,80 +34,214 @@ const InputInfo& InputManager::GetInputInfo() const {
 
 }
 
-void InputManager::Update() {
+void SetInput(InputInfo& inputInfo, const std::size_t index, KEY_STATE state, float value = 1.0f) {
 
-	inputInfo.Reset();
-	Controller_Keyboard& keyboard = Controller_Keyboard::GetInstance();
-	keyboard.ReadInput();
-	Controller_Mouse& mouse = Controller_Mouse::GetInstance();
-	mouse.ReadInput();
+	switch (state) {
+		case KEY_STATE::RELEASE: {		
+			inputInfo.keyDown[index] = false;
+			inputInfo.keyReleased[index] = true;
+			inputInfo.keyValue[index] = 0.0f;	
+		}
+		break;
+		case KEY_STATE::PRESS: {
+			inputInfo.keyDown[index] = true;
+			inputInfo.keyReleased[index] = false;
+			inputInfo.keyValue[index] = value;	
+		}
+		break;
+	}
 
-	/********************************************************************************************************************/
+}
+
+void ProcessInput(InputInfo& inputInfo, const Key& input) {
+
+	/****************************************/
 	//This is where we start customising the controls for our game. It might get a little tedious.
 	//For the sake of standardisation, ensure that keyValue is between 0.0f to 1.0f.
 	//The point of keyValue is when using mouse or controller. When using a mouse, moving the mouse from the centre of
 	//the screen all the way to the edge of the screen will be considered 1.0f.
-	/********************************************************************************************************************/
-	
+	/****************************************/
+
 	//Quit Button
-	if (keyboard.IsKeyPressed(VK_ESCAPE)) {
-		inputInfo.keyDown[INPUT_QUIT] = 1;
-		inputInfo.keyValue[INPUT_QUIT] = 1.0f;
+	switch (input.GetKey()) {
+		case KEYS::ESCAPE: {
+			SetInput(inputInfo, INPUT_QUIT, input.GetState());
+			break;
+		}
+		case KEYS::ENTER: {	
+			SetInput(inputInfo, INPUT_SELECT, input.GetState());
+			break;	
+		}
+		case KEYS::LEFT: {
+			SetInput(inputInfo, INPUT_MOVE_LEFT, input.GetState());
+			SetInput(inputInfo, INPUT_MENU_LEFT, input.GetState());
+			break;
+		}
+		case KEYS::RIGHT: {
+			SetInput(inputInfo, INPUT_MOVE_RIGHT, input.GetState());
+			SetInput(inputInfo, INPUT_MENU_RIGHT, input.GetState());
+			break;
+		}
+		case KEYS::UP: {
+			SetInput(inputInfo, INPUT_MENU_UP, input.GetState());
+			break;
+		}
+		case KEYS::DOWN: {
+			SetInput(inputInfo, INPUT_MENU_DOWN, input.GetState());
+			break;
+		}
+		case KEYS::SPACE: {
+			SetInput(inputInfo, INPUT_JUMP, input.GetState());
+			break;
+		}
+		case KEYS::C: {
+			SetInput(inputInfo, INPUT_SHOOT, input.GetState());
+			break;
+		}
+		case KEYS::Z: {
+			SetInput(inputInfo, INPUT_ABILITY, input.GetState());
+			break;
+		}
+	}
+}
+
+void ProcessInput(InputInfo& inputInfo, const Gamepad& input) {
+
+	/****************************************/
+	//This is where we start customising the controls for our game. It might get a little tedious.
+	//For the sake of standardisation, ensure that keyValue is between 0.0f to 1.0f.
+	//The point of keyValue is when using mouse or controller. When using a mouse, moving the mouse from the centre of
+	//the screen all the way to the edge of the screen will be considered 1.0f.
+	/****************************************/
+
+	float left_horizontal_axis = input.axes[0]; //Left Thumb Stick
+	static bool movedLeftStickRight = false; //Did we move the stick right.
+	static bool movedLeftStickLeft = false; //Did we move the stick left.
+	//Check if the stick was moved.
+	if (std::abs(left_horizontal_axis) > GamepadManager::GetInstance().GetDeadzone()) {
+		//Check which direction it was moved.
+		if(left_horizontal_axis < 0) { //Left
+			SetInput(inputInfo, INPUT_MOVE_LEFT, KEY_STATE::PRESS, std::abs(left_horizontal_axis));
+			movedLeftStickLeft = true;
+			if (movedLeftStickRight) {
+				SetInput(inputInfo, INPUT_MOVE_RIGHT, KEY_STATE::RELEASE);
+				movedLeftStickRight = false;
+			}
+		} else if(left_horizontal_axis > 0) { //Right
+			SetInput(inputInfo, INPUT_MOVE_RIGHT, KEY_STATE::PRESS, std::abs(left_horizontal_axis));
+			movedLeftStickRight = true;
+			if (movedLeftStickLeft) {
+				SetInput(inputInfo, INPUT_MOVE_LEFT, KEY_STATE::RELEASE);
+				movedLeftStickLeft = false;
+			}
+		}
+	} else {
+		if (movedLeftStickLeft) {
+			SetInput(inputInfo, INPUT_MOVE_LEFT, KEY_STATE::RELEASE);	
+			movedLeftStickLeft = false;
+		}
+		if (movedLeftStickRight) {
+			SetInput(inputInfo, INPUT_MOVE_RIGHT, KEY_STATE::RELEASE);
+			movedLeftStickRight = false;
+		}
 	}
 
-	//Simple example player controls.
-	if (keyboard.IsKeyPressed(VK_LEFT)) {
-		inputInfo.keyDown[INPUT_MOVE_LEFT] = 1;
-		inputInfo.keyValue[INPUT_MOVE_LEFT] = 1.0f;
-	} else if (keyboard.IsKeyReleased(VK_LEFT)) {
-		inputInfo.keyReleased[INPUT_MOVE_LEFT] = 1;
-	}
-	if (keyboard.IsKeyPressed(VK_RIGHT)) {
-		inputInfo.keyDown[INPUT_MOVE_RIGHT] = 1;
-		inputInfo.keyValue[INPUT_MOVE_RIGHT] = 1.0f;
-	} else if (keyboard.IsKeyReleased(VK_RIGHT)) {
-		inputInfo.keyReleased[INPUT_MOVE_RIGHT] = 1;
-	}
-	if (keyboard.IsKeyPressed(VK_SPACE)) {
-		inputInfo.keyDown[INPUT_JUMP] = 1;
-		inputInfo.keyValue[INPUT_JUMP] = 1.0f;
-	}
-	if (keyboard.IsKeyPressed(VK_DOWN)) {
-		inputInfo.keyDown[INPUT_MOVE_DOWN] = 1;
-		inputInfo.keyValue[INPUT_MOVE_DOWN] = 1.0f;
-	} else if (keyboard.IsKeyReleased(VK_DOWN)) {
-		inputInfo.keyReleased[INPUT_MOVE_DOWN] = 1;
-	}
-	if (keyboard.IsKeyPressed(VK_UP)) {
-		inputInfo.keyDown[INPUT_MOVE_UP] = 1;
-		inputInfo.keyValue[INPUT_MOVE_UP] = 1.0f;
-	} else if (keyboard.IsKeyReleased(VK_UP)) {
-		inputInfo.keyReleased[INPUT_MOVE_UP] = 1;
-	}
-	
-	if (keyboard.IsKeyReleased(VK_RETURN)) {
-		inputInfo.keyReleased[INPUT_SELECT] = 1;
+	//A
+	if (input.buttons[0] == true) {
+		SetInput(inputInfo, INPUT_JUMP, KEY_STATE::PRESS);
+	} else {
+		SetInput(inputInfo, INPUT_JUMP, KEY_STATE::RELEASE);
 	}
 
-	if (keyboard.IsKeyPressed('C')) {
-		inputInfo.keyDown[INPUT_SHOOT] = 1;
-		inputInfo.keyValue[INPUT_SHOOT] = 1.0f;
-	} else if (keyboard.IsKeyReleased('C')) {
-		inputInfo.keyReleased[INPUT_SHOOT] = 1;
+	//X
+	if (input.buttons[2] == true) {
+		SetInput(inputInfo, INPUT_SHOOT, KEY_STATE::PRESS);
+	} else {
+		SetInput(inputInfo, INPUT_SHOOT, KEY_STATE::RELEASE);
 	}
 
-	if (keyboard.IsKeyPressed('Z')) {
-		inputInfo.keyDown[INPUT_ABILITY] = 1;
-		inputInfo.keyValue[INPUT_ABILITY] = 1.0f;
-	}
-	else if (keyboard.IsKeyReleased('Z')) {
-		inputInfo.keyReleased[INPUT_ABILITY] = 1;
+	//Y
+	if (input.buttons[3] == true) {
+		SetInput(inputInfo, INPUT_ABILITY, KEY_STATE::PRESS);
+	} else {
+		SetInput(inputInfo, INPUT_ABILITY, KEY_STATE::RELEASE);
 	}
 
-	/********************************************************************************************************************/
+	//Back
+	if (input.buttons[6] == true) {
+		SetInput(inputInfo, INPUT_QUIT, KEY_STATE::PRESS);
+	} else {
+		SetInput(inputInfo, INPUT_QUIT, KEY_STATE::RELEASE);
+	}
+
+	//D-Pad Up
+	if(input.buttons[10] == true) {
+		SetInput(inputInfo, INPUT_MENU_UP, KEY_STATE::PRESS);
+	} else {
+		SetInput(inputInfo, INPUT_MENU_UP, KEY_STATE::RELEASE);
+	}
+
+	//D-Pad Right
+	if(input.buttons[11] == true) {
+		SetInput(inputInfo, INPUT_MENU_RIGHT, KEY_STATE::PRESS);
+	} else {
+		SetInput(inputInfo, INPUT_MENU_RIGHT, KEY_STATE::RELEASE);
+	}
+
+	//D-Pad Down
+	if(input.buttons[12] == true) {
+		SetInput(inputInfo, INPUT_MENU_DOWN, KEY_STATE::PRESS);
+	} else {
+		SetInput(inputInfo, INPUT_MENU_DOWN, KEY_STATE::RELEASE);
+	}
+
+	//D-Pad Left
+	if(input.buttons[13] == true) {
+		//SetInput(inputInfo, INPUT_MOVE_LEFT, KEY_STATE::PRESS);
+		SetInput(inputInfo, INPUT_MENU_LEFT, KEY_STATE::PRESS);
+	} else {
+		//SetInput(inputInfo, INPUT_MOVE_LEFT, KEY_STATE::RELEASE);
+		SetInput(inputInfo, INPUT_MENU_LEFT, KEY_STATE::RELEASE);
+	}
+
+}
+
+void InputManager::Update() {
+
+	Keyboard& keyboard = Keyboard::GetInstance();
+	Mouse& mouse = Mouse::GetInstance();
+	GamepadManager& gamepadManager = GamepadManager::GetInstance();
+
+	mouse.ReadInput();
+	gamepadManager.UpdateJoysticks();
+
+	//Process keyboard input.
+	bool hasGamepad = false;
+	for (auto& gamepad : gamepadManager.GetGamepads()) {
+		if (gamepad.active) {
+			hasGamepad = true;
+			inputInfo.Reset();
+			ProcessInput(inputInfo, gamepad);
+			break;
+		}
+	}
+
+	if (!hasGamepad) {
+		try {
+			while (true) {
+				ProcessInput(inputInfo, keyboard.GetKey());
+			}
+		} catch (std::exception exception) {
+			//queue empty. Moving on.
+			//std::cout << "No keys pressed this update." << std::endl;
+		}
+	} else {
+		keyboard.ClearInput();
+	}
+	/****************************************/
 	//Do not touch anything below unless you know what you're doing.
-	/********************************************************************************************************************/
-	
+	/****************************************/
+
 	inputInfo.ClampValues(); //This is to ensure that our keyValues are between 0.0f and 1.0f;
 
 }

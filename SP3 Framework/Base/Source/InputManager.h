@@ -13,14 +13,17 @@ enum INPUT_TYPE {
 	//Movement
 	INPUT_MOVE_LEFT,
 	INPUT_MOVE_RIGHT,
-	INPUT_MOVE_UP,
-	INPUT_MOVE_DOWN,
-
+	
 	INPUT_JUMP,
 	INPUT_SHOOT,
 	INPUT_ABILITY,
 
 	INPUT_SELECT,
+
+	INPUT_MENU_LEFT,
+	INPUT_MENU_RIGHT,
+	INPUT_MENU_UP,
+	INPUT_MENU_DOWN,
 
 	INPUT_QUIT,
 
@@ -36,22 +39,20 @@ public:
 	float keyValue[NUM_KEYS];
 
 	//Constructor(s) & Destructor
-	InputInfo() {
-		Reset();
+	InputInfo() = default;
+	virtual ~InputInfo() = default;
+
+	void ClampValues() {
+		for (auto& value : keyValue) {
+			value = Math::Clamp(value, 0.0f, 1.0f);
+		}
 	}
-	virtual ~InputInfo() {}	
 
 	void Reset() {
 		keyDown.reset();
 		keyReleased.reset();
-		for (int i = 0; i < static_cast<int>(NUM_KEYS); ++i) {
+		for (unsigned int i = 0; i < static_cast<unsigned int>(NUM_KEYS); ++i) {
 			keyValue[i] = 0.0f;
-		}
-	}
-
-	void ClampValues() {
-		for (int i = 0; i < static_cast<int>(NUM_KEYS); ++i) {
-			keyValue[i] = Math::Clamp(keyValue[i], 0.0f, 1.0f);
 		}
 	}
 
@@ -67,12 +68,12 @@ class InputManager : public Singleton<InputManager> {
 private:
 	//Variable(s)
 	InputInfo inputInfo;
-	
+
 	//Constructor(s) & Destructor
 	InputManager();
 	virtual ~InputManager();
 
-public:	
+public:
 	//Function(s)
 	const InputInfo& GetInputInfo() const;
 	void Update();

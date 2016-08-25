@@ -14,6 +14,11 @@
 #include "InputManager.h"
 #include "SceneManager.h"
 
+//Include Controllers
+#include "Controller_Keyboard.h"
+#include "Controller_Mouse.h"
+#include "Controller_Gamepad.h"
+
 //Include Scenes
 #include "SceneDaniu_1.h"
 
@@ -126,6 +131,10 @@ void Application::Init() {
 		accumulatedTime[t] = 0.0;
 	}
 
+	controller::Mouse::GetInstance().SetWindow(m_window);
+	controller::Keyboard::GetInstance().SetWindow(m_window);
+	controller::GamepadManager::GetInstance().SetWindow(m_window);
+
 	quit = false;
 
 }
@@ -141,16 +150,13 @@ void Application::Run() {
 
 		elapsedTime = m_timer.getElapsedTime();
 		
-		SceneManager::GetInstance().Update(elapsedTime);
-
-		//Threads
-		if (accumulatedTime[UPDATE_USER_INPUT] >= 0.03) {
-			InputManager::GetInstance().Update();
-			if (InputManager::GetInstance().GetInputInfo().keyDown[INPUT_QUIT] == true) {
-				quit = true;
-			}
-			accumulatedTime[UPDATE_USER_INPUT] = 0.0;
+		InputManager::GetInstance().Update();
+		if (InputManager::GetInstance().GetInputInfo().keyDown[INPUT_QUIT] == true) {
+			quit = true;
 		}
+
+		SceneManager::GetInstance().Update(elapsedTime);
+		AudioManager::GetInstance().Update();
 
 		SceneManager::GetInstance().Render();
 		glfwSwapBuffers(m_window); //Swap buffers

@@ -6,6 +6,9 @@ Character::Character(const string& name, const string& sceneName) : GameEntity(n
 	//GameEntity
 	isActive = true;
 
+	//Direction
+	forwardDirection.Set(1, 0);
+	
 	//Health
 	currentHealth = 1;
 	maxHealth = 1;
@@ -15,17 +18,15 @@ Character::Character(const string& name, const string& sceneName) : GameEntity(n
 	maxSpeed = 1;	
 	onGround = true;
 	gravity = -9.81f;
-
-	//Direction
-	currentDirection = FACING_DIRECTION::RIGHT;
-
+	
 	//Combat
 	damage = 1;
 	fireRate = 1.0f;
-	shootingCooldown = 0.0;
-	damageCooldown = 0.0;
+	attackCooldown = 0.0;
+	damageCooldown = 0.0f;
+	damageCooldownTimer = 0.0f;
 	collisionRadius = 1.0f;		
-	isShooting = false;
+	isAttacking = false;
 		
 	//Tile System
 	tileSystem = nullptr;
@@ -33,9 +34,20 @@ Character::Character(const string& name, const string& sceneName) : GameEntity(n
 	//Is the character alive?
 	isDead = false;
 
+	//Bullets
+	bulletIndex = 0;
+
 }
 
-Character::~Character() {}
+Character::~Character() {
+
+	while (bullets.size() > 0) {
+		Bullet* bulletPtr = *bullets.begin();
+		delete bulletPtr;
+		bullets.erase(bullets.begin());
+	}
+
+}
 
 //Health
 void Character::SetHealth(const float& health)
@@ -73,6 +85,42 @@ float Character::GetMaxSpeed() const
 	return this->maxSpeed;
 }
 
+/*void Character::SetForwardDirection(const Vector2& forwardDirection) {
+
+	SetForwardDirection(forwardDirection.x, forwardDirection.y);
+
+}
+
+void Character::SetForwardDirection(const float& x, const float& y) {
+
+	this->forwardDirection.Set(x, y);
+
+	if (forwardDirection.IsZero()) {
+		forwardDirection.Set(1, 0);
+	} else if (!forwardDirection.IsUnitVector()) {
+		forwardDirection.Normalize();
+	}
+
+}*/
+
+Vector2 Character::GetForwardDirection() const {
+
+	return this->forwardDirection;
+
+}
+
+void Character::FaceLeft() {
+
+	this->forwardDirection.Set(-1, 0);
+
+}
+
+void Character::FaceRight() {
+
+	this->forwardDirection.Set(1, 0);
+
+}
+
 //Combat
 void Character::SetDamage(const int& damage)
 {
@@ -87,7 +135,7 @@ int Character::GetDamage() const
 void Character::SetFireRate(const float& fireRate)
 {
 	this->fireRate = fireRate;
-	this->shootingCooldown = 0.0;
+	this->attackCooldown = 0.0;
 }
 
 float Character::GetFireRate() const
@@ -107,10 +155,10 @@ float Character::GetCollisionRadius() const
 
 bool Character::TakeDamage(const int &damage)
 {
-	if (damageCooldown <= 0.0)
+	if (damageCooldownTimer <= 0.0)
 	{
 		this->currentHealth -= damage;
-		damageCooldown = 0.5f;
+		damageCooldownTimer = damageCooldown;
 		return true;
 	}
 
@@ -136,7 +184,7 @@ void Character::RemoveTileSystem()
 //Bullets
 Bullet& Character::FetchBullet() {
 
-	static int bulletIndex = 0;
+	int bulletIndex = 0;
 	size_t vectorSize = bullets.size();
 
 	if (bulletIndex > vectorSize) {
@@ -144,7 +192,7 @@ Bullet& Character::FetchBullet() {
 	}
 
 	if (vectorSize == 0) {
-		bullets.push_back(new Bullet(GetScene()));
+		bullets.push_back(new Bullet());
 		return *bullets.back();
 	}
 
@@ -159,12 +207,12 @@ Bullet& Character::FetchBullet() {
 			bulletIndex = (bulletIndex + 1) % vectorSize;
 			return *(*iter);
 		}		
-		++iter;		
+		++iter;
 		bulletIndex = (bulletIndex + 1) % vectorSize;
 	} while (bulletIndex!= endIndex);
 
 	for (unsigned int n = 0; n < (vectorSize + 1) / 2; ++n) {
-		bullets.push_back(new Bullet(GetScene()));
+		bullets.push_back(new Bullet());
 	}
 
 	bulletIndex = vectorSize;
@@ -174,14 +222,14 @@ Bullet& Character::FetchBullet() {
 }
 
 //Collision Detection
-vector<unsigned int>& Character::CheckCollisionLeft() {
+vector<unsigned int> Character::CheckCollisionLeft() {
 
 	//Starting position of the hotspots we're checking.
 	Vector2 hotspot(position.x - tileCollider.GetDetectionWidth() * 0.5f, position.y - tileCollider.GetLengthHeight() * 0.5f);
 	TileCoord hotspotTile;
 
 	//We need a vector to store our results.
-	static vector<unsigned int> result;
+	vector<unsigned int> result;
 	if (result.size() < tileCollider.GetNumHotspotsHeight()) {
 		result.resize(tileCollider.GetNumHotspotsHeight(), 0);
 	}
@@ -215,14 +263,14 @@ vector<unsigned int>& Character::CheckCollisionLeft() {
 
 }
 
-vector<unsigned int>& Character::CheckCollisionRight() {
+vector<unsigned int> Character::CheckCollisionRight() {
 	
 	//Starting position of the hotspots we're checking.
 	Vector2 hotspot(position.x + tileCollider.GetDetectionWidth() * 0.5f, position.y - tileCollider.GetLengthHeight() * 0.5f);
 	TileCoord hotspotTile;
 
 	//We need a vector to store our results.
-	static vector<unsigned int> result;
+	vector<unsigned int> result;
 	if (result.size() < tileCollider.GetNumHotspotsHeight()) {
 		result.resize(tileCollider.GetNumHotspotsHeight(), 0);
 	}
@@ -255,14 +303,14 @@ vector<unsigned int>& Character::CheckCollisionRight() {
 
 }
 
-vector<unsigned int>& Character::CheckCollisionDown() {
+vector<unsigned int> Character::CheckCollisionDown() {
 
 	//Starting position of the hotspots we're checking.
 	Vector2 hotspot(position.x - tileCollider.GetLengthWidth() * 0.5f, position.y - tileCollider.GetDetectionHeight() * 0.5f);
 	TileCoord hotspotTile;
 
 	//We need a vector to store our results.
-	static vector<unsigned int> result;
+	vector<unsigned int> result;
 	if (result.size() < tileCollider.GetNumHotspotsHeight()) {
 		result.resize(tileCollider.GetNumHotspotsHeight(), 0);
 	}
@@ -296,14 +344,14 @@ vector<unsigned int>& Character::CheckCollisionDown() {
 
 }
 
-vector<unsigned int>& Character::CheckCollisionUp() {
+vector<unsigned int> Character::CheckCollisionUp() {
 
 	//Starting position of the hotspots we're checking.
 	Vector2 hotspot(position.x - tileCollider.GetLengthWidth() * 0.5f, position.y + tileCollider.GetDetectionHeight() * 0.5f);
 	TileCoord hotspotTile;
 	
 	//We need a vector to store our results.
-	static vector<unsigned int> result;
+	vector<unsigned int> result;
 	if (result.size() < tileCollider.GetNumHotspotsHeight()) {
 		result.resize(tileCollider.GetNumHotspotsHeight(), 0);
 	}
@@ -347,7 +395,7 @@ unsigned int& Character::CheckCollisionCentre() {
 	//What tile is our centre currently in.
 	TileCoord currentTile(tileSystem->GetTile(position.y), tileSystem->GetTile(position.x));
 	
-	static unsigned int result = 0;
+	unsigned int result = 0;
 	result = 0;
 
 	//Check if we're within the map's bounds.
@@ -367,6 +415,6 @@ unsigned int& Character::CheckCollisionCentre() {
 void Character::Update(const double& deltaTime) {
 
 	damageCooldown = Math::Max(0.0f, damageCooldown -= static_cast<float>(deltaTime));
-	shootingCooldown = Math::Max(0.0f, shootingCooldown -= static_cast<float>(deltaTime));
+	attackCooldown = Math::Max(0.0f, attackCooldown -= static_cast<float>(deltaTime));
 
 }

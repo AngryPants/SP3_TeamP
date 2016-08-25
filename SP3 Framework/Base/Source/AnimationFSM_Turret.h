@@ -15,9 +15,6 @@ public:
 	};
 
 	//Public Function(s)
-	/*void SetDirection(MOVE_DIRECTION direction) {
-	currentDirection = direction;
-	}*/
 	void SetIsShooting(bool isShooting) {
 		this->isShooting[STATE_PREVIOUS] = this->isShooting[STATE_CURRENT];
 		this->isShooting[STATE_CURRENT] = isShooting;
@@ -27,6 +24,7 @@ public:
 	}
 
 	SpriteAnimation& GetMesh() {
+		mesh->animation = &animation[animationState[STATE_CURRENT]];
 		return *this->mesh;
 	}
 	Texture& GetTexture() {
@@ -42,16 +40,13 @@ public:
 
 	//Constructor(s) & Destructor
 	AnimationFSM_Turret() {
-		//currentDirection = MOVE_DIRECTION::RIGHT;
-
 		for (unsigned int i = 0; i < static_cast<unsigned int>(NUM_STATE); ++i) {
 			isShooting[i] = false;
 			isDead = false;
 		}
-
 		InitAnimation();
 	}
-	~AnimationFSM_Turret() {
+	virtual ~AnimationFSM_Turret() {
 		mesh = nullptr;
 	}
 
@@ -85,10 +80,11 @@ private:
 	void InitAnimation() {
 		texture.textureArray[0] = TextureManager::GetInstance().AddTexture("Turret", "Image//Cyborg_Shooter//Characters//Enemies//Enemy_Turret.tga");
 		mesh = MeshBuilder::GetInstance().GenerateSpriteAnimation("Turret", 3, 6);
-		mesh->animation = &animation[IDLE];
-		animation[IDLE].Set(0, 6, true, 1.0, true);
-		animation[SHOOTING].Set(7, 12, true, 1.0 / 3.0, true);
-		animation[DEAD].Set(13, 17, false, 1.0, true);
+		//mesh->animation = &animation[IDLE];
+		mesh->animation = nullptr;
+		animation[IDLE].Set(3, 6, 0, 5, true, 0.5, true);
+		animation[SHOOTING].Set(3, 6, 6, 11, true, 2.0, true);
+		animation[DEAD].Set(3, 6, 12, 16, false, 0.5, true);
 	}
 
 	void UpdateAnimation() {
@@ -109,14 +105,13 @@ private:
 
 		//Which animation should we be using?
 		if (isDead) {
+			//cout << "TURRET DEAD" << endl;
 			animationState[STATE_CURRENT] = DEAD;
-		}
-		else if (!isShooting[STATE_CURRENT]) {
-			//cout << "IDLE" << endl;
+		} else if (!isShooting[STATE_CURRENT]) {
+			//cout << "TURRET IDLE" << endl;
 			animationState[STATE_CURRENT] = IDLE;
-		}
-		else if (isShooting[STATE_CURRENT]) {
-			//cout << "SHOOTING" << endl;
+		} else if (isShooting[STATE_CURRENT]) {
+			//cout << "TURRET SHOOTING" << endl;
 			animationState[STATE_CURRENT] = SHOOTING;
 		}
 
@@ -127,8 +122,7 @@ private:
 		//If there was no change in state, then no.
 		if (animationState[STATE_PREVIOUS] == animationState[STATE_CURRENT]) {
 			resetAnimation = false;
-		}
-		else {
+		} else {
 			//If there was, let's see which state changed into what.
 			//If we were at JUMPING, and now JUMPING_SHOOTING, then no.
 			if (animationState[STATE_PREVIOUS] == IDLE && animationState[STATE_CURRENT] == SHOOTING) {
