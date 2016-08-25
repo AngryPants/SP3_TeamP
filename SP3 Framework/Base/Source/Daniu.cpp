@@ -162,3 +162,8 @@ void Daniu::SpecialAbility(const double &deltaTime)
 		SetAbilityActive(false);
 	}
 }
+
+void Daniu::HitSound()
+{
+	AudioManager::GetInstance().PlayAudio2D("Audio//Sound_Effects//Daniu_Hit.mp3", false);
+}

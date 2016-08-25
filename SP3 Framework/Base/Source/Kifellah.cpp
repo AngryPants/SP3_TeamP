@@ -147,6 +147,7 @@ bool Kifellah::TakeDamage(const int &damage)
 	{
 		this->currentHealth -= damage;
 		damageCooldown = 0.5f;
+		HitSound();
 		return true;
 	}
 	if (damageCooldown <= 0.0 && GetAbilityActive())
@@ -156,4 +157,9 @@ bool Kifellah::TakeDamage(const int &damage)
 		return true;
 	}
 	return false;
+}
+
+void Kifellah::HitSound()
+{
+	AudioManager::GetInstance().PlayAudio2D("Audio//Sound_Effects//Kifellah_Hit.mp3", false);
 }

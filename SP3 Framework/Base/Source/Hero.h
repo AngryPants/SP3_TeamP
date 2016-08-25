@@ -54,6 +54,7 @@ public:
 	set<Enemy*>* enemies;
 	virtual void Attack() = 0;
 	virtual bool TakeDamage(const int &damage);
+	virtual void HitSound();
 	virtual void SpecialAbility(const double &deltaTime);
 	void SetEnemies(set<Enemy*>* enemies);
 
