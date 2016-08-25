@@ -35,6 +35,7 @@ public:
 	}
 
 	SpriteAnimation& GetMesh() {
+		mesh->animation = &animation[animationState[STATE_CURRENT]];
 		return *this->mesh;
 	}
 	Texture& GetTexture() {
@@ -102,13 +103,13 @@ private:
 		texture.textureArray[0] = TextureManager::GetInstance().AddTexture("Daniu", "Image//Cyborg_Shooter//Characters//Heroes//Hero_Daniu.tga");
 		mesh = MeshBuilder::GetInstance().GenerateSpriteAnimation("Daniu", 6, 10);
 		mesh->animation = &animation[IDLE];
-		animation[IDLE].Set(0, 9, true, 1.0, true);
-		animation[RUNNING].Set(10, 19, true, 1.0, true);
-		animation[JUMPING].Set(20, 29, false, 1.0, true);
-		animation[SHOOTING].Set(30, 34, true, 1.0 / 3.0, true);
-		animation[RUNNING_SHOOTING].Set(40, 49, true, 1.0, true);
-		animation[JUMPING_SHOOTING].Set(40, 49, true, 1.0, true);
-		animation[DEAD].Set(50, 59, false, 1.0, true);
+		animation[IDLE].Set(6, 10, 0, 9, true, 1.0, true);
+		animation[RUNNING].Set(6, 10, 10, 19, true, 1.0, true);
+		animation[JUMPING].Set(6, 10, 20, 29, false, 1.0, true);
+		animation[SHOOTING].Set(6, 10, 30, 34, true, 1.0 / 3.0, true);
+		animation[RUNNING_SHOOTING].Set(6, 10, 40, 49, true, 1.0, true);
+		animation[JUMPING_SHOOTING].Set(6, 10, 40, 49, true, 1.0, true);
+		animation[DEAD].Set(6, 10, 50, 59, false, 1.0, true);
 	}
 
 	void UpdateAnimation() {

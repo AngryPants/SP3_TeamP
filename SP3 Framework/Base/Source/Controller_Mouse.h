@@ -5,92 +5,101 @@
 #include <climits>
 #include <bitset>
 
+//Include GLFW
+#include <GLFW/glfw3.h>
+
 using std::bitset;
 
-struct CursorPosition {
+namespace controller {
 
-public:
-	//Variable(s)
-	double x, y;
+	struct CursorPosition {
 
-	//Constructor(s) & Destructor
-	CursorPosition(double x = 0.0, double y = 0.0) {
-		Set(x, y);
-	}
-	~CursorPosition() {}
+	public:
+		//Variable(s)
+		double x, y;
 
-	//Setter(s)
-	void Set(double x, double y) {
-		this->x = x;
-		this->y = y;
-	}
+		//Constructor(s) & Destructor
+		CursorPosition(double x = 0.0, double y = 0.0) {
+			Set(x, y);
+		}
+		~CursorPosition() {}
 
-	//Operator Overload
-	CursorPosition operator=(const CursorPosition& rhs) {
-		this->x = rhs.x;
-		this->y = rhs.y;
+		//Setter(s)
+		void Set(double x, double y) {
+			this->x = x;
+			this->y = y;
+		}
 
-		return *this;
-	}
-	CursorPosition operator-(const CursorPosition& rhs) const {
-		return CursorPosition(this->x - rhs.x, this->y - rhs.y);
-	}
-	CursorPosition& operator-=(const CursorPosition& rhs) {
-		this->x -= rhs.x;
-		this->y -= rhs.y;
+		//Operator Overload
+		CursorPosition operator=(const CursorPosition& rhs) {
+			this->x = rhs.x;
+			this->y = rhs.y;
 
-		return *this;
-	}
-	CursorPosition operator+(const CursorPosition& rhs) const {
-		return CursorPosition(this->x + rhs.x, this->y + rhs.y);
-	}
-	CursorPosition& operator+=(const CursorPosition& rhs) {
-		this->x += rhs.x;
-		this->y += rhs.y;
+			return *this;
+		}
+		CursorPosition operator-(const CursorPosition& rhs) const {
+			return CursorPosition(this->x - rhs.x, this->y - rhs.y);
+		}
+		CursorPosition& operator-=(const CursorPosition& rhs) {
+			this->x -= rhs.x;
+			this->y -= rhs.y;
 
-		return *this;
-	}
+			return *this;
+		}
+		CursorPosition operator+(const CursorPosition& rhs) const {
+			return CursorPosition(this->x + rhs.x, this->y + rhs.y);
+		}
+		CursorPosition& operator+=(const CursorPosition& rhs) {
+			this->x += rhs.x;
+			this->y += rhs.y;
 
-};
+			return *this;
+		}
 
-//NOTE: DO NOT USE CONTROLLER MOUSE DIRECTLY!
-//USE THE INPUTMANAGER INSTEAD.
-class Controller_Mouse : public Singleton<Controller_Mouse> {
+	};
 
-	friend class Singleton<Controller_Mouse>;
+	//NOTE: DO NOT USE CONTROLLER MOUSE DIRECTLY!
+	//USE THE INPUTMANAGER INSTEAD.
+	class Mouse : public Singleton<Mouse> {
 
-public:
-	//Static Variable(s)
-	static const int MAX_KEYS = 3;
+		friend class Singleton<Mouse>;
 
-private:
-	//Constructor(s) & Destructor
-	Controller_Mouse();
-	virtual ~Controller_Mouse();
+	public:
+		//Static Variable(s)
+		static const int MAX_KEYS = 3;
 
-	//Mouse Clicks
-	bitset<MAX_KEYS> currentState;
-	bitset<MAX_KEYS> previousState;
+	private:
+		//Constructor(s) & Destructor
+		Mouse();
+		virtual ~Mouse();
 
-	//Mouse Movement
-	CursorPosition cursorPosition;
-	float deadZone;
-	float travelDistanceX, travelDistanceY;
+		GLFWwindow* window;
 
-public:
-	//Mouse Clicks
-	bool IsKeyPressed(unsigned int key);
-	bool IsKeyReleased(unsigned int key);
+		//Mouse Clicks
+		bitset<MAX_KEYS> currentState;
+		bitset<MAX_KEYS> previousState;
 
-	//Cursor Movement
-	CursorPosition GetCursorPosition();
-	float GetTravelDistanceX();
-	float GetTravelDistanceY();
-	void SetDeadZone(const float& deadZone);
+		//Mouse Movement
+		CursorPosition cursorPosition;
+		float deadZone;
+		float travelDistanceX, travelDistanceY;
 
-	void ReadInput();
-	void Reset();
+	public:
+		//Mouse Clicks
+		bool IsKeyPressed(unsigned int key);
+		bool IsKeyReleased(unsigned int key);
 
-};
+		//Cursor Movement
+		CursorPosition GetCursorPosition();
+		float GetTravelDistanceX();
+		float GetTravelDistanceY();
+		void SetDeadZone(const float& deadZone);
 
+		void ReadInput();
+		void Reset();
+		void SetWindow(GLFWwindow*const window);
+
+	};
+
+}
 #endif

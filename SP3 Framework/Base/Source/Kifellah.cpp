@@ -38,11 +38,11 @@ void Kifellah::Update(const double& deltaTime)
 		currentHealth = maxHealth;
 	}
 
-	Hero::Update(deltaTime);
+	Hero::Update(deltaTime);	
 
 	//Update AnimationFSM
 	animationFSM.SetIsMoving(isMoving);
-	animationFSM.SetIsShooting(isShooting);
+	animationFSM.SetIsShooting(isAttacking);
 	animationFSM.SetOnGround(onGround);
 	animationFSM.Update(deltaTime);
 
@@ -56,33 +56,31 @@ void Kifellah::Render()
 	modelStack.PushMatrix();
 		modelStack.Translate(position.x, position.y, 0);
 		modelStack.Scale(4, 4, 1);
-		if (currentDirection == FACING_DIRECTION::RIGHT) {
-			SpriteAnimation* sprite = &animationFSM.GetMesh();
+		SpriteAnimation* sprite = &animationFSM.GetMesh();
+		if (GetForwardDirection().x > 0) {
 			sprite->SetTextureScale(1, 1);
 			sprite->SetTextureOffset(0, 0);
-		} else if (currentDirection == FACING_DIRECTION::LEFT) {
+		} else {
 			//To flip the texture, we need to scale it then translate.
-			SpriteAnimation* sprite = &animationFSM.GetMesh();
 			sprite->SetTextureScale(-1, 1);
-			if (sprite->column != 0) {
+			if (sprite->animation->column != 0) {
 				sprite->textureOffset[1] = 0;
-				sprite->textureOffset[0] = (static_cast<float>((sprite->currentFrame) % sprite->column) * 2 + 1) / sprite->column;
+				sprite->textureOffset[0] = (static_cast<float>((sprite->animation->currentFrame) % sprite->animation->column) * 2 + 1) / sprite->animation->column;
 			}
 		}
-		RenderHelper::GetInstance().RenderMesh(animationFSM.GetMesh(), animationFSM.GetTexture(), false);
+		RenderHelper::GetInstance().RenderMesh(*sprite, animationFSM.GetTexture(), false);
 	modelStack.PopMatrix();
 
-	if (!GetAbilityActive() && GetAbilityAvailable() && (InputManager::GetInstance().GetInputInfo().keyDown[INPUT_ABILITY]))
-		AudioManager::GetInstance().PlayAudio2D("Audio//Sound_Effects//Kifellah_Shieldmp3", false);
-
 	if (GetAbilityActive())
-	{		
+	{	
 		modelStack.PushMatrix();
 			modelStack.Translate(position.x, position.y, 0);
 			modelStack.Scale(4, 4, 1);
 			RenderHelper::GetInstance().RenderMesh(*mesh, specialAbility, false);
 		modelStack.PopMatrix();
 	}
+
+	RenderBullets();
 }
 
 void Kifellah::RenderUI() {
@@ -91,39 +89,53 @@ void Kifellah::RenderUI() {
 
 }
 
-void Kifellah::Shoot() {
+void Kifellah::RenderBullets() {
+
+	Mesh* bulletMesh = MeshBuilder::GetInstance().GenerateQuad("Daniu Bullet");
+	Texture texture;
+	texture.textureArray[0] = TextureManager::GetInstance().AddTexture("Bullet Kifellah", "Image//Cyborg_Shooter//Bullets//Bullet_Yellow.tga");
+	MS& modelStack = GraphicsManager::GetInstance().modelStack;
+	for (vector<Bullet*>::iterator bulletIter = bullets.begin(); bulletIter != bullets.end(); ++bulletIter) {
+		Bullet* bulletPtr = *bulletIter;
+		if (bulletPtr->isActive) {
+			modelStack.PushMatrix();
+				modelStack.Translate(bulletPtr->position.x, bulletPtr->position.y, 0);
+				modelStack.Rotate(Math::RadianToDegree(atan2(bulletPtr->velocity.y, bulletPtr->velocity.x)), 0, 0, 1);
+				modelStack.Scale(0.2f, 0.2f, 1.0f);
+				RenderHelper::GetInstance().RenderMesh(*bulletMesh, texture);
+			modelStack.PopMatrix();
+		}
+	}
+
+}
+
+void Kifellah::Attack() {
 
 	if (InputManager::GetInstance().GetInputInfo().keyDown[INPUT_SHOOT]) {
-		isShooting = true;
-		if (shootingCooldown <= 0.0) {
-			shootingCooldown = 1.0 / fireRate;
+		isAttacking = true;
+		if (attackCooldown <= 0.0) {
+			attackCooldown = 1.0 / fireRate;
 			Bullet& bullet = FetchBullet();			
 			bullet.isActive = true;
 			bullet.damage = 20.0f;
 			bullet.radius = 0.15f;
-			bullet.tileSystem = tileSystem;
-			bullet.targets = enemies;
 			bullet.lifetime = 5.0f;
 			bullet.position = position;
-			if (currentDirection == FACING_DIRECTION::LEFT) {
-				bullet.position.x -= 1.4f;
-				bullet.velocity.Set(-20, 0);
-			} else if (currentDirection == FACING_DIRECTION::RIGHT) {
-				bullet.position.x += 1.4f;
-				bullet.velocity.Set(20, 0);
-			}
-			bullet.mesh = MeshBuilder::GetInstance().GenerateQuad("Bullet");
-			bullet.texture.textureArray[0] = TextureManager::GetInstance().AddTexture("Bullet Yellow", "Image//Cyborg_Shooter//Bullets//Bullet_Yellow.tga");
+			bullet.position.y += 0.4f;
+			bullet.position.x += GetForwardDirection().x * 1.6f;
+			bullet.velocity = GetForwardDirection() * 20.0f;
 			AudioManager::GetInstance().PlayAudio2D("Audio//Sound_Effects//Weapons//Gun_Kifellah.flac", false);
 		}
 	} else {
-		isShooting = false;
+		isAttacking = false;
 	}
 
 }
 
 void Kifellah::SpecialAbility(const double &deltaTime)
 {
+	if (!GetAbilityActive() && GetAbilityAvailable() && (InputManager::GetInstance().GetInputInfo().keyDown[INPUT_ABILITY]))
+		AudioManager::GetInstance().PlayAudio2D("Audio//Sound_Effects//Kifellah_ShieldActivate.mp3", false);
 	Hero::SpecialAbility(deltaTime);
 	if (GetAbilityScore() <= 0)
 		SetAbilityActive(false);

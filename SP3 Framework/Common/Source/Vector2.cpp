@@ -77,12 +77,19 @@ Vector2& Vector2::operator*=(const float& scalar) {
 
 }
 
+float Vector2::AngleBetween(const Vector2& rhs) const {
+
+	return Math::RadianToDegree( acos(Dot(rhs) / (Length() * rhs.Length()) ) );
+
+}
+
 float Vector2::Dot( const Vector2& rhs ) const {
 
 	return this->x * rhs.x + this->y * rhs.y;
 
 }
 
+//Normalising
 Vector2 Vector2::Normalized(void) {
 
 	float length = this->Length();
@@ -133,5 +140,18 @@ float Vector2::LengthSquared() const {
 bool Vector2::IsZero() const {
 
 	return IsEqual(x, 0.0f) && IsEqual(y, 0.0f);
+
+}
+
+std::ostream& operator<<(std::ostream& os, Vector2& rhs) {
+
+	os << "[" << rhs.x << ", " << rhs.y << "]";
+	return os;
+
+}
+
+Vector2 operator*(float scalar, const Vector2& rhs) {
+
+	return rhs * scalar;
 
 }

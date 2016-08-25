@@ -9,14 +9,15 @@ class SpriteAnimation : public Mesh {
 
 public:	
 	//Variable(s)
-	unsigned int row, column;
-	double currentTime;
-	unsigned int currentFrame;
+	//const unsigned int row;
+	//const unsigned int column;
+	//double currentTime;
+	//unsigned int currentFrame;
 
 	Animation* animation;
 
 	//Constructor(s) & Destructor
-	SpriteAnimation(const string& meshName, unsigned int row, unsigned int column);
+	SpriteAnimation(const string& meshName, unsigned int row, unsigned int col);
 	virtual ~SpriteAnimation();
 
 	//Function(s)

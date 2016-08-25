@@ -2,14 +2,7 @@
 #include "GL\glew.h"
 #include "Vertex.h"
 
-SpriteAnimation::SpriteAnimation(const string& meshName, unsigned int row, unsigned int column) : Mesh(meshName) {
-	
-	this->row = row;
-	this->column = column;
-	this->currentTime = 0.0;
-	this->currentFrame = 0;
-	this->animation = nullptr;
-
+SpriteAnimation::SpriteAnimation(const string& meshName, unsigned int row, unsigned int col) : Mesh(meshName) {//, row(row), column(col) {
 }
 
 SpriteAnimation::~SpriteAnimation() {
@@ -22,7 +15,9 @@ void SpriteAnimation::Update(double deltaTime) {
 		return;
 	}
 
-	if (!animation->animActive || animation->animTime < Math::EPSILON || row == 0 || column == 0) {
+	animation->Update(deltaTime);
+
+	/*if (!animation->animActive || animation->animTime < Math::EPSILON || row == 0 || column == 0) {
 		return;
 	}
 	
@@ -48,7 +43,7 @@ void SpriteAnimation::Update(double deltaTime) {
 		} else {
 			Reset(true);
 		}
-	}
+	}*/
 
 }
 
@@ -58,9 +53,11 @@ void SpriteAnimation::Reset(bool animActive) {
 		std::cout << name << " has no animation attached." << std::endl;
 	}
 
-	currentFrame = animation->startFrame;
+	animation->Reset(animActive);
+
+	/*currentFrame = animation->startFrame;
 	animation->animActive = true;
-	currentTime = 0.0;
+	currentTime = 0.0;*/
 
 }
 
@@ -80,12 +77,16 @@ void SpriteAnimation::Render() {
 	//glDrawArrays(GL_TRIANGLES, offset, count);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
 
+	unsigned int offset = 0;
+	if (animation != nullptr) {
+		offset = animation->currentFrame;
+	}
 	if (mode == DRAW_LINES) {
-		glDrawElements(GL_LINES, 6, GL_UNSIGNED_INT, (void*)(currentFrame * 6 * sizeof(GLuint)));
+		glDrawElements(GL_LINES, 6, GL_UNSIGNED_INT, (void*)(offset * 6 * sizeof(GLuint)));
 	} else if (mode == DRAW_TRIANGLE_STRIP) {
-		glDrawElements(GL_TRIANGLE_STRIP, 6, GL_UNSIGNED_INT, (void*)(currentFrame * 6 * sizeof(GLuint)));
+		glDrawElements(GL_TRIANGLE_STRIP, 6, GL_UNSIGNED_INT, (void*)(offset * 6 * sizeof(GLuint)));
 	} else {
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void*)(currentFrame * 6 * sizeof(GLuint)));
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void*)(offset * 6 * sizeof(GLuint)));
 	}
 
 	glDisableVertexAttribArray(0);

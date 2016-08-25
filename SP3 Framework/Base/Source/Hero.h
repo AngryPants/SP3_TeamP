@@ -7,12 +7,15 @@
 #include "InputManager.h"
 #include "TileCollider.h"
 
+class Enemy;
+
 class Hero : public Character {
 
 private:
 	int abilityScore;
 	bool abilityAvailable;
 	bool abilityActive;
+	double abilityAccumulatedTime;
 
 protected:
 	//Stats
@@ -48,10 +51,11 @@ public:
 	virtual ~Hero();
 
 	//Combat
-	vector<Character*>* enemies;
-	virtual void Shoot();
+	set<Enemy*>* enemies;
+	virtual void Attack() = 0;
 	virtual bool TakeDamage(const int &damage);
 	virtual void SpecialAbility(const double &deltaTime);
+	void SetEnemies(set<Enemy*>* enemies);
 
 	//Stats
 	int GetLives() const;
@@ -74,8 +78,10 @@ public:
 
 	//Virtual Function(s)
 	virtual void Update(const double &deltaTime);
+	virtual void UpdateBullets(const double& deltaTime);
 	virtual void Render();
 	virtual void RenderUI();
+	virtual void RenderBullets() = 0;
 
 };
 

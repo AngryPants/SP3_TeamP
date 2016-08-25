@@ -30,12 +30,9 @@ private:
 
 	//Threads
 	enum THREAD {
-
-		UPDATE_USER_INPUT,
-		UPDATE_SCENE,
+		THREAD_PLACEHOLDER,
 
 		NUM_THREAD,
-
 	};
 
 	bool quit;

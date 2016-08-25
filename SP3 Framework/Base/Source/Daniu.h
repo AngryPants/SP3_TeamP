@@ -9,9 +9,12 @@ class Daniu : public Hero {
 
 private:
 	AnimationFSM_Daniu animationFSM;
+
 	//Mesh & Textures
 	Mesh* mesh;
 	Texture specialAbility;
+
+	double abilityAccumulatedTime;
 public:
 	Daniu(const string& sceneName);
 	virtual ~Daniu();
@@ -23,8 +26,10 @@ public:
 	void Movement(const double &deltaTime);
 	void TileCollision();
 
-	virtual void Shoot();
+	virtual void Attack();
 	virtual void SpecialAbility(const double &deltaTime);
+
+	virtual void RenderBullets();
 };
 
 #endif

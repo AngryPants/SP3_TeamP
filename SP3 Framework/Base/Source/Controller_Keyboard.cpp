@@ -1,52 +1,99 @@
 #include "Controller_Keyboard.h"
 
-Controller_Keyboard::Controller_Keyboard() {
-}
+namespace controller {
 
-Controller_Keyboard::~Controller_Keyboard() {
-}
-
-bool Controller_Keyboard::IsKeyPressed(unsigned int key) {
-
-	if (key < 0 || key >= MAX_KEYS) {
-		return false;
+	Key::Key(KEYS key, KEY_STATE state, int scancode, Modifiers modifiers)
+	:
+	key(key),
+	state(state),
+	scancode(scancode),
+	modifiers(modifiers) {
 	}
 
-	return currentState[key];
-
-}
-
-bool Controller_Keyboard::IsKeyReleased(unsigned int key) {
-
-	if (key < 0 || key >= MAX_KEYS) {
-		return false;
+	KEYS Key::GetKey() const {
+		return key;
 	}
 
-	//Check if the previous update we were pressing the key and now we're not.
-	if (currentState[key] == 0 && previousState[key] == 1) {
-		return true;
+	KEY_STATE Key::GetState() const {
+		return state;
 	}
 
-	return false;
-
-}
-
-void Controller_Keyboard::ReadInput() {
-
-	for (int i = 0; i < MAX_KEYS; ++i) {
-		previousState[i] = currentState[i];
-	}
-	currentState.reset();
-
-	for (int j = 0; j < MAX_KEYS; ++j) {
-		currentState[j] = ((GetAsyncKeyState(j) & 0x8001) != 0);
+	template<>
+	bool Key::GetModifier<MODIFIERS::SHIFT>() const {
+		return modifiers[0];
 	}
 
-}
+	template<>
+	bool Key::GetModifier<MODIFIERS::CTRL>() const {
+		return modifiers[1];
+	}
 
-void Controller_Keyboard::Reset() {
+	template<>
+	bool Key::GetModifier<MODIFIERS::ALT>() const {
+		return modifiers[2];
+	}
 
-	previousState.reset();
-	currentState.reset();
+	template<>
+	bool Key::GetModifier<MODIFIERS::SUPER>() const {
+		return modifiers[3];
+	}
+
+	int Key::GetScancode() const {
+		return scancode;
+	}
+
+	Keyboard::Keyboard() : window(nullptr) {	
+	}
+
+	void Keyboard::SetWindow(GLFWwindow*const window) {
+		this->window = window;
+		static std::queue<Key>* queue = nullptr;
+		queue = &GetInstance().key_queue;
+		glfwSetKeyCallback(window, [](GLFWwindow* window, int key, int scancode, int action, int mods) {
+			switch (action) {
+				case GLFW_PRESS:
+					queue->push(Key(KEYS(key), KEY_STATE::PRESS, scancode, mods));
+					break;
+				case GLFW_RELEASE:
+					queue->push(Key(KEYS(key), KEY_STATE::RELEASE, scancode, mods));
+					break;
+			}
+		});
+	}
+
+	Key Keyboard::GetKey() {
+		if (key_queue.empty())
+		{
+			throw std::exception("We ran out of keys!");
+		}
+
+		Key key = key_queue.front();
+		key_queue.pop();
+		return key;
+	}
+
+	int Keyboard::GetUnicode() {
+		if (unicode_queue.empty())
+		{
+			throw std::exception("We ran out of unicode characters!");
+		}
+
+		int unicode = unicode_queue.front();
+		unicode_queue.pop();
+		return unicode;
+	}
+
+	std::string Keyboard::GetClipboard() {
+		return glfwGetClipboardString(window);
+	}
+
+	void Keyboard::SetClipboard(std::string string) {
+		glfwSetClipboardString(window, string.c_str());
+	}
+
+	void Keyboard::ClearInput() {
+		unicode_queue.swap(std::queue<int>());
+		key_queue.swap(std::queue<Key>());
+	}
 
 }

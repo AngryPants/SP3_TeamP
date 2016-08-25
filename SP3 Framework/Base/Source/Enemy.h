@@ -2,21 +2,23 @@
 #define ENEMY_H
 
 #include "Hero.h"
+#include "TileIndex.h"
 
-class AIStrategy;
+class AIState;
 
 class Enemy : public Character {
+
+	friend class AIState;
 
 protected:
 	//The enemy shall detect the player in a cone shape.
 	float viewAngle;
 	float viewRange;
-	Vector2 viewDirection;
-
-	//Alert
+	
+	//Combat
 	float alertTime; //How long it takes for us to alert the rest.
-	float alertTimeLeft; //How long more until we complete alerting our allies.
 	float alertRadius; //How far we can alert.
+	float attackRange;
 
 	//The target of the AI.
 	Hero* target;
@@ -24,74 +26,61 @@ protected:
 	//The rest of the AIs
 	set<Enemy*>* allies;
 
-	//Strategies
-	AIStrategy* currentStrategy;
+	//State
+	AIState* currentState;
 
 public:
 	//Has this unit been alerted?
 	bool isAlerted;
 
 	//Constructor(s) & Destructor
-	Enemy(const string& name, const string& sceneName) : Character(name, sceneName) {
-		viewAngle = 30.0f;
-		viewRange = 10.0f;
-		viewDirection.Set(1, 0);
-		
-		alertRadius = 5.0f;
-		alertTime = 5.0f;
-		alertTimeLeft = alertTime;
-		isAlerted = false;
-		
-		target = nullptr;
-		allies = nullptr;
-		
-		currentStrategy = nullptr;
-	}
-	virtual ~Enemy() {}
+	Enemy(const string& name, const string& sceneName);
+	virtual ~Enemy();
 
-	//Set Allies
-	void SetAllies(set<Enemy*>* allies) {
-		this->allies = allies;
-	}
-	void RemoveAllies() {
-		this->allies = allies;
-	}
+	//Allies
+	void SetAllies(set<Enemy*>* allies);
+	void RemoveAllies();
+	set<Enemy*>* GetAllies();
 
 	//Target
-	void SetTarget(Hero* target) {
-		this->target = target;
-	}
-	void RemoveTarget() {
-		this->target = nullptr;
-	}
+	void SetTarget(Hero* target);
+	Hero* GetTarget();
+
+	//Alert
+	void SetAlertTime(const float& alertTime);
+	float GetAlertTime() const;
+	void SetAlertRadius(const float& alertRadius);
+	float GetAlertRadius() const;
+	bool CanSeePlayer() const;
+
+	//Combat
+	void SetAttackRange(const float& attackRange);
+	float GetAttackRange() const;
 
 	//Strategy
-	void SetStrategy(AIStrategy* strategy) {
-		this->currentStrategy = strategy;
-	}
-	void RemoveStrategy() {
-		this->currentStrategy = nullptr;
-	}
+	void SetState(AIState* state);
 
 	//Movement
 	virtual void MoveLeft() = 0;
 	virtual void MoveRight() = 0;
+	bool IsOnEdgeLeft();
+	bool IsOnEdgeRight();
+	bool HitWallRight();
+	bool HitWallLeft();
 	//virtual void Jump() = 0;
 
 	//Combat
-	virtual void Alert() {
-		isAlerted = true;
-	}
-	virtual void UnAlert() {
-		isAlerted = false;
-	}
-	virtual void AlertAllies(const double& deltaTime) = 0;
+	virtual void Alert();
+	virtual void UnAlert();
 	virtual void Attack() = 0;
 
 	//Virtual Function(s)
-	virtual void Update(const double& deltaTime) {}
+	virtual void Update(const double& deltaTime) = 0;
+	virtual void UpdateBullets(const double& deltaTime);
 	virtual void Render() {}
 	virtual void RenderUI() {}
+	virtual void RenderBullets() = 0;
+	virtual void Reset() = 0;
 
 };
 

@@ -11,8 +11,7 @@ AudioManager::AudioManager() {
 
 AudioManager::~AudioManager() {
 
-	ClearAudioList2D();
-	ClearAudioList3D();
+	ClearAudioList();
 
 	if (audioEngine) {
 		audioEngine->drop();
@@ -35,24 +34,24 @@ void AudioManager::Update() {
 
 }
 
-bool AudioManager::PlayAudio2D(const char* audioFile, bool looped) {
+bool AudioManager::PlayAudio2D(const string& audioFile, bool looped) {
 
-	ISound* soundPtr = audioEngine->play2D(audioFile, looped, false, true);
+	ISound* soundPtr = audioEngine->play2D(audioFile.c_str(), looped, false, true);
 
-	audioList2D.insert(soundPtr);
+	audioList.insert(soundPtr);
 
 	return true;
 
 }
 
-bool AudioManager::ClearAudioList2D() {
+bool AudioManager::ClearAudioList() {
 
-	set<ISound*>::iterator iter = audioList2D.begin();
-	while (audioList2D.size() > 0) {
+	set<ISound*>::iterator iter = audioList.begin();
+	while (audioList.size() > 0) {
 		if (*iter) {
 			(*iter)->drop();
 		}
-		iter = audioList2D.erase(iter);
+		iter = audioList.erase(iter);
 	}
 
 	std::cout << "Clear Audio List 2D" << std::endl;
@@ -61,47 +60,47 @@ bool AudioManager::ClearAudioList2D() {
 
 }
 
-bool AudioManager::PlayAudio3D(const char* audioFile, bool looped, float minDistance, float maxDistance, Vector3 listenerPosition, Vector3 listenerDirection, Vector3 soundPosition, Vector3 upVector ) {
+bool AudioManager::PlayAudio3D(const string& audioFile, bool looped, float minDistance, float maxDistance, Vector3 listenerPosition, Vector3 listenerDirection, Vector3 soundPosition, Vector3 upVector ) {
 
 	audioEngine->setListenerPosition(vec3df(listenerPosition.x, listenerPosition.y, listenerPosition.z),
 									 vec3df(listenerDirection.x, listenerDirection.y, listenerDirection.z),
 									 vec3df(upVector.x, upVector.y, upVector.z));
 
-	ISound* soundPtr = audioEngine->play3D(audioFile, vec3df(soundPosition.x, soundPosition.y, soundPosition.z), looped, false, true);
+	ISound* soundPtr = audioEngine->play3D(audioFile.c_str(), vec3df(soundPosition.x, soundPosition.y, soundPosition.z), looped, false, true);
 	soundPtr->setMinDistance(minDistance);
 	soundPtr->setMaxDistance(maxDistance);
 
-	audioList3D.insert(soundPtr);
+	audioList.insert(soundPtr);
 
 	return true;
 
 }
 
-bool AudioManager::PlayAudio3D(const char* audioFile, bool looped, float minDistance, Vector3 listenerPosition, Vector3 listenerDirection, Vector3 soundPosition, Vector3 upVector ) {
+bool AudioManager::PlayAudio3D(const string& audioFile, bool looped, float minDistance, Vector3 listenerPosition, Vector3 listenerDirection, Vector3 soundPosition, Vector3 upVector ) {
 	
 	audioEngine->setListenerPosition(vec3df(listenerPosition.x, listenerPosition.y, listenerPosition.z),
 									 vec3df(listenerDirection.x, listenerDirection.y, listenerDirection.z),
 									 vec3df(upVector.x, upVector.y, upVector.z));
 
 
-	ISound* soundPtr = audioEngine->play3D(audioFile, vec3df(soundPosition.x, soundPosition.y, soundPosition.z), looped, false, true);
+	ISound* soundPtr = audioEngine->play3D(audioFile.c_str(), vec3df(soundPosition.x, soundPosition.y, soundPosition.z), looped, false, true);
 	soundPtr->setMinDistance(minDistance);
 
-	audioList3D.insert(soundPtr);
+	audioList.insert(soundPtr);
 
 	return true;
 
 }
 
-bool AudioManager::UpdateAudio3D(const char* audioFile, Vector3 soundPosition) {
+bool AudioManager::UpdateAudio3D(const string& audioFile, Vector3 soundPosition) {
 
-	ISoundSource* soundSourcePtr = audioEngine->getSoundSource(audioFile, false);
+	ISoundSource* soundSourcePtr = audioEngine->getSoundSource(audioFile.c_str(), false);
 	
 	if (soundSourcePtr == 0) {
 		return false;
 	}
 
-	for (set<ISound*>::iterator iter = audioList3D.begin(); iter != audioList3D.end(); ++iter) {
+	for (set<ISound*>::iterator iter = audioList.begin(); iter != audioList.end(); ++iter) {
 		ISound* soundPtr = *iter;
 		if (soundPtr->getSoundSource() == soundSourcePtr) {
 			soundPtr->setPosition(vec3df(soundPosition.x, soundPosition.y, soundPosition.z));
@@ -123,29 +122,9 @@ bool AudioManager::UpdateListener3D(Vector3 listenerPosition, Vector3 listenerDi
 
 }
 
-bool AudioManager::ClearAudioList3D() {
-
-	set<ISound*>::iterator iter = audioList3D.begin();
-	while (audioList3D.size() > 0) {
-		if (*iter) {
-			(*iter)->drop();
-		}
-		iter = audioList3D.erase(iter);
-	}
-
-	std::cout << "Clear Audio List 2D" << std::endl;
-
-	return true;
-
-}
-
 void AudioManager::SetVolumeAll(const float& volume) {
 
-	for (set<ISound*>::iterator iter = audioList2D.begin(); iter != audioList2D.end(); ++iter) {
-		(*iter)->setVolume(Math::Clamp(volume, 0.0f, 1.0f));
-	}
-
-	for (set<ISound*>::iterator iter = audioList3D.begin(); iter != audioList2D.end(); ++iter) {
+	for (set<ISound*>::iterator iter = audioList.begin(); iter != audioList.end(); ++iter) {
 		(*iter)->setVolume(Math::Clamp(volume, 0.0f, 1.0f));
 	}
 

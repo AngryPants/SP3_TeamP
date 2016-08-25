@@ -53,6 +53,7 @@ struct Vector3 : public Vector {
 	virtual float LengthSquared (void) const; //Get square of magnitude
 	
 	float Dot(const Vector3& rhs) const; //Dot product
+	float AngleBetween(const Vector3& rhs) const; //Find the angle between these 2 vector3 in degrees.
 	Vector3 Cross(const Vector3& rhs) const; //Cross product
 	Vector3 Projection(const Vector3& rhs) const; //Projeciton
 
@@ -65,7 +66,7 @@ struct Vector3 : public Vector {
 	//Normalize this vector and return a reference to it
 	//Throw a divide by zero exception if normalizing a zero vector
 	Vector3& Normalize(void) throw(DivideByZero);
-	
+
 	friend std::ostream& operator<<( std::ostream& os, Vector3& rhs); //print to ostream
 
 	friend Vector3 operator*(float scalar, const Vector3& rhs); //what is this for?

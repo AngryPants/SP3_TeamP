@@ -9,37 +9,25 @@
 
 class Character;
 
-class Bullet : public GameEntity {
-
-private:
-	//Private Functions
-	void DamageTargets(const double& deltaTime);
-	void CheckCollisionWithWall();
+class Bullet {
 
 public:
 	//Stats
 	int damage; //Damage of bullet.
 	double lifetime; //How long until bullet despawns.
 	float radius; //What is the effective radius of the bullet.
+	bool isActive; //Is this bullet active?
 
-	//What characters can the bullet hit?
-	vector<Character*>* targets;
-
-	//Check for collision with walls etc.
-	TileSystem* tileSystem;
-
-	//Mesh & Texture.
-	Mesh* mesh;
-	Texture texture;
+	//Transform
+	Vector2 position;
+	Vector2 velocity;
 	
 	//Constructor(s) & Destructor
-	Bullet(const string& sceneName);
+	Bullet();
 	virtual ~Bullet();
 
 	//Virtual Function(s)
 	void Update(const double& deltaTime);
-	void Render();
-	void RenderUI();
 
 };
 

@@ -56,19 +56,19 @@
       <Filter>Source Files\Camera</Filter>
     </ClCompile>
     <ClCompile Include="Source\Character.cpp">
-      <Filter>Source Files\Characters</Filter>
+      <Filter>Source Files\Game\Characters</Filter>
     </ClCompile>
     <ClCompile Include="Source\Hero.cpp">
-      <Filter>Source Files\Characters\Heroes</Filter>
+      <Filter>Source Files\Game\Characters\Heroes</Filter>
     </ClCompile>
     <ClCompile Include="Source\Bullet.cpp">
-      <Filter>Source Files\Bullet</Filter>
+      <Filter>Source Files\Game\Bullet</Filter>
     </ClCompile>
     <ClCompile Include="Source\EntityManager.cpp">
       <Filter>Source Files\Entity</Filter>
     </ClCompile>
     <ClCompile Include="Source\Kifellah.cpp">
-      <Filter>Source Files\Characters\Heroes</Filter>
+      <Filter>Source Files\Game\Characters\Heroes</Filter>
     </ClCompile>
     <ClCompile Include="Source\SceneDaniu_1.cpp">
       <Filter>Source Files\Scene\DaniuLevels</Filter>
@@ -113,13 +113,28 @@
       <Filter>Source Files\Obstacles</Filter>
     </ClCompile>
     <ClCompile Include="Source\Daniu.cpp">
-      <Filter>Source Files\Characters\Heroes</Filter>
+      <Filter>Source Files\Game\Characters\Heroes</Filter>
     </ClCompile>
     <ClCompile Include="Source\Seetwo.cpp">
-      <Filter>Source Files\Characters\Heroes</Filter>
+      <Filter>Source Files\Game\Characters\Heroes</Filter>
     </ClCompile>
     <ClCompile Include="Source\Turret.cpp">
-      <Filter>Source Files\Characters\Enemy</Filter>
+      <Filter>Source Files\Game\Characters\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Controller_Gamepad.cpp">
+      <Filter>Source Files\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Enemy.cpp">
+      <Filter>Source Files\Game\Characters\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SceneMainMenu.cpp">
+      <Filter>Source Files\Scene\MainMenu</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\MainMenu.cpp">
+      <Filter>Source Files\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Animation.cpp">
+      <Filter>Source Files\SpriteAnimation</Filter>
     </ClCompile>
     <ClCompile Include="Source\Particles.cpp">
       <Filter>Source Files\Graphics</Filter>
@@ -274,10 +289,7 @@
       <Filter>Header Files\Game\Characters\Heroes</Filter>
     </ClInclude>
     <ClInclude Include="Source\Enemy.h">
-      <Filter>Header Files\Game\Characters\AICharacters\Enemies</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\AIStrategy.h">
-      <Filter>Header Files\Game\Characters\AICharacters\AIStrategy</Filter>
+      <Filter>Header Files\Game\Characters\Enemies</Filter>
     </ClInclude>
     <ClInclude Include="Source\AnimationFSM_Turret.h">
       <Filter>Header Files\AnimationFSM</Filter>
@@ -289,7 +301,22 @@
       <Filter>Header Files\AnimationFSM</Filter>
     </ClInclude>
     <ClInclude Include="Source\Turret.h">
-      <Filter>Header Files\Game\Characters\AICharacters\Enemies</Filter>
+      <Filter>Header Files\Game\Characters\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Controller_Gamepad.h">
+      <Filter>Header Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Brawler.h">
+      <Filter>Header Files\Game\Characters\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MainMenu.h">
+      <Filter>Header Files\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\InGameMenu.h">
+      <Filter>Header Files\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneMainMenu.h">
+      <Filter>Header Files\Scene\MainMenu</Filter>
     </ClInclude>
     <ClInclude Include="Source\Particles.h">
       <Filter>Header Files\Graphics</Filter>
@@ -316,9 +343,6 @@
     </Filter>
     <Filter Include="Source Files\Input">
       <UniqueIdentifier>{664cd4e5-7738-4b43-bf83-5743bbff58f5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Mesh">
-      <UniqueIdentifier>{3ffd7100-0ab6-43c4-91f6-bf54be3317ad}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\SpriteAnimation">
       <UniqueIdentifier>{b8f3479b-300b-49d6-8ef6-0e132e345305}</UniqueIdentifier>
@@ -365,15 +389,6 @@
     <Filter Include="Header Files\Tiles">
       <UniqueIdentifier>{8b398f2d-c5dd-4258-8ddb-c75ab5a04390}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Characters">
-      <UniqueIdentifier>{96f1f0f1-fc92-4404-b807-360aa5d65a14}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Characters\Heroes">
-      <UniqueIdentifier>{41b9da91-f3b2-490b-9618-154222e19285}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Bullet">
-      <UniqueIdentifier>{88f9ef95-7832-4baf-bf86-742e2bb5168b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Tiles">
       <UniqueIdentifier>{892e0d2b-9f58-4c82-8405-928b736f00b3}</UniqueIdentifier>
     </Filter>
@@ -407,20 +422,41 @@
     <Filter Include="Header Files\Game\Characters">
       <UniqueIdentifier>{18ee08f9-f088-4a6e-bf10-1df968c11488}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Game">
+      <UniqueIdentifier>{70c80f96-4a5e-40fa-a624-196b1ce0fd1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Bullet">
+      <UniqueIdentifier>{88f9ef95-7832-4baf-bf86-742e2bb5168b}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Header Files\Game\Characters\Heroes">
       <UniqueIdentifier>{959cbc48-ca56-4030-9407-5c568f1f0b57}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Game\Characters\AICharacters">
-      <UniqueIdentifier>{52839878-97c3-40a1-b57b-5d64f5bbba5b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Game\Characters\AICharacters\Enemies">
+    <Filter Include="Header Files\Game\Characters\Enemies">
       <UniqueIdentifier>{6597849e-6746-47df-a751-391ab00032c8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Game\Characters\AICharacters\AIStrategy">
-      <UniqueIdentifier>{72baeb72-5658-4842-a971-07d4f5708a35}</UniqueIdentifier>
+    <Filter Include="Source Files\Game\Characters">
+      <UniqueIdentifier>{96f1f0f1-fc92-4404-b807-360aa5d65a14}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Characters\Enemy">
+    <Filter Include="Source Files\Game\Characters\Heroes">
+      <UniqueIdentifier>{41b9da91-f3b2-490b-9618-154222e19285}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Characters\Enemy">
       <UniqueIdentifier>{469e4e10-5c1d-4ffc-b6de-dec5411ab709}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Mesh">
+      <UniqueIdentifier>{3ffd7100-0ab6-43c4-91f6-bf54be3317ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Menu">
+      <UniqueIdentifier>{311e1a55-7a71-4f68-84d8-b13f1251fc90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Scene\MainMenu">
+      <UniqueIdentifier>{7225b282-2297-4a7f-ad8a-e93806ba6436}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scene\MainMenu">
+      <UniqueIdentifier>{a930423d-c617-4836-9e1c-22d6edf57d71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Menu">
+      <UniqueIdentifier>{2fc09192-93c0-4b0c-b680-9746953ec5ae}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

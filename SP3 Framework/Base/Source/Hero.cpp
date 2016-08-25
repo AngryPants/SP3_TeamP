@@ -1,9 +1,11 @@
 #include "Hero.h"
+#include "Enemy.h"
 #include "InputManager.h"
 #include "TileIndex.h"
 #include "GraphicsManager.h"
 #include "RenderHelper.h"
 #include "AudioManager.h"
+#include "CollisionSystem.h"
 
 //Constructor(s) & Destructor
 Hero::Hero(const string& name, const string& sceneName) : Character(name, sceneName)
@@ -14,6 +16,7 @@ Hero::Hero(const string& name, const string& sceneName) : Character(name, sceneN
 	abilityScore = 0;
 	abilityAvailable = false;
 	abilityActive = false;
+	abilityAccumulatedTime = 0.0;
 
 	//Movement
 	gravity = -20.0f;
@@ -22,7 +25,8 @@ Hero::Hero(const string& name, const string& sceneName) : Character(name, sceneN
 	canBoost = true;
 
 	//Combat
-	enemies = nullptr;
+	damageCooldown = 0.5f;
+	enemies = nullptr;	
 
 	//Mesh & Textures
 	mesh = MeshBuilder::GetInstance().GenerateQuad("Quad");
@@ -304,19 +308,16 @@ void Hero::Move(const double& deltaTime) {
 
 	Vector2 acceleration;
 	//Running
+	isMoving = false;
 	if (InputManager::GetInstance().GetInputInfo().keyDown[INPUT_MOVE_RIGHT]) 
 	{
-		acceleration.x += 20.0f * InputManager::GetInstance().GetInputInfo().keyValue[INPUT_MOVE_RIGHT];
+		FaceRight();
+		acceleration = GetForwardDirection() * 20.0f * InputManager::GetInstance().GetInputInfo().keyValue[INPUT_MOVE_RIGHT];
 		isMoving = true;
-		currentDirection = FACING_DIRECTION::RIGHT;
-	} 
-	else if (InputManager::GetInstance().GetInputInfo().keyDown[INPUT_MOVE_LEFT]) 
-	{
-		acceleration.x -= 20.0f * InputManager::GetInstance().GetInputInfo().keyValue[INPUT_MOVE_LEFT];		
+	} else if (InputManager::GetInstance().GetInputInfo().keyDown[INPUT_MOVE_LEFT]) {
+		FaceLeft();
+		acceleration = GetForwardDirection() * 20.0f * InputManager::GetInstance().GetInputInfo().keyValue[INPUT_MOVE_LEFT];
 		isMoving = true;
-		currentDirection = FACING_DIRECTION::LEFT;
-	} else {
-		isMoving = false;
 	}
 
 	//Jumping
@@ -326,17 +327,20 @@ void Hero::Move(const double& deltaTime) {
 		onGround = false;
 		acceleration.y += 800.0f * InputManager::GetInstance().GetInputInfo().keyValue[INPUT_JUMP];
 	}
-	
+
+	//cout << "Hero Acceleration: " << acceleration << endl;
 	this->velocity += acceleration * static_cast<float>(deltaTime);
 	this->velocity.x = Math::Clamp(this->velocity.x, -maxSpeed, maxSpeed); //Limit our horizontal speed.
 	this->velocity.y = Math::Clamp(this->velocity.y, -27.0f, 27.0f);
+	//cout << "Hero Velocity: " << this->velocity << endl;
 
+	//Check Y-Axis First
 	position.y += velocity.y * deltaTime;
 
-	vector<unsigned int>& result = CheckCollisionUp();
+	vector<unsigned int> result = CheckCollisionUp();
 	for (unsigned int i = 0; i < result.size(); ++i) {
 		unsigned int terrain = GetTileInfo(TILE_INFO::TERRAIN, result[i]);
-		if (terrain != 0) {
+		if (terrain != TILE_NOTHING) {
 			int tileRow = tileSystem->GetTile(position.y + tileCollider.GetDetectionHeight() * 0.5f);
 			position.y = (static_cast<float>(tileRow - 1) + 0.5f) * tileSystem->GetTileSize() - tileCollider.GetDetectionHeight() * 0.5f;
 			velocity.y = -velocity.y;
@@ -404,9 +408,6 @@ void Hero::Move(const double& deltaTime) {
 }
 
 //Combat
-void Hero::Shoot() {
-}
-
 bool Hero::TakeDamage(const int &damage)
 {
 	if (damageCooldown <= 0.0) {
@@ -418,6 +419,10 @@ bool Hero::TakeDamage(const int &damage)
 	}	
 }
 
+void Hero::SetEnemies(set<Enemy*>* enemies) {
+	this->enemies = enemies;
+}
+
 void Hero::SpecialAbility(const double &deltaTime)
 {
 	// Special Ability
@@ -426,13 +431,12 @@ void Hero::SpecialAbility(const double &deltaTime)
 	if (abilityScore > maxAbilityScore)
 		abilityScore = maxAbilityScore;
 
-	static double accumulatedTime = 0;
 	if (!abilityAvailable && !abilityActive)
-		accumulatedTime += deltaTime * 10.25;
+		abilityAccumulatedTime += deltaTime * 10.25;
 	// Check if ability is available, add ability score over time if both are not true
-	if (accumulatedTime > 1 && !abilityAvailable && !abilityActive)
+	if (abilityAccumulatedTime > 1 && !abilityAvailable && !abilityActive)
 	{
-		accumulatedTime -= 1;
+		abilityAccumulatedTime -= 1;
 		++abilityScore;
 	}
 	// Check if ability is active, and makes it available if it is not active and the ability score is greater than 50
@@ -549,28 +553,28 @@ void Hero::ItemInteraction(int row, int column, const double& deltaTime) {
 			break;
 		case TILE_BOOSTPAD_LEFT: {
 			if (canBoost) {
-				velocity.x -= 200.0f * deltaTime;
+				velocity.x -= 100.0f * deltaTime;
 				canBoost = false;
 			}
 		}
 			break;
 		case TILE_BOOSTPAD_RIGHT: {
 			if (canBoost) {
-				velocity.x += 200.0f * deltaTime;
+				velocity.x += 100.0f * deltaTime;
 				canBoost = false;
 			}
 		}
 			break;
 		case TILE_BOOSTPAD_DOWN: {
 			if (canBoost) {
-				velocity.y -= 200.0f * deltaTime;
+				velocity.y -= 100.0f * deltaTime;
 				canBoost = false;
 			}
 		}
 			break;
 		case TILE_BOOSTPAD_UP: {
 			if (canBoost) {
-				velocity.y += 200.0f * deltaTime;
+				velocity.y += 100.0f * deltaTime;
 				canBoost = false;
 			}
 		}
@@ -602,12 +606,55 @@ void Hero::Update(const double &deltaTime)
 	Move(deltaTime);
 	ItemInteraction(deltaTime);
 	SpecialAbility(deltaTime);
-	Shoot();
-	
+	Attack();
+	UpdateBullets(deltaTime);
+
 	if (currentHealth <= 0)
 	{
 		Respawn();
 	}
+}
+
+void Hero::UpdateBullets(const double& deltaTime) {
+
+	for (vector<Bullet*>::iterator bulletIter = bullets.begin(); bulletIter != bullets.end(); ++bulletIter) {
+		Bullet* bulletPtr = *bulletIter;
+		if (!bulletPtr->isActive) {
+			continue;
+		}
+		bulletPtr->Update(deltaTime);
+		//Hurt Enemies
+		if (enemies != nullptr) {
+			for (set<Enemy*>::iterator enemyIter = (*enemies).begin(); enemyIter != (*enemies).end(); ++enemyIter) {
+				Enemy* enemyPtr = *enemyIter;
+				float timeToCollision = CollisionSystem::CircleCircle(bulletPtr->position, enemyPtr->position, bulletPtr->radius, enemyPtr->GetCollisionRadius(), bulletPtr->velocity, enemyPtr->velocity);
+				if (timeToCollision > 0.0f && timeToCollision <= static_cast<float>(deltaTime)) {
+					enemyPtr->TakeDamage(bulletPtr->damage);
+					bulletPtr->isActive = false;
+					break;
+				}
+			}
+		}
+		//Despawn if hit wall
+		if (tileSystem != nullptr) {
+			TileCoord bulletCoord;
+			bulletCoord.Set(tileSystem->GetTile(bulletPtr->position.y), tileSystem->GetTile(bulletPtr->position.x));
+			//Check if we are out of the map
+			if (bulletCoord.column < 0 || bulletCoord.column >= tileSystem->GetNumColumns()) {
+				bulletPtr->isActive = false;
+				continue;
+			} else if (bulletCoord.row < 0 || bulletCoord.row >= tileSystem->GetNumRows()) {
+				bulletPtr->isActive = false;
+				continue;
+			}
+			//Check if we hit a wall
+			unsigned int terrain = GetTileInfo(TILE_INFO::TERRAIN, tileSystem->TileValue(bulletCoord.row, bulletCoord.column));
+			if (terrain != TILE_NOTHING) {
+				bulletPtr->isActive = false;
+			}
+		}
+	}
+
 }
 
 void Hero::Render()
