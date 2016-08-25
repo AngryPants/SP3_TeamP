@@ -62,13 +62,12 @@ void Daniu::Render()
 	modelStack.PushMatrix();
 	modelStack.Translate(position.x, position.y, 0);
 	modelStack.Scale(4, 4, 1);
-	if (GetForwardDirection().x) {
-		SpriteAnimation* sprite = &animationFSM.GetMesh();
+	SpriteAnimation* sprite = &animationFSM.GetMesh();
+	if (GetForwardDirection().x > 0) {		
 		sprite->SetTextureScale(1, 1);
 		sprite->SetTextureOffset(0, 0);
 	} else {
 		//To flip the texture, we need to scale it then translate.
-		SpriteAnimation* sprite = &animationFSM.GetMesh();
 		sprite->SetTextureScale(-1, 1);
 		if (sprite->animation->column != 0) {
 			sprite->textureOffset[1] = 0;

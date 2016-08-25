@@ -155,7 +155,7 @@ float Character::GetCollisionRadius() const
 
 bool Character::TakeDamage(const int &damage)
 {
-	if (damageCooldownTimer <= 0.0)
+	if (damageCooldownTimer <= 0.0 && !isDead)
 	{
 		this->currentHealth -= damage;
 		damageCooldownTimer = damageCooldown;

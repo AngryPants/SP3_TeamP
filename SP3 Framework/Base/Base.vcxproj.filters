@@ -118,9 +118,6 @@
     <ClCompile Include="Source\Seetwo.cpp">
       <Filter>Source Files\Game\Characters\Heroes</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Turret.cpp">
-      <Filter>Source Files\Game\Characters\Enemy</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Controller_Gamepad.cpp">
       <Filter>Source Files\Input</Filter>
     </ClCompile>
@@ -138,6 +135,9 @@
     </ClCompile>
     <ClCompile Include="Source\Particles.cpp">
       <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Turret.cpp">
+      <Filter>Source Files\Game\Characters\Heroes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
