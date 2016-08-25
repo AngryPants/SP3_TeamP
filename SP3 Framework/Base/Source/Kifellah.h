@@ -27,6 +27,7 @@ public:
 	virtual void Attack();
 	virtual void SpecialAbility(const double &deltaTime);
 	virtual bool TakeDamage(const int &damage);
+	virtual void HitSound();
 };
 
 #endif

@@ -39,6 +39,7 @@ public:
 
 	virtual void Attack();
 	virtual void SpecialAbility(const double &deltaTime);
+	virtual void HitSound();
 };
 
 #endif

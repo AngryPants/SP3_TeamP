@@ -232,3 +232,8 @@ void Seetwo::RenderParticles()
 		}
 	}
 }
+
+void Seetwo::HitSound()
+{
+	AudioManager::GetInstance().PlayAudio2D("Audio//Sound_Effects//Seetwo_Hit.mp3", false);
+}

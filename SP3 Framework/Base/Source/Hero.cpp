@@ -424,10 +424,16 @@ bool Hero::TakeDamage(const int &damage)
 	if (damageCooldown <= 0.0) {
 		currentHealth -= damage;
 		damageCooldown = 0.7f;
+		HitSound();
 		return true;
 	} else {
 		return false;
 	}	
+}
+
+void Hero::HitSound()
+{
+
 }
 
 void Hero::SetEnemies(set<Enemy*>* enemies) {
