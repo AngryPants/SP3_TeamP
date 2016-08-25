@@ -53,12 +53,13 @@ void Seetwo::Update(const double& deltaTime)
 	animationFSM.Update(deltaTime);
 
 	//Hero::Respawn();
-
 }
 
 void Seetwo::Render()
 {
 	MS& modelStack = GraphicsManager::GetInstance().modelStack;
+	if (!GetAbilityActive() && GetAbilityAvailable() && (InputManager::GetInstance().GetInputInfo().keyDown[INPUT_ABILITY]))
+		AudioManager::GetInstance().PlayAudio2D("Audio//Sound_Effects//Seetwo_HealActivate.mp3", false);
 	if (GetAbilityActive())
 	{
 		RenderParticles();

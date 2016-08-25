@@ -72,8 +72,11 @@ void Kifellah::Render()
 		RenderHelper::GetInstance().RenderMesh(animationFSM.GetMesh(), animationFSM.GetTexture(), false);
 	modelStack.PopMatrix();
 
+	if (!GetAbilityActive() && GetAbilityAvailable() && (InputManager::GetInstance().GetInputInfo().keyDown[INPUT_ABILITY]))
+		AudioManager::GetInstance().PlayAudio2D("Audio//Sound_Effects//Kifellah_Shieldmp3", false);
+
 	if (GetAbilityActive())
-	{
+	{		
 		modelStack.PushMatrix();
 			modelStack.Translate(position.x, position.y, 0);
 			modelStack.Scale(4, 4, 1);
