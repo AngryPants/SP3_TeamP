@@ -141,6 +141,8 @@ void Daniu::Attack() {
 
 void Daniu::SpecialAbility(const double &deltaTime)
 {
+	if (!GetAbilityActive() && GetAbilityAvailable() && (InputManager::GetInstance().GetInputInfo().keyDown[INPUT_ABILITY]))
+		AudioManager::GetInstance().PlayAudio2D("Audio//Sound_Effects//Daniu_BoostActivate.mp3", false);
 	Hero::SpecialAbility(deltaTime);
 	if (GetAbilityActive())
 		fireRate = 6.0;

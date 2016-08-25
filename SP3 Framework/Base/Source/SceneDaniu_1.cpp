@@ -25,7 +25,7 @@ void SceneDaniu_1::Init() {
 
 	//SceneBase::InitHero<Kifellah>();
 	//SceneBase::InitHero<Daniu>();
-	SceneBase::InitHero<Seetwo>();
+	SceneBase::InitHero<Daniu>();
 	SceneBase::InitCamera();
 	SceneBase::InitEnemies();
 	SceneBase::InitSawblades();
