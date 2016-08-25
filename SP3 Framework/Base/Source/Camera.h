@@ -80,13 +80,13 @@ public:
 	float GetNearClippingPlane() const;
 	float GetFarClippingPlane() const;
 	
-	void SetPosition(const Vector3& position) {
+	virtual void SetPosition(const Vector3& position) {
 		this->position = position;
 	}
-	void SetTarget(const Vector3& target) {
+	virtual void SetTarget(const Vector3& target) {
 		this->target = target;
 	}
-	void SetUp(const Vector3& up) {
+	virtual void SetUp(const Vector3& up) {
 		this->up = up;
 	}
 
