@@ -1,13 +1,14 @@
 #include "CollisionSystem.h"
 
-float CollisionSystem::CircleCircle(Vector2 circlePositionA, Vector2 circlePositionB, float circleRadiusA, float circleRadiusB, Vector2 circleVelocityA, Vector2 circleVelocityB)
+float CollisionSystem::CircleCircle(Vector2 circlePositionA, Vector2 circlePositionB, float circleRadiusA, float circleRadiusB, Vector2 circleVelocityA, Vector2 circleVelocityB, bool directionCheck)
 {
 	Vector2 relativeVelocity = circleVelocityA - circleVelocityB;
 	Vector2 relativeDirection = circlePositionA - circlePositionB; //Usually we do B - A but for this case A - B makes calculations easier.
 	float combinedRadius = circleRadiusA + circleRadiusB;
 
-	if (relativeVelocity.Dot(relativeDirection) > 0)
+	if (directionCheck && relativeVelocity.Dot(relativeDirection) > 0) {
 		return -1; //We the 2 circles aren't going towards each other.
+	}
 
 	float a = relativeVelocity.LengthSquared();
 	float b = 2 * relativeVelocity.Dot(relativeDirection);
@@ -22,7 +23,7 @@ float CollisionSystem::CircleCircle(Vector2 circlePositionA, Vector2 circlePosit
 
 }
 
-float CollisionSystem::LineCircle(Vector2 linePosition, Vector2 circlePosition, float circleRadius, Vector2 lineVelocity, Vector2 circleVelocity)
+float CollisionSystem::LineCircle(Vector2 linePosition, Vector2 circlePosition, float circleRadius, Vector2 lineVelocity, Vector2 circleVelocity, bool directionCheck)
 {
-	return CircleCircle(linePosition, circlePosition, 0, circleRadius, lineVelocity, circleVelocity);
+	return CircleCircle(linePosition, circlePosition, 0, circleRadius, lineVelocity, circleVelocity, directionCheck);
 }

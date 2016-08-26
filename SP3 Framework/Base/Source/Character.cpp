@@ -414,7 +414,7 @@ unsigned int& Character::CheckCollisionCentre() {
 //Virtual Function(s)
 void Character::Update(const double& deltaTime) {
 
-	damageCooldown = Math::Max(0.0f, damageCooldown -= static_cast<float>(deltaTime));
-	attackCooldown = Math::Max(0.0f, attackCooldown -= static_cast<float>(deltaTime));
+	damageCooldown = Math::Max(0.0f, damageCooldown - static_cast<float>(deltaTime));
+	attackCooldown = Math::Max(0.0f, attackCooldown - static_cast<float>(deltaTime));
 
 }

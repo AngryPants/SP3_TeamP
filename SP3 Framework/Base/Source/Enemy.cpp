@@ -12,7 +12,7 @@ Enemy::Enemy(const string& name, const string& sceneName) : Character(name, scen
 	hasAlertedAllies = false;
 	isAlerted = false;
 	
-	attackRange = 10.0f;	
+	attackRange = 10.0f;
 
 	target = nullptr;
 	allies = nullptr;
@@ -162,5 +162,17 @@ void Enemy::UpdateBullets(const double& deltaTime) {
 			}
 		}
 	}
+
+}
+
+void Enemy::Reset() {
+
+	isMoving = false;
+	isAttacking = false;
+	isDead = false;
+	isAlerted = false;
+	isActive = true;
+	currentHealth = maxHealth;
+	hasAlertedAllies = false;
 
 }

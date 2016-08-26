@@ -145,6 +145,9 @@
     <ClCompile Include="Source\CameraMainMenu.cpp">
       <Filter>Source Files\Camera</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Gunner.cpp">
+      <Filter>Source Files\Game\Characters\Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\GraphicsManager.h">
@@ -329,6 +332,9 @@
     </ClInclude>
     <ClInclude Include="Source\CameraMainMenu.h">
       <Filter>Header Files\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Gunner.h">
+      <Filter>Header Files\Game\Characters\Enemies</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

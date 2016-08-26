@@ -31,6 +31,9 @@ private:
 	//Dead
 	void Dead(const double& deltaTime);
 
+	//Bullet
+	Mesh* bulletMesh;
+
 public:
 	//Constructor(s) & Destructor
 	Turret(const string& sceneName);

@@ -97,7 +97,7 @@ void Daniu::RenderUI() {
 
 void Daniu::RenderBullets() {
 
-	Mesh* bulletMesh = MeshBuilder::GetInstance().GenerateQuad("Daniu Bullet");
+	Mesh* bulletMesh = MeshBuilder::GetInstance().GenerateQuad("Bullet Daniu");
 	Texture texture;
 	texture.textureArray[0] = TextureManager::GetInstance().AddTexture("Bullet Daniu", "Image//Cyborg_Shooter//Bullets//Bullet_Red.tga");
 	MS& modelStack = GraphicsManager::GetInstance().modelStack;
@@ -107,7 +107,7 @@ void Daniu::RenderBullets() {
 			modelStack.PushMatrix();
 				modelStack.Translate(bulletPtr->position.x, bulletPtr->position.y, 0);
 				modelStack.Rotate(Math::RadianToDegree(atan2(bulletPtr->velocity.y, bulletPtr->velocity.x)), 0, 0, 1);
-				modelStack.Scale(0.2f, 0.2f, 1.0f);
+				modelStack.Scale(bulletPtr->radius * 2.0f, bulletPtr->radius * 2.0f, 1.0f);
 				RenderHelper::GetInstance().RenderMesh(*bulletMesh, texture);
 			modelStack.PopMatrix();
 		}
@@ -127,8 +127,7 @@ void Daniu::Attack() {
 			bullet.radius = 0.15f;
 			bullet.lifetime = 5.0f;
 			bullet.position = position;
-			bullet.position.y += 0.4f;
-			bullet.position.x += GetForwardDirection().x * 1.6f;
+			bullet.position.y += 0.05f;
 			bullet.velocity = GetForwardDirection() * 20.0f;
 			AudioManager::GetInstance().PlayAudio2D("Audio//Sound_Effects//Weapons//Gun_Kifellah.flac", false);
 		}

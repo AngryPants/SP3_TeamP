@@ -8,6 +8,7 @@
 //Enemy Types
 #include "Turret.h"
 #include "Brawler.h"
+#include "Gunner.h"
 
 SceneBase::SceneBase(const string& name) : Scene(name) {
 	hero = nullptr;
@@ -69,6 +70,11 @@ void SceneBase::InitEnemies() {
 					case (TILE_BRAWLER_SPAWN): {
 						enemy = new Brawler(name);
 					}
+					break;
+					case (TILE_GUNNER_SPAWN): {
+						enemy = new Gunner(name);
+					}
+					break;
 				}
 				if (enemy != nullptr) {
 					enemy->SetTarget(hero);

@@ -88,9 +88,9 @@ void Seetwo::Render()
 
 void Seetwo::RenderBullets() {
 
-	Mesh* bulletMesh = MeshBuilder::GetInstance().GenerateQuad("Daniu Bullet");
+	Mesh* bulletMesh = MeshBuilder::GetInstance().GenerateQuad("Bullet Seetwo");
 	Texture texture;
-	texture.textureArray[0] = TextureManager::GetInstance().AddTexture("Bullet Kifellah", "Image//Cyborg_Shooter//Bullets//Bullet_Yellow.tga");
+	texture.textureArray[0] = TextureManager::GetInstance().AddTexture("Bullet Seetwo", "Image//Cyborg_Shooter//Bullets//Bullet_Blue.tga");
 	MS& modelStack = GraphicsManager::GetInstance().modelStack;
 	for (vector<Bullet*>::iterator bulletIter = bullets.begin(); bulletIter != bullets.end(); ++bulletIter) {
 		Bullet* bulletPtr = *bulletIter;
@@ -98,7 +98,7 @@ void Seetwo::RenderBullets() {
 			modelStack.PushMatrix();
 				modelStack.Translate(bulletPtr->position.x, bulletPtr->position.y, 0);
 				modelStack.Rotate(Math::RadianToDegree(atan2(bulletPtr->velocity.y, bulletPtr->velocity.x)), 0, 0, 1);
-				modelStack.Scale(0.2f, 0.2f, 1.0f);
+				modelStack.Scale(bulletPtr->radius * 2.0f, bulletPtr->radius * 2.0f, 1.0f);
 				RenderHelper::GetInstance().RenderMesh(*bulletMesh, texture);
 			modelStack.PopMatrix();
 		}
@@ -121,11 +121,10 @@ void Seetwo::Attack() {
 			Bullet& bullet = FetchBullet();
 			bullet.isActive = true;
 			bullet.damage = 20.0f;
-			bullet.radius = 0.3f;
+			bullet.radius = 0.2f;
 			bullet.lifetime = 5.0f;
 			bullet.position = position;
-			bullet.position.y += 0.4f;
-			bullet.position.x += GetForwardDirection().x * 1.6f;
+			bullet.position.y += 0.55f;
 			bullet.velocity = GetForwardDirection() * 20.0f;
 			AudioManager::GetInstance().PlayAudio2D("Audio//Sound_Effects//Weapons//Gun_Kifellah.flac", false);
 		}

@@ -22,9 +22,9 @@ public:
 		this->isMoving[STATE_PREVIOUS] = this->isMoving[STATE_CURRENT];
 		this->isMoving[STATE_CURRENT] = isMoving;
 	}
-	void SetIsShooting(bool isShooting) {
-		this->isShooting[STATE_PREVIOUS] = this->isShooting[STATE_CURRENT];
-		this->isShooting[STATE_CURRENT] = isShooting;
+	void SetIsAttacking(bool isAttacking) {
+		this->isAttacking[STATE_PREVIOUS] = this->isAttacking[STATE_CURRENT];
+		this->isAttacking[STATE_CURRENT] = isAttacking;
 	}
 	/*void SetOnGround(bool onGround) {
 		this->onGround[STATE_PREVIOUS] = this->onGround[STATE_CURRENT];
@@ -55,7 +55,7 @@ public:
 
 		for (unsigned int i = 0; i < static_cast<unsigned int>(NUM_STATE); ++i) {
 			isMoving[i] = false;
-			isShooting[i] = false;
+			isAttacking[i] = false;
 			//onGround[i] = true;
 			isDead = false;
 		}
@@ -70,7 +70,7 @@ private:
 	enum ANIMATION {
 		IDLE, //Not Moving, Not Shooting.
 		WALKING, //Not Idle, Not Shooting 
-		SHOOTING, //Not Idle, Not Moving, Shooting.
+		ATTACKING, //Not Idle, Not Moving, Shooting.
 		DEAD,
 
 		NUM_ANIMATION,
@@ -90,7 +90,7 @@ private:
 	//Player States
 	bool isMoving[NUM_STATE];
 	//bool onGround[NUM_STATE];
-	bool isShooting[NUM_STATE];
+	bool isAttacking[NUM_STATE];
 	bool isDead;
 	ANIMATION animationState[NUM_STATE];
 	//MOVE_DIRECTION currentDirection;
@@ -102,7 +102,7 @@ private:
 		mesh->animation = &animation[IDLE];
 		animation[IDLE].Set(4, 11, 0, 5, true, 1.0, true);
 		animation[WALKING].Set(4, 11, 11, 21, true, 1.0, true);
-		animation[SHOOTING].Set(4, 22, 31, 32, true, 1.0 / 3.0, true);
+		animation[ATTACKING].Set(4, 11, 22, 31, true, 1.0, true);
 		animation[DEAD].Set(4, 11, 33, 37, false, 1.0, true);
 	}
 
@@ -111,6 +111,7 @@ private:
 		if (mesh == nullptr) {
 			return;
 		}
+		mesh->animation = nullptr;
 		/*
 		IDLE, //Not Moving, On Ground, Not Shooting.
 		RUNNING, //Moving, On Ground, Not Shooting.
@@ -125,20 +126,18 @@ private:
 		//Which animation should we be using?
 		if (isDead) {
 			animationState[STATE_CURRENT] = DEAD;
-		}
-		else if (!isMoving[STATE_CURRENT] && !isShooting[STATE_CURRENT]) {
-			//cout << "IDLE" << endl;
-			animationState[STATE_CURRENT] = IDLE;
-		}
-		else if (isShooting[STATE_CURRENT]) {
+		}		
+		else if (isAttacking[STATE_CURRENT]) {
 			//cout << "SHOOTING" << endl;
-			animationState[STATE_CURRENT] = SHOOTING;
+			animationState[STATE_CURRENT] = ATTACKING;
 		}		
 		else if (isMoving[STATE_CURRENT]) {
 			//cout << "RUNNING" << endl;
 			animationState[STATE_CURRENT] = WALKING;
-		}
-		
+		} else {
+			//cout << "IDLE" << endl;
+			animationState[STATE_CURRENT] = IDLE;
+		}		
 
 		mesh->animation = &animation[animationState[STATE_CURRENT]];
 
@@ -151,20 +150,20 @@ private:
 		else {
 			//If there was, let's see which state changed into what.
 			//If we were at JUMPING, and now JUMPING_SHOOTING, then no.
-			if (animationState[STATE_PREVIOUS] == WALKING && animationState[STATE_CURRENT] == SHOOTING) {
+			if (animationState[STATE_PREVIOUS] == WALKING && animationState[STATE_CURRENT] == ATTACKING) {
 				if (animation[WALKING].animActive == true) {
 					resetAnimation = false;
 				}
 			}
-			else if (animationState[STATE_CURRENT] == WALKING && animationState[STATE_PREVIOUS] == SHOOTING) {
+			else if (animationState[STATE_CURRENT] == WALKING && animationState[STATE_PREVIOUS] == ATTACKING) {
 				resetAnimation = false;
 			}
 
 			//Same for the other way around.
-			if (animationState[STATE_PREVIOUS] == SHOOTING && animationState[STATE_CURRENT] == WALKING) { //If we were RUNNING and now RUNNING_SHOOTING, then no.
+			if (animationState[STATE_PREVIOUS] == ATTACKING && animationState[STATE_CURRENT] == WALKING) { //If we were RUNNING and now RUNNING_SHOOTING, then no.
 				resetAnimation = false;
 			}
-			else if (animationState[STATE_CURRENT] == SHOOTING && animationState[STATE_PREVIOUS] == WALKING) { //If we were RUNNING and now RUNNING_SHOOTING, then no.
+			else if (animationState[STATE_CURRENT] == ATTACKING && animationState[STATE_PREVIOUS] == WALKING) { //If we were RUNNING and now RUNNING_SHOOTING, then no.
 				resetAnimation = false;
 			}
 		}

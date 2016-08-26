@@ -71,6 +71,7 @@ public:
 	//virtual void Jump() = 0;
 
 	//Combat
+	virtual void AlertAllies(const double& deltaTime) {}
 	virtual void Alert();
 	virtual void UnAlert();
 
@@ -80,7 +81,7 @@ public:
 	virtual void Render() {}
 	virtual void RenderUI() {}
 	virtual void RenderBullets() {}
-	virtual void Reset() = 0;
+	virtual void Reset();
 
 };
 

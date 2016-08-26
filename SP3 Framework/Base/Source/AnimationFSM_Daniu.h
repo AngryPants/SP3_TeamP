@@ -62,7 +62,7 @@ public:
 
 		InitAnimation();
 	}
-	~AnimationFSM_Daniu() {
+	virtual ~AnimationFSM_Daniu() {
 		mesh = nullptr;
 	}
 
@@ -117,6 +117,7 @@ private:
 		if (mesh == nullptr) {
 			return;
 		}
+		mesh->animation = nullptr;
 		/*
 		IDLE, //Not Moving, On Ground, Not Shooting.
 		RUNNING, //Moving, On Ground, Not Shooting.
@@ -125,7 +126,7 @@ private:
 		JUMPING, //Moving/Not Moving, Off Ground, Not Shooting.
 		JUMPING_SHOOTING, //Moving/Not Moving, Off Ground, Shooting.
 		*/
-
+		
 		animationState[STATE_PREVIOUS] = animationState[STATE_CURRENT];
 
 		//Which animation should we be using?

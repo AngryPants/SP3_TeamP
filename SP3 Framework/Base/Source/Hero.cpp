@@ -332,7 +332,7 @@ void Hero::Move(const double& deltaTime) {
 	this->velocity += acceleration * static_cast<float>(deltaTime);
 
 	//Friction
-	float frictionCoefficient = 0.5f;
+	float frictionCoefficient = 1.0f;
 	float frictionAcceleration = (std::abs(gravity) * frictionCoefficient);
 	//cout << "Brawler: Friction Acceleration: " << frictionAcceleration * deltaTime << endl;
 	if (std::abs(velocity.x) > Math::EPSILON) {
@@ -554,8 +554,6 @@ void Hero::ItemInteraction(int row, int column, const double& deltaTime) {
 			break;
 		case TILE_SPIKE: {
 			if (TakeDamage(10)) {
-				/*velocity.x *= -1;
-				velocity.y *= -1;*/
 				if (velocity.LengthSquared() > Math::EPSILON)
 					Knockback(-velocity.Normalized() * 10);
 				else
@@ -564,8 +562,10 @@ void Hero::ItemInteraction(int row, int column, const double& deltaTime) {
 		}
 			break;
 		case TILE_HEALTH: {
-			currentHealth += 40;
-			ClearTileValue(TILE_INFO::ITEM, tileValue);
+			if (currentHealth < maxHealth) {
+				currentHealth += 40;
+				ClearTileValue(TILE_INFO::ITEM, tileValue);
+			}
 		}
 			break;
 		case TILE_BOOSTPAD_LEFT: {

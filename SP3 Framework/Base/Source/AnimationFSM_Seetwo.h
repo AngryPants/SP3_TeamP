@@ -62,7 +62,7 @@ public:
 
 		InitAnimation();
 	}
-	~AnimationFSM_Seetwo() {
+	virtual ~AnimationFSM_Seetwo() {
 		mesh = nullptr;
 	}
 
@@ -117,6 +117,7 @@ private:
 		if (mesh == nullptr) {
 			return;
 		}
+		mesh->animation = nullptr;
 		/*
 		IDLE, //Not Moving, On Ground, Not Shooting.
 		RUNNING, //Moving, On Ground, Not Shooting.

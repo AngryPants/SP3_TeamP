@@ -1,10 +1,10 @@
-#ifndef BRAWLER_H
-#define BRAWLER_H
+#ifndef GUNNER_H
+#define GUNNER_H
 
 #include "Enemy.h"
-#include "AnimationFSM_Brawler.h"
+#include "AnimationFSM_Gunner.h"
 
-class Brawler : public Enemy {
+class Gunner : public Enemy {
 
 private:
 	enum class STATE {
@@ -15,7 +15,7 @@ private:
 	};
 
 	STATE currentState;
-	AnimationFSM_Brawler animationFSM;
+	AnimationFSM_Gunner animationFSM;
 
 	//Movement
 	bool canWalkLeft;
@@ -40,19 +40,21 @@ private:
 	void Chase();
 	virtual void Attack();
 	virtual bool TakeDamage(const int& damage);
+	Mesh* bulletMesh;
 
 	//Dead
 	void Dead(const double& deltaTime);
 
 public:
 	//Constructor(s) & Destructor
-	Brawler(const string& sceneName);
-	virtual ~Brawler();
+	Gunner(const string& sceneName);
+	virtual ~Gunner();
 
 	//Virtual Function(s)
 	virtual void Update(const double& deltaTime);
 	virtual void Render();
 	virtual void RenderUI();
+	virtual void RenderBullets();
 	virtual void Reset();
 
 };

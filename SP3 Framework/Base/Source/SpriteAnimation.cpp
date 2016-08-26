@@ -3,6 +3,9 @@
 #include "Vertex.h"
 
 SpriteAnimation::SpriteAnimation(const string& meshName, unsigned int row, unsigned int col) : Mesh(meshName) {//, row(row), column(col) {
+
+	animation = nullptr;
+
 }
 
 SpriteAnimation::~SpriteAnimation() {
@@ -51,6 +54,7 @@ void SpriteAnimation::Reset(bool animActive) {
 
 	if (animation == nullptr) {
 		std::cout << name << " has no animation attached." << std::endl;
+		return;
 	}
 
 	animation->Reset(animActive);

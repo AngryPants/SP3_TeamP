@@ -44,6 +44,9 @@ Turret::Turret(const string& sceneName) : Enemy("Turret", sceneName) {
 	//Combat
 	cannotSeePlayerTimer = 5.0f;
 
+	//Bullet
+	bulletMesh = MeshBuilder::GetInstance().GenerateCircle("Turret Bullet", Color(1, 0, 0), 12, 0.5f);
+
 }
 
 Turret::~Turret() {
@@ -62,6 +65,7 @@ void Turret::Attack() {
 		bullet.radius = 0.1f;
 		bullet.lifetime = 5.0f;
 		bullet.position = position;
+		bullet.position.y += 0.5f;
 		bullet.velocity = GetForwardDirection() * 5.0f;
 		//AudioManager::GetInstance().PlayAudio2D("Turret_Shot.flac", false);
 	}
@@ -96,7 +100,6 @@ void Turret::Fall(const double& deltaTime) {
 void Turret::Update(const double& deltaTime) {
 
 	Character::Update(deltaTime);	
-	Fall(deltaTime);
 	isAttacking = false;
 
 	if (currentHealth <= 0.0f) {
@@ -118,6 +121,7 @@ void Turret::Update(const double& deltaTime) {
 		break;
 	}
 
+	Fall(deltaTime);
 	UpdateBullets(deltaTime);
 	animationFSM.SetIsShooting(isAttacking);
 	animationFSM.SetIsDead(isDead);
@@ -155,7 +159,6 @@ void Turret::RenderUI() {
 
 void Turret::RenderBullets() {
 
-	Mesh* bulletMesh = MeshBuilder::GetInstance().GenerateCircle("Turret Bullet", Color(1, 0, 0), 12, 0.5f);
 	//Mesh* bulletMesh = MeshBuilder::GetInstance().GenerateSphere("Turret Bullet", Color(1, 0, 0), 12, 12);
 	MS& modelStack = GraphicsManager::GetInstance().modelStack;
 	for (vector<Bullet*>::iterator bulletIter = bullets.begin(); bulletIter != bullets.end(); ++bulletIter) {
@@ -164,7 +167,7 @@ void Turret::RenderBullets() {
 			modelStack.PushMatrix();
 				modelStack.Translate(bulletPtr->position.x, bulletPtr->position.y, 0);
 				modelStack.Rotate(Math::RadianToDegree(atan2(bulletPtr->velocity.y, bulletPtr->velocity.x)), 0, 0, 1);
-				modelStack.Scale(0.3f, 0.3f, 1.0f);
+				modelStack.Scale(bulletPtr->radius * 2.0f, bulletPtr->radius * 2.0f, 1.0f);
 				RenderHelper::GetInstance().RenderMesh(*bulletMesh);
 			modelStack.PopMatrix();
 		}
@@ -229,11 +232,11 @@ void Turret::Dead(const double& deltaTime) {
 
 void Turret::Reset() {
 
-	isDead = false;
+	Enemy::Reset();
+
+	cannotSeePlayerTimer = 5.0f;
 	currentState = STATE::PATROL;
 	patrolTime = 3.0f;
-	cannotSeePlayerTimer = 5.0f;
-	currentHealth = maxHealth;
 
 }
 
