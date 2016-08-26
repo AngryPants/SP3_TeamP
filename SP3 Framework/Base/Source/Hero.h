@@ -44,7 +44,9 @@ protected:
 	Texture abilityBarCharging;
 	Texture abilityBarFull;
 	Texture abilityBarBorder;
-
+	Texture lifeCount;
+	Mesh* consolas;
+	Texture text;
 public:
 	//Constructor(s) & Destructor
 	Hero(const string& name, const string& sceneName);

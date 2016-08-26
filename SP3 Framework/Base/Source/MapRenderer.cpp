@@ -145,18 +145,23 @@ void MapRenderer::Render(TileSystem& tileSystem) {
 						RenderHelper::GetInstance().RenderMesh(*mesh, meshTextures[MESH_SPIKE], false);
 						break;
 					case TILE_HERO_SPAWN:
+						modelStack.Scale(3, 3, 3);
 						RenderHelper::GetInstance().RenderMesh(*mesh, meshTextures[MESH_HERO_SPAWN], false);
 						break;
-					case TILE_CHECKPOINT_UNSET: 
+					case TILE_CHECKPOINT_UNSET:
+						modelStack.Scale(3, 3, 3);
 						RenderHelper::GetInstance().RenderMesh(*mesh, meshTextures[MESH_CHECKPOINT_UNSET], false);
 						break;
 					case TILE_CHECKPOINT_SET:
+						modelStack.Scale(3, 3, 3);
 						RenderHelper::GetInstance().RenderMesh(*mesh, meshTextures[MESH_CHECKPOINT_SET], false);
 						break;				
 					case TILE_DOOR_OPEN:
+						modelStack.Scale(3, 3, 3); 
 						RenderHelper::GetInstance().RenderMesh(*sprite[SPRITE_DOOR_OPEN], spriteTextures[SPRITE_DOOR_OPEN], false);
 						break;
 					case TILE_DOOR_CLOSE:
+						modelStack.Scale(3, 3, 3); 
 						RenderHelper::GetInstance().RenderMesh(*sprite[SPRITE_DOOR_CLOSE], spriteTextures[SPRITE_DOOR_CLOSE], false);
 						break;
 					case TILE_BOOSTPAD_LEFT:

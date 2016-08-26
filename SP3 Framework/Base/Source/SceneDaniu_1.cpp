@@ -18,7 +18,7 @@ void SceneDaniu_1::Init() {
 
 	SceneBase::Init();
 
-	tileSystem.LoadFile("Level//Daniu//Daniu_Level_1.csv");
+	tileSystem.LoadFile("Level//Daniu//Daniu_Level_2.csv");
 	MapRenderer::GetInstance().Reset();
 
 	//AudioManager::GetInstance().PlayAudio2D("Audio//BGM//BGM_Daniu.mp3", true);
