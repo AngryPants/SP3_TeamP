@@ -38,6 +38,7 @@ protected:
 
 	//Mesh & Textures
 	Mesh* mesh;
+	Mesh* consolas;
 	Texture healthBarGreen;
 	Texture healthBarYellow;
 	Texture healthBarRed;
@@ -45,6 +46,8 @@ protected:
 	Texture abilityBarCharging;
 	Texture abilityBarFull;
 	Texture abilityBarBorder;
+	Texture lifeCount;
+	Texture text;
 
 public:
 	//Constructor(s) & Destructor

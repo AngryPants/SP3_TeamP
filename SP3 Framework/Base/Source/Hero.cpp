@@ -41,6 +41,9 @@ Hero::Hero(const string& name, const string& sceneName) : Character(name, sceneN
 	abilityBarBorder.textureArray[0] = TextureManager::GetInstance().AddTexture("borderAbility", "Image//Cyborg_Shooter//Characters//Heroes//MP_Border.tga");
 	abilityBarCharging.textureArray[0] = TextureManager::GetInstance().AddTexture("barCharging", "Image//Cyborg_Shooter//Characters//Heroes//Ability_BarCharging.tga");
 	abilityBarFull.textureArray[0] = TextureManager::GetInstance().AddTexture("barFull", "Image//Cyborg_Shooter//Characters//Heroes//Ability_BarFull.tga");
+	lifeCount.textureArray[0] = TextureManager::GetInstance().AddTexture("heart", "Image//Cyborg_Shooter//Characters//Heroes//LifeCount.tga");
+	consolas = MeshBuilder::GetInstance().GenerateText("Consolas", 16, 16);
+	text.textureArray[0] = TextureManager::GetInstance().AddTexture("text", "Image//Fonts//Consolas.tga");
 }
 
 Hero::~Hero() {
@@ -526,40 +529,68 @@ void Hero::RenderUI()
 
 	float hpBarScale = 34 * (static_cast<float>(currentHealth) / static_cast<float>(maxHealth));
 	hpBarScale = Math::Max(0.01f, hpBarScale);
+	Math::Clamp(hpBarScale, 0.01f, 34.f);
 	float hpBarPosition = -50 + hpBarScale * 0.5 + 9;
-	modelStack.PushMatrix();
-		modelStack.Translate(hpBarPosition, 46, 0);	
-		modelStack.Scale(hpBarScale, 8, 1);
-		if (currentHealth >= maxHealth * 0.667)
-			RenderHelper::GetInstance().RenderMesh(*mesh, healthBarGreen, false);
-		else if (currentHealth >= maxHealth * 0.333)
- 			RenderHelper::GetInstance().RenderMesh(*mesh, healthBarYellow, false);
-		else
-			RenderHelper::GetInstance().RenderMesh(*mesh, healthBarRed, false);
-	modelStack.PopMatrix(); 
 	
+	// HP Bar
 	modelStack.PushMatrix();
-		modelStack.Translate(-27, 46, 0);
-		modelStack.Scale(46, 8, 1);
-		RenderHelper::GetInstance().RenderMesh(*mesh, healthBarBorder, false);
-	modelStack.PopMatrix();
-	
-	float abilityBarScale = 34 * (static_cast<float>(abilityScore) / static_cast<float>(50));
-	abilityBarScale = Math::Max(0.01f, abilityBarScale);
-	float abilityBarPosition = -50 + abilityBarScale * 0.5 + 9;
-	modelStack.PushMatrix();
-		modelStack.Translate(abilityBarPosition, 40, 0);
-		modelStack.Scale(abilityBarScale, 8, 1);
-		if (!abilityAvailable)
-			RenderHelper::GetInstance().RenderMesh(*mesh, abilityBarCharging, false);
-		else if (abilityAvailable)
-			RenderHelper::GetInstance().RenderMesh(*mesh, abilityBarFull, false);
+	modelStack.Translate(hpBarPosition, 46, 0);
+	modelStack.Scale(hpBarScale, 8, 1);
+	if (currentHealth >= maxHealth * 0.667)
+		RenderHelper::GetInstance().RenderMesh(*mesh, healthBarGreen, false);
+	else if (currentHealth >= maxHealth * 0.333)
+		RenderHelper::GetInstance().RenderMesh(*mesh, healthBarYellow, false);
+	else
+		RenderHelper::GetInstance().RenderMesh(*mesh, healthBarRed, false);
 	modelStack.PopMatrix();
 
+	// HP Bar Border
 	modelStack.PushMatrix();
-		modelStack.Translate(-27, 40, 0);
-		modelStack.Scale(46, 8, 1);
-		RenderHelper::GetInstance().RenderMesh(*mesh, abilityBarBorder, false);
+	modelStack.Translate(-27, 46, 0);
+	modelStack.Scale(46, 8, 1);
+	RenderHelper::GetInstance().RenderMesh(*mesh, healthBarBorder, false);
+	modelStack.PopMatrix();
+
+	float abilityBarScale = 34 * (static_cast<float>(abilityScore) / static_cast<float>(50));
+	abilityBarScale = Math::Max(0.01f, abilityBarScale);
+	Math::Clamp(abilityBarScale, 0.01f, 34.f); 
+	float abilityBarPosition = -50 + abilityBarScale * 0.5 + 9;
+	
+	// MP Bar
+	modelStack.PushMatrix();
+	modelStack.Translate(abilityBarPosition, 40, 0);
+	modelStack.Scale(abilityBarScale, 8, 1);
+	if (!abilityAvailable)
+		RenderHelper::GetInstance().RenderMesh(*mesh, abilityBarCharging, false);
+	else if (abilityAvailable)
+		RenderHelper::GetInstance().RenderMesh(*mesh, abilityBarFull, false);
+	modelStack.PopMatrix();
+	
+	// MP Bar Border
+	modelStack.PushMatrix();
+	modelStack.Translate(-27, 40, 0);
+	modelStack.Scale(46, 8, 1);
+	RenderHelper::GetInstance().RenderMesh(*mesh, abilityBarBorder, false);
+	modelStack.PopMatrix();
+
+	// Lives
+	for (int i = 0; i < lives; ++i)
+	{
+		modelStack.PushMatrix();
+		modelStack.Translate(35 + (5 * i), 45, 0);
+		modelStack.Scale(3, 3, 3);
+		RenderHelper::GetInstance().RenderMesh(*mesh, lifeCount, false);
+		modelStack.PopMatrix();
+	}
+
+	// Score
+	std::string scoreToString;
+	scoreToString = std::to_string(score);
+
+	modelStack.PushMatrix();
+	modelStack.Translate(35, 40, 0);
+	modelStack.Scale(5, 5, 1);
+	RenderHelper::GetInstance().RenderText(*consolas, text, scoreToString, Color(0.831f, 0.686f, 0.215f));
 	modelStack.PopMatrix();
 }
 

@@ -98,7 +98,7 @@ void RenderTextDelegate(Mesh& mesh, Texture& texture, const string& text, Color 
 
 	shaderProgram->Update(shadowUniforms.textEnabled, true);
 	shaderProgram->Update(shadowUniforms.textColor, ToOpenglStruct(color), 1);
-	shaderProgram->Update(shadowUniforms.lightEnabled, true);
+	shaderProgram->Update(shadowUniforms.lightEnabled, false);
 
 	int booleans[MAX_TEXTURES] = { 1, 0, 0, 0, 0, 0, 0, 0 };
 	int ids[MAX_TEXTURES] = { 0, 1, 2, 3, 4, 5, 6, 7 };

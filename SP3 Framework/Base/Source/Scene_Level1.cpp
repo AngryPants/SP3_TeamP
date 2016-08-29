@@ -18,7 +18,7 @@ void Scene_Level1::Init() {
 
 	SceneBase::Init();
 
-	tileSystem.LoadFile("Levels//Level1//TM.csv");
+	tileSystem.LoadFile("Levels//Level1//TM1.csv");
 	SceneBase::ResetItems();
 	MapRenderer::GetInstance().Reset();
 
@@ -29,7 +29,7 @@ void Scene_Level1::Init() {
 	SceneBase::InitHero<Seetwo>();
 	SceneBase::InitCamera();
 	SceneBase::InitEnemies();
-	SceneBase::InitSawblades("Levels//Level1//SB.csv");
+	//SceneBase::InitSawblades("Levels//Level1//SB.csv");
 	
 	backgroundTextures[BACKGROUND_REAR].textureArray[0] = TextureManager::GetInstance().AddTexture("Background Rear", "Image//Cyborg_Shooter//Backgrounds//Background_Rear.tga");
 	nextScene = "Level 2";

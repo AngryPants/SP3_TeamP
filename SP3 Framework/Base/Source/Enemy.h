@@ -3,6 +3,7 @@
 
 #include "Hero.h"
 #include "TileIndex.h"
+#include "AudioManager.h"
 
 class AIState;
 
