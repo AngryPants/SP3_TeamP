@@ -273,6 +273,7 @@ void Gunner::Patrol(const double& deltaTime) {
 				currentState = STATE::COMBAT;
 			} else {
 				currentState = STATE::ALERT;
+				AudioManager::GetInstance().PlayAudio2D("Audio//Sound_Effects//alert.mp3", false);
 			}
 		}
 		isAlerted = true;
