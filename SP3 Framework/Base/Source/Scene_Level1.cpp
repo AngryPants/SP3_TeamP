@@ -24,9 +24,9 @@ void Scene_Level1::Init() {
 
 	//AudioManager::GetInstance().PlayAudio2D("Audio//BGM//BGM_Daniu.mp3", true);
 
-	//SceneBase::InitHero<Kifellah>();
+	SceneBase::InitHero<Kifellah>();
 	//SceneBase::InitHero<Daniu>();
-	SceneBase::InitHero<Seetwo>();
+	//SceneBase::InitHero<Seetwo>();
 	SceneBase::InitCamera();
 	SceneBase::InitEnemies();
 	//SceneBase::InitSawblades("Levels//Level1//SB.csv");

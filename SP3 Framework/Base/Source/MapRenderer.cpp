@@ -224,7 +224,7 @@ void MapRenderer::Render(TileSystem& tileSystem) {
 					break;
 					case TILE_DOOR: {
 						modelStack.PushMatrix();
-							modelStack.Scale(1, 2, 1);
+							modelStack.Scale(3, 3, 1);
 							if (CheckItemToggle(tileValue)) {
 								RenderHelper::GetInstance().RenderMesh(*mesh, meshTextures[MESH_DOOR_OPEN]);
 							} else {
