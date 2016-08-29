@@ -43,6 +43,7 @@ protected:
 	Texture healthBarYellow;
 	Texture healthBarRed;
 	Texture healthBarBorder;
+	Texture borderBackground;
 	Texture abilityBarCharging;
 	Texture abilityBarFull;
 	Texture abilityBarBorder;

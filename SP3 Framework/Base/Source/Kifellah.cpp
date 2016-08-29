@@ -154,7 +154,7 @@ bool Kifellah::TakeDamage(const int &damage)
 	}
 	if (damageCooldownTimer <= 0.0 && GetAbilityActive())
 	{
-		//AddAbilityScore(-damage);
+		AddAbilityScore(-damage);
 		damageCooldownTimer = damageCooldown;
 		return true;
 	}
