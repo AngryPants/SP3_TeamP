@@ -1,14 +1,14 @@
-#ifndef SCENE_DANIU_1_H
-#define SCENE_DANIU_1_H
+#ifndef SCENE_LEVEL_7_H
+#define SCENE_LEVEL_7_H
 
 #include "SceneBase.h"
 
-class SceneDaniu_1 : public SceneBase {
+class Scene_Level7 : public SceneBase {
 
 public:
 	//Constructor(s) & Destructor
-	SceneDaniu_1();
-	virtual ~SceneDaniu_1();
+	Scene_Level7();
+	virtual ~Scene_Level7();
 
 	//Virtual Function(s)
 	virtual void Init();

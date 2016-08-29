@@ -14,6 +14,7 @@ public:
 	//Function(s)
 	void Init();
 	void Run();
+	void Quit();
 	void Exit();
 
 private:

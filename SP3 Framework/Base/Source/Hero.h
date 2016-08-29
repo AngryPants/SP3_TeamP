@@ -20,15 +20,16 @@ private:
 protected:
 	//Stats
 	int lives;
-	int score;	
+	int score;
+	
+	//Level Objective
+	bool isAtExit;
+
+	//Checkpoint
 	TileCoord checkpoint;
 
 	//Movement
 	virtual void Move(const double& deltaTime);
-	//virtual void MoveLeft(const double& deltaTime);
-	//virtual void MoveRight(const double& deltaTime);
-	//virtual void MoveDown(const double& deltaTime);
-	//virtual void MoveUp(const double& deltaTime);
 	
 	//Item Interaction
 	bool canBoost; //Make sure we don't go too fast on boostpads
@@ -71,9 +72,14 @@ public:
 	void SetAbilityAvailable(const bool& abilityAvailable);
 	bool GetAbilityActive() const;
 	void SetAbilityActive(const bool& abilityActive);
+
+	//Level Objective
+	bool IsAtExit() const;
+
+	//Checkpoint
 	void SetCheckpoint(int row, int column);
 	TileCoord GetCheckpoint() const;
-
+	
 	//Others
 	void Respawn();
 
@@ -83,6 +89,7 @@ public:
 	virtual void Render();
 	virtual void RenderUI();
 	virtual void RenderBullets() = 0;
+	virtual void Reset();
 
 };
 

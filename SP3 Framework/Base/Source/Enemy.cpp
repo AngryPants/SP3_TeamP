@@ -2,7 +2,8 @@
 #include "CollisionSystem.h"
 
 //Constructor(s) & Destructor
-Enemy::Enemy(const string& name, const string& sceneName) : Character(name, sceneName) {
+Enemy::Enemy(const string& name, const string& sceneName) : Character(name, sceneName)
+{
 	viewAngle = 5.0f;
 	viewRange = 10.0f;
 		
@@ -89,17 +90,17 @@ void Enemy::SetState(AIState* state) {
 
 //Movement
 bool Enemy::IsOnEdgeLeft() {
-	return GetTileInfo(TILE_INFO::TERRAIN, CheckCollisionDown()[0]) == TILE_NOTHING;
+	return GetTileType(TILE_TYPE::TERRAIN, CheckCollisionDown()[0]) == TILE_NOTHING;
 }
 
 bool Enemy::IsOnEdgeRight() {
-	return GetTileInfo(TILE_INFO::TERRAIN, CheckCollisionDown().back()) == TILE_NOTHING;
+	return GetTileType(TILE_TYPE::TERRAIN, CheckCollisionDown().back()) == TILE_NOTHING;
 }
 
 bool Enemy::HitWallRight() {
 	vector<unsigned int>& collisionResult = CheckCollisionRight();
 	for (size_t i = 0; i < collisionResult.size(); ++i) {
-		if (GetTileInfo(TILE_INFO::TERRAIN, collisionResult[i]) != TILE_NOTHING) {
+		if (GetTileType(TILE_TYPE::TERRAIN, collisionResult[i]) != TILE_NOTHING) {
 			return true;
 		}
 	}
@@ -109,7 +110,7 @@ bool Enemy::HitWallRight() {
 bool Enemy::HitWallLeft() {
 	vector<unsigned int>& collisionResult = CheckCollisionLeft();
 	for (size_t i = 0; i < collisionResult.size(); ++i) {
-		if (GetTileInfo(TILE_INFO::TERRAIN, collisionResult[i]) != TILE_NOTHING) {
+		if (GetTileType(TILE_TYPE::TERRAIN, collisionResult[i]) != TILE_NOTHING) {
 			return true;
 		}
 	}
@@ -135,7 +136,7 @@ void Enemy::UpdateBullets(const double& deltaTime) {
 		}
 		bulletPtr->Update(deltaTime);
 		//Hurt Enemies
-		if (target != nullptr) {
+		if (target != nullptr && target->isDead == false) {
 			float timeToCollision = CollisionSystem::CircleCircle(bulletPtr->position, target->position, bulletPtr->radius, target->GetCollisionRadius(), bulletPtr->velocity, target->velocity);
 			if (timeToCollision > 0.0f && timeToCollision <= static_cast<float>(deltaTime)) {
 				target->TakeDamage(bulletPtr->damage);
@@ -156,7 +157,7 @@ void Enemy::UpdateBullets(const double& deltaTime) {
 				continue;
 			}
 			//Check if we hit a wall
-			unsigned int terrain = GetTileInfo(TILE_INFO::TERRAIN, tileSystem->TileValue(bulletCoord.row, bulletCoord.column));
+			unsigned int terrain = GetTileType(TILE_TYPE::TERRAIN, tileSystem->TileValue(bulletCoord.row, bulletCoord.column));
 			if (terrain != TILE_NOTHING) {
 				bulletPtr->isActive = false;
 			}
@@ -167,12 +168,8 @@ void Enemy::UpdateBullets(const double& deltaTime) {
 
 void Enemy::Reset() {
 
-	isMoving = false;
-	isAttacking = false;
-	isDead = false;
+	Character::Reset();
 	isAlerted = false;
-	isActive = true;
-	currentHealth = maxHealth;
 	hasAlertedAllies = false;
 
 }

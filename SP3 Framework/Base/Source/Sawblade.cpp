@@ -46,7 +46,7 @@ void Sawblade::DamageTarget(const double& deltaTime)
 		return;
 	}
 
-	if (target->isActive) {
+	if (target->isDead == false) {
 		float timeToCollision = CollisionSystem::CircleCircle(position, target->position, radius, target->GetCollisionRadius(), velocity, target->velocity);
 		if (timeToCollision > 0.0f && timeToCollision < static_cast<float>(deltaTime)) {
 			if (target->TakeDamage(damage))

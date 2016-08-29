@@ -8,11 +8,12 @@
 Seetwo::Seetwo(const string& sceneName) : Hero("Seetwo", sceneName)
 {
 
-	maxSpeed = 4;
+	maxSpeed = 5;
 	damage = 10;
 	maxHealth = 150;
 	currentHealth = maxHealth;
 	fireRate = 3.0;
+	animationFSM.SetFireRate(fireRate);
 	abilityAccumulatedTime = 0.0;
 
 	collisionRadius = 1.0f;
@@ -51,6 +52,7 @@ void Seetwo::Update(const double& deltaTime)
 	animationFSM.SetIsMoving(isMoving);
 	animationFSM.SetIsShooting(isAttacking);
 	animationFSM.SetOnGround(onGround);
+	animationFSM.SetIsDead(isDead);
 	animationFSM.Update(deltaTime);
 
 	//Hero::Respawn();
@@ -116,8 +118,8 @@ void Seetwo::Attack() {
 
 	if (InputManager::GetInstance().GetInputInfo().keyDown[INPUT_SHOOT]) {
 		isAttacking = true;
-		if (attackCooldown <= 0.0) {
-			attackCooldown = 1.0 / fireRate;
+		if (attackCooldownTimer <= 0.0) {
+			attackCooldownTimer = 1.0 / fireRate;
 			Bullet& bullet = FetchBullet();
 			bullet.isActive = true;
 			bullet.damage = 20.0f;

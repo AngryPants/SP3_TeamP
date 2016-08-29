@@ -25,8 +25,11 @@ MapRenderer::MapRenderer() {
 	meshTextures[MESH_SPIKE].textureArray[0] = TextureManager::GetInstance().AddTexture("Spike", "Image//Cyborg_Shooter//Tiles//Items//Item_Spike.tga");
 	meshTextures[MESH_HEALTH].textureArray[0] = TextureManager::GetInstance().AddTexture("Health", "Image//Cyborg_Shooter//Tiles//Items//Item_Health.tga");
 	meshTextures[MESH_HERO_SPAWN].textureArray[0] = TextureManager::GetInstance().AddTexture("Hero Spawn", "Image//Cyborg_Shooter//Tiles//Items//Item_Hero_Spawn.tga");
-	meshTextures[MESH_CHECKPOINT_SET].textureArray[0] = TextureManager::GetInstance().AddTexture("Checkpoint Unset", "Image//Cyborg_Shooter//Tiles//Items//Item_Checkpoint_Unset.tga");
-	meshTextures[MESH_CHECKPOINT_UNSET].textureArray[0] = TextureManager::GetInstance().AddTexture("Checkpoint Set", "Image//Cyborg_Shooter//Tiles//Items//Item_Checkpoint_Set.tga");
+	meshTextures[MESH_CHECKPOINT_SET].textureArray[0] = TextureManager::GetInstance().AddTexture("Checkpoint Unset", "Image//Cyborg_Shooter//Tiles//Items//Item_Checkpoint_Set.tga");
+	meshTextures[MESH_CHECKPOINT_UNSET].textureArray[0] = TextureManager::GetInstance().AddTexture("Checkpoint Set", "Image//Cyborg_Shooter//Tiles//Items//Item_Checkpoint_Unset.tga");
+	meshTextures[MESH_DOOR_OPEN].textureArray[0] = TextureManager::GetInstance().AddTexture("Door Open", "Image//Cyborg_Shooter//Tiles//Items//Item_Door_Open.tga");
+	meshTextures[MESH_DOOR_CLOSE].textureArray[0] = TextureManager::GetInstance().AddTexture("Door Close", "Image//Cyborg_Shooter//Tiles//Items//Item_Door_Close.tga");
+	meshTextures[MESH_OBJECTIVE].textureArray[0] = TextureManager::GetInstance().AddTexture("Objective", "Image//Cyborg_Shooter//Tiles//Items//Item_Objective.tga");
 
 	//Signs
 	meshTextures[MESH_ARROW_LEFT].textureArray[0] = TextureManager::GetInstance().AddTexture("Arrow Left", "Image//Cyborg_Shooter//Tiles//Signs//Sign_Arrow_Left.tga");
@@ -44,17 +47,7 @@ MapRenderer::MapRenderer() {
 	sprite[SPRITE_COIN] = MeshBuilder::GetInstance().GenerateSpriteAnimation("Coin", 1, 4);
 	sprite[SPRITE_COIN]->animation = &animation[SPRITE_COIN];
 	spriteTextures[SPRITE_COIN].textureArray[0] = TextureManager::GetInstance().AddTexture("Coin", "Image//Cyborg_Shooter//Tiles//Items//Item_Coin.tga");
-
-	animation[SPRITE_DOOR_OPEN].Set(2, 2, 0, 3, false, 0.5, true);
-	sprite[SPRITE_DOOR_OPEN] = MeshBuilder::GetInstance().GenerateSpriteAnimation("Door Open", 2, 2);
-	sprite[SPRITE_DOOR_OPEN]->animation = &animation[SPRITE_DOOR_OPEN];
-	spriteTextures[SPRITE_DOOR_OPEN].textureArray[0] = TextureManager::GetInstance().AddTexture("Door Open", "Image//Cyborg_Shooter//Tiles//Items//Item_Door_Open.tga");
-
-	animation[SPRITE_DOOR_CLOSE].Set(2, 2, 0, 3, false, 0.5, true);
-	sprite[SPRITE_DOOR_CLOSE] = MeshBuilder::GetInstance().GenerateSpriteAnimation("Door Close", 2, 2);
-	sprite[SPRITE_DOOR_CLOSE]->animation = &animation[SPRITE_DOOR_CLOSE];
-	spriteTextures[SPRITE_DOOR_CLOSE].textureArray[0] = TextureManager::GetInstance().AddTexture("Door Close", "Image//Cyborg_Shooter//Tiles//Items//Item_Door_Close.tga");
-
+	
 	animation[SPRITE_BOOSTPAD].Set(2, 2, 0, 4, true, 0.25, true);
 	sprite[SPRITE_BOOSTPAD] = MeshBuilder::GetInstance().GenerateSpriteAnimation("Boost Pad", 2, 2);
 	sprite[SPRITE_BOOSTPAD]->animation = &animation[SPRITE_BOOSTPAD];
@@ -100,21 +93,22 @@ void MapRenderer::Update(const double& deltaTime) {
 void MapRenderer::Render(TileSystem& tileSystem) {
 
 	unsigned int terrain = 0;
-	unsigned int item = 0;
+	unsigned int interactable = 0;
+	unsigned int item = 0;	
 	unsigned int sign = 0;
+	unsigned int spawn = 0;
 
 	MS& modelStack = GraphicsManager::GetInstance().modelStack;
 
 	for (int row = Math::Max(0, startRow); row < Math::Min(tileSystem.GetNumRows(), endRow); ++row) {
 		for (int column = Math::Max(0, startColumn); column < Math::Min(tileSystem.GetNumColumns(), endColumn); ++column) {
 			modelStack.PushMatrix();
-				modelStack.Translate(column * tileSystem.GetTileSize(), row * tileSystem.GetTileSize(), -5);
+				modelStack.Translate(column * tileSystem.GetTileSize(), row * tileSystem.GetTileSize(), -6);
 
-				terrain = GetTileInfo(TILE_INFO::TERRAIN, tileSystem.TileValue(row, column));
-				item = GetTileInfo(TILE_INFO::ITEM, tileSystem.TileValue(row, column));
-				sign = GetTileInfo(TILE_INFO::SIGN, tileSystem.TileValue(row, column));
+				unsigned int tileValue = tileSystem.TileValue(row, column);
 
-				//Render Terrain
+				//Terrain
+				terrain = GetTileType(TILE_TYPE::TERRAIN, tileValue);
 				switch (terrain) {
 					case 0:
 						//Do Nothing
@@ -130,94 +124,136 @@ void MapRenderer::Render(TileSystem& tileSystem) {
 						break;
 				}
 
+				//Signs (Arrows etc.)
+				sign = GetTileType(TILE_TYPE::SIGNS, tileValue);
 				modelStack.Translate(0, 0, 1);
-				//Render Items
-				switch (item) {
+				switch (sign) {
 					case 0:
-						break;
-					case TILE_COIN:
-						RenderHelper::GetInstance().RenderMesh(*sprite[SPRITE_COIN], spriteTextures[SPRITE_COIN], false);
-						break;
+						//Do Nothing
+					break;
+					case TILE_ARROW_LEFT:
+						RenderHelper::GetInstance().RenderMesh(*mesh, meshTextures[MESH_ARROW_LEFT], false);
+					break;
+					case TILE_ARROW_RIGHT:
+						RenderHelper::GetInstance().RenderMesh(*mesh, meshTextures[MESH_ARROW_RIGHT], false);
+					break;
+					case TILE_ARROW_UP:
+						RenderHelper::GetInstance().RenderMesh(*mesh, meshTextures[MESH_ARROW_UP], false);
+					break;
+					case TILE_ARROW_DOWN:
+						RenderHelper::GetInstance().RenderMesh(*mesh, meshTextures[MESH_ARROW_DOWN], false);
+					break;
+					case TILE_WARNING:
+						RenderHelper::GetInstance().RenderMesh(*mesh, meshTextures[MESH_WARNING], false);
+					break;
+					case TILE_WARNING_SAWBLADE:
+						RenderHelper::GetInstance().RenderMesh(*mesh, meshTextures[MESH_WARNING_SAWBLADE], false);
+					break;
+					case TILE_WARNING_SPIKE:
+						RenderHelper::GetInstance().RenderMesh(*mesh, meshTextures[MESH_WARNING_SPIKE], false);
+					break;
+					case TILE_ALERT_TRAMPOLINE:
+						RenderHelper::GetInstance().RenderMesh(*mesh, meshTextures[MESH_ALERT_TRAMPOLINE], false);
+					break;
+					case TILE_ALERT_EXIT:
+						RenderHelper::GetInstance().RenderMesh(*mesh, meshTextures[MESH_ALERT_EXIT], false);
+					break;
+				}
+				
+				//Interactables
+				interactable = GetTileType(TILE_TYPE::INTERACTABLES, tileValue);
+				modelStack.Translate(0, 0, 1);
+				switch (interactable) {
+					case 0:
+						//Do Nothing
+					break;
 					case TILE_ACID:
 						RenderHelper::GetInstance().RenderMesh(*mesh, meshTextures[MESH_ACID], false);
-						break;
+					break;
 					case TILE_SPIKE:
 						RenderHelper::GetInstance().RenderMesh(*mesh, meshTextures[MESH_SPIKE], false);
-						break;
-					case TILE_HERO_SPAWN:
-						RenderHelper::GetInstance().RenderMesh(*mesh, meshTextures[MESH_HERO_SPAWN], false);
-						break;
-					case TILE_CHECKPOINT_UNSET: 
-						RenderHelper::GetInstance().RenderMesh(*mesh, meshTextures[MESH_CHECKPOINT_UNSET], false);
-						break;
-					case TILE_CHECKPOINT_SET:
-						RenderHelper::GetInstance().RenderMesh(*mesh, meshTextures[MESH_CHECKPOINT_SET], false);
-						break;				
-					case TILE_DOOR_OPEN:
-						RenderHelper::GetInstance().RenderMesh(*sprite[SPRITE_DOOR_OPEN], spriteTextures[SPRITE_DOOR_OPEN], false);
-						break;
-					case TILE_DOOR_CLOSE:
-						RenderHelper::GetInstance().RenderMesh(*sprite[SPRITE_DOOR_CLOSE], spriteTextures[SPRITE_DOOR_CLOSE], false);
-						break;
+					break;
+					case TILE_BOOSTPAD_RIGHT:
+						RenderHelper::GetInstance().RenderMesh(*sprite[SPRITE_BOOSTPAD], spriteTextures[SPRITE_BOOSTPAD], false);
+					break;
 					case TILE_BOOSTPAD_LEFT:
 						modelStack.PushMatrix();
 							modelStack.Rotate(180, 0, 0, 1);
 							RenderHelper::GetInstance().RenderMesh(*sprite[SPRITE_BOOSTPAD], spriteTextures[SPRITE_BOOSTPAD], false);
 						modelStack.PopMatrix();
-						break;
-					case TILE_BOOSTPAD_RIGHT:
-						RenderHelper::GetInstance().RenderMesh(*sprite[SPRITE_BOOSTPAD], spriteTextures[SPRITE_BOOSTPAD], false);
-						break;
+					break;
 					case TILE_BOOSTPAD_DOWN:
 						modelStack.PushMatrix();
 							modelStack.Rotate(270, 0, 0, 1);
 							RenderHelper::GetInstance().RenderMesh(*sprite[SPRITE_BOOSTPAD], spriteTextures[SPRITE_BOOSTPAD], false);
 						modelStack.PopMatrix();
-						break;
+					break;
 					case TILE_BOOSTPAD_UP:
 						modelStack.PushMatrix();
 							modelStack.Rotate(90, 0, 0, 1);
 							RenderHelper::GetInstance().RenderMesh(*sprite[SPRITE_BOOSTPAD], spriteTextures[SPRITE_BOOSTPAD], false);
 						modelStack.PopMatrix();
-						break;
-					case TILE_HEALTH:
-						RenderHelper::GetInstance().RenderMesh(*mesh, meshTextures[MESH_HEALTH], false);
-						break;
+					break;
 				}
 
+				//Render Items
+				item = GetTileType(TILE_TYPE::ITEMS, tileValue);
 				modelStack.Translate(0, 0, 1);
-				//Signs (Arrows etc.)
-				switch (sign) {
+				switch (item) {
 					case 0:
-						break;
-					case TILE_ARROW_LEFT:
-						RenderHelper::GetInstance().RenderMesh(*mesh, meshTextures[MESH_ARROW_LEFT], false);
-						break;
-					case TILE_ARROW_RIGHT:
-						RenderHelper::GetInstance().RenderMesh(*mesh, meshTextures[MESH_ARROW_RIGHT], false);
-						break;
-					case TILE_ARROW_UP:
-						RenderHelper::GetInstance().RenderMesh(*mesh, meshTextures[MESH_ARROW_UP], false);
-						break;
-					case TILE_ARROW_DOWN:
-						RenderHelper::GetInstance().RenderMesh(*mesh, meshTextures[MESH_ARROW_DOWN], false);
-						break;
-					case TILE_WARNING:
-						RenderHelper::GetInstance().RenderMesh(*mesh, meshTextures[MESH_WARNING], false);
-						break;
-					case TILE_WARNING_SAWBLADE:
-						RenderHelper::GetInstance().RenderMesh(*mesh, meshTextures[MESH_WARNING_SAWBLADE], false);
-						break;
-					case TILE_WARNING_SPIKE:
-						RenderHelper::GetInstance().RenderMesh(*mesh, meshTextures[MESH_WARNING_SPIKE], false);
-						break;
-					case TILE_ALERT_TRAMPOLINE:
-						RenderHelper::GetInstance().RenderMesh(*mesh, meshTextures[MESH_ALERT_TRAMPOLINE], false);
-						break;
-					case TILE_ALERT_EXIT:
-						RenderHelper::GetInstance().RenderMesh(*mesh, meshTextures[MESH_ALERT_EXIT], false);
-						break;
+						//Do Nothing
+					break;
+					case TILE_COIN:
+						if (CheckItemToggle(tileValue))
+							RenderHelper::GetInstance().RenderMesh(*sprite[SPRITE_COIN], spriteTextures[SPRITE_COIN], false);
+					break;
+					case TILE_HEALTH:
+						if (CheckItemToggle(tileValue))	
+							RenderHelper::GetInstance().RenderMesh(*mesh, meshTextures[MESH_HEALTH], false);
+					break;
+					case TILE_CHECKPOINT: {
+						modelStack.PushMatrix();
+							modelStack.Scale(3, 3, 1);
+							if (CheckItemToggle(tileValue)) {
+								RenderHelper::GetInstance().RenderMesh(*mesh, meshTextures[MESH_CHECKPOINT_UNSET], false);
+							} else {
+								RenderHelper::GetInstance().RenderMesh(*mesh, meshTextures[MESH_CHECKPOINT_SET], false);
+							}
+						modelStack.PopMatrix();
+					}
+					break;
+					case TILE_DOOR: {
+						modelStack.PushMatrix();
+							modelStack.Scale(1, 2, 1);
+							if (CheckItemToggle(tileValue)) {
+								RenderHelper::GetInstance().RenderMesh(*mesh, meshTextures[MESH_DOOR_OPEN]);
+							} else {
+								RenderHelper::GetInstance().RenderMesh(*mesh, meshTextures[MESH_DOOR_CLOSE]);
+							}
+						modelStack.PopMatrix();
+					}
+					break;
+					case TILE_OBJECTIVE: {
+						if (CheckItemToggle(tileValue)) {
+							RenderHelper::GetInstance().RenderMesh(*mesh, meshTextures[MESH_OBJECTIVE]);
+						}
+					}
+					break;
 				}
+
+				//Render Spawn
+				spawn = GetTileType(TILE_TYPE::SPAWNS, tileValue);
+				modelStack.Translate(0, 0, 1);
+				switch (spawn) {
+					case TILE_SPAWN_HERO: {
+						modelStack.PushMatrix();
+						modelStack.Scale(3, 3, 1);
+							RenderHelper::GetInstance().RenderMesh(*mesh, meshTextures[MESH_HERO_SPAWN]);
+						modelStack.PopMatrix();
+					}
+					break;
+				}
+
 			modelStack.PopMatrix();
 		}
 	}

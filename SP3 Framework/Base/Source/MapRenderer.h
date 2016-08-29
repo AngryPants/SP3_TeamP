@@ -18,15 +18,22 @@ private:
 		MESH_WALL_2,
 		MESH_WALL_3,
 		
-		//Items
+		//Interactables
 		MESH_ACID,
 		MESH_SPIKE,
+
+		//Items
 		MESH_HEALTH,
-		MESH_HERO_SPAWN,
 		MESH_CHECKPOINT_UNSET,
 		MESH_CHECKPOINT_SET,
-		
-		//SIGNS
+		MESH_DOOR_OPEN,
+		MESH_DOOR_CLOSE,
+		MESH_OBJECTIVE,
+
+		//Spawn
+		MESH_HERO_SPAWN,
+
+		//Signs
 		MESH_ARROW_LEFT,
 		MESH_ARROW_RIGHT,
 		MESH_ARROW_UP,
@@ -44,9 +51,8 @@ private:
 	Texture meshTextures[NUM_MESH];
 
 	enum SPRITE_TYPE {
+		//Interactables
 		SPRITE_COIN,
-		SPRITE_DOOR_OPEN,
-		SPRITE_DOOR_CLOSE,
 		SPRITE_BOOSTPAD,
 
 		NUM_SPRITE,
@@ -63,6 +69,8 @@ private:
 	virtual ~MapRenderer();
 
 public:	
+	Texture partTexture;
+
 	void SetStartRow(const int& startRow);
 	void SetEndRow(const int& endRow);
 

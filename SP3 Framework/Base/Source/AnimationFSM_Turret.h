@@ -19,10 +19,13 @@ public:
 		this->isShooting[STATE_PREVIOUS] = this->isShooting[STATE_CURRENT];
 		this->isShooting[STATE_CURRENT] = isShooting;
 	}
+	void SetFireRate(float fireRate) {
+		this->fireRate = fireRate;
+		animation[SHOOTING].Set(3, 6, 6, 11, true, 1.0 / fireRate, true);
+	}
 	void SetIsDead(bool isDead) {
 		this->isDead = isDead;
 	}
-
 	SpriteAnimation& GetMesh() {
 		mesh->animation = &animation[animationState[STATE_CURRENT]];
 		return *this->mesh;
@@ -40,6 +43,7 @@ public:
 
 	//Constructor(s) & Destructor
 	AnimationFSM_Turret() {
+		fireRate = 1.0f;
 		for (unsigned int i = 0; i < static_cast<unsigned int>(NUM_STATE); ++i) {
 			isShooting[i] = false;
 			isDead = false;
@@ -72,6 +76,7 @@ private:
 
 	//Player States
 	bool isDead;
+	float fireRate;
 	bool isShooting[NUM_STATE];
 	ANIMATION animationState[NUM_STATE];
 	//MOVE_DIRECTION currentDirection;
@@ -80,10 +85,9 @@ private:
 	void InitAnimation() {
 		texture.textureArray[0] = TextureManager::GetInstance().AddTexture("Turret", "Image//Cyborg_Shooter//Characters//Enemies//Enemy_Turret.tga");
 		mesh = MeshBuilder::GetInstance().GenerateSpriteAnimation("Turret", 3, 6);
-		//mesh->animation = &animation[IDLE];
 		mesh->animation = nullptr;
 		animation[IDLE].Set(3, 6, 0, 5, true, 0.5, true);
-		animation[SHOOTING].Set(3, 6, 6, 11, true, 2.0, true);
+		animation[SHOOTING].Set(3, 6, 6, 11, true, 1.0 / fireRate, true);
 		animation[DEAD].Set(3, 6, 12, 16, false, 0.5, true);
 	}
 

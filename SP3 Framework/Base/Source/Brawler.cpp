@@ -11,7 +11,7 @@ Brawler::Brawler(const string& sceneName) : Enemy("Brawler", sceneName) {
 	currentState = STATE::PATROL;
 
 	//Health
-	maxHealth = 300.0f;
+	maxHealth = 100.0f;
 	currentHealth = maxHealth;
 	canWalkLeft = true;
 	canWalkRight = true;
@@ -22,10 +22,12 @@ Brawler::Brawler(const string& sceneName) : Enemy("Brawler", sceneName) {
 
 	//Combat
 	damage = 30.0f;
-	fireRate = 1.0f;
+	fireRate = 2.0f;
+	animationFSM.SetFireRate(fireRate);
 	collisionRadius = 1.0f;
 	attackRange = 1.0f;
-	attackCooldown = 1.0 / fireRate;
+	attackCooldownTimer = 1.0 / fireRate;	
+	cannotSeePlayerTimer = 5.0f;
 
 	//Line Of Sight
 	viewAngle = 15.0f;
@@ -35,6 +37,8 @@ Brawler::Brawler(const string& sceneName) : Enemy("Brawler", sceneName) {
 	alertTime = 3.0f;
 	alertTimer = alertTime;
 	alertRadius = 20.0f;
+	alertMesh = MeshBuilder::GetInstance().GenerateQuad("Alert Mesh");
+	alertTexture.textureArray[0] = TextureManager::GetInstance().AddTexture("Alert Warning Texture", "Image//Cyborg_Shooter//Characters//Enemies//Alert_Warning.tga");
 
 	//Collider
 	tileCollider.SetDetectionHeight(2.0f);
@@ -50,13 +54,6 @@ Brawler::Brawler(const string& sceneName) : Enemy("Brawler", sceneName) {
 	//Patrol
 	patrolTime = 3.0f;
 	shouldMove = false;
-
-	//Combat
-	cannotSeePlayerTimer = 5.0f;
-	alertTimer = 3.0f;
-
-	alertMesh = MeshBuilder::GetInstance().GenerateQuad("Alert Mesh");
-	alertTexture.textureArray[0] = TextureManager::GetInstance().AddTexture("Alert Warning Texture", "Image//Cyborg_Shooter//Characters//Enemies//Alert_Warning.tga");
 
 }
 
@@ -97,7 +94,7 @@ void Brawler::Move(const double& deltaTime) {
 	//cout << "Brawler Velocity(After): " << velocity << endl;
 
 	//Y-Axis
-	position.y += velocity.y * deltaTime;
+	position.y += velocity.y * static_cast<float>(deltaTime);
 
 	canWalkLeft = true;
 	canWalkRight = true;
@@ -111,7 +108,7 @@ void Brawler::Move(const double& deltaTime) {
 	}
 	vector<unsigned int> collisionResult = CheckCollisionUp();
 	for (unsigned int i = 0; i < collisionResult.size(); ++i) {
-		unsigned int terrain = GetTileInfo(TILE_INFO::TERRAIN, collisionResult[i]);
+		unsigned int terrain = GetTileType(TILE_TYPE::TERRAIN, collisionResult[i]);
 		if (terrain != TILE_NOTHING) {
 			int tileRow = tileSystem->GetTile(position.y + tileCollider.GetDetectionHeight() * 0.5f);
 			position.y = (static_cast<float>(tileRow - 1) + 0.5f) * tileSystem->GetTileSize() - tileCollider.GetDetectionHeight() * 0.5f;
@@ -123,7 +120,7 @@ void Brawler::Move(const double& deltaTime) {
 	collisionResult = CheckCollisionDown();
 	onGround = false;
 	for (unsigned int i = 0; i < collisionResult.size(); ++i) {
-		unsigned int terrain = GetTileInfo(TILE_INFO::TERRAIN, collisionResult[i]);
+		unsigned int terrain = GetTileType(TILE_TYPE::TERRAIN, collisionResult[i]);
 		if (terrain != 0) {
 			int tileRow = tileSystem->GetTile(position.y - tileCollider.GetDetectionHeight() * 0.5f);
 			position.y = (static_cast<float>(tileRow) + 0.5f) * tileSystem->GetTileSize() + tileCollider.GetDetectionHeight() * 0.5f;
@@ -165,7 +162,7 @@ void Brawler::AlertAllies(const double& deltaTime) {
 	if (alertTimer <= 0.0f) {
 		for (set<Enemy*>::iterator iter = (*allies).begin(); iter != (*allies).end(); ++iter) {
 			Enemy* allyPtr = *iter;
-			if (!allyPtr->isActive || allyPtr->isDead) {
+			if (allyPtr->isDead) {
 				continue;
 			}
 			allyPtr->Alert();
@@ -192,7 +189,7 @@ void Brawler::Combat(const double& deltaTime) {
 	}
 
 	if (!CanSeePlayer()) {
-		cannotSeePlayerTimer -= deltaTime;
+		cannotSeePlayerTimer -= static_cast<float>(deltaTime);
 	} else {
 		cannotSeePlayerTimer = 5.0f;
 	}
@@ -238,9 +235,10 @@ void Brawler::Chase() {
 void Brawler::Attack() {
 
 	isAttacking = true;
-	if (attackCooldown <= 0.0f) {
-		attackCooldown = 1.0f / fireRate;
+	if (attackCooldownTimer <= 0.0f) {
+		attackCooldownTimer = 1.0f / fireRate;
 		target->TakeDamage(damage);
+		cout << "Damaging Player" << endl;
 	}
 
 }
@@ -323,9 +321,9 @@ void Brawler::Update(const double& deltaTime) {
 
 	damageCooldown = Math::Max(0.0f, damageCooldown - static_cast<float>(deltaTime));
 	if (isAttacking) {
-		attackCooldown = Math::Max(0.0f, attackCooldown - static_cast<float>(deltaTime));
+		attackCooldownTimer = Math::Max(0.0f, attackCooldownTimer - static_cast<float>(deltaTime));
 	} else {
-		attackCooldown = 1.0 / fireRate;
+		attackCooldownTimer = 1.0 / fireRate;
 	}
 	isAttacking = false;
 	isMoving = false;

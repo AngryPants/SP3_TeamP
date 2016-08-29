@@ -13,6 +13,8 @@ Kifellah::Kifellah(const string& sceneName) : Hero("Kifellah", sceneName)
 	maxHealth = 100;
 	currentHealth = maxHealth;
 	fireRate = 3.0;
+	animationFSM.SetFireRate(fireRate);
+	damageCooldown = 0.5f;
 
 	collisionRadius = 1.0f;
 	
@@ -44,6 +46,7 @@ void Kifellah::Update(const double& deltaTime)
 	animationFSM.SetIsMoving(isMoving);
 	animationFSM.SetIsShooting(isAttacking);
 	animationFSM.SetOnGround(onGround);
+	animationFSM.SetIsDead(isDead);
 	animationFSM.Update(deltaTime);
 
 	//Hero::Respawn();
@@ -113,8 +116,8 @@ void Kifellah::Attack() {
 
 	if (InputManager::GetInstance().GetInputInfo().keyDown[INPUT_SHOOT]) {
 		isAttacking = true;
-		if (attackCooldown <= 0.0) {
-			attackCooldown = 1.0 / fireRate;
+		if (attackCooldownTimer <= 0.0) {
+			attackCooldownTimer = 1.0 / fireRate;
 			Bullet& bullet = FetchBullet();			
 			bullet.isActive = true;
 			bullet.damage = 20.0f;
@@ -142,17 +145,17 @@ void Kifellah::SpecialAbility(const double &deltaTime)
 
 bool Kifellah::TakeDamage(const int &damage)
 {
-	if (damageCooldown <= 0.0 && !GetAbilityActive())
+	if (damageCooldownTimer <= 0.0 && !GetAbilityActive())
 	{
 		this->currentHealth -= damage;
-		damageCooldown = 0.5f;
+		damageCooldownTimer = damageCooldown;
 		HitSound();
 		return true;
 	}
-	if (damageCooldown <= 0.0 && GetAbilityActive())
+	if (damageCooldownTimer <= 0.0 && GetAbilityActive())
 	{
-		AddAbilityScore(-damage);
-		damageCooldown = 0.5f;
+		//AddAbilityScore(-damage);
+		damageCooldownTimer = damageCooldown;
 		return true;
 	}
 	return false;

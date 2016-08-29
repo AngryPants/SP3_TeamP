@@ -32,6 +32,17 @@ void TileSystem::UpdateBoundaries() {
 
 }
 
+void TileSystem::Clear() {
+
+	//Empty our current tiles.
+	tileMap.clear();
+	numRows = 0;
+	numColumns = 0;
+
+	UpdateBoundaries();
+
+}
+
 bool TileSystem::LoadFile(const string& filePath) {
 
 	//Open the file.

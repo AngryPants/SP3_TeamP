@@ -23,6 +23,7 @@ Gunner::Gunner(const string& sceneName) : Enemy("Gunner", sceneName) {
 	//Combat
 	damage = 20.0f;
 	fireRate = 1.0;
+	animationFSM.SetFireRate(fireRate);
 	collisionRadius = 1.0f;
 	attackRange = 8.0f;
 
@@ -98,7 +99,7 @@ void Gunner::Move(const double& deltaTime) {
 	//cout << "Gunner Velocity(After): " << velocity << endl;
 
 	//Y-Axis
-	position.y += velocity.y * deltaTime;
+	position.y += velocity.y * static_cast<float>(deltaTime);
 
 	canWalkLeft = true;
 	canWalkRight = true;
@@ -112,7 +113,7 @@ void Gunner::Move(const double& deltaTime) {
 	}
 	vector<unsigned int> collisionResult = CheckCollisionUp();
 	for (unsigned int i = 0; i < collisionResult.size(); ++i) {
-		unsigned int terrain = GetTileInfo(TILE_INFO::TERRAIN, collisionResult[i]);
+		unsigned int terrain = GetTileType(TILE_TYPE::TERRAIN, collisionResult[i]);
 		if (terrain != TILE_NOTHING) {
 			int tileRow = tileSystem->GetTile(position.y + tileCollider.GetDetectionHeight() * 0.5f);
 			position.y = (static_cast<float>(tileRow - 1) + 0.5f) * tileSystem->GetTileSize() - tileCollider.GetDetectionHeight() * 0.5f;
@@ -124,7 +125,7 @@ void Gunner::Move(const double& deltaTime) {
 	collisionResult = CheckCollisionDown();
 	onGround = false;
 	for (unsigned int i = 0; i < collisionResult.size(); ++i) {
-		unsigned int terrain = GetTileInfo(TILE_INFO::TERRAIN, collisionResult[i]);
+		unsigned int terrain = GetTileType(TILE_TYPE::TERRAIN, collisionResult[i]);
 		if (terrain != 0) {
 			int tileRow = tileSystem->GetTile(position.y - tileCollider.GetDetectionHeight() * 0.5f);
 			position.y = (static_cast<float>(tileRow) + 0.5f) * tileSystem->GetTileSize() + tileCollider.GetDetectionHeight() * 0.5f;
@@ -135,7 +136,7 @@ void Gunner::Move(const double& deltaTime) {
 	}
 
 	//X-Axis
-	position.x += velocity.x * deltaTime;
+	position.x += velocity.x * static_cast<float>(deltaTime);
 	if (HitWallLeft()) {
 		int tileCol = tileSystem->GetTile(position.x - tileCollider.GetDetectionWidth() * 0.5f);
 		position.x = (static_cast<float>(tileCol) + 0.5f) * tileSystem->GetTileSize() + (tileCollider.GetDetectionWidth() * 0.5f);
@@ -166,7 +167,7 @@ void Gunner::AlertAllies(const double& deltaTime) {
 	if (alertTimer <= 0.0f) {
 		for (set<Enemy*>::iterator iter = (*allies).begin(); iter != (*allies).end(); ++iter) {
 			Enemy* allyPtr = *iter;
-			if (!allyPtr->isActive || allyPtr->isDead) {
+			if (allyPtr->isDead) {
 				continue;
 			}
 			allyPtr->Alert();
@@ -193,7 +194,7 @@ void Gunner::Combat(const double& deltaTime) {
 	}
 
 	if (!CanSeePlayer()) {
-		cannotSeePlayerTimer -= deltaTime;
+		cannotSeePlayerTimer -= static_cast<float>(deltaTime);
 	} else {
 		cannotSeePlayerTimer = 5.0f;
 	}
@@ -237,8 +238,8 @@ void Gunner::Chase() {
 void Gunner::Attack() {
 
 	isAttacking = true;
-	if (attackCooldown <= 0.0) {
-		attackCooldown = 1.0 / fireRate;
+	if (attackCooldownTimer <= 0.0) {
+		attackCooldownTimer = 1.0 / fireRate;
 		Bullet& bullet = FetchBullet();
 		//cout << "Fetching Bullet" << endl;
 		bullet.isActive = true;

@@ -70,9 +70,6 @@
     <ClCompile Include="Source\Kifellah.cpp">
       <Filter>Source Files\Game\Characters\Heroes</Filter>
     </ClCompile>
-    <ClCompile Include="Source\SceneDaniu_1.cpp">
-      <Filter>Source Files\Scene\DaniuLevels</Filter>
-    </ClCompile>
     <ClCompile Include="Source\TileSystem.cpp">
       <Filter>Source Files\Tiles</Filter>
     </ClCompile>
@@ -87,9 +84,6 @@
     </ClCompile>
     <ClCompile Include="Source\CollisionSystem.cpp">
       <Filter>Source Files\Others</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\GameInformation.cpp">
-      <Filter>Source Files\Gameplay</Filter>
     </ClCompile>
     <ClCompile Include="Source\MapRenderer.cpp">
       <Filter>Source Files\Tiles</Filter>
@@ -110,7 +104,7 @@
       <Filter>Source Files\Entity</Filter>
     </ClCompile>
     <ClCompile Include="Source\Sawblade.cpp">
-      <Filter>Source Files\Obstacles</Filter>
+      <Filter>Source Files\Game\Sawblade</Filter>
     </ClCompile>
     <ClCompile Include="Source\Daniu.cpp">
       <Filter>Source Files\Game\Characters\Heroes</Filter>
@@ -123,12 +117,6 @@
     </ClCompile>
     <ClCompile Include="Source\Enemy.cpp">
       <Filter>Source Files\Game\Characters\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\SceneMainMenu.cpp">
-      <Filter>Source Files\Scene\MainMenu</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\MainMenu.cpp">
-      <Filter>Source Files\Menu</Filter>
     </ClCompile>
     <ClCompile Include="Source\Animation.cpp">
       <Filter>Source Files\SpriteAnimation</Filter>
@@ -147,6 +135,15 @@
     </ClCompile>
     <ClCompile Include="Source\Gunner.cpp">
       <Filter>Source Files\Game\Characters\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameData.cpp">
+      <Filter>Source Files\Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene_Level1.cpp">
+      <Filter>Source Files\Scene\Levels</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene_Level2.cpp">
+      <Filter>Source Files\Scene\Levels</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -246,9 +243,6 @@
     <ClInclude Include="Source\Kifellah.h">
       <Filter>Header Files\Game\Characters\Heroes</Filter>
     </ClInclude>
-    <ClInclude Include="Source\SceneDaniu_1.h">
-      <Filter>Header Files\Scene\DaniuLevels</Filter>
-    </ClInclude>
     <ClInclude Include="Source\ShaderProgram.h">
       <Filter>Header Files\Graphics</Filter>
     </ClInclude>
@@ -264,9 +258,6 @@
     <ClInclude Include="Source\TileCollider.h">
       <Filter>Header Files\Tiles</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GameInformation.h">
-      <Filter>Header Files\Gameplay</Filter>
-    </ClInclude>
     <ClInclude Include="Source\MapRenderer.h">
       <Filter>Header Files\Tiles</Filter>
     </ClInclude>
@@ -274,7 +265,7 @@
       <Filter>Header Files\Gameplay</Filter>
     </ClInclude>
     <ClInclude Include="Source\Sawblade.h">
-      <Filter>Header Files\Game\Obstacles</Filter>
+      <Filter>Header Files\Game\Sawblades</Filter>
     </ClInclude>
     <ClInclude Include="Source\GameEntity.h">
       <Filter>Header Files\Game</Filter>
@@ -318,15 +309,6 @@
     <ClInclude Include="Source\Brawler.h">
       <Filter>Header Files\Game\Characters\Enemies</Filter>
     </ClInclude>
-    <ClInclude Include="Source\MainMenu.h">
-      <Filter>Header Files\Menu</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\InGameMenu.h">
-      <Filter>Header Files\Menu</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\SceneMainMenu.h">
-      <Filter>Header Files\Scene\MainMenu</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Particles.h">
       <Filter>Header Files\Graphics</Filter>
     </ClInclude>
@@ -335,6 +317,33 @@
     </ClInclude>
     <ClInclude Include="Source\Gunner.h">
       <Filter>Header Files\Game\Characters\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameData.h">
+      <Filter>Header Files\Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene_Level1.h">
+      <Filter>Header Files\Scene\Levels</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene_Level2.h">
+      <Filter>Header Files\Scene\Levels</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene_Level3.h">
+      <Filter>Header Files\Scene\Levels</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene_Level4.h">
+      <Filter>Header Files\Scene\Levels</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene_Level5.h">
+      <Filter>Header Files\Scene\Levels</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene_Level6.h">
+      <Filter>Header Files\Scene\Levels</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene_Level7.h">
+      <Filter>Header Files\Scene\Levels</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene_Level8.h">
+      <Filter>Header Files\Scene\Levels</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -398,9 +407,6 @@
     <Filter Include="Source Files\Entity">
       <UniqueIdentifier>{f2c21d18-4475-4dd7-8753-d528f2d07f3d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Scene\DaniuLevels">
-      <UniqueIdentifier>{856064fe-8ae6-4e30-806a-570e64025e84}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Tiles">
       <UniqueIdentifier>{8b398f2d-c5dd-4258-8ddb-c75ab5a04390}</UniqueIdentifier>
     </Filter>
@@ -413,23 +419,14 @@
     <Filter Include="Header Files\Input">
       <UniqueIdentifier>{f3f6ba48-634b-4673-a140-723b24bdc1c5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Obstacles">
-      <UniqueIdentifier>{9d6fd90f-baa9-4178-a983-9b234c8095eb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Scene">
       <UniqueIdentifier>{8020bce8-bbb6-4af1-b7c5-50ce94ae5721}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Scene\DaniuLevels">
-      <UniqueIdentifier>{b9701e39-4536-4f87-b496-0935ebeb9b2d}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\AnimationFSM">
       <UniqueIdentifier>{804fbf79-dd3b-4658-93cb-380f18bf8bfb}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Game">
       <UniqueIdentifier>{93eb0cff-13e1-4ef3-9b2c-bf774be9173f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Game\Obstacles">
-      <UniqueIdentifier>{09836863-a44c-42ea-a1a5-e9668759a2aa}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Game\Bullets">
       <UniqueIdentifier>{6d918a1e-5e81-46c5-835d-7db59aac2cec}</UniqueIdentifier>
@@ -461,17 +458,23 @@
     <Filter Include="Header Files\Menu">
       <UniqueIdentifier>{311e1a55-7a71-4f68-84d8-b13f1251fc90}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Scene\MainMenu">
-      <UniqueIdentifier>{7225b282-2297-4a7f-ad8a-e93806ba6436}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Scene\MainMenu">
-      <UniqueIdentifier>{a930423d-c617-4836-9e1c-22d6edf57d71}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Menu">
       <UniqueIdentifier>{2fc09192-93c0-4b0c-b680-9746953ec5ae}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Game\Characters\Heroes">
       <UniqueIdentifier>{959cbc48-ca56-4030-9407-5c568f1f0b57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game\Sawblades">
+      <UniqueIdentifier>{09836863-a44c-42ea-a1a5-e9668759a2aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Sawblade">
+      <UniqueIdentifier>{9d6fd90f-baa9-4178-a983-9b234c8095eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scene\Levels">
+      <UniqueIdentifier>{b9701e39-4536-4f87-b496-0935ebeb9b2d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Scene\Levels">
+      <UniqueIdentifier>{856064fe-8ae6-4e30-806a-570e64025e84}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
