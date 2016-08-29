@@ -23,6 +23,8 @@ public:
 	virtual void SetYaw(const float& rotation);
 	virtual void SetPitch(const float& rotation);
 
+	Vector3 GetRotation() const;
+
 	//Virtual Function(s)
 	virtual void Update(const double& deltaTime);
 

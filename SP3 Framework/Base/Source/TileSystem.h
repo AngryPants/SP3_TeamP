@@ -91,6 +91,7 @@ public:
 
 	//Function(s)
 	bool LoadFile(const string& filePath);
+	void Clear();
 	int GetNumRows() const;
 	int GetNumColumns() const;
 	void SetTileSize(const float& tileSize);

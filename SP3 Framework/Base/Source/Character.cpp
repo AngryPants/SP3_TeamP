@@ -1,14 +1,15 @@
 #include "Character.h"
 
 //Constructor(s) & Destructor
-Character::Character(const string& name, const string& sceneName) : GameEntity(name, sceneName)
+Character::Character(const string& name, const string& sceneName)
+: GameEntity(name, sceneName)
 {
-	//GameEntity
-	isActive = true;
-
 	//Direction
 	forwardDirection.Set(1, 0);
 	
+	//Bullets
+	bulletIndex = 0;
+
 	//Health
 	currentHealth = 1;
 	maxHealth = 1;
@@ -22,7 +23,7 @@ Character::Character(const string& name, const string& sceneName) : GameEntity(n
 	//Combat
 	damage = 1;
 	fireRate = 1.0f;
-	attackCooldown = 0.0;
+	attackCooldownTimer = 0.0;
 	damageCooldown = 0.0f;
 	damageCooldownTimer = 0.0f;
 	collisionRadius = 1.0f;		
@@ -34,19 +35,11 @@ Character::Character(const string& name, const string& sceneName) : GameEntity(n
 	//Is the character alive?
 	isDead = false;
 
-	//Bullets
-	bulletIndex = 0;
-
 }
 
-Character::~Character() {
-
-	while (bullets.size() > 0) {
-		Bullet* bulletPtr = *bullets.begin();
-		delete bulletPtr;
-		bullets.erase(bullets.begin());
-	}
-
+Character::~Character()
+{
+	ClearBullets();
 }
 
 //Health
@@ -85,24 +78,6 @@ float Character::GetMaxSpeed() const
 	return this->maxSpeed;
 }
 
-/*void Character::SetForwardDirection(const Vector2& forwardDirection) {
-
-	SetForwardDirection(forwardDirection.x, forwardDirection.y);
-
-}
-
-void Character::SetForwardDirection(const float& x, const float& y) {
-
-	this->forwardDirection.Set(x, y);
-
-	if (forwardDirection.IsZero()) {
-		forwardDirection.Set(1, 0);
-	} else if (!forwardDirection.IsUnitVector()) {
-		forwardDirection.Normalize();
-	}
-
-}*/
-
 Vector2 Character::GetForwardDirection() const {
 
 	return this->forwardDirection;
@@ -121,6 +96,19 @@ void Character::FaceRight() {
 
 }
 
+//Spawnpoint
+void Character::SetSpawnpoint(int row, int col) {
+
+	spawnpoint.Set(row, col);
+
+}
+
+TileCoord Character::GetSpawnpoint() const {
+
+	return spawnpoint;
+
+}
+
 //Combat
 void Character::SetDamage(const int& damage)
 {
@@ -135,7 +123,7 @@ int Character::GetDamage() const
 void Character::SetFireRate(const float& fireRate)
 {
 	this->fireRate = fireRate;
-	this->attackCooldown = 0.0;
+	this->attackCooldownTimer = 0.0;
 }
 
 float Character::GetFireRate() const
@@ -184,7 +172,6 @@ void Character::RemoveTileSystem()
 //Bullets
 Bullet& Character::FetchBullet() {
 
-	int bulletIndex = 0;
 	size_t vectorSize = bullets.size();
 
 	if (bulletIndex > vectorSize) {
@@ -218,6 +205,19 @@ Bullet& Character::FetchBullet() {
 	bulletIndex = vectorSize;
 
 	return *(*(std::next(bullets.begin(), bulletIndex)));
+
+}
+
+void Character::ClearBullets() {
+
+	while (bullets.size() > 0) {
+		Bullet* bulletPtr = *bullets.begin();
+		if (bulletPtr != nullptr) {
+			delete bulletPtr;
+		}
+		bullets.erase(bullets.begin());
+	}
+	bulletIndex = 0;
 
 }
 
@@ -414,7 +414,46 @@ unsigned int& Character::CheckCollisionCentre() {
 //Virtual Function(s)
 void Character::Update(const double& deltaTime) {
 
-	damageCooldown = Math::Max(0.0f, damageCooldown - static_cast<float>(deltaTime));
-	attackCooldown = Math::Max(0.0f, attackCooldown - static_cast<float>(deltaTime));
+	damageCooldownTimer = Math::Max(0.0f, damageCooldownTimer - static_cast<float>(deltaTime));
+	attackCooldownTimer = Math::Max(0.0f, attackCooldownTimer - static_cast<float>(deltaTime));
+
+}
+
+void Character::Render() {
+}
+
+void Character::RenderUI() {
+}
+
+void Character::Reset() {
+
+	//Spawnpoint
+	if (tileSystem != nullptr) {
+		position.Set(tileSystem->GetTileSize() * spawnpoint.column, tileSystem->GetTileSize() * spawnpoint.row);
+	} else {
+		position.SetZero();
+	}
+
+	//Movement
+	velocity.SetZero();
+	onGround = true;
+	isMoving = false;
+
+	//Bullet
+	ClearBullets();
+
+	//Combat
+	isAttacking = false;
+	attackCooldownTimer = 0.0f;
+	damageCooldownTimer = 0.0f;
+
+	//Direction
+	FaceRight();
+
+	//Health
+	currentHealth = maxHealth;
+
+	//Is the character alive?
+	isDead = false;
 
 }

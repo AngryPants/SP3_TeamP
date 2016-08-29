@@ -26,10 +26,10 @@ public:
 		this->isShooting[STATE_PREVIOUS] = this->isShooting[STATE_CURRENT];
 		this->isShooting[STATE_CURRENT] = isShooting;
 	}
-	/*void SetOnGround(bool onGround) {
-		this->onGround[STATE_PREVIOUS] = this->onGround[STATE_CURRENT];
-		this->onGround[STATE_CURRENT] = onGround;
-	}*/
+	void SetFireRate(float fireRate) {
+		this->fireRate = fireRate;
+		animation[SHOOTING].Set(4, 9, 18, 21, true, 1.0 / fireRate, true);
+	}
 	void SetIsDead(bool isDead) {
 		this->isDead = isDead;
 	}
@@ -51,8 +51,7 @@ public:
 
 	//Constructor(s) & Destructor
 	AnimationFSM_Gunner() {
-		//currentDirection = MOVE_DIRECTION::RIGHT;
-
+		fireRate = 1.0f;
 		for (unsigned int i = 0; i < static_cast<unsigned int>(NUM_STATE); ++i) {
 			isMoving[i] = false;
 			isShooting[i] = false;
@@ -89,11 +88,10 @@ private:
 
 	//Player States
 	bool isMoving[NUM_STATE];
-	//bool onGround[NUM_STATE];
+	float fireRate;
 	bool isShooting[NUM_STATE];
 	bool isDead;
 	ANIMATION animationState[NUM_STATE];
-	//MOVE_DIRECTION currentDirection;
 
 	//Load all our SpriteAnimations, Animations & Textures.
 	void InitAnimation() {
@@ -102,7 +100,7 @@ private:
 		mesh->animation = &animation[IDLE];
 		animation[IDLE].Set(4, 9, 0, 5, true, 1.0, true);
 		animation[WALKING].Set(4, 9, 9, 17, true, 1.0, true);
-		animation[SHOOTING].Set(4, 9, 18, 21, true, 1.0, true);
+		animation[SHOOTING].Set(4, 9, 18, 21, true, 1.0 / fireRate, true);
 		animation[DEAD].Set(4, 9, 27, 31, false, 1.0, true);
 	}
 

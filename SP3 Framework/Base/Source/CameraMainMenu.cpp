@@ -80,3 +80,9 @@ void CameraMainMenu::Update(const double& deltaTime) {
 	CalculateVectors();
 
 }
+
+Vector3 CameraMainMenu::GetRotation() const {
+
+	return this->rotation;
+
+}

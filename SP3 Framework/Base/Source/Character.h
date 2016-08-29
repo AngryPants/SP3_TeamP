@@ -22,6 +22,9 @@ private:
 	int bulletIndex;
 
 protected:
+	//Spawnpoint
+	TileCoord spawnpoint;
+
 	//Health
 	float currentHealth;
 	float maxHealth;	
@@ -36,14 +39,15 @@ protected:
 	bool isAttacking;
 	int damage; //How much damage do we deal.
 	float fireRate;	//How many bullets per second can we shoot
-	float attackCooldown; //How long until we can shoot again.
+	float attackCooldownTimer; //How long until we can shoot again.
 	float damageCooldown; //How long until we can take damage again.
-	float damageCooldownTimer;
+	float damageCooldownTimer; //The timer for damage cooldown
 	float collisionRadius; //The radius of which the character will collide with bullets etc.
 
 	//Bullets
 	vector<Bullet*> bullets;
 	Bullet& FetchBullet();
+	void ClearBullets();
 	virtual void RenderBullets() = 0;
 
 	//Tile System
@@ -67,10 +71,15 @@ public:
 	//Movement (Maximum Horizontal Speed)
 	void SetMaxSpeed(const float& speed);
 	float GetMaxSpeed() const;
-	//bool IsMovingBackwards() const;
+	
+	//Direction
 	Vector2 GetForwardDirection() const; //Where our character is facing
 	void FaceLeft();
 	void FaceRight();
+
+	//Spawnpoint
+	void SetSpawnpoint(int row, int col);
+	TileCoord GetSpawnpoint() const;
 
 	//Combat
 	void SetDamage(const int& damage);
@@ -96,11 +105,9 @@ public:
 
 	//Virtual Function(s)
 	virtual void Update(const double& deltaTime);
-	virtual void Render() {}
-	virtual void RenderUI() {}
-	virtual void Reset() {
-		currentHealth = maxHealth;
-	}
+	virtual void Render();
+	virtual void RenderUI();
+	virtual void Reset();
 
 };
 

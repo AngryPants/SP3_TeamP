@@ -26,10 +26,10 @@ public:
 		this->isAttacking[STATE_PREVIOUS] = this->isAttacking[STATE_CURRENT];
 		this->isAttacking[STATE_CURRENT] = isAttacking;
 	}
-	/*void SetOnGround(bool onGround) {
-		this->onGround[STATE_PREVIOUS] = this->onGround[STATE_CURRENT];
-		this->onGround[STATE_CURRENT] = onGround;
-	}*/
+	void SetFireRate(float fireRate) {
+		this->fireRate = fireRate;
+		animation[ATTACKING].Set(4, 11, 22, 31, true, 1.0 / fireRate, true);
+	}
 	void SetIsDead(bool isDead) {
 		this->isDead = isDead;
 	}
@@ -51,12 +51,10 @@ public:
 
 	//Constructor(s) & Destructor
 	AnimationFSM_Brawler() {
-		//currentDirection = MOVE_DIRECTION::RIGHT;
-
+		fireRate = 1.0f;
 		for (unsigned int i = 0; i < static_cast<unsigned int>(NUM_STATE); ++i) {
 			isMoving[i] = false;
 			isAttacking[i] = false;
-			//onGround[i] = true;
 			isDead = false;
 		}
 
@@ -89,8 +87,8 @@ private:
 
 	//Player States
 	bool isMoving[NUM_STATE];
-	//bool onGround[NUM_STATE];
 	bool isAttacking[NUM_STATE];
+	float fireRate;
 	bool isDead;
 	ANIMATION animationState[NUM_STATE];
 	//MOVE_DIRECTION currentDirection;
@@ -102,7 +100,7 @@ private:
 		mesh->animation = &animation[IDLE];
 		animation[IDLE].Set(4, 11, 0, 5, true, 1.0, true);
 		animation[WALKING].Set(4, 11, 11, 21, true, 1.0, true);
-		animation[ATTACKING].Set(4, 11, 22, 31, true, 1.0, true);
+		animation[ATTACKING].Set(4, 11, 22, 29, true, 1.0, true);
 		animation[DEAD].Set(4, 11, 33, 37, false, 1.0, true);
 	}
 

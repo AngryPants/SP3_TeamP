@@ -15,9 +15,6 @@ public:
 	};
 
 	//Public Function(s)
-	/*void SetDirection(MOVE_DIRECTION direction) {
-	currentDirection = direction;
-	}*/
 	void SetIsMoving(bool isMoving) {
 		this->isMoving[STATE_PREVIOUS] = this->isMoving[STATE_CURRENT];
 		this->isMoving[STATE_CURRENT] = isMoving;
@@ -25,6 +22,10 @@ public:
 	void SetIsShooting(bool isShooting) {
 		this->isShooting[STATE_PREVIOUS] = this->isShooting[STATE_CURRENT];
 		this->isShooting[STATE_CURRENT] = isShooting;
+	}
+	void SetFireRate(float fireRate) {
+		this->fireRate = fireRate;
+		animation[SHOOTING].Set(6, 10, 30, 34, true, 1.0 / fireRate, true);
 	}
 	void SetOnGround(bool onGround) {
 		this->onGround[STATE_PREVIOUS] = this->onGround[STATE_CURRENT];
@@ -51,8 +52,7 @@ public:
 
 	//Constructor(s) & Destructor
 	AnimationFSM_Daniu() {
-		//currentDirection = MOVE_DIRECTION::RIGHT;
-
+		fireRate = 1.0f;
 		for (unsigned int i = 0; i < static_cast<unsigned int>(NUM_STATE); ++i) {
 			isMoving[i] = false;
 			isShooting[i] = false;
@@ -94,6 +94,7 @@ private:
 	bool isDead;
 	bool isMoving[NUM_STATE];
 	bool isShooting[NUM_STATE];
+	float fireRate;
 	bool onGround[NUM_STATE];
 	ANIMATION animationState[NUM_STATE];
 	//MOVE_DIRECTION currentDirection;
@@ -106,8 +107,8 @@ private:
 		animation[IDLE].Set(6, 10, 0, 9, true, 1.0, true);
 		animation[RUNNING].Set(6, 10, 10, 19, true, 1.0, true);
 		animation[JUMPING].Set(6, 10, 20, 29, false, 1.0, true);
-		animation[SHOOTING].Set(6, 10, 30, 34, true, 1.0 / 3.0, true);
-		animation[RUNNING_SHOOTING].Set(6, 10, 40, 49, true, 1.0, true);
+		animation[SHOOTING].Set(6, 10, 30, 34, true, 1.0 / fireRate, true);
+		animation[RUNNING_SHOOTING].Set(6, 10, 40, 49, true, 1.0 / fireRate, true);
 		animation[JUMPING_SHOOTING].Set(6, 10, 40, 49, true, 1.0, true);
 		animation[DEAD].Set(6, 10, 50, 59, false, 1.0, true);
 	}

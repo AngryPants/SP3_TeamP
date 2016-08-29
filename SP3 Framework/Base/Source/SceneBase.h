@@ -14,25 +14,57 @@ using std::map;
 
 class SceneBase : public Scene {
 
+private:
+	//Initialisation
+	void InitShader();
+
 protected:
+	//Minimum Frame Rate
+	static const double minFPS;
+	
+	//State of the scene
+	enum class STATE {
+		PLAY,
+		PAUSE,
+		END,
+	};
+
+	STATE currentState;
+
+	//States
+	void Play(const double& deltaTime);
+	void Pause(const double& deltaTime);
+	void End(const double& deltaTime);
+
+	//Text
+	Mesh* font;
+	Texture fontTexture;
+
+	//Backgrounds
 	enum BACKGROUND {
 		BACKGROUND_REAR,
 		BACKGROUND_MIDDLE,
 		BACKGROUND_FRONT,
-
+		BACKGROUND_PAUSE,
 		NUM_BACKGROUND,
 	};
-
 	Mesh* background;
 	Texture backgroundTextures[NUM_BACKGROUND];
 
-	double minFPS;
+	//Camera
 	Camera2D* camera;
+
+	//Characters
 	Hero* hero;
 	set<Enemy*> enemies;
-	map<int, Sawblade*> sawblades;
-	TileSystem tileSystem;
 
+	//Others
+	TileSystem tileSystem;
+	TileCoord objective;
+	bool completedObjective;
+	map<unsigned int, Sawblade*> sawblades;	
+
+	//Initialisation
 	template <class Type>
 	void InitHero() {
 		if (is_base_of<Hero, Type>::value == false) {
@@ -50,24 +82,51 @@ protected:
 		//Spawn the player.
 		for (int row = 0; row < tileSystem.GetNumRows(); ++row) {
 			for (int col = 0; col < tileSystem.GetNumColumns(); ++col) {
-				if (GetTileInfo(TILE_INFO::ITEM, tileSystem.TileValue(row, col)) == TILE_HERO_SPAWN) {
+				if (GetTileType(TILE_TYPE::SPAWNS, tileSystem.TileValue(row, col)) == TILE_SPAWN_HERO) {
 					hero->position.Set(col * tileSystem.GetTileSize(), row * tileSystem.GetTileSize());
+					hero->SetSpawnpoint(row, col);
 					hero->SetCheckpoint(row, col);
 					break;
 				}
 			}
 		}
 	}
-
+	void InitObjective();
 	virtual void InitCamera();
 	virtual void InitEnemies();
-	virtual void InitSawblades();
+	virtual bool InitSawblades(const string& filePath);
 	virtual void InitBackgrounds();
 
+	//Rendering
 	virtual void RenderBackground();
+	virtual void RenderPauseScreen();
+	virtual void RenderEndScreen();
 
-private:
-	void InitShader();
+	//Reset
+	virtual void Reset();
+	virtual void ResetItems();
+	virtual void ResetEnemies();
+	virtual void ResetHero();
+	virtual void ResetSawblades();
+
+	//Minimum Frame Rate
+	double GetMinimumFPS() const;
+
+	//Scene Transition
+	string nextScene;
+	void OpenDoors();
+	void CloseDoors();
+	void Quit();
+	void GoToNextLevel();
+
+	//Debouncing
+	enum KEYS {
+		SELECT,
+		BACK,
+		NUM_KEYS,
+	};
+
+	bool isKeyDown[static_cast<unsigned int>(NUM_KEYS)];
 
 public:
 	//Constructor(s) & Destructor

@@ -1,0 +1,7 @@
+Unlocked Parts:
+Head=Kifellah,Daniu,
+Body=Kifellah,
+Arms=Kifellah,
+Legs=Kifellah,
+Highscores:
+Level1=2901

@@ -83,7 +83,7 @@ bool EntityManager::AddEntity(const string& sceneName, EntityBase& entity) {
 		mapIter->second.insert(&entity);
 	}
 
-	cout << "Added " << entity.name << "." << endl;
+	cout << "EntityManager will add " << entity.name << " in the next update." << endl;
 
 	return true;
 
@@ -147,6 +147,7 @@ void EntityManager::AddEntities(const string& sceneName) {
 	
 	for (EntitySet::iterator setIter = addMapIter->second.begin(); setIter != addMapIter->second.end(); ++setIter) {
 		mapIter->second.insert(*setIter);
+		cout << "Added " << (*setIter)->name << "." << endl;
 	}
 	addMapIter->second.clear();
 
@@ -156,7 +157,7 @@ void EntityManager::RemoveEntities(const string& sceneName) {
 
 	EntityMap::iterator mapIter = entityMap.find(sceneName);
 	if (mapIter == entityMap.end()) {
-		cout << "Cannot remove entities as scene does not exist." << endl;
+		cout << "Cannot remove entities as scene " << sceneName << " does not exist in the SceneManager." << endl;
 		return;
 	}
 
@@ -200,7 +201,8 @@ void EntityManager::DestroyScene(const string& sceneName) {
 
 	EntityMap::iterator mapIter = entityMap.find(sceneName);
 	if (mapIter == entityMap.end()) {
-		cout << "EntityManager has nothing to update." << endl;
+		cout << "EntityManager has nothing to destroy." << endl;
+		return;
 	}
 
 	for (EntitySet::iterator setIter = mapIter->second.begin(); setIter != mapIter->second.end(); ++setIter) {

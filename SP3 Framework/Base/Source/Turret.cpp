@@ -17,6 +17,7 @@ Turret::Turret(const string& sceneName) : Enemy("Turret", sceneName) {
 	//Combat
 	damage = 10.0f;
 	fireRate = 0.5;
+	animationFSM.SetFireRate(fireRate);
 	collisionRadius = 1.0f;
 
 	//Line Of Sight
@@ -56,8 +57,8 @@ Turret::~Turret() {
 void Turret::Attack() {
 	
 	isAttacking = true;
-	if (attackCooldown <= 0.0) {
-		attackCooldown = 1.0 / fireRate;
+	if (attackCooldownTimer <= 0.0) {
+		attackCooldownTimer = 1.0 / fireRate;
 		Bullet& bullet = FetchBullet();
 		//cout << "Fetching Bullet" << endl;
 		bullet.isActive = true;
@@ -84,7 +85,7 @@ void Turret::Fall(const double& deltaTime) {
 	vector<unsigned int>collisionResult = CheckCollisionDown();
 	onGround = false;
 	for (unsigned int i = 0; i < collisionResult.size(); ++i) {
-		unsigned int terrain = GetTileInfo(TILE_INFO::TERRAIN, collisionResult[i]);
+		unsigned int terrain = GetTileType(TILE_TYPE::TERRAIN, collisionResult[i]);
 		if (terrain != 0) {
 			int tileRow = tileSystem->GetTile(position.y - tileCollider.GetDetectionHeight() * 0.5f);
 			position.y = (static_cast<float>(tileRow) + 0.5f) * tileSystem->GetTileSize() + tileCollider.GetDetectionHeight() * 0.5f;
