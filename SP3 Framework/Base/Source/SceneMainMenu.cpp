@@ -63,10 +63,9 @@ void SceneMainMenu::Init()
 	texture[MENUGUI_MAIN_FOUR].textureArray[0] = TextureManager::GetInstance().AddTexture("Option Four", "Image//Cyborg_Shooter//MenuUI//How_To_Play.tga");
 	texture[MENUGUI_MAIN_FIVE].textureArray[0] = TextureManager::GetInstance().AddTexture("Option Five", "Image//Cyborg_Shooter//MenuUI//Quit.tga");
 
-	texture[MENUGUI_OPTION_ONE].textureArray[0] = TextureManager::GetInstance().AddTexture("Volume", "Image//Cyborg_Shooter//MenuUI//Volume.tga");
-	texture[MENUGUI_OPTION_TWO].textureArray[0] = TextureManager::GetInstance().AddTexture("High Score", "Image//Cyborg_Shooter//MenuUI//HighScore.tga");
-	texture[MENUGUI_OPTION_THREE].textureArray[0] = TextureManager::GetInstance().AddTexture("Erase Data", "Image//Cyborg_Shooter//MenuUI//Erase_Data.tga");
-	texture[MENUGUI_OPTION_FOUR].textureArray[0] = TextureManager::GetInstance().AddTexture("Back", "Image//Cyborg_Shooter//MenuUI//Back.tga");
+	texture[MENUGUI_OPTION_ONE].textureArray[0] = TextureManager::GetInstance().AddTexture("High Score", "Image//Cyborg_Shooter//MenuUI//HighScore.tga");
+	texture[MENUGUI_OPTION_TWO].textureArray[0] = TextureManager::GetInstance().AddTexture("Erase Data", "Image//Cyborg_Shooter//MenuUI//Erase_Data.tga");
+	texture[MENUGUI_OPTION_THREE].textureArray[0] = TextureManager::GetInstance().AddTexture("Back", "Image//Cyborg_Shooter//MenuUI//Back.tga");
 
 	texture[MENUGUI_CONTINUEGAME_DISPLAY].textureArray[0] = TextureManager::GetInstance().AddTexture("Display", "Image//Cyborg_Shooter//MenuUI//ChooseLevel.tga");
 	texture[MENUGUI_CONTINUEGAME_OPTIONS].textureArray[0] = TextureManager::GetInstance().AddTexture("Level 1", "Image//Cyborg_Shooter//MenuUI//Level1.tga");
@@ -157,26 +156,6 @@ void SceneMainMenu::UpdateContinueGameToScene()
 
 }
 
-void SceneMainMenu::RenderInTransition()
-{
-	if (menuChange)
-	{
-		// From Main menu to options
-		if (mainmenu.menu == MainMenu::MENU::MENU_OPTION && mainmenu.option == MainMenu::OPTION::OPTION_MAINOPTION)
-		{
-
-		}
-
-		// From Options to Main Menu
-		if (mainmenu.menu == MainMenu::MENU::MENU_MAINMENU)
-		{
-
-		}
-
-		menuChange = false;
-	}
-}
-
 void SceneMainMenu::PointerPositionUpdate()
 {
 	if (!mainmenu.transitionInProgress)
@@ -191,6 +170,12 @@ void SceneMainMenu::PointerPositionUpdate()
 		{
 			pointerPositionY = defaultPointerPositionY;
 			menuChange = true;
+		}
+
+		if (mainmenu.option == MainMenu::OPTION::OPTION_ERASEDATA)
+		{
+			pointerPositionX = -10;
+			pointerPositionY = 1;
 		}
 
 		if (mainmenu.menu == MainMenu::MENU::MENU_NEWGAME)
@@ -214,7 +199,7 @@ void SceneMainMenu::DeleteSaveFileOrNot()
 			{
 				GameManager::GetInstance().GoToScene("Level_1");
 				std::cout << "I'm here" << std::endl;
-				return;
+				mainmenu.deletingFile = false;
 			}
 		}
 
@@ -222,6 +207,21 @@ void SceneMainMenu::DeleteSaveFileOrNot()
 		{
 			GameManager::GetInstance().GoToScene("Level_1");
 			std::cout << "I'm here too" << std::endl;
+		}
+	}
+
+	if (mainmenu.menu == MainMenu::MENU::MENU_OPTION && mainmenu.option == MainMenu::OPTION::OPTION_ERASEDATA)
+	{
+		if (mainmenu.hasSavedFile)
+		{
+			if (mainmenu.deletingFile == true)
+			{
+				GameData::GetInstance().DeleteGameData("SaveFile//DataOne.txt");
+				std::cout << "File deleted" << std::endl;
+				mainmenu.option = MainMenu::OPTION::OPTION_MAINOPTION;
+				mainmenu.deletingFile = false;
+				mainmenu.hasSavedFile = false;
+			}
 		}
 	}
 }
@@ -297,16 +297,14 @@ void SceneMainMenu::RenderMenuPointer()
 				modelStack.PopMatrix();
 				break;
 
-			case MainMenu::OPTION::OPTION_VOLUME:
-				break;
-
 			case MainMenu::OPTION::OPTION_HIGHSCORE:
 				break;
 
 			case MainMenu::OPTION::OPTION_ERASEDATA:
 			{
 				modelStack.PushMatrix();
-				modelStack.Translate(pointerPositionX + mainmenu.chooseMenu * 6.f, pointerPositionY, 1);
+				modelStack.Translate(pointerPositionX + mainmenu.chooseMenu * 6.f, 1, pointerPositionY);
+				modelStack.Rotate(-90, 1, 0, 0);
 				modelStack.Scale(1.f, 1.f, 1);
 				RenderHelper::GetInstance().RenderMesh(*mesh, texture[MENUGUI_MENU_POINTER], false);
 				modelStack.PopMatrix();
@@ -492,21 +490,13 @@ void SceneMainMenu::RenderOptionChoice()
 		case MainMenu::OPTION::OPTION_MAINOPTION:
 		{
 			modelStack.PushMatrix();
-				modelStack.Translate(1, 1.5, -translateZ);
+				modelStack.Translate(1, 3.5, -translateZ);
 
 				modelStack.PushMatrix();
 					modelStack.Translate(0, -0.5, translateZ);
 
 					modelStack.PushMatrix();
 						modelStack.Translate(0, -2.5, translateZ);
-
-						modelStack.PushMatrix();
-							modelStack.Translate(0, -4.5, translateZ);
-							modelStack.Rotate(-90, 1, 0, 0);
-							modelStack.Scale(scale, scale, 1);
-							RenderHelper::GetInstance().RenderMesh(*mesh, texture[MENUGUI_OPTION_FOUR], false);
-						modelStack.PopMatrix();
-
 						modelStack.Rotate(-90, 1, 0, 0);
 						modelStack.Scale(scale, scale, 1);
 						RenderHelper::GetInstance().RenderMesh(*mesh, texture[MENUGUI_OPTION_THREE], false);
@@ -524,65 +514,44 @@ void SceneMainMenu::RenderOptionChoice()
 		}
 		break;
 
-		case MainMenu::OPTION::OPTION_VOLUME:
-		{
-			modelStack.PushMatrix();
-				modelStack.Translate(-5.f, 0, 0);
-				modelStack.Rotate(-90, 1, 0, 0);
-				modelStack.Scale(2, 2, 1);
-				RenderHelper::GetInstance().RenderMesh(*mesh, texture[MENUGUI_VOLUMEMINUS], false);
-			modelStack.PopMatrix();
-
-			modelStack.PushMatrix();
-				modelStack.Translate(5.f, 0, 0);
-				modelStack.Rotate(-90, 1, 0, 0);
-				modelStack.Scale(2, 2, 1);
-				RenderHelper::GetInstance().RenderMesh(*mesh, texture[MENUGUI_VOLUMEPLUS], false);
-			modelStack.PopMatrix();
-
-			modelStack.PushMatrix();
-				modelStack.Translate((mainmenu.volume * 6) - 3, 0, 0);
-				modelStack.Rotate(-90, 1, 0, 0);
-				modelStack.Scale(2, 2, 2);
-				RenderHelper::GetInstance().RenderMesh(*mesh, texture[MENUGUI_VOLUMEICON], false);
-			modelStack.PopMatrix();
-		}
-		break;
-
 		case MainMenu::OPTION::OPTION_HIGHSCORE:
-
 			break;
 
 		case MainMenu::OPTION::OPTION_ERASEDATA:
 		{
 			modelStack.PushMatrix();
-				modelStack.Translate(1.5f, 0.5f, 0);
+				modelStack.Translate(1.f, 0.5f, -3.f);
 
 				modelStack.PushMatrix();
-					modelStack.Translate(0.f, -2.5f, 0);
-					modelStack.Scale(7, 7, 1);
+					modelStack.Translate(0.5f, 0.f, 2.f);
+					modelStack.Rotate(-90, 1, 0, 0);
+					modelStack.Scale(6, 6, 1);
 					RenderHelper::GetInstance().RenderMesh(*mesh, texture[MENUGUI_DELETEFILE_TWO], false);
 				modelStack.PopMatrix();
 
-				modelStack.Scale(10, 10, 1);
+				modelStack.Rotate(-90, 1, 0, 0);
+				modelStack.Scale(6, 6, 1);
 				RenderHelper::GetInstance().RenderMesh(*mesh, texture[MENUGUI_DELETEFILE_ONE], false);
 			modelStack.PopMatrix();
 
 			modelStack.PushMatrix();
-				modelStack.Translate(-0.f, -4.5f, 0);
+				modelStack.Translate(0.f, 0.5f, 1.f);
 
 				modelStack.PushMatrix();
 					modelStack.Translate(6.f, 0, 0);
+					modelStack.Rotate(-90, 1, 0, 0);
 					modelStack.Scale(7, 7, 1);
 					RenderHelper::GetInstance().RenderMesh(*mesh, texture[MENUGUI_TWOCHOICE_NO], false);
 				modelStack.PopMatrix();
 
+				modelStack.Rotate(-90, 1, 0, 0);
 				modelStack.Scale(7, 7, 1);
 				RenderHelper::GetInstance().RenderMesh(*mesh, texture[MENUGUI_TWOCHOICE_YES], false);
 			modelStack.PopMatrix();
 
 			modelStack.PushMatrix();
-				modelStack.Translate(0.f, -2.f, -0.5f);
+				modelStack.Translate(0.f, 0.f, -0.5f);
+				modelStack.Rotate(-90, 1, 0, 0);
 				modelStack.Scale(12, 9, 1);
 				RenderHelper::GetInstance().RenderMesh(*mesh, texture[MENUGUI_TEXTSCREEN], false);
 			modelStack.PopMatrix();
@@ -601,26 +570,19 @@ void SceneMainMenu::RenderHighScore()
 
 	MS &modelStack = GraphicsManager::GetInstance().modelStack;
 	float initialTranslateY = 15.f;
-	float count = 2.f;
 	if (mainmenu.option == MainMenu::OPTION::OPTION_HIGHSCORE)
 	{
-		modelStack.PushMatrix();
+		int count = 0;
 		for (map<string, int>::const_iterator mapIter = highscore.begin(); mapIter != highscore.end(); ++mapIter)
 		{
+			modelStack.PushMatrix();
 			//std::cout << mapIter->first << ": " << to_string(mapIter->second) << std::endl;
-			modelStack.Translate(0.f, initialTranslateY, 0.f);
-
-				modelStack.PushMatrix();
-					modelStack.Translate(15.f, count, 0);
-					modelStack.Scale(2, 2, 1);
-					RenderHelper::GetInstance().RenderText(*textOnScreenMesh, texture[MENUGUI_TEXTONSCREEN], to_string(mapIter->second), Color(0, 0, 0));
-				modelStack.PopMatrix();
-
-				modelStack.Scale(2, 2, 1);
-				RenderHelper::GetInstance().RenderText(*textOnScreenMesh, texture[MENUGUI_TEXTONSCREEN], mapIter->first , Color(0, 0, 0));
+				modelStack.Translate(-15.f, initialTranslateY - static_cast<float>(count * 4), 0.f);			
+				modelStack.Scale(4, 4, 1);
+				RenderHelper::GetInstance().RenderText(*textOnScreenMesh, texture[MENUGUI_TEXTONSCREEN], mapIter->first + ": " + to_string(mapIter->second), Color(0, 0, 0));
+			modelStack.PopMatrix();
+			++count;
 		}
-
-		modelStack.PopMatrix();
 	}
 }
 

@@ -32,7 +32,6 @@ class MainMenu
 			OPTION_MAINOPTION,
 
 			// Options
-			OPTION_VOLUME,
 			OPTION_HIGHSCORE,
 			OPTION_ERASEDATA,
 			OPTION_BACK,
@@ -60,6 +59,7 @@ class MainMenu
 		void MainMenuChoice();
 		void NewGameChoice();
 		void MainOptionChoice();
+		void EraseDataChoice();
 		void HowToPlayChoice();
 
 		void MainMenuUpdates(MENU menu, const double &deltaTime);

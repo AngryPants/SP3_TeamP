@@ -19,7 +19,7 @@ bool GameManager::GoToScene(string sceneName) {
 			SceneBase* scene = new SceneBase(sceneName);
 			scene->nextScene = "Level_3";
 			scene->tileMapFile = "Levels//Level2//TM.csv";
-			scene->sawbladesFile = "";
+			scene->sawbladesFile = "Levels//Level2//SB.txt";
 			scene->bgmFile = "Audio//BGM//BGM_Daniu.mp3";
 			scene->unlockCharacter = "Daniu";
 			scene->unlockPart = SceneBase::PART::BODY;

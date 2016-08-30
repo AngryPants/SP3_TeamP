@@ -1,6 +1,7 @@
 #include "MainMenu.h"
 #include "InputManager.h"
 #include "Application.h"
+#include "GameManager.h"
 
 MainMenu::MainMenu()
 {
@@ -107,8 +108,14 @@ void MainMenu::MainOptionChoice()
 	if (InputManager::GetInstance().GetInputInfo().keyPressed[INPUT_MENU_DOWN])
 	{
 		chooseMenu++;
-		if (chooseMenu > 4)
+		if (chooseMenu > 3)
 			chooseMenu = 1;
+
+		if (!hasSavedFile)
+		{
+			if (chooseMenu == 2)
+				chooseMenu = 3;
+		}
 		return;
 	}
 
@@ -116,7 +123,14 @@ void MainMenu::MainOptionChoice()
 	{
 		chooseMenu--;
 		if (chooseMenu < 1)
-			chooseMenu = 4;
+			chooseMenu = 3;
+
+		if (!hasSavedFile)
+		{
+			if (chooseMenu == 2)
+				chooseMenu = 1;
+		}
+
 		return;
 	}
 
@@ -130,6 +144,51 @@ void MainMenu::MainOptionChoice()
 			menu = MENU::MENU_MAINMENU;
 			chooseMenu = previousMenu;
 			previousMenu = 0;
+		}
+
+		if (option == OPTION::OPTION_ERASEDATA)
+		{
+			chooseMenu = 1;
+		}
+	}
+}
+
+void MainMenu::EraseDataChoice()
+{
+	if (InputManager::GetInstance().GetInputInfo().keyPressed[INPUT_MENU_LEFT])
+	{
+		chooseMenu--;
+		if (chooseMenu < 1)
+			chooseMenu = 2;
+	}
+
+	if (InputManager::GetInstance().GetInputInfo().keyPressed[INPUT_MENU_RIGHT])
+	{
+		chooseMenu++;
+		if (chooseMenu > 2)
+			chooseMenu = 1;
+	}
+
+	if (InputManager::GetInstance().GetInputInfo().keyPressed[INPUT_SELECT])
+	{
+		switch (chooseMenu)
+		{
+			default:
+				break;
+
+			case 1:
+			{
+				deletingFile = true;
+				chooseMenu = previousMenu;
+			}
+			break;
+
+			case 2:
+			{
+				option = OPTION::OPTION_MAINOPTION;
+				chooseMenu = previousMenu;
+			}
+			break;
 		}
 	}
 }
@@ -205,32 +264,6 @@ void MainMenu::OptionUpdates(OPTION option, const double &deltaTime)
 			MainOptionChoice();
 			break;
 
-		case OPTION::OPTION_VOLUME:
-		{
-			if (InputManager::GetInstance().GetInputInfo().keyDown[INPUT_MENU_LEFT])
-			{
-				volume -= 0.5f * (float)deltaTime;
-
-				if (volume < Math::EPSILON)
-					volume = Math::EPSILON;
-			}
-
-			if (InputManager::GetInstance().GetInputInfo().keyDown[INPUT_MENU_RIGHT])
-			{
-				volume += 0.5f * (float)deltaTime;
-
-				if (volume > 1.f)
-					volume = 1.f;
-			}
-
-
-			if (InputManager::GetInstance().GetInputInfo().keyDown[INPUT_MENU_DOWN])
-			{
-				this->option = OPTION::OPTION_MAINOPTION;
-			}
-		}
-			break;
-
 		case OPTION::OPTION_HIGHSCORE:
 		{
 			if (InputManager::GetInstance().GetInputInfo().keyPressed[INPUT_BACK])
@@ -239,11 +272,11 @@ void MainMenu::OptionUpdates(OPTION option, const double &deltaTime)
 			break;
 
 		case OPTION::OPTION_ERASEDATA:
+			EraseDataChoice();
 			break;
 
 		case OPTION::OPTION_BACK:
-
-				break;
+			break;
 	}
 }
 

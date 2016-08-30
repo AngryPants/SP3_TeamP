@@ -78,7 +78,6 @@ protected:
 
 	void UpdateContinueGameToScene();
 	void UpdateInTransition(const double &deltaTime);
-	void RenderInTransition();
 
 	void RenderMenuPointer();
 	void RenderMenuChoice();

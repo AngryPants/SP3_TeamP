@@ -623,6 +623,7 @@ void SceneBase::Exit() {
 void SceneBase::StartScene() {
 
 	tileSystem.LoadFile(tileMapFile);
+	InitObjective();
 	ResetItems();
 	MapRenderer::GetInstance().Reset();		
 	switch (selectedHero) {
