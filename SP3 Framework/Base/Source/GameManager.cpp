@@ -19,7 +19,7 @@ bool GameManager::GoToScene(const string& sceneName) {
 			SceneBase* scene = new SceneBase(sceneName);
 			scene->nextScene = "Level_2";
 			scene->tileMapFile = "Levels//Level1//TM.csv";
-			scene->sawbladesFile = "Levels//Level1//SB.txt";	
+			scene->sawbladesFile = "Levels//Level1//SB.txt";
 			scene->bgmFile = "Audio//BGM//BGM_Daniu.mp3";
 		}
 		SceneManager::GetInstance().SetActiveScene(sceneName);
@@ -28,7 +28,7 @@ bool GameManager::GoToScene(const string& sceneName) {
 		if (!SceneManager::GetInstance().CheckSceneExist(sceneName)) {
 			SceneBase* scene = new SceneBase(sceneName);
 			scene->nextScene = "Level_3";
-			scene->tileMapFile = "";
+			scene->tileMapFile = "Levels//Level2//TM.csv";
 			scene->sawbladesFile = "";
 			scene->bgmFile = "Audio//BGM//BGM_Daniu.mp3";
 		}

@@ -40,7 +40,7 @@ MapRenderer::MapRenderer() {
 	meshTextures[MESH_WARNING_SAWBLADE].textureArray[0] = TextureManager::GetInstance().AddTexture("Warning Sawblade", "Image//Cyborg_Shooter//Tiles//Signs//Sign_Warning_Sawblade.tga");
 	meshTextures[MESH_WARNING_SPIKE].textureArray[0] = TextureManager::GetInstance().AddTexture("Warning Spike", "Image//Cyborg_Shooter//Tiles//Signs//Sign_Warning_Spike.tga");
 	meshTextures[MESH_ALERT_TRAMPOLINE].textureArray[0] = TextureManager::GetInstance().AddTexture("Alert Trampoline", "Image//Cyborg_Shooter//Tiles//Signs//Sign_Alert_Trampoline.tga");
-	meshTextures[MESH_ALERT_EXIT].textureArray[0] = TextureManager::GetInstance().AddTexture("Acid", "Image//Cyborg_Shooter//Tiles//Signs//Sign_Alert_Exit.tga");
+	meshTextures[MESH_ALERT_EXIT].textureArray[0] = TextureManager::GetInstance().AddTexture("Alert Exit", "Image//Cyborg_Shooter//Tiles//Signs//Sign_Alert_Exit.tga");
 
 	//Sprite
 	animation[SPRITE_COIN].Set(1, 4, 0, 3, true, 0.4, true);
