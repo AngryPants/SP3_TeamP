@@ -1,0 +1,4 @@
+GamePad Controls
+
+DPad Left: Move Left
+DPad Right: Move Right

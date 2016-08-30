@@ -1,0 +1,8 @@
+Keyboard Controls
+ 
+<- Move Left
+-> Move Right
+ 
+SpaceBar to Jump
+C to Shoot
+Z to Use Special Ability

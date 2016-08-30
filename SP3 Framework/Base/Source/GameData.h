@@ -28,8 +28,10 @@ private:
 
 public:
 	void SetCurrentLevel(const string& levelName);
+	string GetCurrentLevel();
 	bool SaveGameData(const string& unlocks, const string& highscore);
-	bool LoadGameData(const string& unlocks, const string& highscore);
+	bool LoadGameData(const string& unlocks);
+	void LoadHighScore(const string &highscore);
 	bool DeleteGameData(const string& filePath);
 	void UnlockHead(const string& characterName);
 	void UnlockBody(const string& characterName);

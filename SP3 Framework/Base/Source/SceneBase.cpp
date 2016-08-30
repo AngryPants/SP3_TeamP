@@ -218,8 +218,8 @@ void SceneBase::InitBackgrounds() {
 
 	backgroundTextures[BACKGROUND_PAUSE].textureArray[0] = TextureManager::GetInstance().AddTexture("Pause Background", "Image//Cyborg_Shooter//Backgrounds//Background_Pause.tga");
 	backgroundTextures[BACKGROUND_REAR].textureArray[0] = TextureManager::GetInstance().AddTexture("Background Rear", "Image//Cyborg_Shooter//Backgrounds//Background_Rear.tga");
-	//backgroundTextures[BACKGROUND_MIDDLE].textureArray[0] = TextureManager::GetInstance().AddTexture("Background Rear", "Image//Cyborg_Shooter//Backgrounds//Background_Middle.tga");
-	//backgroundTextures[BACKGROUND_FRONT].textureArray[0] = TextureManager::GetInstance().AddTexture("Background Rear", "Image//Cyborg_Shooter//Backgrounds//Background_Front.tga");
+	backgroundTextures[BACKGROUND_MIDDLE].textureArray[0] = TextureManager::GetInstance().AddTexture("Background Middle", "Image//Cyborg_Shooter//Backgrounds//Background_Middle.tga");
+	backgroundTextures[BACKGROUND_FRONT].textureArray[0] = TextureManager::GetInstance().AddTexture("Background Front", "Image//Cyborg_Shooter//Backgrounds//Background_Front.tga");
 
 }
 
@@ -283,8 +283,10 @@ void SceneBase::CharacterSelection(const double& deltaTime) {
 			currentState = STATE::PLAY;
 			StartScene();
 			//Play nice sound.
+			AudioManager::GetInstance().PlayAudio2D("Audio//Sound_Effects//Good_Buzzer.mp3", false);
 		} else {
 			//Play bad sound.
+			AudioManager::GetInstance().PlayAudio2D("Audio//Sound_Effects//Bad_Buzzer.mp3", false);
 		}
 	}
 
@@ -332,8 +334,8 @@ void SceneBase::Pause(const double& deltaTime) {
 		currentState = STATE::PLAY;
 	} else if (InputManager::GetInstance().GetInputInfo().keyDown[INPUT_BACK] && !isKeyDown[KEYS::BACK]) {
 		isKeyDown[KEYS::BACK] = true;
-		//Quit();
-		GoToNextLevel();
+		Quit();
+		//GoToNextLevel();
 	}
 
 }
@@ -356,7 +358,7 @@ void SceneBase::End(const double& deltaTime) {
 void SceneBase::Quit() {
 
 	SceneManager::GetInstance().RemoveScene(name);
-	if (!GameManager::GetInstance().GoToScene("Main Menu")) {
+	if (!GameManager::GetInstance().GoToScene("Main_Menu")) {
 		currentState = STATE::PLAY;
 	}
 
@@ -401,6 +403,7 @@ void SceneBase::CloseDoors() {
 void SceneBase::Render() {
 	
 	GraphicsManager::GetInstance().Update();
+	background->SetTextureOffset(0, 0);
 
 	if (currentState != STATE::CHARACTER_SELECT) {
 		GraphicsManager::GetInstance().SetToCameraView(*camera);
@@ -427,6 +430,15 @@ void SceneBase::Render() {
 void SceneBase::RenderCharacterSelect() {
 
 	MS& modelStack = GraphicsManager::GetInstance().modelStack;
+	modelStack.PushMatrix();
+		modelStack.Scale(100, 100, 1);
+		RenderHelper::GetInstance().RenderMesh(*background, backgroundTextures[BACKGROUND_REAR], false);
+		modelStack.Translate(0, 0, 1);
+		RenderHelper::GetInstance().RenderMesh(*background, backgroundTextures[BACKGROUND_MIDDLE], false);
+		modelStack.Translate(0, 0, 1);
+		RenderHelper::GetInstance().RenderMesh(*background, backgroundTextures[BACKGROUND_FRONT], false);
+	modelStack.PopMatrix();
+
 	modelStack.PushMatrix();
 		modelStack.Translate(-30.0f, 0, 0);
 		if (selectedHero == KIFELLAH) {
@@ -475,8 +487,14 @@ void SceneBase::RenderBackground() {
 		modelStack.Scale(camera->GetOrthoWidth() * 2.0f, camera->GetOrthoSize() * 2.0f, 1);
 		background->SetTextureOffset(0, 0);
 		RenderHelper::GetInstance().RenderMesh(*background, backgroundTextures[BACKGROUND_REAR], false);
+		modelStack.Translate(0, 0, 1);
+		background->SetTextureOffset(camera->GetPosition().x / camera->GetOrthoWidth() * 0.1f, 0);
+		RenderHelper::GetInstance().RenderMesh(*background, backgroundTextures[BACKGROUND_MIDDLE], false);
+		modelStack.Translate(0, 0, 1);
+		background->SetTextureOffset(camera->GetPosition().x / camera->GetOrthoWidth() * 0.2f, 0);
+		RenderHelper::GetInstance().RenderMesh(*background, backgroundTextures[BACKGROUND_FRONT], false);
 	modelStack.PopMatrix();
-	
+
 }
 
 void SceneBase::RenderPauseScreen() {

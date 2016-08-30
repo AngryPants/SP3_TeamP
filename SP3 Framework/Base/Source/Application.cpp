@@ -141,7 +141,7 @@ void Application::Init() {
 void Application::Run() {
 
 	//Main Loop
-	GameManager::GetInstance().GoToScene("Level_1");
+	GameManager::GetInstance().GoToScene("Main_Menu");
 
 	m_timer.startTimer(); //Start timer to calculate how long it takes to render this frame
 	while (glfwWindowShouldClose(m_window) == false && quit == false) {
