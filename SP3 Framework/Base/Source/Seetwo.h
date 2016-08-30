@@ -1,3 +1,13 @@
+/******************************************************************************/
+/*!
+\file	Seetwo.h
+\author Teh Kai Hong Bryan
+\par	email: 150587A@mymail.nyp.edu.sg
+\brief
+Class to define the player character Seetwo
+*/
+/******************************************************************************/
+
 #pragma once
 #ifndef SEETWO_H
 #define SEETWO_H
@@ -5,6 +15,13 @@
 #include "Hero.h"
 #include "AnimationFSM_Seetwo.h"
 #include "Particles.h"
+
+/******************************************************************************/
+/*!
+		Class Seetwo:
+\brief	Defines Seetwo and their methods
+*/
+/******************************************************************************/
 
 class Seetwo : public Hero {
 

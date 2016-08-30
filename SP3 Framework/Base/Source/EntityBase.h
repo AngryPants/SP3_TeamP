@@ -1,9 +1,26 @@
+/******************************************************************************/
+/*!
+\file	EntityBase.h
+\author Lim Ngian Xin Terry
+\par	email: 150496F@mymail.nyp.edu.sg
+\brief
+Class that handles the creation and destruction of entities
+*/
+/******************************************************************************/
+
 #ifndef ENTITY_BASE_H
 #define ENTITY_BASE_H
 
 #include <string>
 
 using std::string;
+
+/******************************************************************************/
+/*!
+		Class EntityBase:
+\brief	The class that handles the creation and destruction of entities
+*/
+/******************************************************************************/
 
 class EntityBase {
 

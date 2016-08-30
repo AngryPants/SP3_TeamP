@@ -1,10 +1,26 @@
+/******************************************************************************/
+/*!
+\file	GameEntity.h
+\author Lim Ngian Xin Terry
+\par	email: 150496F@mymail.nyp.edu.sg
+\brief
+Class to to handle	creation of game entities, their position and velocity
+*/
+/******************************************************************************/
+
 #ifndef GAME_ENTITY_H
 #define GAME_ENTITY_H
 
 #include "EntityBase.h"
 #include "Vector2.h"
 
-//The base entity for this game.
+/******************************************************************************/
+/*!
+		Class GameEntity:
+\brief	The class to handle	creation of game entities, their position and velocity
+*/
+/******************************************************************************/
+
 class GameEntity : public EntityBase {
 
 public:

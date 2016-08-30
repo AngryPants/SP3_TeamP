@@ -1,3 +1,13 @@
+/******************************************************************************/
+/*!
+\file	Hero.h
+\author Teh Kai Hong Bryan
+\par	email: 150587A@mymail.nyp.edu.sg
+\brief
+Class to define a Hero entity
+*/
+/******************************************************************************/
+
 #pragma once
 #ifndef HERO_H
 #define HERO_H
@@ -8,6 +18,13 @@
 #include "TileCollider.h"
 
 class Enemy;
+
+/******************************************************************************/
+/*!
+		Class Hero:
+\brief	Defines a hero and their methods
+*/
+/******************************************************************************/
 
 class Hero : public Character {
 

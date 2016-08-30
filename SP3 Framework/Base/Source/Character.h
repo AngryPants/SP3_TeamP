@@ -1,3 +1,13 @@
+/******************************************************************************/
+/*!
+\file	Character.h
+\author Teh Kai Hong Bryan
+\par	email: 150587A@mymail.nyp.edu.sg
+\brief
+Class to define a character entity
+*/
+/******************************************************************************/
+
 #ifndef CHARACTER_H
 #define CHARACTER_H
 
@@ -11,6 +21,13 @@
 #include <set>
 
 using std::set;
+
+/******************************************************************************/
+/*!
+		Class Character:
+\brief	Defines a character and its methods
+*/
+/******************************************************************************/
 
 class Character : public GameEntity {
 	

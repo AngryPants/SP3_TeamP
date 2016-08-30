@@ -1,3 +1,13 @@
+/******************************************************************************/
+/*!
+\file	EntityManager.h
+\author Lim Ngian Xin Terry
+\par	email: 150496F@mymail.nyp.edu.sg
+\brief
+Class that is purely in charge of calling the update and render functions of the entities. It does not handle creation and destruction.
+*/
+/******************************************************************************/
+
 #ifndef ENTITY_MANAGER_H
 #define ENTITY_MANAGER_H
 
@@ -17,8 +27,13 @@ class EntityBase;
 typedef set<EntityBase*> EntitySet;
 typedef map<string, EntitySet> EntityMap;
 
-//The EntityManager is purely in charge of calling the update and render functions of the entities. It does not
-//handle creation and destruction.
+/******************************************************************************/
+/*!
+		Class EntityManager:
+\brief	The EntityManager is purely in charge of calling the update and render functions of the entities. It does not handle creation and destruction.
+*/
+/******************************************************************************/
+
 class EntityManager : public Singleton<EntityManager> {
 
 	friend class Singleton<EntityManager>;
