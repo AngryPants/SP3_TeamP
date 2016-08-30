@@ -347,9 +347,6 @@
     <Filter Include="Source Files\Audio">
       <UniqueIdentifier>{016b3e95-0cb6-43a2-98ff-d38d562c7e59}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Input">
-      <UniqueIdentifier>{664cd4e5-7738-4b43-bf83-5743bbff58f5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\SpriteAnimation">
       <UniqueIdentifier>{b8f3479b-300b-49d6-8ef6-0e132e345305}</UniqueIdentifier>
     </Filter>
@@ -451,6 +448,9 @@
     </Filter>
     <Filter Include="Source Files\Systems">
       <UniqueIdentifier>{175e7cc8-e485-4eb0-b794-667b3592f3bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Input">
+      <UniqueIdentifier>{664cd4e5-7738-4b43-bf83-5743bbff58f5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

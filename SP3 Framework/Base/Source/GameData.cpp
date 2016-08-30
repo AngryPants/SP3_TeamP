@@ -30,7 +30,7 @@ bool GameData::SaveGameData(const string& unlocks, const string& highscore) {
 	ofstream file;
 	file.open(unlocks, std::ofstream::out | std::ofstream::trunc);
 	//Save our current level
-	file << "Current_Level: " + currentLevel + "\n";
+	file << "Current_Level=" + currentLevel + "\n";
 	//Save our unlocked body parts.
 	file << "Head=";
 	for (set<string>::iterator setIter = unlockedHeads.begin(); setIter != unlockedHeads.end(); ++setIter) {
@@ -77,7 +77,7 @@ bool GameData::LoadGameData(const string& unlocks) {
 	unlockedBodies.clear();
 	unlockedLegs.clear();
 	highscores.clear();
-	currentLevel = "Level_1";
+	currentLevel = "";
 
 	//Load our unlocks
 	string filePath = unlocks;
@@ -86,97 +86,95 @@ bool GameData::LoadGameData(const string& unlocks) {
 	//If file is successfully opened.
 	if (file.is_open()) 
 	{
-		if (filePath == "")
+		getline(file, currentLine);
+		if (currentLine == "")
 		{
 			cout << "Error: Cannot open file " << filePath << "." << endl;
 			return false;
 		}
-
 		else
 		{
-			while (file.good())
-			{
-				while (getline(file, currentLine)) {
-					if (currentLine == "" || currentLine == "\n") {
-						continue;
-					}
+			file.clear();
+			file.seekg(0);
+			currentLine = "";
 
-					istringstream iss(currentLine);
-					string headerToken = "";
-					string dataToken = "";
-					getline(iss, headerToken, '=');
-					if (headerToken == "Current_Level") {
-						getline(iss, dataToken);
-						currentLevel = dataToken;
-					}
-					else if (headerToken == "Head") {
-						while (getline(iss, dataToken, ',')) {
-							unlockedHeads.insert(dataToken);
-						}
-					}
-					else if (headerToken == "Body") {
-						while (getline(iss, dataToken, ',')) {
-							unlockedBodies.insert(dataToken);
-						}
-					}
-					else if (headerToken == "Arms") {
-						while (getline(iss, dataToken, ',')) {
-							unlockedArms.insert(dataToken);
-						}
-					}
-					else if (headerToken == "Legs") {
-						while (getline(iss, dataToken, ',')) {
-							unlockedLegs.insert(dataToken);
-						}
-					}
+			while (getline(file, currentLine)) {
+				if (currentLine == "" || currentLine == "\n") {
+					continue;
 				}
 
-				file.close();
-			}
-
-		}
-	}
-
-	else
-		return false;
-}
-
-void GameData::LoadHighScore(const string &highscore)
-{
-	string filePath = highscore;
-	ifstream file(filePath);
-	string currentLine = "";
-	//If file is successfully opened.
-	if (file.is_open()) {
-
-		if (filePath == "")
-		{
-			cout << "Error: Cannot open file " << filePath << "." << endl;
-			return;
-		}
-
-		else
-		{
-			while (file.good())
-			{
-				currentLine = "";
-				while (getline(file, currentLine)) {
-					if (currentLine == "" || currentLine == "\n") {
-						continue;
-					}
-
-					istringstream iss(currentLine);
-					string headerToken;
-					string dataToken;
-					getline(iss, headerToken, '=');
+				istringstream iss(currentLine);
+				string headerToken = "";
+				string dataToken = "";
+				getline(iss, headerToken, '=');
+				if (headerToken == "Current_Level") {
 					getline(iss, dataToken);
-
-					highscores.insert(std::pair<string, int>(headerToken, atoi(dataToken.c_str())));
+					currentLevel = dataToken;
+				}
+				else if (headerToken == "Head") {
+					while (getline(iss, dataToken, ',')) {
+						unlockedHeads.insert(dataToken);
+					}
+				}
+				else if (headerToken == "Body") {
+					while (getline(iss, dataToken, ',')) {
+						unlockedBodies.insert(dataToken);
+					}
+				}
+				else if (headerToken == "Arms") {
+					while (getline(iss, dataToken, ',')) {
+						unlockedArms.insert(dataToken);
+					}
+				}
+				else if (headerToken == "Legs") {
+					while (getline(iss, dataToken, ',')) {
+						unlockedLegs.insert(dataToken);
+					}
 				}
 			}
 
 			file.close();
+			return true;
 		}
+	} else {
+		return false;
+	}
+
+}
+
+void GameData::LoadHighScore(const string &filePath)
+{
+	highscores.clear();
+	string currentLine = "";
+	ifstream file(filePath);	
+	if (file.is_open()) //If file is successfully opened.
+	{
+		while (getline(file, currentLine))
+		{
+			if (currentLine == "" || currentLine == "\n")
+			{
+				continue;
+			}
+			istringstream iss(currentLine);
+			string headerToken;
+			string dataToken;
+			getline(iss, headerToken, '=');
+			if (headerToken == currentLine)
+			{
+				continue; //Check if the header token is valid, or this line is just garbage.
+			}
+			getline(iss, dataToken);
+			if (dataToken == "")
+			{
+				continue;
+			}
+			highscores.insert(std::pair<string, int>(headerToken, atoi(dataToken.c_str())));
+		}
+		file.close();
+		cout << "Successfully loaded " << filePath << endl;
+	}
+	else {
+		cout << "Cannot open file " << filePath << endl;
 	}
 }
 

@@ -20,7 +20,7 @@ private:
 
 public:
 	//Function(s)
-	bool GoToScene(const string& sceneName);
+	bool GoToScene(string sceneName);
 
 };
 
