@@ -95,7 +95,7 @@
       <Filter>Source Files\Input</Filter>
     </ClCompile>
     <ClCompile Include="Source\GameManager.cpp">
-      <Filter>Source Files\Gameplay</Filter>
+      <Filter>Source Files\Systems</Filter>
     </ClCompile>
     <ClCompile Include="Source\SceneManager.cpp">
       <Filter>Source Files\Scene</Filter>
@@ -137,13 +137,7 @@
       <Filter>Source Files\Game\Characters\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="Source\GameData.cpp">
-      <Filter>Source Files\Gameplay</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Scene_Level1.cpp">
-      <Filter>Source Files\Scene\Levels</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Scene_Level2.cpp">
-      <Filter>Source Files\Scene\Levels</Filter>
+      <Filter>Source Files\Systems</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -262,7 +256,7 @@
       <Filter>Header Files\Tiles</Filter>
     </ClInclude>
     <ClInclude Include="Source\GameManager.h">
-      <Filter>Header Files\Gameplay</Filter>
+      <Filter>Header Files\Systems</Filter>
     </ClInclude>
     <ClInclude Include="Source\Sawblade.h">
       <Filter>Header Files\Game\Sawblades</Filter>
@@ -319,31 +313,7 @@
       <Filter>Header Files\Game\Characters\Enemies</Filter>
     </ClInclude>
     <ClInclude Include="Source\GameData.h">
-      <Filter>Header Files\Gameplay</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Scene_Level1.h">
-      <Filter>Header Files\Scene\Levels</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Scene_Level2.h">
-      <Filter>Header Files\Scene\Levels</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Scene_Level3.h">
-      <Filter>Header Files\Scene\Levels</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Scene_Level4.h">
-      <Filter>Header Files\Scene\Levels</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Scene_Level5.h">
-      <Filter>Header Files\Scene\Levels</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Scene_Level6.h">
-      <Filter>Header Files\Scene\Levels</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Scene_Level7.h">
-      <Filter>Header Files\Scene\Levels</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Scene_Level8.h">
-      <Filter>Header Files\Scene\Levels</Filter>
+      <Filter>Header Files\Systems</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -379,12 +349,6 @@
     </Filter>
     <Filter Include="Source Files\Texture">
       <UniqueIdentifier>{abf2717b-5eb9-4515-8ca3-f2f6af130b18}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Gameplay">
-      <UniqueIdentifier>{e57160ba-ae31-412b-a9c8-3e7acb0f9ad2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Gameplay">
-      <UniqueIdentifier>{175e7cc8-e485-4eb0-b794-667b3592f3bf}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Others">
       <UniqueIdentifier>{63c02688-a8ac-4757-9b96-75f1b20d4767}</UniqueIdentifier>
@@ -470,11 +434,11 @@
     <Filter Include="Source Files\Game\Sawblade">
       <UniqueIdentifier>{9d6fd90f-baa9-4178-a983-9b234c8095eb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Scene\Levels">
-      <UniqueIdentifier>{b9701e39-4536-4f87-b496-0935ebeb9b2d}</UniqueIdentifier>
+    <Filter Include="Header Files\Systems">
+      <UniqueIdentifier>{e57160ba-ae31-412b-a9c8-3e7acb0f9ad2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Scene\Levels">
-      <UniqueIdentifier>{856064fe-8ae6-4e30-806a-570e64025e84}</UniqueIdentifier>
+    <Filter Include="Source Files\Systems">
+      <UniqueIdentifier>{175e7cc8-e485-4eb0-b794-667b3592f3bf}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

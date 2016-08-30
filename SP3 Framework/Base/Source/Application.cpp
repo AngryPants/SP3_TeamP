@@ -19,8 +19,7 @@
 #include "Controller_Mouse.h"
 #include "Controller_Gamepad.h"
 
-//Include Scenes
-#include "Scene_Level1.h"
+#include "GameManager.h"
 
 GLFWwindow* m_window;
 const unsigned char maxFPS = 60; //Maximum FPS of this game.
@@ -142,8 +141,7 @@ void Application::Init() {
 void Application::Run() {
 
 	//Main Loop
-	Scene* scene = new Scene_Level1();
-	SceneManager::GetInstance().SetActiveScene(scene->name);
+	GameManager::GetInstance().GoToScene("Level_1");
 
 	m_timer.startTimer(); //Start timer to calculate how long it takes to render this frame
 	while (glfwWindowShouldClose(m_window) == false && quit == false) {

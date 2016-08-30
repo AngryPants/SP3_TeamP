@@ -18,7 +18,8 @@ void EntityManager::Update(const string& sceneName, const double& deltaTime) {
 
 	EntityMap::iterator mapIter = entityMap.find(sceneName);
 	if (mapIter == entityMap.end()) {
-		//cout << "EntityManager has nothing to update." << endl;
+		cout << "EntityManager has nothing to update." << endl;
+		return;
 	}
 
 	for (EntitySet::iterator setIter = mapIter->second.begin(); setIter != mapIter->second.end();) {

@@ -27,19 +27,19 @@ float Physics::GetVelocityUTA(float u, float t, float a) {
 
 float Physics::GetVelocityUAS(float u, float a, float s) {
 
-	return sqrt(u*u + 2*a*s);
+	return sqrt(u*u + 2.0f*a*s);
 
 }
 
 float Physics::GetDisplacementUVT(float u, float v, float t) {
 
-	return 0.5 * (v + u) * t;
+	return 0.5f * (v + u) * t;
 
 }
 
 float Physics::GetDisplacementUTA(float u, float t, float a) {
 
-	return u*t + 0.5*a*t*t;
+	return u*t + 0.5f*a*t*t;
 
 }
 

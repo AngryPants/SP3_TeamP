@@ -15,19 +15,27 @@ class GameData : public Singleton<GameData> {
 
 private:
 	//Variable(s)
-	map<string, set<string> > unlockedParts;
+	set<string> unlockedHeads;
+	set<string> unlockedBodies;
+	set<string> unlockedArms;
+	set<string> unlockedLegs;
 	map<string, int> highscores;
+	string currentLevel;
 
 	//Constructor(s) & Destructor
 	GameData();
 	virtual ~GameData();
 
 public:
-	bool SaveGameData(const string& filePath);
-	bool LoadGameData(const string& filePath);
+	void SetCurrentLevel(const string& levelName);
+	bool SaveGameData(const string& unlocks, const string& highscore);
+	bool LoadGameData(const string& unlocks, const string& highscore);
 	bool DeleteGameData(const string& filePath);
-	void UnlockPart(const string& partName, const string& characterName);
-	bool CheckIfPartUnlocked(const string& partName, const string& characterName);
+	void UnlockHead(const string& characterName);
+	void UnlockBody(const string& characterName);
+	void UnlockArms(const string& characterName);
+	void UnlockLegs(const string& characterName);
+	bool IsCharacterUnlocked(const string& characterName);
 	void AddHighScore(const string& levelName, const int& score);
 	const map<string, int>& GetHighScores() const;
 

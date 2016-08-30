@@ -5,6 +5,7 @@
 #include "EntityManager.h"
 #include "MapRenderer.h"
 #include "GameManager.h"
+#include "GameData.h"
 
 #include <fstream>
 #include <sstream>
@@ -15,24 +16,49 @@
 #include "Brawler.h"
 #include "Gunner.h"
 
+//Hero Types
+#include "Kifellah.h"
+#include "Daniu.h"
+#include "Seetwo.h"
+
 const double SceneBase::minFPS = 30.0;
 
 //Constructor(s) & Destructor
 SceneBase::SceneBase(const string& name) : Scene(name) {
 	
+	//Mesh & Textures
 	font = MeshBuilder::GetInstance().GenerateText("Consolas", 16, 16);
 	fontTexture.textureArray[0] = TextureManager::GetInstance().AddTexture("Consolas", "Image//Fonts//Consolas.tga");
-	backgroundTextures[BACKGROUND_PAUSE].textureArray[0] = TextureManager::GetInstance().AddTexture("Pause Background", "Image//Cyborg_Shooter//Backgrounds//Background_Pause.tga");
+	InitBackgrounds();
+
+	//Character Selection
+	heroCard = MeshBuilder::GetInstance().GenerateQuad("Hero Card");
+	cardTexture[KIFELLAH].textureArray[0] = TextureManager::GetInstance().AddTexture("Hero Card Kifellah", "Image//Cyborg_Shooter//Characters//Hero_Cards//Kifellah.tga");
+	cardTexture[DANIU].textureArray[0] = TextureManager::GetInstance().AddTexture("Hero Card Daniu", "Image//Cyborg_Shooter//Characters//Hero_Cards//Daniu.tga");
+	cardTexture[SEETWO].textureArray[0] = TextureManager::GetInstance().AddTexture("Hero Card Seetwo", "Image//Cyborg_Shooter//Characters//Hero_Cards//Seetwo.tga");
+	lockedCardTexture.textureArray[0] = TextureManager::GetInstance().AddTexture("Hero Card Lock", "Image//Cyborg_Shooter//Characters//Hero_Cards//Lock.tga");
+	
+	//unlockedCharacters[KIFELLAH] = GameData::GetInstance().IsCharacterUnlocked("Kifellah");
+	//Check for unlocked characters
+	unlockedCharacters[KIFELLAH] = true;
+	unlockedCharacters[DANIU] = GameData::GetInstance().IsCharacterUnlocked("Daniu");
+	unlockedCharacters[SEETWO] = GameData::GetInstance().IsCharacterUnlocked("Seetwo");
 
 	hero = nullptr;
 	camera = nullptr;
-	currentState = STATE::PLAY;
+	//currentState = STATE::PLAY;
+	currentState = STATE::CHARACTER_SELECT;
 	completedObjective = false;
+	selectedHero = HERO::KIFELLAH;
 
 	//Debouncing
 	for (unsigned int i = 0; i < static_cast<unsigned int>(NUM_KEYS); ++i) {
 		isKeyDown[i] = true;
 	}
+
+	string tileMapFile = "";
+	string sawbladesFile = "";
+	string bgmFile = "";
 
 }
 
@@ -48,7 +74,7 @@ void SceneBase::Init() {
 
 	InitShader();
 	background = MeshBuilder::GetInstance().GenerateQuad("Scene Background", Color(0.4f, 0.7f, 0.1f));
-	currentState = STATE::PLAY;
+	currentState = STATE::CHARACTER_SELECT;
 
 }
 
@@ -189,16 +215,23 @@ bool SceneBase::InitSawblades(const string& filePath) {
 }
 
 void SceneBase::InitBackgrounds() {
+
+	backgroundTextures[BACKGROUND_PAUSE].textureArray[0] = TextureManager::GetInstance().AddTexture("Pause Background", "Image//Cyborg_Shooter//Backgrounds//Background_Pause.tga");
+	backgroundTextures[BACKGROUND_REAR].textureArray[0] = TextureManager::GetInstance().AddTexture("Background Rear", "Image//Cyborg_Shooter//Backgrounds//Background_Rear.tga");
+	//backgroundTextures[BACKGROUND_MIDDLE].textureArray[0] = TextureManager::GetInstance().AddTexture("Background Rear", "Image//Cyborg_Shooter//Backgrounds//Background_Middle.tga");
+	//backgroundTextures[BACKGROUND_FRONT].textureArray[0] = TextureManager::GetInstance().AddTexture("Background Rear", "Image//Cyborg_Shooter//Backgrounds//Background_Front.tga");
+
 }
 
 //Update
 void SceneBase::Update(const double& deltaTime) {
-
+	
 	double frameTime = deltaTime;
 	if (frameTime > 1.0 / minFPS) {
 		cout << "Lag Spike Detected." << endl;
 		frameTime = 1.0 / minFPS;
 	}
+	cout << "Frame Rate: " << to_string(frameTime) << endl;
 
 	if (!InputManager::GetInstance().GetInputInfo().keyDown[INPUT_SELECT]) {
 		isKeyDown[static_cast<unsigned int>(KEYS::SELECT)] = false;
@@ -206,8 +239,17 @@ void SceneBase::Update(const double& deltaTime) {
 	if (!InputManager::GetInstance().GetInputInfo().keyDown[INPUT_BACK]) {
 		isKeyDown[static_cast<unsigned int>(KEYS::BACK)] = false;
 	}
+	if (!InputManager::GetInstance().GetInputInfo().keyDown[INPUT_MENU_LEFT]) {
+		isKeyDown[static_cast<unsigned int>(KEYS::MENU_LEFT)] = false;
+	}
+	if (!InputManager::GetInstance().GetInputInfo().keyDown[INPUT_MENU_RIGHT]) {
+		isKeyDown[static_cast<unsigned int>(KEYS::MENU_RIGHT)] = false;
+	}
 
 	switch (currentState) {
+		case STATE::CHARACTER_SELECT:
+			CharacterSelection(frameTime);
+			break;
 		case STATE::PLAY:
 			Play(frameTime);
 			break;
@@ -217,6 +259,33 @@ void SceneBase::Update(const double& deltaTime) {
 		case STATE::END:
 			End(frameTime);
 			break;
+	}
+
+}
+
+void SceneBase::CharacterSelection(const double& deltaTime) {
+
+	if (InputManager::GetInstance().GetInputInfo().keyDown[INPUT_MENU_LEFT] && !isKeyDown[MENU_LEFT]) {
+		isKeyDown[MENU_LEFT] = true;
+		if (selectedHero > 0) {
+			selectedHero = static_cast<HERO>(selectedHero - 1);
+		} else {
+			selectedHero = static_cast<HERO>(NUM_HERO - 1);
+		}
+	} else if (InputManager::GetInstance().GetInputInfo().keyDown[INPUT_MENU_RIGHT] && !isKeyDown[MENU_RIGHT]) {
+		isKeyDown[MENU_RIGHT] = true;
+		selectedHero = static_cast<HERO>(static_cast<unsigned int>(selectedHero + 1) % NUM_HERO);
+	}
+	
+	if (InputManager::GetInstance().GetInputInfo().keyDown[INPUT_SELECT] && !isKeyDown[SELECT]) {
+		isKeyDown[SELECT] = true;
+		if (unlockedCharacters[selectedHero]) {
+			currentState = STATE::PLAY;
+			StartScene();
+			//Play nice sound.
+		} else {
+			//Play bad sound.
+		}
 	}
 
 }
@@ -232,7 +301,12 @@ void SceneBase::Play(const double& deltaTime) {
 	EntityManager::GetInstance().Update(name, deltaTime);
 	MapRenderer::GetInstance().Update(deltaTime);
 	
-	unsigned int tileValue = tileSystem.TileValue(objective.row, objective.column);
+	unsigned int tileValue = 0;
+	if (objective.row >= 0 && objective.row < tileSystem.GetNumRows()) {
+		if (objective.column >= 0 && objective.column < tileSystem.GetNumColumns()) {
+			tileValue = tileSystem.TileValue(objective.row, objective.column);
+		}
+	}
 	unsigned int item = GetTileType(TILE_TYPE::ITEMS, tileValue);
 	if (completedObjective == false && (item != TILE_OBJECTIVE || CheckItemToggle(tileValue) == false)) {
 		completedObjective = true;
@@ -269,7 +343,7 @@ void SceneBase::End(const double& deltaTime) {
 	if (InputManager::GetInstance().GetInputInfo().keyDown[INPUT_SELECT] && !isKeyDown[KEYS::SELECT]) {
 		//Move on to next level.
 		isKeyDown[KEYS::SELECT] = true;
-		GoToNextLevel();
+		GoToNextLevel();		
 	} else if (InputManager::GetInstance().GetInputInfo().keyDown[INPUT_BACK] && !isKeyDown[KEYS::BACK]) {
 		//Restart the level
 		isKeyDown[KEYS::BACK] = true;
@@ -282,14 +356,18 @@ void SceneBase::End(const double& deltaTime) {
 void SceneBase::Quit() {
 
 	SceneManager::GetInstance().RemoveScene(name);
-	GameManager::GetInstance().GoToScene("Main Menu");	
+	if (!GameManager::GetInstance().GoToScene("Main Menu")) {
+		currentState = STATE::PLAY;
+	}
 
 }
 
 void SceneBase::GoToNextLevel() {
 
 	SceneManager::GetInstance().RemoveScene(name);
-	GameManager::GetInstance().GoToScene(nextScene);
+	if (!GameManager::GetInstance().GoToScene(nextScene)) {
+		currentState = STATE::PLAY;
+	}
 
 }
 
@@ -321,23 +399,69 @@ void SceneBase::CloseDoors() {
 
 //Rendering
 void SceneBase::Render() {
-
+	
 	GraphicsManager::GetInstance().Update();
-	GraphicsManager::GetInstance().SetToCameraView(*camera);
-	GraphicsManager::GetInstance().Enable<GraphicsManager::MODE::DEPTH_TEST>();
-	RenderBackground();
-	MapRenderer::GetInstance().Render(tileSystem);
-	EntityManager::GetInstance().Render(this->name);
+
+	if (currentState != STATE::CHARACTER_SELECT) {
+		GraphicsManager::GetInstance().SetToCameraView(*camera);
+		GraphicsManager::GetInstance().Enable<GraphicsManager::MODE::DEPTH_TEST>();
+		RenderBackground();
+		MapRenderer::GetInstance().Render(tileSystem);
+		EntityManager::GetInstance().Render(this->name);
+	}
 
 	GraphicsManager::GetInstance().SetToHUD(-50, 50, -50, 50, -50, 50);
 	GraphicsManager::GetInstance().Disable<GraphicsManager::MODE::DEPTH_TEST>();
 	EntityManager::GetInstance().RenderUI(this->name);
 
-	if (currentState == STATE::PAUSE) {
+	if (currentState == STATE::CHARACTER_SELECT) {
+		RenderCharacterSelect();
+	} else if (currentState == STATE::PAUSE) {
 		RenderPauseScreen();
 	} else if (currentState == STATE::END) {
 		RenderEndScreen();
 	}
+
+}
+
+void SceneBase::RenderCharacterSelect() {
+
+	MS& modelStack = GraphicsManager::GetInstance().modelStack;
+	modelStack.PushMatrix();
+		modelStack.Translate(-30.0f, 0, 0);
+		if (selectedHero == KIFELLAH) {
+			modelStack.Scale(30, 30, 1);
+		} else {
+			modelStack.Scale(20, 20, 1);
+		}
+		RenderHelper::GetInstance().RenderMesh(*heroCard, cardTexture[KIFELLAH]);
+		if (unlockedCharacters[KIFELLAH] == false) {
+			RenderHelper::GetInstance().RenderMesh(*heroCard, lockedCardTexture);
+		}
+	modelStack.PopMatrix();
+	modelStack.PushMatrix();
+		if (selectedHero == DANIU) {
+			modelStack.Scale(30, 30, 1);
+		} else {
+			modelStack.Scale(20, 20, 1);
+		}
+		RenderHelper::GetInstance().RenderMesh(*heroCard, cardTexture[DANIU]);
+		if (unlockedCharacters[DANIU] == false) {
+			RenderHelper::GetInstance().RenderMesh(*heroCard, lockedCardTexture);
+		}
+	modelStack.PopMatrix();
+	modelStack.PushMatrix();
+		modelStack.Translate(30.0f, 0, 0);
+		if (selectedHero == SEETWO) {
+			modelStack.Scale(30, 30, 1);
+		} else {
+			modelStack.Scale(20, 20, 1);
+		}
+		RenderHelper::GetInstance().RenderMesh(*heroCard, cardTexture[SEETWO]);
+		if (unlockedCharacters[DANIU] == false) {
+			RenderHelper::GetInstance().RenderMesh(*heroCard, lockedCardTexture);
+		}
+	modelStack.PopMatrix();
 
 }
 
@@ -452,5 +576,30 @@ void SceneBase::Exit() {
 	sawblades.clear();
 	tileSystem.Clear();
 	EntityManager::GetInstance().DestroyScene(name);	
+	selectedHero = HERO::KIFELLAH;
+
+}
+
+void SceneBase::StartScene() {
+
+	tileSystem.LoadFile(tileMapFile);
+	ResetItems();
+	MapRenderer::GetInstance().Reset();		
+	switch (selectedHero) {
+		case DANIU:
+			SceneBase::InitHero<Daniu>();
+		break;
+		case SEETWO:
+			SceneBase::InitHero<Seetwo>();
+		break;
+		default:
+			SceneBase::InitHero<Kifellah>();
+	}
+	
+	InitCamera();
+	InitEnemies();
+	InitSawblades(sawbladesFile);
+
+	//AudioManager::GetInstance().PlayAudio2D(bgmFile, true);
 
 }
