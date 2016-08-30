@@ -19,6 +19,7 @@ SceneMainMenu::~SceneMainMenu()
 
 void SceneMainMenu::Init()
 {
+	mainmenu.MainMenuInit();
 
 	defaultPointerPositionY = 3.5f;
 	pointerPositionY = defaultPointerPositionY;
@@ -37,8 +38,6 @@ void SceneMainMenu::Init()
 	RenderHelper::GetInstance().SetNumLights(0);
 	RenderHelper::GetInstance().EnableFog(false);
 	RenderHelper::GetInstance().SetAlphaDiscardValue(0.1f);
-
-	mainmenu.MainMenuInit();
 
 	mesh = MeshBuilder::GetInstance().GenerateQuad("StartGame", Color(0, 0, 0), 1.f);
 	textOnScreenMesh = MeshBuilder::GetInstance().GenerateText("Text", 16, 16);
@@ -249,8 +248,8 @@ void SceneMainMenu::Render()
 	GraphicsManager::GetInstance().SetToHUD(-50, 50, -50, 50, -50, 50);
 	GraphicsManager::GetInstance().Disable<GraphicsManager::MODE::DEPTH_TEST>();
 	EntityManager::GetInstance().RenderUI(this->name);
-	RenderHowToPlayChoice(mainmenu.chooseMenu);
 	RenderHighScore();
+	RenderHowToPlayChoice(mainmenu.chooseMenu);
 }
 
 void SceneMainMenu::RenderMenuPointer()
@@ -600,42 +599,29 @@ void SceneMainMenu::RenderHighScore()
 {
 	const map<string, int>& highscore = GameData::GetInstance().GetHighScores();
 
-	//MS &modelStack = GraphicsManager::GetInstance().modelStack;
-	//float initialTranslateY = 30.f;
-
-	//modelStack.PushMatrix();
-	//modelStack.Translate(-30.f, initialTranslateY, 0.f);
-
+	MS &modelStack = GraphicsManager::GetInstance().modelStack;
+	float initialTranslateY = 15.f;
+	float count = 2.f;
 	if (mainmenu.option == MainMenu::OPTION::OPTION_HIGHSCORE)
 	{
+		modelStack.PushMatrix();
 		for (map<string, int>::const_iterator mapIter = highscore.begin(); mapIter != highscore.end(); ++mapIter)
 		{
+			//std::cout << mapIter->first << ": " << to_string(mapIter->second) << std::endl;
+			modelStack.Translate(0.f, initialTranslateY, 0.f);
 
+				modelStack.PushMatrix();
+					modelStack.Translate(15.f, count, 0);
+					modelStack.Scale(2, 2, 1);
+					RenderHelper::GetInstance().RenderText(*textOnScreenMesh, texture[MENUGUI_TEXTONSCREEN], to_string(mapIter->second), Color(0, 0, 0));
+				modelStack.PopMatrix();
 
-			cout << to_string(mapIter->second) << endl;
-			cout << mapIter->first << endl;
+				modelStack.Scale(2, 2, 1);
+				RenderHelper::GetInstance().RenderText(*textOnScreenMesh, texture[MENUGUI_TEXTONSCREEN], mapIter->first , Color(0, 0, 0));
 		}
+
+		modelStack.PopMatrix();
 	}
-	//if (mainmenu.option == MainMenu::OPTION::OPTION_HIGHSCORE)
-	//{
-
-	//	std::vector<std::string> highscore;
-	//	highscore = mainmenu.TextFileToScreen("MenuFile//HowToPageOne.txt");
-
-
-	//	float count = 2;
-
-	//	modelStack.Translate(-30, initialTranslateY, 0.f);
-	//	modelStack.Scale(3, 3, 1);
-
-	//	for (std::vector<std::string>::iterator it = highscore.begin(); it != highscore.end(); ++it)
-	//	{
-	//		modelStack.Translate(0, -count, 0);
-	//		RenderHelper::GetInstance().RenderText(*textOnScreenMesh, texture[MENUGUI_TEXTONSCREEN], *it, Color(0, 1, 0));
-	//	}
-
-	//	modelStack.PopMatrix();
-	//}
 }
 
 void SceneMainMenu::RenderHowToPlayChoice(int chooseMenu)

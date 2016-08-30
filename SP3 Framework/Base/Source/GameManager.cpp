@@ -12,25 +12,17 @@ GameManager::~GameManager() {
 }
 
 //Function(s)
-bool GameManager::GoToScene(const string& sceneName) {
+bool GameManager::GoToScene(string sceneName) {
 
-	if (sceneName == "Level_1") {
-		if (!SceneManager::GetInstance().CheckSceneExist(sceneName)) {
-			SceneBase* scene = new SceneBase(sceneName);
-			scene->nextScene = "Level_2";
-			scene->tileMapFile = "Levels//Level1//TM.csv";
-			scene->sawbladesFile = "Levels//Level1//SB.txt";	
-			scene->bgmFile = "Audio//BGM//BGM_Daniu.mp3";
-		}
-		SceneManager::GetInstance().SetActiveScene(sceneName);
-		return true;
-	} else if (sceneName == "Level_2") {
+	if (sceneName == "Level_2") {
 		if (!SceneManager::GetInstance().CheckSceneExist(sceneName)) {
 			SceneBase* scene = new SceneBase(sceneName);
 			scene->nextScene = "Level_3";
 			scene->tileMapFile = "";
 			scene->sawbladesFile = "";
 			scene->bgmFile = "Audio//BGM//BGM_Daniu.mp3";
+			scene->unlockCharacter = "Daniu";
+			scene->unlockPart = SceneBase::PART::BODY;
 		}
 		SceneManager::GetInstance().SetActiveScene(sceneName);
 		return true;
@@ -41,6 +33,8 @@ bool GameManager::GoToScene(const string& sceneName) {
 			scene->tileMapFile = "";
 			scene->sawbladesFile = "";
 			scene->bgmFile = "Audio//BGM//BGM_Daniu.mp3";
+			scene->unlockCharacter = "Daniu";
+			scene->unlockPart = SceneBase::PART::ARMS;
 		}
 		SceneManager::GetInstance().SetActiveScene(sceneName);
 		return true;
@@ -51,6 +45,8 @@ bool GameManager::GoToScene(const string& sceneName) {
 			scene->tileMapFile = "";
 			scene->sawbladesFile = "";
 			scene->bgmFile = "Audio//BGM//BGM_Daniu.mp3";
+			scene->unlockCharacter = "Daniu";
+			scene->unlockPart = SceneBase::PART::LEGS;
 		}
 		SceneManager::GetInstance().SetActiveScene(sceneName);
 		return true;
@@ -61,6 +57,8 @@ bool GameManager::GoToScene(const string& sceneName) {
 			scene->tileMapFile = "";
 			scene->sawbladesFile = "";
 			scene->bgmFile = "Audio//BGM//BGM_Daniu.mp3";
+			scene->unlockCharacter = "Seetwo";
+			scene->unlockPart = SceneBase::PART::HEAD;
 		}
 		SceneManager::GetInstance().SetActiveScene(sceneName);
 		return true;
@@ -71,6 +69,20 @@ bool GameManager::GoToScene(const string& sceneName) {
 			scene->tileMapFile = "";
 			scene->sawbladesFile = "";
 			scene->bgmFile = "Audio//BGM//BGM_Daniu.mp3";
+			scene->unlockCharacter = "Seetwo";
+			scene->unlockPart = SceneBase::PART::BODY;
+		}
+		SceneManager::GetInstance().SetActiveScene(sceneName);
+		return true;
+	} else if (sceneName == "Level_7") {
+		if (!SceneManager::GetInstance().CheckSceneExist(sceneName)) {
+			SceneBase* scene = new SceneBase(sceneName);
+			scene->nextScene = "Level_8";
+			scene->tileMapFile = "";
+			scene->sawbladesFile = "";
+			scene->bgmFile = "Audio//BGM//BGM_Daniu.mp3";
+			scene->unlockCharacter = "Seetwo";
+			scene->unlockPart = SceneBase::PART::ARMS;
 		}
 		SceneManager::GetInstance().SetActiveScene(sceneName);
 		return true;
@@ -81,6 +93,8 @@ bool GameManager::GoToScene(const string& sceneName) {
 			scene->tileMapFile = "";
 			scene->sawbladesFile = "";
 			scene->bgmFile = "Audio//BGM//BGM_Daniu.mp3";
+			scene->unlockCharacter = "Seetwo";
+			scene->unlockPart = SceneBase::PART::LEGS;
 		}
 		SceneManager::GetInstance().SetActiveScene(sceneName);
 		return true;
@@ -91,7 +105,23 @@ bool GameManager::GoToScene(const string& sceneName) {
 		SceneManager::GetInstance().SetActiveScene(sceneName);
 		return true;
 	} else {
-		cout << "Error: Unrecognised Level!" << endl;
+		bool returnValue = true;
+		if (sceneName != "Level_1") {
+			returnValue = false;
+			sceneName = "Level_1";
+			cout << "Error: Unrecognised Level! Defaulting to " << sceneName << "!" << endl;
+		}
+		if (!SceneManager::GetInstance().CheckSceneExist(sceneName)) {
+			SceneBase* scene = new SceneBase(sceneName);
+			scene->nextScene = "Level_2";
+			scene->tileMapFile = "Levels//Level1//TM.csv";
+			scene->sawbladesFile = "Levels//Level1//SB.txt";	
+			scene->bgmFile = "Audio//BGM//BGM_Daniu.mp3";
+			scene->unlockCharacter = "Daniu";
+			scene->unlockPart = SceneBase::PART::HEAD;
+		}
+		SceneManager::GetInstance().SetActiveScene(sceneName);
+		return false;
 	}
 
 	return false;

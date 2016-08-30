@@ -151,6 +151,15 @@ public:
 	string sawbladesFile;
 	string nextScene;
 	string bgmFile;
+	string unlockCharacter;
+
+	enum class PART {
+		HEAD,
+		BODY,
+		ARMS,
+		LEGS,
+	};
+	PART unlockPart;
 
 	//Constructor(s) & Destructor
 	SceneBase(const string& name);

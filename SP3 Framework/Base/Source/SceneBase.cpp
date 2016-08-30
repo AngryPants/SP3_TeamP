@@ -56,9 +56,11 @@ SceneBase::SceneBase(const string& name) : Scene(name) {
 		isKeyDown[i] = true;
 	}
 
-	string tileMapFile = "";
-	string sawbladesFile = "";
-	string bgmFile = "";
+	tileMapFile = "";
+	sawbladesFile = "";
+	bgmFile = "";
+	unlockCharacter = "Kifellah";
+	unlockPart = PART::HEAD;
 
 }
 
@@ -75,6 +77,7 @@ void SceneBase::Init() {
 	InitShader();
 	background = MeshBuilder::GetInstance().GenerateQuad("Scene Background", Color(0.4f, 0.7f, 0.1f));
 	currentState = STATE::CHARACTER_SELECT;
+	GameData::GetInstance().SetCurrentLevel(name);
 
 }
 
@@ -343,7 +346,7 @@ void SceneBase::End(const double& deltaTime) {
 	if (InputManager::GetInstance().GetInputInfo().keyDown[INPUT_SELECT] && !isKeyDown[KEYS::SELECT]) {
 		//Move on to next level.
 		isKeyDown[KEYS::SELECT] = true;
-		GoToNextLevel();		
+		GoToNextLevel();
 	} else if (InputManager::GetInstance().GetInputInfo().keyDown[INPUT_BACK] && !isKeyDown[KEYS::BACK]) {
 		//Restart the level
 		isKeyDown[KEYS::BACK] = true;
@@ -364,6 +367,25 @@ void SceneBase::Quit() {
 
 void SceneBase::GoToNextLevel() {
 
+	//Unlock/save our stuff
+	switch (unlockPart) {
+		case PART::HEAD:
+			GameData::GetInstance().UnlockHead(unlockCharacter);
+		break;
+		case PART::BODY:
+			GameData::GetInstance().UnlockBody(unlockCharacter);
+		break;
+		case PART::ARMS:
+			GameData::GetInstance().UnlockArms(unlockCharacter);
+		break;
+		case PART::LEGS:
+			GameData::GetInstance().UnlockLegs(unlockCharacter);
+		break;
+	}
+	GameData::GetInstance().AddHighScore(name, hero->GetScore());
+	GameData::GetInstance().SetCurrentLevel(nextScene);
+	GameData::GetInstance().SaveGameData("SaveFile//DataOne.txt", "SaveFile//Highscore.txt");
+	
 	SceneManager::GetInstance().RemoveScene(name);
 	if (!GameManager::GetInstance().GoToScene(nextScene)) {
 		currentState = STATE::PLAY;

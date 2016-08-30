@@ -277,11 +277,11 @@ void MainMenu::MainMenuInit()
 	deletingFile = false;
 	transitionInProgress = false;
 
-	if (GameData::GetInstance().LoadGameData("SaveFile//DataOne.txt"))
+	if (GameData::GetInstance().LoadGameData("SaveFile//DataOne.txt")) {
 		hasSavedFile = true;
-
-	else
+	} else {
 		hasSavedFile = false;
+	}
 
 	GameData::GetInstance().LoadHighScore("SaveFile//Highscore.txt");
 
@@ -293,12 +293,6 @@ void MainMenu::MainMenuInit()
 void MainMenu::MainMenuUpdate(const double &deltaTime)
 {
 	MainMenuUpdates(menu, deltaTime);
-	if (GameData::GetInstance().LoadGameData("SaveFile//DataOne.txt"))
-	hasSavedFile = true;
-
-	else
-		hasSavedFile = false;
-
 	//std::cout << chooseMenu << "  " << static_cast<int>(menu) << "  " << static_cast<int>(option) <<  "  " << GameInformation::GetInstance().GetVolume() << std::endl;
 	//std::cout << GameInformation::GetInstance().GetDataSaveNum() << " " << GameInformation::GetInstance().GetDataSaveLevel();
 }
