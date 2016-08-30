@@ -231,7 +231,7 @@ void SceneBase::Update(const double& deltaTime) {
 		cout << "Lag Spike Detected." << endl;
 		frameTime = 1.0 / minFPS;
 	}
-	cout << "Frame Rate: " << to_string(frameTime) << endl;
+	//cout << "Frame Rate: " << to_string(frameTime) << endl;
 
 	if (!InputManager::GetInstance().GetInputInfo().keyDown[INPUT_SELECT]) {
 		isKeyDown[static_cast<unsigned int>(KEYS::SELECT)] = false;

@@ -225,7 +225,7 @@ void Turret::Dead(const double& deltaTime) {
 	if (!isDead) {
 		isDead = true;
 		if (target != nullptr) {
-			target->AddScore(100);
+			target->AddScore(40);
 		}
 	}
 
@@ -245,6 +245,8 @@ void Turret::Reset() {
 bool Turret::TakeDamage(const int& damage) {
 
 	bool tookDamage = Character::TakeDamage(damage);
+	if (!target->GetAbilityActive())
+		target->AddAbilityScore(2.5);
 
 	if (tookDamage && target != nullptr) {
 		if (target->position.x < position.x) {

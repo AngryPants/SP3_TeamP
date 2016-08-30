@@ -35,6 +35,7 @@ Hero::Hero(const string& name, const string& sceneName) : Character(name, sceneN
 	//Mesh & Textures
 	mesh = MeshBuilder::GetInstance().GenerateQuad("Quad");
 	healthBarBorder.textureArray[0] = TextureManager::GetInstance().AddTexture("borderHealth", "Image//Cyborg_Shooter//Characters//Heroes//HP_Border.tga");
+	borderBackground.textureArray[0] = TextureManager::GetInstance().AddTexture("borderHealth2", "Image//Cyborg_Shooter//Characters//Heroes//BorderBackground.tga");
 	healthBarGreen.textureArray[0] = TextureManager::GetInstance().AddTexture("barGreen", "Image//Cyborg_Shooter//Characters//Heroes//HP_BarGreen.tga");
 	healthBarYellow.textureArray[0] = TextureManager::GetInstance().AddTexture("barYellow", "Image//Cyborg_Shooter//Characters//Heroes//HP_BarYellow.tga");
 	healthBarRed.textureArray[0] = TextureManager::GetInstance().AddTexture("barRed", "Image//Cyborg_Shooter//Characters//Heroes//HP_BarRed.tga");
@@ -73,7 +74,8 @@ void Hero::SetScore(const int& score)
 void Hero::AddScore(const int& score) {
 
 	this->score += score;
-	AddAbilityScore(score * 0.25);
+	if (!abilityActive)
+		AddAbilityScore(score * 0.25);
 }
 
 int Hero::GetAbilityScore() const
@@ -272,14 +274,6 @@ void Hero::SpecialAbility(const double &deltaTime)
 	if (abilityScore > maxAbilityScore)
 		abilityScore = maxAbilityScore;
 
-	if (!abilityAvailable && !abilityActive)
-		abilityAccumulatedTime += deltaTime * 10.25;
-	// Check if ability is available, add ability score over time if both are not true
-	if (abilityAccumulatedTime > 1 && !abilityAvailable && !abilityActive)
-	{
-		abilityAccumulatedTime -= 1;
-		++abilityScore;
-	}
 	// Check if ability is active, and makes it available if it is not active and the ability score is greater than 50
 	if (!abilityAvailable && !abilityActive && abilityScore >= maxAbilityScore)
 	{
@@ -527,12 +521,21 @@ void Hero::RenderUI()
 {
 	MS& modelStack = GraphicsManager::GetInstance().modelStack;
 
+	// Border Background
+	modelStack.PushMatrix();
+	modelStack.Translate(-27, 46, 0);
+	modelStack.Scale(46, 8, 1);
+	RenderHelper::GetInstance().RenderMesh(*mesh, borderBackground, false);
+	modelStack.PopMatrix();
+
+	// HP Bar
 	float hpBarScale = 34 * (static_cast<float>(currentHealth) / static_cast<float>(maxHealth));
 	hpBarScale = Math::Max(0.01f, hpBarScale);
 	Math::Clamp(hpBarScale, 0.01f, 34.f);
+	if (currentHealth >= maxHealth)
+		hpBarScale = 34;
 	float hpBarPosition = -50 + hpBarScale * 0.5 + 9;
 	
-	// HP Bar
 	modelStack.PushMatrix();
 	modelStack.Translate(hpBarPosition, 46, 0);
 	modelStack.Scale(hpBarScale, 8, 1);
@@ -551,12 +554,21 @@ void Hero::RenderUI()
 	RenderHelper::GetInstance().RenderMesh(*mesh, healthBarBorder, false);
 	modelStack.PopMatrix();
 
+	// Border Background
+	modelStack.PushMatrix();
+	modelStack.Translate(-27, 40, 0);
+	modelStack.Scale(46, 8, 1);
+	RenderHelper::GetInstance().RenderMesh(*mesh, borderBackground, false);
+	modelStack.PopMatrix();
+
+	// MP Bar
 	float abilityBarScale = 34 * (static_cast<float>(abilityScore) / static_cast<float>(50));
+	if (abilityScore >= 50)
+		abilityBarScale = 34;
 	abilityBarScale = Math::Max(0.01f, abilityBarScale);
-	Math::Clamp(abilityBarScale, 0.01f, 34.f); 
+	Math::Clamp(abilityBarScale, 0.01f, 34.f);
 	float abilityBarPosition = -50 + abilityBarScale * 0.5 + 9;
 	
-	// MP Bar
 	modelStack.PushMatrix();
 	modelStack.Translate(abilityBarPosition, 40, 0);
 	modelStack.Scale(abilityBarScale, 8, 1);

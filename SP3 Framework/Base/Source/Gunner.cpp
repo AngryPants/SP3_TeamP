@@ -256,6 +256,8 @@ void Gunner::Attack() {
 bool Gunner::TakeDamage(const int& damage) {
 
 	bool tookDamage = Character::TakeDamage(damage);
+	if (!target->GetAbilityActive())
+		target->AddAbilityScore(2.5);
 
 	currentState = STATE::COMBAT;
 	
@@ -320,7 +322,7 @@ void Gunner::Dead(const double& deltaTime) {
 	if (!isDead) {
 		isDead = true;
 		if (target != nullptr) {
-			target->AddScore(150);
+			target->AddScore(50);
 		}
 	}
 
