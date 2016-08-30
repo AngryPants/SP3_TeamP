@@ -7,7 +7,6 @@
 
 Seetwo::Seetwo(const string& sceneName) : Hero("Seetwo", sceneName)
 {
-
 	maxSpeed = 5;
 	damage = 10;
 	maxHealth = 150;
@@ -148,9 +147,8 @@ void Seetwo::SpecialAbility(const double &deltaTime)
 	if (abilityAccumulatedTime > 1)
 	{
 		abilityAccumulatedTime -= 1;
-		currentHealth += maxHealth * 0.5 * 0.02;
+		currentHealth += maxHealth * 0.5f * deltaTime;
 		AddAbilityScore(-1);
-		//cout << currentHealth << endl;
 	}
 	// Deactivates the ability if it was active and the score is above 5
 	if (GetAbilityActive() && GetAbilityScore() <= 0)

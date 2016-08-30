@@ -46,8 +46,6 @@
     <ClCompile Include="Source\Sawblade.cpp" />
     <ClCompile Include="Source\SceneBase.cpp" />
     <ClCompile Include="Source\SceneManager.cpp" />
-    <ClCompile Include="Source\Scene_Level1.cpp" />
-    <ClCompile Include="Source\Scene_Level2.cpp" />
     <ClCompile Include="Source\Seetwo.cpp" />
     <ClCompile Include="Source\shader.cpp" />
     <ClCompile Include="Source\ShaderProgram.cpp" />
@@ -106,14 +104,6 @@
     <ClInclude Include="Source\Scene.h" />
     <ClInclude Include="Source\SceneBase.h" />
     <ClInclude Include="Source\SceneManager.h" />
-    <ClInclude Include="Source\Scene_Level1.h" />
-    <ClInclude Include="Source\Scene_Level2.h" />
-    <ClInclude Include="Source\Scene_Level3.h" />
-    <ClInclude Include="Source\Scene_Level4.h" />
-    <ClInclude Include="Source\Scene_Level5.h" />
-    <ClInclude Include="Source\Scene_Level6.h" />
-    <ClInclude Include="Source\Scene_Level7.h" />
-    <ClInclude Include="Source\Scene_Level8.h" />
     <ClInclude Include="Source\Seetwo.h" />
     <ClInclude Include="Source\shader.hpp" />
     <ClInclude Include="Source\ShaderProgram.h" />
