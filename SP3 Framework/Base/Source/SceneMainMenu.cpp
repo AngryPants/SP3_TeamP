@@ -6,10 +6,11 @@
 #include "TextureManager.h"
 #include "EntityManager.h"
 #include "GameManager.h"
+#include "AudioManager.h"
 
 SceneMainMenu::SceneMainMenu(const string& name) : Scene(name)
 {
-
+	bgm = "";
 }
 
 SceneMainMenu::~SceneMainMenu()
@@ -90,6 +91,8 @@ void SceneMainMenu::Init()
 	camera->SetFarClippingPlane(100);
 	camera->SetNearClippingPlane(-200);
 	camera->SetOrthoSize(9);
+
+	AudioManager::GetInstance().PlayAudio2D(bgm, true, 0.5f);
 
 }
 
@@ -650,5 +653,6 @@ void SceneMainMenu::RenderHowToPlayChoice(int chooseMenu)
 
 void SceneMainMenu::Exit()
 {
+	AudioManager::GetInstance().ClearAudioList();
 	EntityManager::GetInstance().DestroyScene(name);
 }

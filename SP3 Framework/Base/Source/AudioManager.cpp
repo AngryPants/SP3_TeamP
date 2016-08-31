@@ -34,10 +34,10 @@ void AudioManager::Update() {
 
 }
 
-bool AudioManager::PlayAudio2D(const string& audioFile, bool looped) {
+bool AudioManager::PlayAudio2D(const string& audioFile, bool looped, float volume) {
 
 	ISound* soundPtr = audioEngine->play2D(audioFile.c_str(), looped, false, true);
-
+	soundPtr->setVolume(volume);
 	audioList.insert(soundPtr);
 
 	return true;
@@ -54,13 +54,15 @@ bool AudioManager::ClearAudioList() {
 		iter = audioList.erase(iter);
 	}
 
+	audioEngine->removeAllSoundSources();
+
 	std::cout << "Clear Audio List 2D" << std::endl;
 
 	return true;
 
 }
 
-bool AudioManager::PlayAudio3D(const string& audioFile, bool looped, float minDistance, float maxDistance, Vector3 listenerPosition, Vector3 listenerDirection, Vector3 soundPosition, Vector3 upVector ) {
+bool AudioManager::PlayAudio3D(const string& audioFile, bool looped, float minDistance, float maxDistance, Vector3 listenerPosition, Vector3 listenerDirection, Vector3 soundPosition, Vector3 upVector, float volume) {
 
 	audioEngine->setListenerPosition(vec3df(listenerPosition.x, listenerPosition.y, listenerPosition.z),
 									 vec3df(listenerDirection.x, listenerDirection.y, listenerDirection.z),
@@ -69,6 +71,7 @@ bool AudioManager::PlayAudio3D(const string& audioFile, bool looped, float minDi
 	ISound* soundPtr = audioEngine->play3D(audioFile.c_str(), vec3df(soundPosition.x, soundPosition.y, soundPosition.z), looped, false, true);
 	soundPtr->setMinDistance(minDistance);
 	soundPtr->setMaxDistance(maxDistance);
+	soundPtr->setVolume(volume);
 
 	audioList.insert(soundPtr);
 
@@ -76,7 +79,7 @@ bool AudioManager::PlayAudio3D(const string& audioFile, bool looped, float minDi
 
 }
 
-bool AudioManager::PlayAudio3D(const string& audioFile, bool looped, float minDistance, Vector3 listenerPosition, Vector3 listenerDirection, Vector3 soundPosition, Vector3 upVector ) {
+bool AudioManager::PlayAudio3D(const string& audioFile, bool looped, float minDistance, Vector3 listenerPosition, Vector3 listenerDirection, Vector3 soundPosition, Vector3 upVector, float volume) {
 	
 	audioEngine->setListenerPosition(vec3df(listenerPosition.x, listenerPosition.y, listenerPosition.z),
 									 vec3df(listenerDirection.x, listenerDirection.y, listenerDirection.z),
@@ -85,6 +88,7 @@ bool AudioManager::PlayAudio3D(const string& audioFile, bool looped, float minDi
 
 	ISound* soundPtr = audioEngine->play3D(audioFile.c_str(), vec3df(soundPosition.x, soundPosition.y, soundPosition.z), looped, false, true);
 	soundPtr->setMinDistance(minDistance);
+	soundPtr->setVolume(volume);
 
 	audioList.insert(soundPtr);
 

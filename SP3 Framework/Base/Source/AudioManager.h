@@ -27,9 +27,9 @@ public:
 	//Function(s)
 	static AudioManager& GetInstance();
 	void Update();
-	bool PlayAudio2D(const string& audioFile, bool looped);
-	bool PlayAudio3D(const string& audioFile, bool looped, float minDistance, float maxDistance, Vector3 listenerPosition, Vector3 listenerDirection, Vector3 soundPosition, Vector3 upVector = Vector3(0, 1, 0));
-	bool PlayAudio3D(const string& audioFile, bool looped, float minDistance, Vector3 listenerPosition, Vector3 listenerDirection, Vector3 soundPosition, Vector3 upVector = Vector3(0, 1, 0));
+	bool PlayAudio2D(const string& audioFile, bool looped, float volume = 1.0f);
+	bool PlayAudio3D(const string& audioFile, bool looped, float minDistance, float maxDistance, Vector3 listenerPosition, Vector3 listenerDirection, Vector3 soundPosition, Vector3 upVector = Vector3(0, 1, 0), float volume = 1.0f);
+	bool PlayAudio3D(const string& audioFile, bool looped, float minDistance, Vector3 listenerPosition, Vector3 listenerDirection, Vector3 soundPosition, Vector3 upVector = Vector3(0, 1, 0), float volume = 1.0f);
 	bool UpdateAudio3D(const string& audioFile, Vector3 soundPosition);
 	bool UpdateListener3D(Vector3 listenerPosition, Vector3 listenerDirection, Vector3 upVector = Vector3(0, 1, 0));
 	bool ClearAudioList();

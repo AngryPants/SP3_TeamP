@@ -20,7 +20,7 @@ bool GameManager::GoToScene(string sceneName) {
 			scene->nextScene = "Level_3";
 			scene->tileMapFile = "Levels//Level2//TM.csv";
 			scene->sawbladesFile = "Levels//Level2//SB.txt";
-			scene->bgmFile = "Audio//BGM//BGM_Daniu.mp3";
+			scene->bgmFile = "Audio//BGM//Back_On_Track.mp3";
 			scene->unlockCharacter = "Daniu";
 			scene->unlockPart = SceneBase::PART::BODY;
 		}
@@ -33,7 +33,7 @@ bool GameManager::GoToScene(string sceneName) {
 			scene->nextScene = "Level_4";
 			scene->tileMapFile = "";
 			scene->sawbladesFile = "";
-			scene->bgmFile = "Audio//BGM//BGM_Daniu.mp3";
+			scene->bgmFile = "Audio//BGM//Dry_Out.mp3";
 			scene->unlockCharacter = "Daniu";
 			scene->unlockPart = SceneBase::PART::ARMS;
 		}
@@ -46,7 +46,7 @@ bool GameManager::GoToScene(string sceneName) {
 			scene->nextScene = "Level_5";
 			scene->tileMapFile = "";
 			scene->sawbladesFile = "";
-			scene->bgmFile = "Audio//BGM//BGM_Daniu.mp3";
+			scene->bgmFile = "Audio//BGM//Dry_Out.mp3";
 			scene->unlockCharacter = "Daniu";
 			scene->unlockPart = SceneBase::PART::LEGS;
 		}
@@ -59,7 +59,7 @@ bool GameManager::GoToScene(string sceneName) {
 			scene->nextScene = "Level_6";
 			scene->tileMapFile = "";
 			scene->sawbladesFile = "";
-			scene->bgmFile = "Audio//BGM//BGM_Daniu.mp3";
+			scene->bgmFile = "Audio//BGM//Forever_Bound_Stereo_Madness.mp3";
 			scene->unlockCharacter = "Seetwo";
 			scene->unlockPart = SceneBase::PART::HEAD;
 		}
@@ -72,7 +72,7 @@ bool GameManager::GoToScene(string sceneName) {
 			scene->nextScene = "Level_7";
 			scene->tileMapFile = "";
 			scene->sawbladesFile = "";
-			scene->bgmFile = "Audio//BGM//BGM_Daniu.mp3";
+			scene->bgmFile = "Audio//BGM//Forever_Bound_Stereo_Madness.mp3";
 			scene->unlockCharacter = "Seetwo";
 			scene->unlockPart = SceneBase::PART::BODY;
 		}
@@ -85,7 +85,7 @@ bool GameManager::GoToScene(string sceneName) {
 			scene->nextScene = "Level_8";
 			scene->tileMapFile = "";
 			scene->sawbladesFile = "";
-			scene->bgmFile = "Audio//BGM//BGM_Daniu.mp3";
+			scene->bgmFile = "Audio//BGM//Base_After_Base.mp3";
 			scene->unlockCharacter = "Seetwo";
 			scene->unlockPart = SceneBase::PART::ARMS;
 		}
@@ -98,7 +98,7 @@ bool GameManager::GoToScene(string sceneName) {
 			scene->nextScene = "Main_Menu";
 			scene->tileMapFile = "";
 			scene->sawbladesFile = "";
-			scene->bgmFile = "Audio//BGM//BGM_Daniu.mp3";
+			scene->bgmFile = "Audio//BGM//Base_After_Base.mp3";
 			scene->unlockCharacter = "Seetwo";
 			scene->unlockPart = SceneBase::PART::LEGS;
 		}
@@ -107,7 +107,8 @@ bool GameManager::GoToScene(string sceneName) {
 	}
 	else if (sceneName == "Main_Menu") {
 		if (!SceneManager::GetInstance().CheckSceneExist(sceneName)) {
-			Scene* scene = new SceneMainMenu(sceneName);
+			SceneMainMenu* scene = new SceneMainMenu(sceneName);
+			scene->bgm = "Audio//BGM//Forever_Bound_Stereo_Madness.mp3";
 		}
 		SceneManager::GetInstance().SetActiveScene(sceneName);
 		return true;
@@ -124,7 +125,7 @@ bool GameManager::GoToScene(string sceneName) {
 			scene->nextScene = "Level_2";
 			scene->tileMapFile = "Levels//Level1//TM.csv";
 			scene->sawbladesFile = "Levels//Level1//SB.txt";
-			scene->bgmFile = "Audio//BGM//BGM_Daniu.mp3";
+			scene->bgmFile = "Audio//BGM//Back_On_Track.mp3";
 			scene->unlockCharacter = "Daniu";
 			scene->unlockPart = SceneBase::PART::HEAD;
 		}

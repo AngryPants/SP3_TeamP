@@ -90,6 +90,7 @@ protected:
 public:
 	Mesh* mesh;
 	Mesh* textOnScreenMesh;
+	string bgm;
 	SceneMainMenu(const string& name);
 	virtual ~SceneMainMenu();
 

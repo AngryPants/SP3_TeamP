@@ -615,7 +615,8 @@ void SceneBase::Exit() {
 	enemies.clear();
 	sawblades.clear();
 	tileSystem.Clear();
-	EntityManager::GetInstance().DestroyScene(name);	
+	EntityManager::GetInstance().DestroyScene(name);
+	AudioManager::GetInstance().ClearAudioList();
 	selectedHero = HERO::KIFELLAH;
 
 }
@@ -641,6 +642,6 @@ void SceneBase::StartScene() {
 	InitEnemies();
 	InitSawblades(sawbladesFile);
 
-	//AudioManager::GetInstance().PlayAudio2D(bgmFile, true);
+	AudioManager::GetInstance().PlayAudio2D(bgmFile, true, 0.1f);
 
 }
