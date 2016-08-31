@@ -549,14 +549,14 @@ void SceneBase::RenderEndScreen() {
 	RenderHelper::GetInstance().RenderMesh(*background, backgroundTextures[BACKGROUND_PAUSE], false);
 	modelStack.PopMatrix();
 
-	modelStack.PushMatrix();
+	/*modelStack.PushMatrix();
 	modelStack.Translate(-40, 0, 0);
 	modelStack.Scale(4, 4, 1);
 	RenderHelper::GetInstance().RenderText(*font, fontTexture, "Press ESC/[B] To Quit", Color(1, 1, 1));
 	modelStack.Translate(0, -5, 0);
 	modelStack.Scale(0.75, 1, 1);
 	RenderHelper::GetInstance().RenderText(*font, fontTexture, "Press Enter/[A] To Resume", Color(1, 1, 1));
-	modelStack.PopMatrix();
+	modelStack.PopMatrix();*/
 
 } 
 
