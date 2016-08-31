@@ -114,6 +114,7 @@ void Sawblade::MoveToNode(const double& deltaTime) {
 
 	velocity = direction.Normalized() * speed;
 	position += velocity * static_cast<float>(deltaTime);
+	cout << position << endl;
 
 	if (velocity.x < 0) {
 		if (position.x < destinationNode->second.x) {

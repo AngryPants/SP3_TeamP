@@ -102,6 +102,10 @@ void ProcessInput(InputInfo& inputInfo, const Key& input) {
 			SetInput(inputInfo, INPUT_ABILITY, input.GetState());
 			break;
 		}
+		case KEYS::P: {
+			SetInput(inputInfo, INPUT_PAUSE, input.GetState());
+			break;
+		}
 	}
 }
 
@@ -125,9 +129,20 @@ void ProcessInput(InputInfo& inputInfo, const Gamepad& input) {
 			}
 	 }
 
+	//Back
+	if (input.buttons[6]) {
+		SetInput(inputInfo, INPUT_PAUSE, KEY_STATE::PRESS);
+	}
+
 	//A
 	if (input.buttons[0] == true) {
 		SetInput(inputInfo, INPUT_JUMP, KEY_STATE::PRESS);
+		SetInput(inputInfo, INPUT_SELECT, KEY_STATE::PRESS);
+	}
+
+	//B
+	if (input.buttons[1]) {
+		SetInput(inputInfo, INPUT_BACK, KEY_STATE::PRESS);
 	}
 
 	//X

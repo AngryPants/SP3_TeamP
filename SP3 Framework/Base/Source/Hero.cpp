@@ -373,6 +373,7 @@ void Hero::ItemInteraction(int row, int column, const double& deltaTime) {
 		case TILE_OBJECTIVE: {
 			if (CheckItemToggle(tileValue)) {
 				ToggleItem(false, tileValue);
+				AudioManager::GetInstance().PlayAudio2D("Audio//Sound_Effects//Items//Checkpoint.flac", false);
 			}
 		}
 		case TILE_DOOR:
@@ -611,7 +612,8 @@ void Hero::Reset() {
 	Character::Reset();
 	checkpoint = spawnpoint;
 	score = 0;
-	lives = 3;
+	abilityScore = 0;
+	lives = 3;	
 	isAtExit = false;
 
 }
