@@ -6,6 +6,7 @@
 #include "TextureManager.h"
 #include "GameManager.h"
 #include "AudioManager.h"
+#include "GameData.h"
 
 SceneCredits::SceneCredits(const string& name) : Scene(name)
 {
@@ -34,6 +35,8 @@ void SceneCredits::Update(const double &deltaTime)
 
 	if (InputManager::GetInstance().GetInputInfo().keyDown[INPUT_SELECT] && !isKeyDown) {
 		isKeyDown = true;
+		GameData::GetInstance().SetCurrentLevel("Level_1");
+		GameData::GetInstance().SaveGameData("SaveFile//DataOne.txt", "SaveFile//Highscore.txt");
 		SceneManager::GetInstance().RemoveScene(name);
 		GameManager::GetInstance().GoToScene("Main_Menu");
 	}

@@ -220,10 +220,14 @@ void SceneMainMenu::DeleteSaveFileOrNot()
 			if (mainmenu.deletingFile == true)
 			{
 				GameData::GetInstance().DeleteGameData("SaveFile//DataOne.txt");
+				if (GameData::GetInstance().LoadGameData("SaveFile//DataOne.txt")) {
+					mainmenu.hasSavedFile = true;
+				} else {
+					mainmenu.hasSavedFile = false;
+				}
 				std::cout << "File deleted" << std::endl;
 				mainmenu.option = MainMenu::OPTION::OPTION_MAINOPTION;
 				mainmenu.deletingFile = false;
-				mainmenu.hasSavedFile = false;
 			}
 		}
 	}
