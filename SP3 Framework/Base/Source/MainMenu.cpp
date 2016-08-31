@@ -58,6 +58,7 @@ void MainMenu::MainMenuChoice()
 				break;
 
 			case MENU::MENU_HOWTOPLAY:
+				howtoplay = HOWTOPLAY::HOWTOPLAY_MAINHOWTOPLAY;
 				transitionInProgress = true;
 				break;
 
@@ -200,14 +201,14 @@ void MainMenu::HowToPlayChoice()
 		--chooseMenu;
 
 		if (chooseMenu < 1)
-			chooseMenu = 5;
+			chooseMenu = 2;
 	}
 
 	if (InputManager::GetInstance().GetInputInfo().keyPressed[INPUT_MENU_RIGHT])
 	{
 		++chooseMenu;
 
-		if (chooseMenu > 5)
+		if (chooseMenu > 2)
 			chooseMenu = 1;
 	}
 

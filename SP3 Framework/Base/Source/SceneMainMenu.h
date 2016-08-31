@@ -62,6 +62,8 @@ protected:
 		MENUGUI_TEXTSCREEN,
 		MENUGUI_TEXTONSCREEN,
 
+		MENUGUI_HIGHSCORE,
+
 		MENUGUI_HOWTOPLAY_PAGEONE,
 		MENUGUI_HOWTOPLAY_PAGETWO,
 
@@ -91,6 +93,7 @@ public:
 	Mesh* mesh;
 	Mesh* textOnScreenMesh;
 	string bgm;
+
 	SceneMainMenu(const string& name);
 	virtual ~SceneMainMenu();
 

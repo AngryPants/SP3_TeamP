@@ -81,7 +81,7 @@ void SceneMainMenu::Init()
 	texture[MENUGUI_HOWTOPLAY_PAGETWO].textureArray[0] = TextureManager::GetInstance().AddTexture("HowToPageTwo", "Image//Cyborg_Shooter//MenuUI//GamePadControls.tga");
 
 	texture[MENUGUI_TEXTONSCREEN].textureArray[0] = TextureManager::GetInstance().AddTexture("Text On Screen", "Image//Fonts//Consolas.tga");
-
+	texture[MENUGUI_HIGHSCORE].textureArray[0] = TextureManager::GetInstance().AddTexture("High score", "Image//Cyborg_Shooter//Others//Highscore.tga");
 
 	camera = new CameraMainMenu(name);
 	camera->SetPosition(Vector3(0, 0, 0));
@@ -92,8 +92,7 @@ void SceneMainMenu::Init()
 	camera->SetNearClippingPlane(-200);
 	camera->SetOrthoSize(9);
 
-	AudioManager::GetInstance().PlayAudio2D(bgm, true, 0.5f);
-
+	//AudioManager::GetInstance().PlayAudio2D(bgm, true, 0.5f);
 }
 
 void SceneMainMenu::UpdateInTransition(const double &deltaTime)
@@ -114,11 +113,12 @@ void SceneMainMenu::UpdateInTransition(const double &deltaTime)
 
 		if (mainmenu.menu == MainMenu::MENU::MENU_HOWTOPLAY)
 		{
-			camera->Yaw(-90.f * (float)deltaTime);
+			camera->Pitch(-90.f * (float)deltaTime);
 
-			if (camera->GetRotation().y < 90.f)
+			if (camera->GetRotation().x < -90.f)
 			{
-				camera->SetYaw(90);
+				camera->SetPitch(-90);
+				mainmenu.howtoplay = MainMenu::HOWTOPLAY::HOWTOPLAY_MAINHOWTOPLAY;
 				mainmenu.transitionInProgress = false;
 			}
 		}
@@ -137,11 +137,11 @@ void SceneMainMenu::UpdateInTransition(const double &deltaTime)
 
 		if (mainmenu.howtoplay == MainMenu::HOWTOPLAY::HOWTOPLAY_BACK)
 		{
-			camera->Yaw(90.f * (float)deltaTime);
+			camera->Pitch(90.f * (float)deltaTime);
 
-			if (camera->GetRotation().y > 180.f)
+			if (camera->GetRotation().x > 0.f)
 			{
-				camera->SetYaw(180.f);
+				camera->SetPitch(0.f);
 				mainmenu.howtoplay = MainMenu::HOWTOPLAY::HOWTOPLAY_MAINHOWTOPLAY;
 				mainmenu.transitionInProgress = false;
 			}
@@ -337,23 +337,23 @@ void SceneMainMenu::RenderMenuChoice() {
 	MS &modelStack = GraphicsManager::GetInstance().modelStack;
 
 	modelStack.PushMatrix();
-		modelStack.Translate(0, 0, -10);
-		modelStack.Scale(25, 20, 1);
-		RenderHelper::GetInstance().RenderMesh(*mesh, texture[MENUGUI_BACKGROUNDONE], false);
+	modelStack.Translate(0, 0, -10);
+	modelStack.Scale(25, 20, 1);
+	RenderHelper::GetInstance().RenderMesh(*mesh, texture[MENUGUI_BACKGROUNDONE], false);
 	modelStack.PopMatrix();
 
 	modelStack.PushMatrix();
-		modelStack.Translate(10, 0, 0);
-		modelStack.Rotate(-90, 0, 1, 0);
-		modelStack.Scale(23, 18, 1);
-		RenderHelper::GetInstance().RenderMesh(*mesh, texture[MENUGUI_TEXTSCREEN], false);
+	modelStack.Translate(0, 10, 0);
+	modelStack.Rotate(90, 1, 0, 0);
+	modelStack.Scale(25, 20, 1);
+	RenderHelper::GetInstance().RenderMesh(*mesh, texture[MENUGUI_TEXTSCREEN], false);
 	modelStack.PopMatrix();
 
 	modelStack.PushMatrix();
-		modelStack.Translate(0, -10, 0);
-		modelStack.Rotate(-90, 1, 0, 0);
-		modelStack.Scale(25, 20, 1);
-		RenderHelper::GetInstance().RenderMesh(*mesh, texture[MENUGUI_BACKGROUNDTWO], false);
+	modelStack.Translate(0, -10, 0);
+	modelStack.Rotate(-90, 1, 0, 0);
+	modelStack.Scale(25, 20, 1);
+	RenderHelper::GetInstance().RenderMesh(*mesh, texture[MENUGUI_BACKGROUNDTWO], false);
 	modelStack.PopMatrix();
 
 	if (!mainmenu.transitionInProgress)
@@ -363,39 +363,39 @@ void SceneMainMenu::RenderMenuChoice() {
 		case MainMenu::MENU::MENU_MAINMENU:
 		{
 			modelStack.PushMatrix();
-				modelStack.Translate(0, 5, 0);
-				modelStack.Scale(17, 17, 1);
-				RenderHelper::GetInstance().RenderMesh(*mesh, texture[MENUGUI_TITLE], false);
+			modelStack.Translate(0, 5, 0);
+			modelStack.Scale(17, 17, 1);
+			RenderHelper::GetInstance().RenderMesh(*mesh, texture[MENUGUI_TITLE], false);
 			modelStack.PopMatrix();
 
 			modelStack.PushMatrix();
-				modelStack.Translate(translateX, 1.5, 0);
-				modelStack.Scale(scale, scale, 1);
-				RenderHelper::GetInstance().RenderMesh(*mesh, texture[MENUGUI_MAIN_ONE], false);
+			modelStack.Translate(translateX, 1.5, 0);
+			modelStack.Scale(scale, scale, 1);
+			RenderHelper::GetInstance().RenderMesh(*mesh, texture[MENUGUI_MAIN_ONE], false);
 			modelStack.PopMatrix();
 
 			modelStack.PushMatrix();
-				modelStack.Translate(translateX, -0.5, 0);
-				modelStack.Scale(scale, scale, 1);
-				RenderHelper::GetInstance().RenderMesh(*mesh, texture[MENUGUI_MAIN_TWO], false);
+			modelStack.Translate(translateX, -0.5, 0);
+			modelStack.Scale(scale, scale, 1);
+			RenderHelper::GetInstance().RenderMesh(*mesh, texture[MENUGUI_MAIN_TWO], false);
 			modelStack.PopMatrix();
 
 			modelStack.PushMatrix();
-				modelStack.Translate(translateX, -2.5, 0);
-				modelStack.Scale(scale, scale, 1);
-				RenderHelper::GetInstance().RenderMesh(*mesh, texture[MENUGUI_MAIN_THREE], false);
+			modelStack.Translate(translateX, -2.5, 0);
+			modelStack.Scale(scale, scale, 1);
+			RenderHelper::GetInstance().RenderMesh(*mesh, texture[MENUGUI_MAIN_THREE], false);
 			modelStack.PopMatrix();
 
 			modelStack.PushMatrix();
-				modelStack.Translate(translateX, -4.5, 0);
-				modelStack.Scale(scale, scale, 1);
-				RenderHelper::GetInstance().RenderMesh(*mesh, texture[MENUGUI_MAIN_FOUR], false);
+			modelStack.Translate(translateX, -4.5, 0);
+			modelStack.Scale(scale, scale, 1);
+			RenderHelper::GetInstance().RenderMesh(*mesh, texture[MENUGUI_MAIN_FOUR], false);
 			modelStack.PopMatrix();
 
 			modelStack.PushMatrix();
-				modelStack.Translate(translateX, -6.5, 0);
-				modelStack.Scale(scale, scale, 1);
-				RenderHelper::GetInstance().RenderMesh(*mesh, texture[MENUGUI_MAIN_FIVE], false);
+			modelStack.Translate(translateX, -6.5, 0);
+			modelStack.Scale(scale, scale, 1);
+			RenderHelper::GetInstance().RenderMesh(*mesh, texture[MENUGUI_MAIN_FIVE], false);
 			modelStack.PopMatrix();
 		}
 		break;
@@ -405,14 +405,14 @@ void SceneMainMenu::RenderMenuChoice() {
 			if (mainmenu.hasSavedFile)
 			{
 				modelStack.PushMatrix();
-					modelStack.Translate(1.5f, 0.5f, 0);
-					modelStack.PushMatrix();
-						modelStack.Translate(0.f, -2.5f, 0);
-						modelStack.Scale(7, 7, 1);
-						RenderHelper::GetInstance().RenderMesh(*mesh, texture[MENUGUI_DELETEFILE_TWO], false);
-					modelStack.PopMatrix();
-					modelStack.Scale(10, 10, 1);
-					RenderHelper::GetInstance().RenderMesh(*mesh, texture[MENUGUI_DELETEFILE_ONE], false);
+				modelStack.Translate(1.5f, 0.5f, 0);
+				modelStack.PushMatrix();
+				modelStack.Translate(0.f, -2.5f, 0);
+				modelStack.Scale(7, 7, 1);
+				RenderHelper::GetInstance().RenderMesh(*mesh, texture[MENUGUI_DELETEFILE_TWO], false);
+				modelStack.PopMatrix();
+				modelStack.Scale(10, 10, 1);
+				RenderHelper::GetInstance().RenderMesh(*mesh, texture[MENUGUI_DELETEFILE_ONE], false);
 				modelStack.PopMatrix();
 
 				modelStack.PushMatrix();
@@ -446,16 +446,16 @@ void SceneMainMenu::RenderMenuChoice() {
 
 		case MainMenu::MENU::MENU_HOWTOPLAY:
 			modelStack.PushMatrix();
-				modelStack.Translate(0, -7, 0);
-				modelStack.Rotate(-90, 0, 1, 0);
-				modelStack.Scale(8, 8, 1);
-				RenderHelper::GetInstance().RenderMesh(*mesh, texture[MENUGUI_BACKTOMAIN], false);
+			modelStack.Translate(0, 0, -7);
+			modelStack.Rotate(90, 1, 0, 0);
+			modelStack.Scale(8, 8, 1);
+			RenderHelper::GetInstance().RenderMesh(*mesh, texture[MENUGUI_BACKTOMAIN], false);
 			modelStack.PopMatrix();
 
 			modelStack.PushMatrix();
-				modelStack.Translate(0, 6.5f, 0);
-				modelStack.Rotate(-90, 0, 1, 0);
-				modelStack.Scale(15, 3, 1);
+			modelStack.Translate(0, 6.5f, 4);
+			modelStack.Rotate(90, 1, 0, 0);
+			modelStack.Scale(12, 12, 1);
 			switch (mainmenu.chooseMenu)
 			{
 			default:
@@ -493,73 +493,95 @@ void SceneMainMenu::RenderOptionChoice()
 		case MainMenu::OPTION::OPTION_MAINOPTION:
 		{
 			modelStack.PushMatrix();
-				modelStack.Translate(1, 3.5, -translateZ);
+			modelStack.Translate(1, 3.5, -translateZ);
 
-				modelStack.PushMatrix();
-					modelStack.Translate(0, -0.5, translateZ);
+			modelStack.PushMatrix();
+			modelStack.Translate(0, -0.5, translateZ);
 
-					modelStack.PushMatrix();
-						modelStack.Translate(0, -2.5, translateZ);
-						modelStack.Rotate(-90, 1, 0, 0);
-						modelStack.Scale(scale, scale, 1);
-						RenderHelper::GetInstance().RenderMesh(*mesh, texture[MENUGUI_OPTION_THREE], false);
-					modelStack.PopMatrix();
+			modelStack.PushMatrix();
+			modelStack.Translate(0, -2.5, translateZ);
+			modelStack.Rotate(-90, 1, 0, 0);
+			modelStack.Scale(scale, scale, 1);
+			RenderHelper::GetInstance().RenderMesh(*mesh, texture[MENUGUI_OPTION_THREE], false);
+			modelStack.PopMatrix();
 
-					modelStack.Rotate(-90, 1, 0, 0);
-					modelStack.Scale(scale, scale, 1);
-					RenderHelper::GetInstance().RenderMesh(*mesh, texture[MENUGUI_OPTION_TWO], false);
-				modelStack.PopMatrix();
+			modelStack.Rotate(-90, 1, 0, 0);
+			modelStack.Scale(scale, scale, 1);
+			RenderHelper::GetInstance().RenderMesh(*mesh, texture[MENUGUI_OPTION_TWO], false);
+			modelStack.PopMatrix();
 
-				modelStack.Rotate(-90, 1, 0, 0);
-				modelStack.Scale(scale, scale, 1);
-				RenderHelper::GetInstance().RenderMesh(*mesh, texture[MENUGUI_OPTION_ONE], false);
+			modelStack.Rotate(-90, 1, 0, 0);
+			modelStack.Scale(scale, scale, 1);
+			RenderHelper::GetInstance().RenderMesh(*mesh, texture[MENUGUI_OPTION_ONE], false);
 			modelStack.PopMatrix();
 		}
 		break;
 
 		case MainMenu::OPTION::OPTION_HIGHSCORE:
-			break;
+		{
+			modelStack.PushMatrix();
+			modelStack.Translate(0, -0.5, 0);
+			modelStack.Rotate(-90, 1, 0, 0);
+			modelStack.Scale(25, 20, 1);
+			RenderHelper::GetInstance().RenderMesh(*mesh, texture[MENUGUI_TEXTSCREEN], false);
+			modelStack.PopMatrix();
+
+			modelStack.PushMatrix();
+			modelStack.Translate(0, 0, -5.f);
+			modelStack.Rotate(-90, 1, 0, 0);
+			modelStack.Scale(10, 10, 1);
+			RenderHelper::GetInstance().RenderMesh(*mesh, texture[MENUGUI_HIGHSCORE], false);
+			modelStack.PopMatrix();
+
+			modelStack.PushMatrix();
+			modelStack.Translate(0, 0, 5.f);
+			modelStack.Rotate(-90, 1, 0, 0);
+			modelStack.Scale(7, 7, 1);
+			RenderHelper::GetInstance().RenderMesh(*mesh, texture[MENUGUI_BACKTOMAIN], false);
+			modelStack.PopMatrix();
+		}
+		break;
 
 		case MainMenu::OPTION::OPTION_ERASEDATA:
 		{
 			modelStack.PushMatrix();
-				modelStack.Translate(1.f, 0.5f, -3.f);
+			modelStack.Translate(1.f, 0.5f, -3.f);
 
-				modelStack.PushMatrix();
-					modelStack.Translate(0.5f, 0.f, 2.f);
-					modelStack.Rotate(-90, 1, 0, 0);
-					modelStack.Scale(6, 6, 1);
-					RenderHelper::GetInstance().RenderMesh(*mesh, texture[MENUGUI_DELETEFILE_TWO], false);
-				modelStack.PopMatrix();
+			modelStack.PushMatrix();
+			modelStack.Translate(0.5f, 0.f, 2.f);
+			modelStack.Rotate(-90, 1, 0, 0);
+			modelStack.Scale(6, 6, 1);
+			RenderHelper::GetInstance().RenderMesh(*mesh, texture[MENUGUI_DELETEFILE_TWO], false);
+			modelStack.PopMatrix();
 
-				modelStack.Rotate(-90, 1, 0, 0);
-				modelStack.Scale(6, 6, 1);
-				RenderHelper::GetInstance().RenderMesh(*mesh, texture[MENUGUI_DELETEFILE_ONE], false);
+			modelStack.Rotate(-90, 1, 0, 0);
+			modelStack.Scale(6, 6, 1);
+			RenderHelper::GetInstance().RenderMesh(*mesh, texture[MENUGUI_DELETEFILE_ONE], false);
 			modelStack.PopMatrix();
 
 			modelStack.PushMatrix();
-				modelStack.Translate(0.f, 0.5f, 1.f);
+			modelStack.Translate(0.f, 0.5f, 1.f);
 
-				modelStack.PushMatrix();
-					modelStack.Translate(6.f, 0, 0);
-					modelStack.Rotate(-90, 1, 0, 0);
-					modelStack.Scale(7, 7, 1);
-					RenderHelper::GetInstance().RenderMesh(*mesh, texture[MENUGUI_TWOCHOICE_NO], false);
-				modelStack.PopMatrix();
+			modelStack.PushMatrix();
+			modelStack.Translate(6.f, 0, 0);
+			modelStack.Rotate(-90, 1, 0, 0);
+			modelStack.Scale(7, 7, 1);
+			RenderHelper::GetInstance().RenderMesh(*mesh, texture[MENUGUI_TWOCHOICE_NO], false);
+			modelStack.PopMatrix();
 
-				modelStack.Rotate(-90, 1, 0, 0);
-				modelStack.Scale(7, 7, 1);
-				RenderHelper::GetInstance().RenderMesh(*mesh, texture[MENUGUI_TWOCHOICE_YES], false);
+			modelStack.Rotate(-90, 1, 0, 0);
+			modelStack.Scale(7, 7, 1);
+			RenderHelper::GetInstance().RenderMesh(*mesh, texture[MENUGUI_TWOCHOICE_YES], false);
 			modelStack.PopMatrix();
 
 			modelStack.PushMatrix();
-				modelStack.Translate(0.f, 0.f, -0.5f);
-				modelStack.Rotate(-90, 1, 0, 0);
-				modelStack.Scale(12, 9, 1);
-				RenderHelper::GetInstance().RenderMesh(*mesh, texture[MENUGUI_TEXTSCREEN], false);
+			modelStack.Translate(0.f, 0.f, -0.5f);
+			modelStack.Rotate(-90, 1, 0, 0);
+			modelStack.Scale(12, 9, 1);
+			RenderHelper::GetInstance().RenderMesh(*mesh, texture[MENUGUI_TEXTSCREEN], false);
 			modelStack.PopMatrix();
 		}
-			break;
+		break;
 
 		case MainMenu::OPTION::OPTION_BACK:
 			break;
@@ -580,9 +602,9 @@ void SceneMainMenu::RenderHighScore()
 		{
 			modelStack.PushMatrix();
 			//std::cout << mapIter->first << ": " << to_string(mapIter->second) << std::endl;
-				modelStack.Translate(-15.f, initialTranslateY - static_cast<float>(count * 4), 0.f);			
-				modelStack.Scale(4, 4, 1);
-				RenderHelper::GetInstance().RenderText(*textOnScreenMesh, texture[MENUGUI_TEXTONSCREEN], mapIter->first + ": " + to_string(mapIter->second), Color(0, 0, 0));
+			modelStack.Translate(-21.f, initialTranslateY - static_cast<float>(count * 4), 0.f);
+			modelStack.Scale(4, 4, 1);
+			RenderHelper::GetInstance().RenderText(*textOnScreenMesh, texture[MENUGUI_TEXTONSCREEN], mapIter->first + ": " + to_string(mapIter->second), Color(1, 1, 1));
 			modelStack.PopMatrix();
 			++count;
 		}
@@ -593,7 +615,7 @@ void SceneMainMenu::RenderHowToPlayChoice(int chooseMenu)
 {
 	MS &modelStack = GraphicsManager::GetInstance().modelStack;
 	std::vector<std::string> howToPlayText;
-	float initialTranslateY = 30.f;
+	float initialTranslateY = 15.f;
 
 	if (mainmenu.menu == MainMenu::MENU::MENU_HOWTOPLAY && !mainmenu.transitionInProgress)
 	{
@@ -608,13 +630,13 @@ void SceneMainMenu::RenderHowToPlayChoice(int chooseMenu)
 			modelStack.PushMatrix();
 			float count = 2;
 
-			modelStack.Translate(-30.f, initialTranslateY, 0);
-			modelStack.Scale(3, 3, 1);
+			modelStack.Translate(-37.5f, initialTranslateY, 0);
+			modelStack.Scale(3.5, 3.5, 1);
 
 			for (std::vector<std::string>::iterator it = howToPlayText.begin(); it != howToPlayText.end(); ++it)
 			{
 				modelStack.Translate(0, -count, 0);
-				RenderHelper::GetInstance().RenderText(*textOnScreenMesh, texture[MENUGUI_TEXTONSCREEN], *it, Color(0, 1, 0));
+				RenderHelper::GetInstance().RenderText(*textOnScreenMesh, texture[MENUGUI_TEXTONSCREEN], *it, Color(1, 1, 1));
 			}
 
 			modelStack.PopMatrix();
@@ -626,13 +648,13 @@ void SceneMainMenu::RenderHowToPlayChoice(int chooseMenu)
 			howToPlayText = mainmenu.TextFileToScreen("MenuFile//HowToPageTwo.txt");
 			modelStack.PushMatrix();
 			float count = 2;
-			modelStack.Translate(-30.f, initialTranslateY, 0);
-			modelStack.Scale(3, 3, 1);
+			modelStack.Translate(-37.5f, initialTranslateY, 0);
+			modelStack.Scale(3.5, 3.5, 1);
 
 			for (std::vector<std::string>::iterator it = howToPlayText.begin(); it != howToPlayText.end(); ++it)
 			{
 				modelStack.Translate(0, -count, 0);
-				RenderHelper::GetInstance().RenderText(*textOnScreenMesh, texture[MENUGUI_TEXTONSCREEN], *it, Color(0, 1, 0));
+				RenderHelper::GetInstance().RenderText(*textOnScreenMesh, texture[MENUGUI_TEXTONSCREEN], *it, Color(1, 1, 1));
 			}
 
 			modelStack.PopMatrix();
@@ -653,6 +675,6 @@ void SceneMainMenu::RenderHowToPlayChoice(int chooseMenu)
 
 void SceneMainMenu::Exit()
 {
-	AudioManager::GetInstance().ClearAudioList();
+	//AudioManager::GetInstance().ClearAudioList();
 	EntityManager::GetInstance().DestroyScene(name);
 }

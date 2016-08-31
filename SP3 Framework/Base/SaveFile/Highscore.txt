@@ -1,7 +1,8 @@
+=0
 Level_1=415
 Level_2=780
-Level_3=180
-Level_4=0
+Level_3=190
+Level_4=30
 Level_5=0
 Level_6=0
 Level_7=0

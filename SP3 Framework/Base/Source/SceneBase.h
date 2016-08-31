@@ -139,6 +139,7 @@ private:
 	enum KEYS {
 		SELECT,
 		BACK,
+		PAUSE,
 		MENU_LEFT,
 		MENU_RIGHT,
 		NUM_KEYS,

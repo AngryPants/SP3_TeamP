@@ -1,4 +1,5 @@
-GamePad Controls
-
-DPad Left: Move Left
-DPad Right: Move Right
+[Joystick] Move Hero
+[A]        Jump
+[X]        Shoot
+[Y]        Special
+[BACK]     Pause
