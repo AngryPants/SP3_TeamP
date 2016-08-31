@@ -490,7 +490,7 @@ void SceneBase::RenderCharacterSelect() {
 			modelStack.Scale(20, 20, 1);
 		}
 		RenderHelper::GetInstance().RenderMesh(*heroCard, cardTexture[SEETWO]);
-		if (unlockedCharacters[DANIU] == false) {
+		if (unlockedCharacters[SEETWO] == false) {
 			RenderHelper::GetInstance().RenderMesh(*heroCard, lockedCardTexture);
 		}
 	modelStack.PopMatrix();

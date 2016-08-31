@@ -3,6 +3,7 @@
 
 #include "SceneBase.h"
 #include "SceneMainMenu.h"
+#include "SceneCredits.h"
 
 //Constructor(s) & Destructor
 GameManager::GameManager() {
@@ -95,7 +96,7 @@ bool GameManager::GoToScene(string sceneName) {
 	else if (sceneName == "Level_8") {
 		if (!SceneManager::GetInstance().CheckSceneExist(sceneName)) {
 			SceneBase* scene = new SceneBase(sceneName);
-			scene->nextScene = "Main_Menu";
+			scene->nextScene = "Credits";
 			scene->tileMapFile = "Levels//Level8//TM.csv";
 			scene->sawbladesFile = "Levels//Level8//SB.txt";
 			scene->bgmFile = "Audio//BGM//Base_After_Base.mp3";
@@ -113,7 +114,14 @@ bool GameManager::GoToScene(string sceneName) {
 		SceneManager::GetInstance().SetActiveScene(sceneName);
 		return true;
 	}
-	else {
+	else if (sceneName == "Credits") {
+		if (!SceneManager::GetInstance().CheckSceneExist(sceneName)) {
+			SceneCredits* scene = new SceneCredits(sceneName);
+			scene->bgm = "Audio//BGM//Forever_Bound_Stereo_Madness.mp3";
+		}
+		SceneManager::GetInstance().SetActiveScene(sceneName);
+		return true;
+	} else {
 		bool returnValue = true;
 		if (sceneName != "Level_1") {
 			returnValue = false;

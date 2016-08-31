@@ -46,6 +46,7 @@
     <ClCompile Include="Source\RenderHelper.cpp" />
     <ClCompile Include="Source\Sawblade.cpp" />
     <ClCompile Include="Source\SceneBase.cpp" />
+    <ClCompile Include="Source\SceneCredits.cpp" />
     <ClCompile Include="Source\SceneMainMenu.cpp" />
     <ClCompile Include="Source\SceneManager.cpp" />
     <ClCompile Include="Source\Seetwo.cpp" />
@@ -106,6 +107,7 @@
     <ClInclude Include="Source\Sawblade.h" />
     <ClInclude Include="Source\Scene.h" />
     <ClInclude Include="Source\SceneBase.h" />
+    <ClInclude Include="Source\SceneCredits.h" />
     <ClInclude Include="Source\SceneMainMenu.h" />
     <ClInclude Include="Source\SceneManager.h" />
     <ClInclude Include="Source\Seetwo.h" />
