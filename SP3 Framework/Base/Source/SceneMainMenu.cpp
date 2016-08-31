@@ -11,6 +11,7 @@
 SceneMainMenu::SceneMainMenu(const string& name) : Scene(name)
 {
 	bgm = "";
+	startScreen = true;
 }
 
 SceneMainMenu::~SceneMainMenu()
@@ -51,6 +52,7 @@ void SceneMainMenu::Init()
 	texture[MENUGUI_TITLE].textureArray[0] = TextureManager::GetInstance().AddTexture("Title", "Image//Cyborg_Shooter//Others//DawnOfCyborgs.tga");
 	texture[MENUGUI_BACKGROUNDONE].textureArray[0] = TextureManager::GetInstance().AddTexture("Menu Background One", "Image//Cyborg_Shooter//Tiles//Terrain//Terrain_Wall_2.tga");
 	texture[MENUGUI_BACKGROUNDTWO].textureArray[0] = TextureManager::GetInstance().AddTexture("Menu Background Two", "Image//Cyborg_Shooter//Tiles//Terrain//Terrain_Wall_3.tga");
+	texture[MENUGUI_STARTSCREEN].textureArray[0] = TextureManager::GetInstance().AddTexture("Fly some Kites!", "Image//Cyborg_Shooter//MenuUI//StartScreen.tga");
 
 	// Volume Graphics
 	texture[MENUGUI_VOLUMEICON].textureArray[0] = TextureManager::GetInstance().AddTexture("VolumeUpDown", "Image//Cyborg_Shooter//Buttons//Button_Mute.tga");
@@ -235,12 +237,18 @@ void SceneMainMenu::DeleteSaveFileOrNot()
 
 void SceneMainMenu::Update(const double &deltaTime)
 {
-	PointerPositionUpdate();
-	mainmenu.MainMenuUpdate(deltaTime);
-	DeleteSaveFileOrNot();
-	UpdateContinueGameToScene();
 	EntityManager::GetInstance().Update(name, deltaTime);
-	UpdateInTransition(deltaTime);
+	if (!startScreen)
+	{
+		PointerPositionUpdate();
+		DeleteSaveFileOrNot();
+		UpdateContinueGameToScene();
+		UpdateInTransition(deltaTime);
+		mainmenu.MainMenuUpdate(deltaTime);
+	}
+
+	if (InputManager::GetInstance().GetInputInfo().keyPressed[INPUT_SELECT])
+		startScreen = false;
 }
 
 void SceneMainMenu::Render()
@@ -249,14 +257,28 @@ void SceneMainMenu::Render()
 	GraphicsManager::GetInstance().SetToCameraView(*camera);
 	GraphicsManager::GetInstance().Enable<GraphicsManager::MODE::DEPTH_TEST>();
 	EntityManager::GetInstance().Render(this->name);
-	RenderMenuPointer();
-	RenderMenuChoice();
+
+	if (!startScreen)
+	{
+		RenderMenuPointer();
+		RenderMenuChoice();
+	}
+
+	if (startScreen)
+	{
+		RenderStartScreen();
+	}
 
 	GraphicsManager::GetInstance().SetToHUD(-50, 50, -50, 50, -50, 50);
 	GraphicsManager::GetInstance().Disable<GraphicsManager::MODE::DEPTH_TEST>();
 	EntityManager::GetInstance().RenderUI(this->name);
-	RenderHighScore();
-	RenderHowToPlayChoice(mainmenu.chooseMenu);
+
+
+	if (!startScreen)
+	{
+		RenderHighScore();
+		RenderHowToPlayChoice(mainmenu.chooseMenu);
+	}
 }
 
 void SceneMainMenu::RenderMenuPointer()
@@ -675,6 +697,15 @@ void SceneMainMenu::RenderHowToPlayChoice(int chooseMenu)
 			break;
 		}
 	}
+}
+
+void SceneMainMenu::RenderStartScreen()
+{
+	MS &modelStack = GraphicsManager::GetInstance().modelStack;
+	modelStack.PushMatrix();
+	modelStack.Scale(20, 20, 1);
+	RenderHelper::GetInstance().RenderMesh(*mesh, texture[MENUGUI_STARTSCREEN], false);
+	modelStack.PopMatrix();
 }
 
 void SceneMainMenu::Exit()

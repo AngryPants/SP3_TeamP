@@ -5,6 +5,10 @@
 using std::cout;
 using std::endl;
 
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
+
 EntityManager::EntityManager() {
 }
 

@@ -9,13 +9,6 @@
 
 using namespace std;
 
-#ifdef _DEBUG
-   #ifndef DBG_NEW
-      #define DBG_NEW new ( _NORMAL_BLOCK , __FILE__ , __LINE__ )
-      #define new DBG_NEW
-   #endif
-#endif  // _DEBUG
-
 MeshBuilder::MeshBuilder() {
 }
 
@@ -26,15 +19,14 @@ MeshBuilder::~MeshBuilder() {
 			delete meshIter->second;
 		}
 	}
+	meshMap.clear();
 
 	for (SpriteMap::iterator spriteIter = spriteMap.begin(); spriteIter != spriteMap.end(); ++spriteIter) {
 		if (spriteIter->second != nullptr) {
 			delete spriteIter->second;
 		}
 	}
-
-	//Check for memory leaks.
-	_CrtDumpMemoryLeaks();
+	spriteMap.clear();
 
 }
 

@@ -21,17 +21,6 @@
 
 #include "GameManager.h"
 
-#define _CRTDBG_MAP_ALLOC
-#include <stdlib.h>
-#include <crtdbg.h>
-
-#ifdef _DEBUG
-   #ifndef DBG_NEW
-      #define DBG_NEW new ( _NORMAL_BLOCK , __FILE__ , __LINE__ )
-      #define new DBG_NEW
-   #endif
-#endif  // _DEBUG
-
 GLFWwindow* m_window;
 const unsigned char maxFPS = 60; //Maximum FPS of this game.
 const unsigned int frameTime = 1000 / maxFPS; //Minimum time for each frame.
@@ -185,7 +174,6 @@ void Application::Exit() {
 	glfwDestroyWindow(m_window);
 	//Finalize and clean up GLFW
 	glfwTerminate();
-	_CrtDumpMemoryLeaks();
 
 }
 

@@ -13,6 +13,7 @@ protected:
 	float defaultPointerPositionY;
 	float pointerPositionX;
 	float defaultPointerPositionX;
+	bool startScreen;
 
 	bool menuChange;
 
@@ -28,6 +29,7 @@ protected:
 		MENUGUI_BACKGROUNDONE,
 		MENUGUI_BACKGROUNDTWO,
 		MENUGUI_BACKGROUNDTHREE,
+		MENUGUI_STARTSCREEN,
 
 		// Volume graphics
 		MENUGUI_VOLUMEICON,
@@ -81,13 +83,14 @@ protected:
 	void UpdateContinueGameToScene();
 	void UpdateInTransition(const double &deltaTime);
 
+
 	void RenderMenuPointer();
 	void RenderMenuChoice();
 	void RenderOptionChoice();
 
 	void RenderHighScore();
 	void RenderHowToPlayChoice(int chooseMenu);
-
+	void RenderStartScreen();
 
 public:
 	Mesh* mesh;
