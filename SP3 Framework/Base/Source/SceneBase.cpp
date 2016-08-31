@@ -218,6 +218,7 @@ bool SceneBase::InitSawblades(const string& filePath) {
 void SceneBase::InitBackgrounds() {
 
 	backgroundTextures[BACKGROUND_PAUSE].textureArray[0] = TextureManager::GetInstance().AddTexture("Pause Background", "Image//Cyborg_Shooter//Backgrounds//Background_Pause.tga");
+	backgroundTextures[BACKGROUND_END].textureArray[0] = TextureManager::GetInstance().AddTexture("Pause End", "Image//Cyborg_Shooter//Backgrounds//Background_End.tga");
 	backgroundTextures[BACKGROUND_REAR].textureArray[0] = TextureManager::GetInstance().AddTexture("Background Rear", "Image//Cyborg_Shooter//Backgrounds//Background_Rear.tga");
 	backgroundTextures[BACKGROUND_MIDDLE].textureArray[0] = TextureManager::GetInstance().AddTexture("Background Middle", "Image//Cyborg_Shooter//Backgrounds//Background_Middle.tga");
 	backgroundTextures[BACKGROUND_FRONT].textureArray[0] = TextureManager::GetInstance().AddTexture("Background Front", "Image//Cyborg_Shooter//Backgrounds//Background_Front.tga");
@@ -545,7 +546,7 @@ void SceneBase::RenderEndScreen() {
 	modelStack.PushMatrix();
 	modelStack.Scale(100, 100, 1);
 	background->SetTextureOffset(0, 0);
-	RenderHelper::GetInstance().RenderMesh(*background, backgroundTextures[BACKGROUND_PAUSE], false);
+	RenderHelper::GetInstance().RenderMesh(*background, backgroundTextures[BACKGROUND_END], false);
 	modelStack.PopMatrix();
 
 	/*modelStack.PushMatrix();
