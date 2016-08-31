@@ -91,7 +91,12 @@ void MainMenu::NewGameChoice()
 			if (chooseMenu == 1)
 			{
 				GameData::GetInstance().DeleteGameData("SaveFile//DataOne.txt");
-				deletingFile = true;
+				if (GameData::GetInstance().LoadGameData("SaveFile//DataOne.txt")) {
+					hasSavedFile = true;
+				} else {
+					hasSavedFile = false;
+				}
+					deletingFile = true;
 			}
 
 			if (chooseMenu == 2)

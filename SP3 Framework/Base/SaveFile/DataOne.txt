@@ -1,5 +1,0 @@
-Current_Level=Credits
-Head=Daniu,Seetwo,
-Body=Daniu,Seetwo,
-Arms=Daniu,Seetwo,
-Legs=Daniu,Seetwo,

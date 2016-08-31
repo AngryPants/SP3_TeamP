@@ -122,10 +122,10 @@ void Seetwo::Attack() {
 			Bullet& bullet = FetchBullet();
 			bullet.isActive = true;
 			bullet.damage = 20.0f;
-			bullet.radius = 0.2f;
+			bullet.radius = 0.15f;
 			bullet.lifetime = 5.0f;
 			bullet.position = position;
-			bullet.position.y += 0.55f;
+			bullet.position.y += 0.5f;
 			bullet.velocity = GetForwardDirection() * 20.0f;
 			AudioManager::GetInstance().PlayAudio2D("Audio//Sound_Effects//Weapons//Gun_Kifellah.flac", false);
 		}
