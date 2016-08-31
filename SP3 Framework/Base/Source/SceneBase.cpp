@@ -27,8 +27,6 @@ const double SceneBase::minFPS = 30.0;
 SceneBase::SceneBase(const string& name) : Scene(name) {
 	
 	//Mesh & Textures
-	font = MeshBuilder::GetInstance().GenerateText("Consolas", 16, 16);
-	fontTexture.textureArray[0] = TextureManager::GetInstance().AddTexture("Consolas", "Image//Fonts//Consolas.tga");
 	InitBackgrounds();
 
 	//Character Selection
@@ -524,17 +522,10 @@ void SceneBase::RenderPauseScreen() {
 	MS& modelStack = GraphicsManager::GetInstance().modelStack;
 	modelStack.PushMatrix();
 		modelStack.Scale(100, 100, 1);
+		background->SetTextureOffset(0, 0);
 		RenderHelper::GetInstance().RenderMesh(*background, backgroundTextures[BACKGROUND_PAUSE],false);
 	modelStack.PopMatrix();
 
-	modelStack.PushMatrix();
-		modelStack.Translate(-40, 0, 0);
-		modelStack.Scale(4, 4, 1);
-		RenderHelper::GetInstance().RenderText(*font, fontTexture, "Press ESC/[B] To Quit", Color(1, 1, 1));
-		modelStack.Translate(0, -5, 0);
-		modelStack.Scale(0.75, 1, 1);
-		RenderHelper::GetInstance().RenderText(*font, fontTexture, "Press Enter/[A] To Resume", Color(1, 1, 1));
-	modelStack.PopMatrix();
 }
 
 void SceneBase::RenderEndScreen() {
@@ -542,16 +533,8 @@ void SceneBase::RenderEndScreen() {
 	MS& modelStack = GraphicsManager::GetInstance().modelStack;
 	modelStack.PushMatrix();
 	modelStack.Scale(100, 100, 1);
+	background->SetTextureOffset(0, 0);
 	RenderHelper::GetInstance().RenderMesh(*background, backgroundTextures[BACKGROUND_PAUSE], false);
-	modelStack.PopMatrix();
-
-	modelStack.PushMatrix();
-	modelStack.Translate(-40, 0, 0);
-	modelStack.Scale(4, 4, 1);
-	RenderHelper::GetInstance().RenderText(*font, fontTexture, "Press ESC/[B] To Quit", Color(1, 1, 1));
-	modelStack.Translate(0, -5, 0);
-	modelStack.Scale(0.75, 1, 1);
-	RenderHelper::GetInstance().RenderText(*font, fontTexture, "Press Enter/[A] To Resume", Color(1, 1, 1));
 	modelStack.PopMatrix();
 
 } 
