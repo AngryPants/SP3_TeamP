@@ -31,8 +31,8 @@ bool GameManager::GoToScene(string sceneName) {
 		if (!SceneManager::GetInstance().CheckSceneExist(sceneName)) {
 			SceneBase* scene = new SceneBase(sceneName);
 			scene->nextScene = "Level_4";
-			scene->tileMapFile = "";
-			scene->sawbladesFile = "";
+			scene->tileMapFile = "Levels//Level3//TM.csv";
+			scene->sawbladesFile = "Levels//Level3//SB.txt";
 			scene->bgmFile = "Audio//BGM//Dry_Out.mp3";
 			scene->unlockCharacter = "Daniu";
 			scene->unlockPart = SceneBase::PART::ARMS;
@@ -44,8 +44,8 @@ bool GameManager::GoToScene(string sceneName) {
 		if (!SceneManager::GetInstance().CheckSceneExist(sceneName)) {
 			SceneBase* scene = new SceneBase(sceneName);
 			scene->nextScene = "Level_5";
-			scene->tileMapFile = "";
-			scene->sawbladesFile = "";
+			scene->tileMapFile = "Levels//Level4//TM.csv";
+			scene->sawbladesFile = "Levels//Level4//SB.txt";
 			scene->bgmFile = "Audio//BGM//Dry_Out.mp3";
 			scene->unlockCharacter = "Daniu";
 			scene->unlockPart = SceneBase::PART::LEGS;
@@ -57,8 +57,8 @@ bool GameManager::GoToScene(string sceneName) {
 		if (!SceneManager::GetInstance().CheckSceneExist(sceneName)) {
 			SceneBase* scene = new SceneBase(sceneName);
 			scene->nextScene = "Level_6";
-			scene->tileMapFile = "";
-			scene->sawbladesFile = "";
+			scene->tileMapFile = "Levels//Level5//TM.csv";
+			scene->sawbladesFile = "Levels//Level5//SB.txt";
 			scene->bgmFile = "Audio//BGM//Forever_Bound_Stereo_Madness.mp3";
 			scene->unlockCharacter = "Seetwo";
 			scene->unlockPart = SceneBase::PART::HEAD;
@@ -70,8 +70,8 @@ bool GameManager::GoToScene(string sceneName) {
 		if (!SceneManager::GetInstance().CheckSceneExist(sceneName)) {
 			SceneBase* scene = new SceneBase(sceneName);
 			scene->nextScene = "Level_7";
-			scene->tileMapFile = "";
-			scene->sawbladesFile = "";
+			scene->tileMapFile = "Levels//Level6//TM.csv";
+			scene->sawbladesFile = "Levels//Level6//SB.txt";
 			scene->bgmFile = "Audio//BGM//Forever_Bound_Stereo_Madness.mp3";
 			scene->unlockCharacter = "Seetwo";
 			scene->unlockPart = SceneBase::PART::BODY;
@@ -83,8 +83,8 @@ bool GameManager::GoToScene(string sceneName) {
 		if (!SceneManager::GetInstance().CheckSceneExist(sceneName)) {
 			SceneBase* scene = new SceneBase(sceneName);
 			scene->nextScene = "Level_8";
-			scene->tileMapFile = "";
-			scene->sawbladesFile = "";
+			scene->tileMapFile = "Levels//Level7//TM.csv";
+			scene->sawbladesFile = "Levels//Level7//SB.txt";
 			scene->bgmFile = "Audio//BGM//Base_After_Base.mp3";
 			scene->unlockCharacter = "Seetwo";
 			scene->unlockPart = SceneBase::PART::ARMS;
@@ -96,8 +96,8 @@ bool GameManager::GoToScene(string sceneName) {
 		if (!SceneManager::GetInstance().CheckSceneExist(sceneName)) {
 			SceneBase* scene = new SceneBase(sceneName);
 			scene->nextScene = "Main_Menu";
-			scene->tileMapFile = "";
-			scene->sawbladesFile = "";
+			scene->tileMapFile = "Levels//Level8//TM.csv";
+			scene->sawbladesFile = "Levels//Level8//SB.txt";
 			scene->bgmFile = "Audio//BGM//Base_After_Base.mp3";
 			scene->unlockCharacter = "Seetwo";
 			scene->unlockPart = SceneBase::PART::LEGS;
