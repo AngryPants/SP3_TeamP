@@ -157,7 +157,7 @@ void Application::Run() {
 		SceneManager::GetInstance().Render();
 		glfwSwapBuffers(m_window); //Swap buffers
 
-		if (accumulatedTime[THREAD_UPDATE_WINDOW_SIZE] >= 5.0) {
+		if (accumulatedTime[THREAD_UPDATE_WINDOW_SIZE] >= 1.5) {
 			glfwGetWindowSize(m_window, &m_window_width, &m_window_height);
 			resize_callback(m_window, m_window_width, m_window_height);
 			accumulatedTime[THREAD_UPDATE_WINDOW_SIZE] = 0.0;

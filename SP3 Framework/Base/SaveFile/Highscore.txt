@@ -1,3 +1,8 @@
-Level_1=340
-Level_2=720
-Level_3=150
+Level_1=0
+Level_2=130
+Level_3=140
+Level_4=635
+Level_5=0
+Level_6=0
+Level_7=730
+Level_8=570
