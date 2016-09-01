@@ -23,15 +23,15 @@ private:
 	~Application();
 
 	//Declare the window width and height as constant integer
-	const static int m_window_width = 1024;
-	const static int m_window_height = 800;
+	int m_window_width;
+	int m_window_height;
 	
 	//Declare a window object
 	StopWatch m_timer;
 
 	//Threads
 	enum THREAD {
-		THREAD_PLACEHOLDER,
+		THREAD_UPDATE_WINDOW_SIZE,
 
 		NUM_THREAD,
 	};

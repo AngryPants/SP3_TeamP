@@ -1,6 +1,7 @@
 #include "Camera2D.h"
 #include "Character.h"
 #include "MapRenderer.h"
+#include "Application.h"
 
 using namespace std;
 
@@ -57,6 +58,8 @@ void Camera2D::Update(const double& deltaTime) {
 		cout << "Unable to update camera as no tileMap was set." << endl;
 		return;
 	}
+
+	aspectRatio.Set(Application::GetInstance().GetWindowWidth(), Application::GetInstance().GetWindowHeight());
 
 	float maxDistanceToTargetX = deadZoneX * GetOrthoWidth(); //What is the maximum distance we should be following the player.
 	float maxDistanceToTargetY = deadZoneY * orthoSize;

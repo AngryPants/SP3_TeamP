@@ -69,6 +69,10 @@ int Application::GetWindowHeight() {
 }
 
 Application::Application() {
+
+	m_window_height = 800;
+	m_window_width = 1024;
+
 }
 
 Application::~Application() {
@@ -93,9 +97,8 @@ void Application::Init() {
 
 
 	//Create a window and create its OpenGL context
-	//m_window = glfwCreateWindow(m_window_width, m_window_height, "150496F_ACG", NULL, NULL); //Windowed
-	m_window = glfwCreateWindow(m_window_width, m_window_height, "150496F_Game_Dev", NULL, NULL); //Windowed
-	//m_window = glfwCreateWindow(glfwGetVideoMode(glfwGetPrimaryMonitor())->width, glfwGetVideoMode(glfwGetPrimaryMonitor())->height, "150496F_ACG", glfwGetPrimaryMonitor(), NULL);
+	//m_window = glfwCreateWindow(m_window_width, m_window_height, "150496F_Framework", NULL, NULL); //Windowed
+	m_window = glfwCreateWindow(glfwGetVideoMode(glfwGetPrimaryMonitor())->width, glfwGetVideoMode(glfwGetPrimaryMonitor())->height, "150496F_ACG", glfwGetPrimaryMonitor(), NULL);
 
 	//If the window couldn't be created
 	if (!m_window) {
@@ -153,6 +156,12 @@ void Application::Run() {
 
 		SceneManager::GetInstance().Render();
 		glfwSwapBuffers(m_window); //Swap buffers
+
+		if (accumulatedTime[THREAD_UPDATE_WINDOW_SIZE] >= 5.0) {
+			glfwGetWindowSize(m_window, &m_window_width, &m_window_height);
+			resize_callback(m_window, m_window_width, m_window_height);
+			accumulatedTime[THREAD_UPDATE_WINDOW_SIZE] = 0.0;
+		}
 
 		for (unsigned int t = 0; t < NUM_THREAD; ++t) {
 			accumulatedTime[t] += elapsedTime;
